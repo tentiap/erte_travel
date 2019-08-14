@@ -22,8 +22,9 @@ class Rute extends Model
         return $this->belongsTo(Kota::class, 'id_kota_asal');
     }
 
-    // public function kota_tujuan()
-    // {
-    //     return $this->belongsTo(Kota::class, 'id_kota_tujuan');
-    // }
+//Comment//
+    public function kota_tujuan()
+    {
+        return $this->belongsTo(Kota::class, 'id_kota_tujuan');
+    }
 }
