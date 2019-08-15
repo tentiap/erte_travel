@@ -29,13 +29,11 @@
                             <label>ID Rute</label>
                             <input type="text" name="id_rute" class="form-control" placeholder="ID rute">
 
-                            <!-- @if($errors->has('id_rute'))
+                            @if($errors->has('id_rute'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_rute')}}
                                 </div>
-                            @endif -->
-
-                            
+                            @endif
 
                         </div>
 
@@ -43,52 +41,56 @@
 
                         <div class="form-group">
                             <label>Kota Asal</label>
-                               
-
-                            <select class="form-control">
-                                    @foreach($kota_asal as $k)
-                                    <option name="id_kota_asal" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
+                                <select class="form-control">
+                                    @foreach($rute as $r)
+                                    <option>{{$r->kota->nama_kota}}</option> 
                                     @endforeach
                             </select>
 
-                            <!-- @if($errors->has('id_kota_asal'))
+                            <select class="form-control">
+                                    @foreach($kota as $k)
+                                    <option value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
+                                    @endforeach
+                            </select>
+
+                             @if($errors->has('id_kota_asal'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_kota_asal')}}
                                 </div>
-                            @endif -->
-
-                           
+                            @endif
                         </div>
 
                         <div class="form-group">
                             <label>Kota Tujuan</label>
                             
-                           
-
-                             <select class="form-control">
-                                    @foreach($kota_tujuan as $kt)
-                                    <option name="id_kota_tujuan" value="{{$kt->id_kota}}">{{$kt->nama_kota}}</option> 
-                                    @endforeach
+                            <select class="form-control">
+                                @foreach($rute as $r)
+                                <option>{{ $r->kota->nama_kota }}</option> 
+                                @endforeach
                             </select>
 
-                            <!-- @if($errors->has('id_kota_tujuan'))
+                           <!--   <select class="form-control">
+                                    @foreach($kota as $k)
+                                    <option value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
+                                    @endforeach
+                            </select>
+ -->
+                             <!-- @if($errors->has('kota_tujuan'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_kota_tujuan')}}
                                 </div>
-                            @endif
- -->
-                            
+                            @endif -->
                         </div>
 
                         <div class="form-group">
                             <label>Harga</label>
                             <input type="text" name="harga" class="form-control" placeholder="Harga">
 
-                            @if($errors->has('harga'))
+                           <!--  @if($errors->has('harga'))
                                 <div class="text-danger">
                                     {{ $errors->first('harga')}}
                                 </div>
-                            @endif
+                            @endif -->
 
                         </div>
 

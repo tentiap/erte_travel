@@ -36,8 +36,9 @@
                 <tbody>
                   @foreach($rute as $r)
                             <tr>
-                                <td>{{ $r->id_rute }}</td>                                                       <td>{{ $r->id_kota_asal }}</td>
-                                <td>{{ $r->id_kota_tujuan }}</td>
+                                <td>{{ $r->id_rute }}</td>     
+                                <td>{{ $r->kota_asal->nama_kota }}</td>
+                                <td>{{ $r->kota_tujuan->nama_kota }}</td>
                                 <td>{{ $r->harga }}</td>
                                 <td>
                                     

@@ -16,8 +16,16 @@ class RuteController extends Controller
     }
 
     public function create(){
-    	$kota = Rute::with('kota')->get();
-    	return view('erte.rute.create', ['rute' => $kota]);
+    	// $kota = Rute::with('kota')->get();
+        // $kota = Kota::all();
+        $rute = Rute::all();
+        $kota_asal = Kota::all();
+        $kota_tujuan = Kota::all();
+
+    	// return view('erte.rute.create', ['rute' => $kota]);
+        return view('erte.rute.create', ['rute' => $rute, 'kota_asal' => $kota_asal, 'kota_tujuan' => $kota_tujuan]);
+
+        // return view('erte.rute.create', compact('rute'), compact('kota_asal'), compact('kota_tujuan');
     }
     
     public function store(Request $request){
@@ -27,12 +35,29 @@ class RuteController extends Controller
     		'id_kota_tujuan' => 'required',
     		'harga' => 'required']);
 
-    	Rute::create([
-    		'id_rute' => $request->id_rute,
-    		'id_kota_asal' => $request->id_kota_asal,
-    		'id_kota_tujuan' => $request->id_kota_tujuan,
-    		'harga' => $request->harga
-    	]);
+        
+    	// Rute::create([
+    	// 	'id_rute' => $request->id_rute,
+    	// 	'id_kota_asal' => $request->id_kota_asal,
+    	// 	'id_kota_tujuan' => $request->id_kota_tujuan,
+    	// 	'harga' => $request->harga
+    	// ]);
+
+        Rute::create([
+            'id_rute' => $request->id_rute,
+            'id_kota_asal' => $request->id_kota_asal,
+            'id_kota_tujuan' => $request->id_kota_tujuan,
+            'harga' => $request->harga
+        ]);
+
+        // $rute = new Rute();
+        // $rute->id_rute = $request->id_rute;
+        // $rute->id_kota_asal = $request->id_kota_asal;
+        // $rute->id_kota_tujuan = $request->id_kota_tujuan;
+        // $rute->harga = $request->harga;
+        // $rute->save();
+
+        
 
         // Flash::success('Mahasiswa saved successfully.');
 
@@ -44,11 +69,15 @@ class RuteController extends Controller
     }
 
     public function edit($id_rute){
+
+        $rute = Rute::find($id_rute);
     	$kota_asal = Kota::all()->pluck('nama_kota');
     	$kota_tujuan = Kota::all()->pluck('nama_kota');
 		    	
-    	$rute = Rute::find($id_rute);
-    	return view('erte.rute.edit', ['rute' => $rute]);
+    	
+    	return view('erte.rute.edit', ['rute' => $rute, 'kota_asal' => $kota_asal, 'kota_tujuan' => $kota_tujuan]);
+
+                // return view('erte.rute.edit', ['rute' => $rute]);
     }
 
     public function update($id_rute, Request $request){

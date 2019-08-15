@@ -35,7 +35,6 @@ Route::get('/seat/delete/{id_seat}', 'SeatController@delete');
 //------------------------------------------------------RUTE----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/rute', 'RuteController@index');
 Route::get('/rute/create', 'RuteController@create');
-// Route::get('/rute/create', 'RuteController@create')->name('rute.create');
 Route::post('/rute/store', 'RuteController@store');
 Route::get('/rute/edit/{id_rute}', 'RuteController@edit');
 Route::put('/rute/update/{id_rute}', 'RuteController@update');

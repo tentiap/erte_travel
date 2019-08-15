@@ -28,58 +28,49 @@
 
                         <div class="form-group">
                             <label>ID</label>
-                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute" value=" {{ $rute->id_rute }}">
+                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute" {{ $rute->id_rute }}">         
 
-                            @if($errors->has('id_rute'))
+                             @if($errors->has('id_rute'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_rute')}}
                                 </div>
-                            @endif
-
+                            @endif                 
                         </div>
+
 
                         <div class="form-group">
                             <label>Kota Asal</label>
-                                <select class="form-control" value=" {{ $rute->id_kota_asal }}">
-                                    @foreach($rute as $r)
-                                    <option>{{$r->id_kota_asal}}</option> 
-                                    @endforeach
-                            </select>
+                                <select class="form-control" >
+                            
+                                    <option name="id_kota_asal">{{$rute->id_kota_asal}}</option>
+                         
+                                   
+                                </select>
 
-                             @if($errors->has('id_kota_asal'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_kota_asal')}}
-                                </div>
-                            @endif
+    
+
                         </div>
 
                         <div class="form-group">
                             <label>Kota Tujuan</label>
-                                <select class="form-control" value=" {{ $rute->id_kota_tujuan }}">
-                                    @foreach($rute as $r)
-                                    <option>{{$r->id_kota_tujuan}}</option> 
-                                    @endforeach
+                                <select class="form-control">
+                                   
+                                    <option name="id_kota_tujuan" >{{$rute->id_kota_tujuan}}</option> 
+                                   
                             </select>
 
-                             @if($errors->has('id_kota_tujuan'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_kota_tujuan')}}
-                                </div>
-                            @endif
-                        </div>
+    
+                     </div>
 
 
 
                         <div class="form-group">
                             <label>Harga</label>
-                            <textarea name="posisi" class="form-control" placeholder="posisi"> {{ $rute->harga }} </textarea>
+                            <textarea name="posisi" class="form-control" placeholder="harga"> {{ $rute->harga }} </textarea>
 
-                             @if($errors->has('rute'))
-                                <div class="text-danger">
-                                    {{ $errors->first('rute')}}
-                                </div>
-                            @endif
+    
                         </div>
+
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-success" value="Simpan">

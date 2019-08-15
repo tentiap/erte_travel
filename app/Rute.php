@@ -8,7 +8,7 @@ class Rute extends Model
 {
     protected $table = "rute";
     protected $primaryKey = 'id_rute';
-    protected $fillable = ['id_rute', 'id_kota_tujuan', 'id_kota_asal', 'harga'];
+    protected $fillable = ['id_rute', 'id_kota_asal', 'id_kota_tujuan', 'harga'];
      public $incrementing = false;
 
 
@@ -17,14 +17,24 @@ class Rute extends Model
         return $this->hasMany(Trip::class);
     }
 
-    public function kota()
+    // public function kota()
+    // {
+    //     return $this->belongsTo(Kota::class, 'id_kota_asal');
+    // }
+
+    public function kota_asal()
     {
         return $this->belongsTo(Kota::class, 'id_kota_asal');
     }
 
-//Comment//
     public function kota_tujuan()
     {
         return $this->belongsTo(Kota::class, 'id_kota_tujuan');
     }
+
+
+    // public function kota_tujuan()
+    // {
+    //     return $this->belongsTo(Kota::class, 'id_kota_tujuan');
+    // }
 }

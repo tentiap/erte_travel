@@ -3,12 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Data Rute
+          Edit Data Rute
       </h1>
           <ol class="breadcrumb">
-            <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../rute">Rute</a></li>
-            <li class="active">Create</li>
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/rute">Rute</a></li>
+            <li class="active">Edit</li>
           </ol>
   </section>
  @endsection
@@ -17,17 +17,18 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="../rute" class="btn btn-primary">Kembali</a>
+                <a href="/rute" class="btn btn-primary">Kembali</a>
                     <br/>
                     <br/>
                     
-                <form method="post" action="/rute/store">
+                <form method="post" action="/rute/update/{{ $rute->id_rute }}">
 
                         {{ csrf_field() }}
+                        {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>ID Rute</label>
-                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute">
+                            <label>ID</label>
+                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute" value=" {{ $rute->id_rute }}">
 
                             <!-- @if($errors->has('id_rute'))
                                 <div class="text-danger">
@@ -35,67 +36,57 @@
                                 </div>
                             @endif -->
 
-                            
-
                         </div>
-
-
 
                         <div class="form-group">
                             <label>Kota Asal</label>
-                               
-
-                            <select class="form-control">
+                                <select class="form-control" value=" {{ $rute->id_kota_asal }}">
                                     @foreach($kota_asal as $k)
                                     <option name="id_kota_asal" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
                                     @endforeach
                             </select>
 
-                            <!-- @if($errors->has('id_kota_asal'))
+<!--                              @if($errors->has('id_kota_asal'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_kota_asal')}}
                                 </div>
-                            @endif -->
-
-                           
-                        </div>
+                            @endif
+ -->                        </div>
 
                         <div class="form-group">
                             <label>Kota Tujuan</label>
-                            
-                           
-
-                             <select class="form-control">
+                                <select class="form-control" value=" {{ $rute->id_kota_tujuan }}">
                                     @foreach($kota_tujuan as $kt)
-                                    <option name="id_kota_tujuan" value="{{$kt->id_kota}}">{{$kt->nama_kota}}</option> 
+                                    <option name="id_kota_asal" value="{{$kt->id_kota}}">{{$kt->nama_kota}}</option> 
                                     @endforeach
                             </select>
 
-                            <!-- @if($errors->has('id_kota_tujuan'))
+   <!--                           @if($errors->has('id_kota_tujuan'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_kota_tujuan')}}
-                                </div>
-                            @endif
- -->
-                            
-                        </div>
+                                @foreach($kota_asaltujuan$k)
+  t                                  <option name="id_kota_asal" value="{{$k->id_kota}}">{{$k->nama_ktota}}</option> 
+                                    @endforeach
+    -->                     </div>
+
+
 
                         <div class="form-group">
                             <label>Harga</label>
-                            <input type="text" name="harga" class="form-control" placeholder="Harga">
+                            <textarea name="posisi" class="form-control" placeholder="posisi"> {{ $rute->harga }} </textarea>
 
-                            @if($errors->has('harga'))
+                             <!-- @if($errors->has('rute'))
                                 <div class="text-danger">
-                                    {{ $errors->first('harga')}}
+                                    {{ $errors->first('rute')}}
                                 </div>
-                            @endif
-
+                            @endif -->
                         </div>
 
                         <div class="form-group">
-                            <input type="submit" class="btn btn-primary" value="Simpan">
+                            <input type="submit" class="btn btn-success" value="Simpan">
                         </div>
-                </form>
+
+                    </form>
+
             </div>
         </div>
     </section>
