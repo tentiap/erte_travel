@@ -14,6 +14,7 @@ class UsersController extends Controller
     }
 
     public function create(){
+        return view('erte.users.create');
     	
     }
 

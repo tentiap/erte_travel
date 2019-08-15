@@ -72,11 +72,59 @@
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Username">
+                            <input type="text" name="email" class="form-control" placeholder="Email">
 
-                             @if($errors->has('username'))
+                             @if($errors->has('email'))
                                 <div class="text-danger">
-                                    {{ $errors->first('username')}}
+                                    {{ $errors->first('email')}}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nama</label>
+                            <input type="text" name="nama" class="form-control" placeholder="Nama">
+
+                             @if($errors->has('nama'))
+                                <div class="text-danger">
+                                    {{ $errors->first('nama')}}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label>Kontak</label>
+                            <input type="number" name="kontak" class="form-control" placeholder="Kontak">
+
+                             @if($errors->has('kontak'))
+                                <div class="text-danger">
+                                    {{ $errors->first('kontak')}}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label>Jenis Kelamin</label>
+                            
+                                  <div class="radio">
+                                    <label>
+                                      <input type="radio" name="optionsLaki" id="optionsLaki" value="laki-laki" checked>
+                                      Laki-laki
+                                    </label>
+                                  </div>
+                                  <div class="radio">
+                                    <label>
+                                      <input type="radio" name="optionsPerempuan" id="optionsPerempuan" value="perempuan">
+                                      Perempuan
+                                    </label>
+                                  </div>
+                                  
+                            </div>
+
+
+                             @if($errors->has('jenis_kelamin'))
+                                <div class="text-danger">
+                                    {{ $errors->first('jenis_kelamin')}}
                                 </div>
                             @endif
                         </div>
