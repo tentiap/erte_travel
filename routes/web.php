@@ -40,6 +40,14 @@ Route::get('/rute/edit/{id_rute}', 'RuteController@edit');
 Route::put('/rute/update/{id_rute}', 'RuteController@update');
 Route::get('/rute/delete/{id_rute}', 'RuteController@delete');
 
+//------------------------------------------------------RUTE----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/users', 'UsersController@index');
+Route::get('/users/create', 'UsersController@create');
+Route::post('/users/store', 'UsersController@store');
+Route::get('/users/edit/{id_rute}', 'UsersController@edit');
+Route::put('/users/update/{id_rute}', 'UsersController@update');
+Route::get('/users/delete/{id_rute}', 'UsersController@delete');
+
 Route::get('/dashboard', function(){
 	return view('dashboard');
 });

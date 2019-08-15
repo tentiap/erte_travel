@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             <label>ID</label>
-                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute" {{ $rute->id_rute }}">         
+                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute" value="{{ $rute->id_rute }}         "> 
 
                              @if($errors->has('id_rute'))
                                 <div class="text-danger">
@@ -42,7 +42,7 @@
                             <label>Kota Asal</label>
                                 <select class="form-control" >
                             
-                                    <option name="id_kota_asal">{{$rute->id_kota_asal}}</option>
+                                    <option name="id_kota_asal">{{$rute->kota_asal->nama_kota}}</option>
                          
                                    
                                 </select>
@@ -55,7 +55,7 @@
                             <label>Kota Tujuan</label>
                                 <select class="form-control">
                                    
-                                    <option name="id_kota_tujuan" >{{$rute->id_kota_tujuan}}</option> 
+                                    <option name="id_kota_tujuan" >{{$rute->kota_tujuan->nama_kota}}</option> 
                                    
                             </select>
 
