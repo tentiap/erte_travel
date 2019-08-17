@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Users extends Model
 {
     protected $table = 'users';
+    protected $primaryKey = "id_users";
     protected $fillable = [
     		'id_users', 
     		'role', 
@@ -16,6 +17,8 @@ class Users extends Model
     		'nama', 
     		'kontak', 
     		'jenis_kelamin'];
+    public $incrementing = false;
+
 
     public function sopir()
     {

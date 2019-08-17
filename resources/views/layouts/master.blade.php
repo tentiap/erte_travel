@@ -18,6 +18,9 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/adminlte/css/skins/_all-skins.min.css">
 
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{asset('Adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -113,9 +116,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="/users"><i class="fa fa-circle"></i> All-Users </a></li>
             <li><a href="/driver"><i class="fa fa-circle"></i> Drivers </a></li>
             <li><a href="/feeder"><i class="fa fa-circle"></i> Feeders</a></li>
-            <li><a href="/passenger"><i class="fa fa-circle"></i> Passengers</a></li>
+            <li><a href="/pemesan"><i class="fa fa-circle"></i> Pemesan</a></li>
           </ul>
         </li>
 
@@ -212,5 +216,16 @@
     $('.sidebar-menu').tree()
   })
 </script>
+
+<script>
+  $(function () {
+    $('#sortdata').DataTable()
+  })
+</script>
+
+<!-- DataTables -->
+<script src="{{asset('Adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('Adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
 </body>
 </html>

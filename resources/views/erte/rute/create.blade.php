@@ -45,7 +45,7 @@
                             <label>Kota Asal</label>
                                
 
-                            <select class="form-control">
+                            <select class="form-control" name="kota_asal">
                                     @foreach($kota_asal as $k)
                                     <option name="id_kota_asal" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
                                     @endforeach
@@ -65,7 +65,7 @@
                             
                            
 
-                             <select class="form-control">
+                             <select class="form-control" name="kota_tujuan">
                                     @foreach($kota_tujuan as $kt)
                                     <option name="id_kota_tujuan" value="{{$kt->id_kota}}">{{$kt->nama_kota}}</option> 
                                     @endforeach

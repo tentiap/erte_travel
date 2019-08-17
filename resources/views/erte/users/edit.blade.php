@@ -3,12 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Data Users
+          Edit Data Users
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="../users">Users</a></li>
-            <li class="active">Create</li>
+            <li class="active">Edit</li>
           </ol>
   </section>
  @endsection
@@ -17,17 +17,18 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="../users" class="btn btn-primary">Kembali</a>
+                <a href="/users" class="btn btn-primary">Kembali</a>
                     <br/>
                     <br/>
                     
-                <form method="post" action="/users/store">
+                <form method="post" action="/users/update/{{$users->id_users}}">
 
                         {{ csrf_field() }}
+                        {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{$users->id_users}}">
 
                             @if($errors->has('id_users'))
                                 <div class="text-danger">
@@ -39,13 +40,27 @@
 
                         <div class="form-group">
                             <label>Role</label>
-                            <!-- <input type="text" name="role" class="form-control" placeholder="Role"> -->
+                            <!-- <input type="text" name="role" class="form-control" placeholder="Role" value="{{$users->role}}"> -->
 
                             <select class="form-control" name="role">
+                                    <option name="role" value="{{$users->role}}">
+                                        @if($users->role == 1)
+                                           Operator
+                                        @elseif($users->role == 2)
+                                            Driver
+                                        @elseif($users->role == 3)
+                                            Feeder
+                                        @elseif($users->role == 4)
+                                            Pemesan
+                                        @endif
+                                    </option>
+                                    
                                     <option name="role" value="1">Operator</option> 
                                     <option name="role" value="2">Driver</option> 
                                     <option name="role" value="3">Feeder</option> 
                                     <option name="role" value="4">Pemesan</option>       
+                            
+                                    
                             </select>
 
                              @if($errors->has('role'))
@@ -57,7 +72,7 @@
 
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username">
+                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{$users->username}}">
 
                              @if($errors->has('username'))
                                 <div class="text-danger">
@@ -68,7 +83,7 @@
 
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
+                            <input type="password" name="password" class="form-control" placeholder="Password" value="{{$users->password}}">
 
                              @if($errors->has('password'))
                                 <div class="text-danger">
@@ -79,7 +94,7 @@
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Email">
+                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{$users->email}}">
 
                              @if($errors->has('email'))
                                 <div class="text-danger">
@@ -90,7 +105,7 @@
 
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama">
+                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{$users->nama}}">
 
                              @if($errors->has('nama'))
                                 <div class="text-danger">
@@ -101,7 +116,7 @@
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="number" name="kontak" class="form-control" placeholder="Kontak">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{$users->kontak}}">
 
                              @if($errors->has('kontak'))
                                 <div class="text-danger">
