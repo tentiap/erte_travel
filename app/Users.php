@@ -22,21 +22,21 @@ class Users extends Model
 
     public function sopir()
     {
-        return $this->hasOne(Sopir::class, 'id_users_sopir');
+        return $this->hasOne(Sopir::class, 'id_users');
     }
 
     public function feeder()
     {
-        return $this->hasOne(Feeder::class, 'id_users_feeder');
+        return $this->hasOne(Feeder::class, 'id_users');
     }
 
     public function operator()
     {
-        return $this->hasOne(Operator::class, 'id_users_operator');
+        return $this->hasOne(Operator::class, 'id_users');
     }
 
     public function pemesan()
     {
-        return $this->hasOne(Pemesan::class, 'id_users_pemesan');
+        return $this->hasOne(Pemesan::class, 'id_users');
     }
 }

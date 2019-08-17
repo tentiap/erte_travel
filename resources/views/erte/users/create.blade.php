@@ -43,7 +43,7 @@
 
                             <select class="form-control" name="role">
                                     <option name="role" value="1">Operator</option> 
-                                    <option name="role" value="2">Driver</option> 
+                                    <option name="role" value="2">Sopir</option> 
                                     <option name="role" value="3">Feeder</option> 
                                     <option name="role" value="4">Pemesan</option>       
                             </select>

@@ -117,7 +117,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="/users"><i class="fa fa-circle"></i> All-Users </a></li>
-            <li><a href="/driver"><i class="fa fa-circle"></i> Drivers </a></li>
+            <li><a href="/sopir"><i class="fa fa-circle"></i> Sopir </a></li>
             <li><a href="/feeder"><i class="fa fa-circle"></i> Feeders</a></li>
             <li><a href="/pemesan"><i class="fa fa-circle"></i> Pemesan</a></li>
           </ul>
