@@ -19,7 +19,7 @@
         <div class="box-body">
           <!-- <div class="box"> -->
               <div class="box-header" align="right">
-                <a href="/users/create" class="btn btn-primary">Tambah Sopir</a>
+                <a href="/sopir/create" class="btn btn-primary">Tambah Sopir</a>
               </div>
 
             <div class="box-body">
@@ -38,40 +38,38 @@
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($users as $u)
-                      @if($u->role == 2)
+                  @foreach($sopir as $s)
+                      
                             <tr>
-                                <td>{{ $u->id_users }}</td>     
-                                
-                                <td>{{ $u->nama }}</td>
-                                <td>{{ $u->username }}</td>
-                                <td>{{ $u->email }}</td>
-                                <td>{{ $u->kontak }}</td>
+                                <td>{{ $s->id_users }}</td>
+                                <td>{{ $s->users->nama }}</td>          
+                                <td>{{ $s->users->username }}</td>
+                                <td>{{ $s->users->email }}</td>
+                                <td>{{ $s->users->kontak }}</td>
                                 <td>
-                                        @if($u->jenis_kelamin == 1)
+                                        @if($s->users->jenis_kelamin == 1)
                                            Laki-laki
                                         @else
                                             Perempuan
                                         @endif
 
                                 </td>
-                            @foreach($sopir as $s)    
-                                <td>{{$s->plat_mobil}}</td>
-                                <td>{{$s->merek_mobil}}</td>
-                            @endforeach
+                               
+                                <td>{{ $s->plat_mobil}}</td>
+                                <td>{{ $s->merek_mobil}}</td>
+                                
                                 <td>
                                     
-                                    <a href="/users/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a href="/users/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
+                                    <a href="/users/edit/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a href="/users/delete/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
-                      @endif      
+                      
                   @endforeach
                 </tbody>
               </table>
             </div>
 
-          <!-- </div> -->
         </div>
         <div class="box-footer">
         </div>        

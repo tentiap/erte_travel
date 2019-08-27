@@ -44,9 +44,9 @@ Route::get('/rute/delete/{id_rute}', 'RuteController@delete');
 Route::get('/users', 'UsersController@index');
 Route::get('/users/create', 'UsersController@create');
 Route::post('/users/store', 'UsersController@store');
-Route::get('/users/edit/{id_rute}', 'UsersController@edit');
-Route::put('/users/update/{id_rute}', 'UsersController@update');
-Route::get('/users/delete/{id_rute}', 'UsersController@delete');
+Route::get('/users/edit/{id_users}', 'UsersController@edit');
+Route::put('/users/update/{id_users}', 'UsersController@update');
+Route::get('/users/delete/{id_users}', 'UsersController@delete');
 
 //------------------------------------------------------SOPIR----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/sopir', 'SopirController@index');
