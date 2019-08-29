@@ -7,6 +7,7 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="../users">Users</a></li>
             <li><a href="../sopir">Sopir</a></li>
             <li class="active">Index</li>
           </ol>

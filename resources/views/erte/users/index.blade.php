@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+
+
 @section('breadcrumb')
   <section class="content-header">
       <h1>
@@ -19,7 +21,21 @@
         <div class="box-body">
           <!-- <div class="box"> -->
               <div class="box-header" align="right">
-                <a href="/users/create" class="btn btn-primary">Tambah Users</a>
+                <!-- <a href="/users/create" class="btn btn-primary">Tambah Users</a> -->
+                <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-toggle="dropdown">Tambah Users</button>
+                        <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tambah Users</button> -->
+                         <!--  <span class="caret"></span> -->
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a href="/operator/create">Operator</a></li>
+                          <li><a href="/sopir/create">Sopir</a></li>
+                          <li><a href="/operator/create">Feeder</a></li>
+                          <li><a href="/sopir/create">Pemesan</a></li>
+
+
+                        </ul>
+                      </div>
               </div>
 
             <div class="box-body">
@@ -27,10 +43,10 @@
                   <thead>
                       <tr>
                         <th>ID Users</th>
-                        <th>Role</th>
                         <th>Nama</th>
-                        <th>Username</th>
-                        <th>Email</th>
+                        <th>Role</th>
+                        <!-- <th>Username</th>
+                        <th>Email</th> -->
                         <th>Kontak</th>
                         <th>Jenis Kelamin</th>
                         <th>OPSI</th>
@@ -40,6 +56,7 @@
                   @foreach($users as $u)
                             <tr>
                                 <td>{{ $u->id_users }}</td>     
+                                <td>{{ $u->nama }}</td>
                                 <td>
                                   @if($u->role == 1)
                                            Operator
@@ -51,9 +68,9 @@
                                             Pemesan
                                   @endif
                                 </td>
-                                <td>{{ $u->nama }}</td>
-                                <td>{{ $u->username }}</td>
-                                <td>{{ $u->email }}</td>
+                                
+                                <!-- <td>{{ $u->username }}</td>
+                                <td>{{ $u->email }}</td> -->
                                 <td>{{ $u->kontak }}</td>
                                 <td>
                                         @if($u->jenis_kelamin == 1)
@@ -65,25 +82,28 @@
                                 </td>
                                 <td>
                                     
-                                    <a href="/users/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a href="/users/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
+                                          
+                                    @if($u->role == 1)
+                                        <a href="/operator/show/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                        <a href="/operator/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a> 
+                                        <a href="/operator/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
+                                          
+                                    @elseif($u->role == 2)
+                                        <a href="/sopir/show/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                        <a href="/sopir/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                        <a href="/sopir/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>  
 
-                                   
-<!--                                       @if($u->role == 1) -->
-                                        <!-- <a href="/operator/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit">
-                                        <a href="/operator/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a> -->
-                                      <!-- @elseif($u->role == 2)
-                                        <a href="/sopir/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit">
-                                        <a href="/sopir/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
                                       @elseif($u->role == 3)
-                                        <a href="/feeder/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit">
+                                        <a href="/feeder/show/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                        <a href="/feeder/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
                                         <a href="/feeder/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
                                       @elseif($u->role == 4)
-                                        <a href="/pemesan/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit">
+                                        <a href="/pemesan/show/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                        <a href="/pemesan/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
                                         <a href="/pemesan/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
-                                      @endif -->
-
-                                   
+                                      @endif
+                                    
+                                                                     
                                     
                                 </td>
                             </tr>
