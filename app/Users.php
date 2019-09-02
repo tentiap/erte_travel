@@ -17,6 +17,12 @@ class Users extends Model
     		'nama', 
     		'kontak', 
     		'jenis_kelamin'];
+
+    
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+            
     public $incrementing = false;
 
 

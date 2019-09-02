@@ -53,6 +53,7 @@ Route::get('/sopir', 'SopirController@index');
 Route::get('/sopir/create', 'SopirController@create');
 Route::post('/sopir/store', 'SopirController@store');
 Route::get('/sopir/edit/{id_users}', 'SopirController@edit');
+Route::get('/sopir/show/{id_users}', 'SopirController@show');
 Route::put('/sopir/update/{id_users}', 'SopirController@update');
 Route::get('/sopir/delete/{id_users}', 'SopirController@delete');
 

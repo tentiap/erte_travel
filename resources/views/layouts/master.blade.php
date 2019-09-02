@@ -141,6 +141,8 @@
     
     
       @yield('breadcrumb')
+
+     
       <!-- <section class="content-header">
       <h1>
           Blank page

@@ -61,8 +61,8 @@
                                 
                                 <td>
                                     
-                                    <a href="/users/edit/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a href="/users/delete/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
+                                    <a href="/sopir/edit/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a href="/sopir/delete/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                       

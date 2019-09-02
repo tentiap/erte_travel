@@ -65,6 +65,16 @@ class SopirController extends Controller
 
     }
 
+    public function show($id_users){
+
+        $users = Users::find($id_users);
+        $sopir = Sopir::find($id_users);
+                        
+        
+        return view('erte.sopir.show', ['users' => $users, 'sopir' => $sopir]);
+
+    }
+
     public function update($id_users, Request $request, Sopir $sopir){
     	$this->validate($request, [
     		'id_users' => 'required',

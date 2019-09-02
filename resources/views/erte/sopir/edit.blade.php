@@ -6,9 +6,9 @@
           Edit Data Sopir
       </h1>
           <ol class="breadcrumb">
-            <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../users">Users</a></li>
-            <li><a href="../sopir">Sopir</a></li>
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/sopir">Sopir</a></li>
             <li class="active">Edit</li>
           </ol>
   </section>
@@ -18,9 +18,9 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="/sopir" class="btn btn-primary">Kembali</a>
-                    <br/>
-                    <br/>
+                <!-- <a href="/sopir" class="btn btn-primary">List Sopir</a> -->
+                   <!--  <br/>
+                    <br/> -->
                     
                 <form method="post" action="/sopir/update/{{$users->id_users}}">
 
@@ -142,10 +142,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="1" {{ $users->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="2" {{ $users->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
                                 </label>
 
                                 @if($errors->has('jenis_kelamin'))
@@ -154,6 +154,9 @@
                                     </div>
                                 @endif
                         </div>
+
+                        
+
 
                         <div class="form-group">
                             <label>Plat Mobil</label>

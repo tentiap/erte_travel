@@ -6,9 +6,9 @@
           Tambah Data Sopir
       </h1>
           <ol class="breadcrumb">
-            <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../users">Users</a></li>
-            <li><a href="../sopir">Sopir</a></li>
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/sopir">Sopir</a></li>
             <li class="active">Create</li>
           </ol>
   </section>
@@ -18,9 +18,9 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="../sopir" class="btn btn-primary">Kembali</a>
+               <!--  <a href="../sopir" class="btn btn-primary">Kembali</a>
                     <br/>
-                    <br/>
+                    <br/> -->
                     
                 <form method="post" action="/sopir/store">
 
