@@ -7,7 +7,20 @@ use App\Users;
 use App\Sopir;
 
 class SopirController extends Controller
-{
+{   
+    public $validation_rules = [
+           'id_users' => 'required',
+            'role' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+            'email' => 'required',
+            'nama' => 'required',
+            'kontak' => 'required',
+            'jenis_kelamin' => 'required',
+            'plat_mobil' => 'required',
+            'merek_mobil' => 'required', 
+    ];
+
     public function index(){
     	// $users = Users::all();
     	$sopir = Sopir::all();
@@ -23,24 +36,25 @@ class SopirController extends Controller
 	}
 
 	public function store(Request $request){
-    	$this->validate($request, [
-    		'id_users' => 'required',
-    		'role' => 'required',
-    		'username' => 'required',
-    		'password' => 'required',
-            'email' => 'required',
-            'nama' => 'required',
-            'kontak' => 'required',
-            'jenis_kelamin' => 'required',
-            'plat_mobil' => 'required',
-            'merek_mobil' => 'required',
-        ]);
+    	$this->validate($request, $this->validation_rules);
+      //       [
+    		// 'id_users' => 'required',
+    		// 'role' => 'required',
+    		// 'username' => 'required',
+    		// 'password' => 'required',
+      //       'email' => 'required',
+      //       'nama' => 'required',
+      //       'kontak' => 'required',
+      //       'jenis_kelamin' => 'required',
+      //       'plat_mobil' => 'required|unique',
+      //       'merek_mobil' => 'required',
+      //   ]);
 
     	$users = Users::create([
     		'id_users' => $request->id_users,
             'role' => $request->role,
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => bcrypt('password'),
             'email' => $request->email,
             'nama' => $request->nama,
             'kontak' => $request->kontak,
@@ -51,6 +65,8 @@ class SopirController extends Controller
     	$users->sopir()->create($request->only(
     		'plat_mobil',
     		'merek_mobil'));
+
+        session()->flash('flash_success', 'Berhasil menambahkan data sopir dengan nama '. $request->input('nama'));
 
     	return redirect('/sopir');
     }
@@ -76,18 +92,19 @@ class SopirController extends Controller
     }
 
     public function update($id_users, Request $request, Sopir $sopir){
-    	$this->validate($request, [
-    		'id_users' => 'required',
-            'role' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            'email' => 'required',
-            'nama' => 'required',
-            'kontak' => 'required',
-            'jenis_kelamin' => 'required',
-            'plat_mobil' => 'required',
-            'merek_mobil' => 'required'
-        ]);
+    	$this->validate($request, $this->validation_rules);
+      //       [
+    		// 'id_users' => 'required',
+      //       'role' => 'required',
+      //       'username' => 'required',
+      //       'password' => 'required',
+      //       'email' => 'required',
+      //       'nama' => 'required',
+      //       'kontak' => 'required',
+      //       'jenis_kelamin' => 'required',
+      //       'plat_mobil' => 'required|unique',
+      //       'merek_mobil' => 'required'
+      //   ]);
 
 
     	// $sopir->users->update([
@@ -111,7 +128,7 @@ class SopirController extends Controller
         $users->id_users = $request->id_users;
         $users->role = $request->role;
         $users->username = $request->username;
-        $users->password = $request->password;
+        $users->password = bcrypt('password');
         $users->email = $request->email;
         $users->nama = $request->nama;
         $users->kontak = $request->kontak;
@@ -122,11 +139,11 @@ class SopirController extends Controller
         $sopir->save();
 
 
+        session()->flash('flash_success', 'Berhasil mengupdate data sopir '.$users->nama);
+        
         return redirect('/sopir');
 
-        // Flash::success('Kota berhasil ditambahkan');
-        // session()->flash('flash_success', 'Berhasil mengupdate data kota '.$kota->nama_kota);
-    	// return redirect()->route('kota.index', [$kota->id_kota] );
+        
      
     }
 
@@ -135,6 +152,8 @@ class SopirController extends Controller
         $users = Users::find($id_users);
     	$sopir->delete();
         $users->delete();
+
+        session()->flash('flash_success', "Berhasil menghapus sopir ".$users->nama);
         return redirect('/sopir');
         
 	}

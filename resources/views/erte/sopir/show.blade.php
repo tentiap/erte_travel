@@ -28,15 +28,38 @@
                     .outset {border-style: outset;}
                 </style> -->
                     <div style="position: absolute; right: 0;">
-                        <a href="/sopir/edit/{{ $sopir->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i>Edit</a>
-                        <a href="/sopir/delete/{{ $sopir->id_users }}" class="btn btn-md" ><i class="fa fa-trash"></i>Delete</a>
-                        <a href="/sopir/index/" class="btn btn-md" ><i class="fa fa-list"></i>List Sopir</a>
-                        <a href="/sopir/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i>Tambah Sopir</a>
-
-
-                        
+                        <a href="/sopir/edit/{{ $sopir->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $sopir->id_users }}"><i class="fa fa-trash"></i> Hapus Sopir</a>
+                        <a href="/sopir/" class="btn btn-md" ><i class="fa fa-list"></i> List Sopir</a>
+                        <a href="/sopir/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Sopir</a>                       
                     </div>
                         </br>
+
+                    <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <b>Anda yakin ingin menghapus data sopir ini ?</b><br><br>
+                                    <a class="btn btn-danger btn-ok"> Hapus</a>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+                        <script type="text/javascript">
+                            //Hapus Data
+                            $(document).ready(function() {
+                                $('#konfirmasi_hapus').on('show.bs.modal', function(e) {
+                                    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+                                });
+                            });
+                    </script>
+
+
+
+
                    
       
                         <div class="form-group">

@@ -155,6 +155,13 @@
           </ol>
       </section>
  -->
+ 
+
+<!--     <div class="box-body">
+      @include('messages')
+    </div> -->
+
+    
     @yield('content')
 
     <!-- <section class="content"> -->

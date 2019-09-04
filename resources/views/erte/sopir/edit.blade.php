@@ -86,6 +86,7 @@
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password" value="{{$users->password}}">
 
+                            
                              @if($errors->has('password'))
                                 <div class="text-danger">
                                     {{ $errors->first('password')}}
