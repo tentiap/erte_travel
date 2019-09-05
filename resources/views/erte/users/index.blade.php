@@ -20,6 +20,9 @@
       <div class="box">
         <div class="box-body">
           <!-- <div class="box"> -->
+
+             
+
               <div class="box-header" align="right">
                 <!-- <a href="/users/create" class="btn btn-primary">Tambah Users</a> -->
                 <div class="btn-group">
@@ -36,7 +39,7 @@
 
                         </ul>
                       </div>
-              </div>
+                </div>
 
             <div class="box-body">
                 <table id="sortdata" class="table table-bordered table-hover table-striped">

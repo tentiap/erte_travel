@@ -19,7 +19,7 @@ class SeatController extends Controller
     
     public function store(Request $request){
     	$this->validate($request, [
-    		'id_seat' => 'required',
+    		'id_seat' => 'required|unique:seat, id_seat',
     		'posisi' => 'required|max:30']);
 
     	Seat::create([

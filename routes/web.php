@@ -57,6 +57,16 @@ Route::get('/sopir/show/{id_users}', 'SopirController@show');
 Route::put('/sopir/update/{id_users}', 'SopirController@update');
 Route::get('/sopir/delete/{id_users}', 'SopirController@delete');
 
+//------------------------------------------------------FEEDER----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/feeder', 'FeederController@index');
+Route::get('/feeder/create', 'FeederController@create');
+Route::post('/feeder/store', 'FeederController@store');
+Route::get('/feeder/edit/{id_users}', 'FeederController@edit');
+Route::get('/feeder/show/{id_users}', 'FeederController@show');
+Route::put('/feeder/update/{id_users}', 'FeederController@update');
+Route::get('/feeder/delete/{id_users}', 'FeederController@delete');
+
+
 
 Route::get('/dashboard', function(){
 	return view('dashboard');

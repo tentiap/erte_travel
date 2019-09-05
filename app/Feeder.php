@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Feeder extends Model
 {
     protected $table = "feeder";
-    protected $fillable = ['id_users', 'id_kota']
+    protected $fillable = ['id_users', 'id_kota'];
 
     public function kota()
     {

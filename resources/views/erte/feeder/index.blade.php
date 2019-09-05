@@ -3,11 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Data Kota
+          Data Sopir
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../kota">Kota</a></li>
+            <li><a href="../users">Users</a></li>
+            <li><a href="../sopir">Sopir</a></li>
             <li class="active">Index</li>
           </ol>
   </section>
@@ -18,38 +19,62 @@
       <div class="box">
         <div class="box-body">
           <!-- <div class="box"> -->
-                @include('messages')
-              <div class="box-header" align="right">
-                <a href="/kota/create" class="btn btn-primary">Tambah Kota</a>
+              @include('messages')
+              <div class="box-header" align="right">                
+                <a href="/sopir/create" class="btn btn-primary">Tambah Sopir</a>
               </div>
+
+              
 
             <div class="box-body">
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
-                        <th>ID</th>
+                        <th>ID Users</th>
                         <th>Nama</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Kontak</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Plat Mobil</th>
+                        <th>Merek Mobil</th>
                         <th>OPSI</th>
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($kota as $k)
+                  @foreach($sopir as $s)
+                      
                             <tr>
-                                <td>{{ $k->id_kota }}</td>
-                                <td>{{ $k->nama_kota }}</td>
+                                <td>{{ $s->id_users }}</td>
+                                <td>{{ $s->users->nama }}</td>          
+                                <td>{{ $s->users->username }}</td>
+                                <td>{{ $s->users->email }}</td>
+                                <td>{{ $s->users->kontak }}</td>
+                                <td>
+                                        @if($s->users->jenis_kelamin == 1)
+                                           Laki-laki
+                                        @else
+                                            Perempuan
+                                        @endif
+
+                                </td>
+                               
+                                <td>{{ $s->plat_mobil}}</td>
+                                <td>{{ $s->merek_mobil}}</td>
+                                
                                 <td>
                                     
-                                    <a href="/kota/edit/{{ $k->id_kota }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <!-- <a href="/kota/delete/{{ $k->id_kota }}" class="btn btn-lg"><i class="fa fa-trash"></i></a> -->
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/kota/delete/{{ $k->id_kota }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/sopir/edit/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $s->id_users }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
-                        <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                                    <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    <b>Anda yakin ingin menghapus data kota ini ?</b><br><br>
+                                                    <b>Anda yakin ingin menghapus data sopir ini ?</b><br><br>
                                                     <a class="btn btn-danger btn-ok"> Hapus</a>
                                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
                                                 </div>
@@ -65,14 +90,13 @@
                                               $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
                                           });
                                       });
-                                    </script>    
-
+                                    </script>
+                      
                   @endforeach
                 </tbody>
               </table>
             </div>
 
-          <!-- </div> -->
         </div>
         <div class="box-footer">
         </div>        
