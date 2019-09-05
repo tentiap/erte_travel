@@ -21,6 +21,7 @@
                 <!-- <a href="/sopir" class="btn btn-primary">List Sopir</a> -->
                    <!--  <br/>
                     <br/> -->
+              <!--    @include('messages') -->
                     
                 <form method="post" action="/sopir/update/{{$users->id_users}}">
 
@@ -30,6 +31,12 @@
                         <div class="form-group">
                             <label>ID Users</label>
                             <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{$users->id_users}}">
+
+                            @if($errors->has('id_users'))
+                                <div class="text-danger">
+                                    {{ $errors->first('id_users')}}
+                                </div>
+                            @endif
 
                           
 
@@ -60,6 +67,12 @@
                                     
                             </select>
 
+                             @if($errors->has('role'))
+                                <div class="text-danger">
+                                    {{ $errors->first('role')}}
+                                </div>
+                            @endif
+
                             
                         </div>
 
@@ -67,12 +80,24 @@
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username" value="{{$users->username}}">
 
+                          @if($errors->has('username'))
+                                <div class="text-danger">
+                                    {{ $errors->first('username')}}
+                                </div>
+                            @endif   
+
                        
                         </div>
 
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" value="{{$users->password}}">
+                            <input type="password" name="password" class="form-control" placeholder="Password" >
+
+                             @if($errors->has('password'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('password')}}
+                                    </div>
+                            @endif
 
                             
                            
@@ -81,6 +106,12 @@
                         <div class="form-group">
                             <label>Email</label>
                             <input type="text" name="email" class="form-control" placeholder="Email" value="{{$users->email}}">
+
+                            @if($errors->has('email'))
+                                <div class="text-danger">
+                                    {{ $errors->first('email')}}
+                                </div>
+                            @endif
 
                             
                         </div>
@@ -99,6 +130,12 @@
                         <div class="form-group">
                             <label>Kontak</label>
                             <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{$users->kontak}}">
+
+                             @if($errors->has('kontak'))
+                                <div class="text-danger">
+                                    {{ $errors->first('kontak')}}
+                                </div>
+                            @endif
 
                              
                         </div>
@@ -125,6 +162,12 @@
                                     <input type="radio" name="jenis_kelamin" value="2" {{ $users->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
                                 </label>
 
+                                @if($errors->has('jenis_kelamin'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('jenis_kelamin')}}
+                                    </div>
+                                @endif
+
                               
                         </div>
 
@@ -135,10 +178,22 @@
                             <label>Plat Mobil</label>
                             <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{$users->sopir->plat_mobil}}">
 
+                            @if($errors->has('plat_mobil'))
+                                <div class="text-danger">
+                                    {{ $errors->first('plat_mobil')}}
+                                </div>
+                            @endif
+
                            
                         <div class="form-group">
                             <label>Merek Mobil</label>
                             <input type="text" name="merek_mobil" class="form-control" placeholder="Merek Mobil" value="{{$users->sopir->merek_mobil}}">
+
+                             @if($errors->has('merek_mobil'))
+                                <div class="text-danger">
+                                    {{ $errors->first('merek_mobil')}}
+                                </div>
+                            @endif
 
                            
                         </div>

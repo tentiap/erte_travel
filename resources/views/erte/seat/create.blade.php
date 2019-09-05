@@ -17,9 +17,9 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="../seat" class="btn btn-primary">Kembali</a>
+                <!-- <a href="../seat" class="btn btn-primary">Kembali</a>
                     <br/>
-                    <br/>
+                    <br/> -->
                     
                 <form method="post" action="/seat/store">
 
@@ -27,25 +27,26 @@
 
                         <div class="form-group">
                             <label>ID</label>
-                            <input type="text" name="id_seat" class="form-control" placeholder="ID seat">
+                            <input type="text" name="id_seat" class="form-control" placeholder="ID seat" value="{{ old('id_seat') }}">  
 
                             @if($errors->has('id_seat'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_seat')}}
                                 </div>
-                            @endif
-
+                            @endif                         
                         </div>
 
                         <div class="form-group">
                             <label>Posisi</label>
-                            <input type="text" name="posisi" class="form-control" placeholder="Posisi">
+                            <input type="text" name="posisi" class="form-control" placeholder="Posisi" value="{{ old('posisi') }}">
 
-                             @if($errors->has('posisi'))
+                            @if($errors->has('posisi'))
                                 <div class="text-danger">
                                     {{ $errors->first('posisi')}}
                                 </div>
                             @endif
+
+                             
                         </div>
 
                         <div class="form-group">
