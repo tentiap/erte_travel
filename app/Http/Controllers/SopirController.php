@@ -8,18 +8,18 @@ use App\Sopir;
 
 class SopirController extends Controller
 {   
-    public $validation_rules = [
-           'id_users' => 'required',
-            'role' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            'email' => 'required',
-            'nama' => 'required',
-            'kontak' => 'required',
-            'jenis_kelamin' => 'required',
-            'plat_mobil' => 'required',
-            'merek_mobil' => 'required', 
-    ];
+    // public $validation_rules = [
+    //        'id_users' => 'required',
+    //         'role' => 'required',
+    //         'username' => 'required',
+    //         'password' => 'required',
+    //         'email' => 'required',
+    //         'nama' => 'required',
+    //         'kontak' => 'required',
+    //         'jenis_kelamin' => 'required',
+    //         'plat_mobil' => 'required|unique:sopir,plat_mobil',
+    //         'merek_mobil' => 'required', 
+    // ];
 
     public function index(){
     	// $users = Users::all();
@@ -36,19 +36,19 @@ class SopirController extends Controller
 	}
 
 	public function store(Request $request){
-    	$this->validate($request, $this->validation_rules);
-      //       [
-    		// 'id_users' => 'required',
-    		// 'role' => 'required',
-    		// 'username' => 'required',
-    		// 'password' => 'required',
-      //       'email' => 'required',
-      //       'nama' => 'required',
-      //       'kontak' => 'required',
-      //       'jenis_kelamin' => 'required',
-      //       'plat_mobil' => 'required|unique',
-      //       'merek_mobil' => 'required',
-      //   ]);
+    	$this->validate($request, 
+            [
+    		'id_users' => 'required',
+    		'role' => 'required',
+    		'username' => 'required',
+    		'password' => 'required',
+            'email' => 'required',
+            'nama' => 'required',
+            'kontak' => 'required',
+            'jenis_kelamin' => 'required',
+            'plat_mobil' => 'required|unique:sopir,plat_mobil',
+            'merek_mobil' => 'required',
+        ]);
 
     	$users = Users::create([
     		'id_users' => $request->id_users,
@@ -92,19 +92,19 @@ class SopirController extends Controller
     }
 
     public function update($id_users, Request $request, Sopir $sopir){
-    	$this->validate($request, $this->validation_rules);
-      //       [
-    		// 'id_users' => 'required',
-      //       'role' => 'required',
-      //       'username' => 'required',
-      //       'password' => 'required',
-      //       'email' => 'required',
-      //       'nama' => 'required',
-      //       'kontak' => 'required',
-      //       'jenis_kelamin' => 'required',
-      //       'plat_mobil' => 'required|unique',
-      //       'merek_mobil' => 'required'
-      //   ]);
+    	$this->validate($request, 
+            [
+    		'id_users' => 'required',
+            'role' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+            'email' => 'required',
+            'nama' => 'required',
+            'kontak' => 'required',
+            'jenis_kelamin' => 'required',
+            'plat_mobil' => 'required',
+            'merek_mobil' => 'required'
+        ]);
 
 
     	// $sopir->users->update([
