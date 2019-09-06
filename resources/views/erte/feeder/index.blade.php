@@ -3,12 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Data Sopir
+          Data Feeder
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="../users">Users</a></li>
-            <li><a href="../sopir">Sopir</a></li>
+            <li><a href="../feeder">Sopir</a></li>
             <li class="active">Index</li>
           </ol>
   </section>
@@ -21,7 +21,7 @@
           <!-- <div class="box"> -->
               @include('messages')
               <div class="box-header" align="right">                
-                <a href="/sopir/create" class="btn btn-primary">Tambah Sopir</a>
+                <a href="/feeder/create" class="btn btn-primary">Tambah Feeder</a>
               </div>
 
               
@@ -31,27 +31,26 @@
                   <thead>
                       <tr>
                         <th>ID Users</th>
-                        <th>Nama</th>
+                        <th>Wilayah</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Kontak</th>
                         <th>Jenis Kelamin</th>
-                        <th>Plat Mobil</th>
-                        <th>Merek Mobil</th>
+                        <th>Wilayah</th>
                         <th>OPSI</th>
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($sopir as $s)
+                  @foreach($feeder as $f)
                       
                             <tr>
-                                <td>{{ $s->id_users }}</td>
-                                <td>{{ $s->users->nama }}</td>          
-                                <td>{{ $s->users->username }}</td>
-                                <td>{{ $s->users->email }}</td>
-                                <td>{{ $s->users->kontak }}</td>
+                                <td>{{ $f->id_users }}</td>
+                                <td>{{ $f->users->nama }}</td>          
+                                <td>{{ $f->users->username }}</td>
+                                <td>{{ $f->users->email }}</td>
+                                <td>{{ $f->users->kontak }}</td>
                                 <td>
-                                        @if($s->users->jenis_kelamin == 1)
+                                        @if($f->users->jenis_kelamin == 1)
                                            Laki-laki
                                         @else
                                             Perempuan
@@ -59,13 +58,13 @@
 
                                 </td>
                                
-                                <td>{{ $s->plat_mobil}}</td>
-                                <td>{{ $s->merek_mobil}}</td>
+                                <td>{{ $f->kota->nama_kota}}</td>
+                                
                                 
                                 <td>
                                     
-                                    <a href="/sopir/edit/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $s->id_users }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/feeder/edit/{{ $f->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/feeder/delete/{{ $f->id_users }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
@@ -74,7 +73,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    <b>Anda yakin ingin menghapus data sopir ini ?</b><br><br>
+                                                    <b>Anda yakin ingin menghapus data feeder ini ?</b><br><br>
                                                     <a class="btn btn-danger btn-ok"> Hapus</a>
                                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
                                                 </div>

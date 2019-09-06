@@ -33,8 +33,8 @@
                         <ul class="dropdown-menu">
                           <li><a href="/operator/create">Operator</a></li>
                           <li><a href="/sopir/create">Sopir</a></li>
-                          <li><a href="/operator/create">Feeder</a></li>
-                          <li><a href="/sopir/create">Pemesan</a></li>
+                          <li><a href="/feeder/create">Feeder</a></li>
+                          <li><a href="/pemesan/create">Pemesan</a></li>
 
 
                         </ul>

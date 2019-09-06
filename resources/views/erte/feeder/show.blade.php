@@ -5,13 +5,13 @@
 @section('breadcrumb')
     <section class="content-header">
       <h1>
-          Detail Data Sopir
+          Detail Data Feeder
       </h1>
     
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="/users">Users</a></li>
-            <li><a href="/sopir">Sopir</a></li>
+            <li><a href="/feeder">Feeder</a></li>
             <li class="active">Detail</li>
           </ol>
 
@@ -28,10 +28,10 @@
                     .outset {border-style: outset;}
                 </style> -->
                     <div style="position: absolute; right: 0;">
-                        <a href="/sopir/edit/{{ $sopir->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
-                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $sopir->id_users }}"><i class="fa fa-trash"></i> Hapus Sopir</a>
-                        <a href="/sopir/" class="btn btn-md" ><i class="fa fa-list"></i> List Sopir</a>
-                        <a href="/sopir/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Sopir</a>                       
+                        <a href="/feeder/edit/{{ $feeder->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/feeder/delete/{{ $feeder->id_users }}"><i class="fa fa-trash"></i> Hapus Feeder</a>
+                        <a href="/feeder/" class="btn btn-md" ><i class="fa fa-list"></i> List Feeder</a>
+                        <a href="/feeder/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Feeder</a>                       
                     </div>
                         </br>
 
@@ -39,7 +39,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <b>Anda yakin ingin menghapus data sopir ini ?</b><br><br>
+                                    <b>Anda yakin ingin menghapus data feeder ini ?</b><br><br>
                                     <a class="btn btn-danger btn-ok"> Hapus</a>
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
                                 </div>
@@ -71,7 +71,7 @@
                         <div class="form-group">
                             <label>Role</label>
 
-                        <input type="text" name="role" class="form-control"  placeholder="Role" value="Sopir" readonly>
+                        <input type="text" name="role" class="form-control"  placeholder="Role" value="Feeder" readonly>
                                                         
                                         
                                                
@@ -124,17 +124,13 @@
                       </div>
 
                         <div class="form-group">
-                            <label>Plat Mobil</label>
-                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{$users->sopir->plat_mobil}}" readonly>
+                            <label>Wilayah</label>
+                            <input type="text" name="kota" class="form-control" placeholder="Wilayah" value="{{$users->feeder->kota->nama_kota}}" readonly>
 
                              
                         </div>
 
-                        <div class="form-group">
-                            <label>Merek Mobil</label>
-                            <input type="text" name="merek_mobil" class="form-control" placeholder="Merek Mobil" value="{{$users->sopir->merek_mobil}}" readonly>
-
-                        </div>
+                       
 
 
             </div>

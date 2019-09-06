@@ -3,13 +3,13 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Data Feeder
+          Edit Data Feeder
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="/users">Users</a></li>
             <li><a href="/feeder">Feeder</a></li>
-            <li class="active">Create</li>
+            <li class="active">Edit</li>
           </ol>
   </section>
  @endsection
@@ -18,34 +18,38 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
+               
                     
-                <form method="post" action="/feeder/store">
+                <form method="post" action="/feeder/update/{{$users->id_users}}">
 
                         {{ csrf_field() }}
+                        {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{$users->id_users}}">
 
-                             @if($errors->has('id_users'))
+                            @if($errors->has('id_users'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_users')}}
                                 </div>
                             @endif
 
+                          
+
                         </div>
 
                         <div class="form-group">
                             <label>Role</label>
-
-
+                            
                             <select class="form-control" name="role">
-                                    
-                                    <option name="role" value="3">Feeder</option> 
+                                    <option name="role" value="{{$users->role}}">Feeder
+                                    </option>
+                                                               
                                     
                             </select>
 
-                            @if($errors->has('role'))
+                             @if($errors->has('role'))
                                 <div class="text-danger">
                                     {{ $errors->first('role')}}
                                 </div>
@@ -56,34 +60,36 @@
 
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
+                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{$users->username}}">
 
-                             @if($errors->has('username'))
+                          @if($errors->has('username'))
                                 <div class="text-danger">
                                     {{ $errors->first('username')}}
                                 </div>
-                            @endif
+                            @endif   
 
-                            
+                       
                         </div>
 
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" value="{{ old('password') }}">
+                            <input type="password" name="password" class="form-control" placeholder="Password" >
 
                              @if($errors->has('password'))
-                                <div class="text-danger">
-                                    {{ $errors->first('password')}}
-                                </div>
+                                    <div class="text-danger">
+                                        {{ $errors->first('password')}}
+                                    </div>
                             @endif
 
+                            
+                           
                         </div>
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{$users->email}}">
 
-                             @if($errors->has('email'))
+                            @if($errors->has('email'))
                                 <div class="text-danger">
                                     {{ $errors->first('email')}}
                                 </div>
@@ -94,22 +100,20 @@
 
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ old('nama') }}">
+                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{$users->nama}}">
 
-                            @if($errors->has('nama'))
+                             @if($errors->has('nama'))
                                 <div class="text-danger">
                                     {{ $errors->first('nama')}}
                                 </div>
                             @endif
-
-                             
                         </div>
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="number" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{$users->kontak}}">
 
-                            @if($errors->has('kontak'))
+                             @if($errors->has('kontak'))
                                 <div class="text-danger">
                                     {{ $errors->first('kontak')}}
                                 </div>
@@ -122,35 +126,33 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="1" {{ $users->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="2" {{ $users->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
                                 </label>
 
-                            @if($errors->has('jenis_kelamin'))
-                                <div class="text-danger">
-                                    {{ $errors->first('jenis_kelamin')}}
-                                </div>
-                            @endif
+                                @if($errors->has('jenis_kelamin'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('jenis_kelamin')}}
+                                    </div>
+                                @endif
 
+                              
                         </div>
-
-
-
 
                         <div class="form-group">
                             <label>Wilayah</label>
-
-
+                            
                             <select class="form-control" name="id_kota">
                                     @foreach($kota as $k)
-                                        <option name="id_kota" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
-                                    @endforeach
-                                    
+                                        <option name="id_kota" value="{{$k->id_kota}}">
+                                            {{$k->nama_kota}}
+                                        </option>
+                                    @endforeach                
                             </select>
 
-                            @if($errors->has('id_kota'))
+                             @if($errors->has('id_kota'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_kota')}}
                                 </div>
@@ -160,16 +162,11 @@
                         </div>
 
                         
-
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                        </div>    
+                             
                         </div>
-
-
-                        </div>
-                        
-
-                        
 
                         
                 </form>
