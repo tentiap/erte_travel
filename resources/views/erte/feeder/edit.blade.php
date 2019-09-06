@@ -145,14 +145,14 @@
                         <div class="form-group">
                             <label>Wilayah</label>
 
-
                             <select class="form-control" name="id_kota">
-                                    
-                                        <option name="id_kota" value="{{$feeder->id_kota}}">{{$feeder->kota->nama_kota}}</option> 
-                                    
+                                    @foreach($kota as $k)
+                                        <!-- <option name="id_kota" value="{{$feeder->kota->nama_kota}}">{{$k->nama_kota}}</option>  -->
+                                        <option value="{{ $k->id_kota }}" {{$feeder->id_kota == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
+                                    @endforeach
                                     
                             </select>
-
+<!--  -->
                             @if($errors->has('id_kota'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_kota')}}

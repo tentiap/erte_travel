@@ -59,7 +59,8 @@ class FeederController extends Controller
 
         $users = Users::find($id_users);
     	$feeder = Feeder::find($id_users);
-    	$kota = Kota::find($id_users);
+    	// $kota = Kota::find($id_users);
+        $kota = Kota::all();
     			    	
     	
     	return view('erte.feeder.edit', ['users' => $users, 'feeder' => $feeder, 'kota' => $kota]);
@@ -93,7 +94,7 @@ class FeederController extends Controller
         ]);
 
 
-    	
+    	// $kota = Feeder::with('kota')->get();
 
         $users = Users::find($id_users);
         $feeder = Feeder::find($id_users);

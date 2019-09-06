@@ -48,6 +48,8 @@
 
                             <select class="form-control" name="role">
                                     <option name="role" value="{{$users->role}}">Sopir
+
+                                        
                                         <!-- @if($users->role == 1)
                                            Operator
                                         @elseif($users->role == 2)

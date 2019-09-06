@@ -31,7 +31,7 @@
                   <thead>
                       <tr>
                         <th>ID Users</th>
-                        <th>Wilayah</th>
+                        <th>Nama</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Kontak</th>
