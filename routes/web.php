@@ -66,6 +66,15 @@ Route::get('/feeder/show/{id_users}', 'FeederController@show');
 Route::put('/feeder/update/{id_users}', 'FeederController@update');
 Route::get('/feeder/delete/{id_users}', 'FeederController@delete');
 
+//------------------------------------------------------PEMESAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/pemesan', 'PemesanController@index');
+Route::get('/pemesan/create', 'PemesanController@create');
+Route::post('/pemesan/store', 'PemesanController@store');
+Route::get('/pemesan/edit/{id_users}', 'PemesanController@edit');
+Route::get('/pemesan/show/{id_users}', 'PemesanController@show');
+Route::put('/pemesan/update/{id_users}', 'PemesanController@update');
+Route::get('/pemesan/delete/{id_users}', 'PemesanController@delete');
+
 
 
 Route::get('/dashboard', function(){

@@ -8,6 +8,8 @@ class Pemesan extends Model
 {
     protected $table = "pemesan";
     protected $fillable = ['id_users', 'alamat'];
+    protected $primaryKey = "id_users";
+    public $incrementing = false;
 
     public function users()
     {
