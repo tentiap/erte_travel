@@ -75,6 +75,15 @@ Route::get('/pemesan/show/{id_users}', 'PemesanController@show');
 Route::put('/pemesan/update/{id_users}', 'PemesanController@update');
 Route::get('/pemesan/delete/{id_users}', 'PemesanController@delete');
 
+//------------------------------------------------------OPERATOR----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/operator', 'OperatorController@index');
+Route::get('/operator/create', 'OperatorController@create');
+Route::post('/operator/store', 'OperatorController@store');
+Route::get('/operator/edit/{id_users}', 'OperatorController@edit');
+Route::get('/operator/show/{id_users}', 'OperatorController@show');
+Route::put('/operator/update/{id_users}', 'OperatorController@update');
+Route::get('/operator/delete/{id_users}', 'OperatorController@delete');
+
 
 
 Route::get('/dashboard', function(){

@@ -3,12 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Data Feeder
+          Data Operator
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="../users">Users</a></li>
-            <li><a href="../feeder">Feeder</a></li>
+            <li><a href="../operator">Operator</a></li>
             <li class="active">Index</li>
           </ol>
   </section>
@@ -21,7 +21,7 @@
           <!-- <div class="box"> -->
               @include('messages')
               <div class="box-header" align="right">                
-                <a href="/feeder/create" class="btn btn-primary">Tambah Feeder</a>
+                <a href="/operator/create" class="btn btn-primary">Tambah Operator</a>
               </div>
 
               
@@ -41,16 +41,16 @@
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($feeder as $f)
+                  @foreach($operator as $o)
                       
                             <tr>
-                                <td>{{ $f->id_users }}</td>
-                                <td>{{ $f->users->nama }}</td>          
-                                <td>{{ $f->users->username }}</td>
-                                <td>{{ $f->users->email }}</td>
-                                <td>{{ $f->users->kontak }}</td>
+                                <td>{{ $o->id_users }}</td>
+                                <td>{{ $o->users->nama }}</td>          
+                                <td>{{ $o->users->username }}</td>
+                                <td>{{ $o->users->email }}</td>
+                                <td>{{ $o->users->kontak }}</td>
                                 <td>
-                                        @if($f->users->jenis_kelamin == 1)
+                                        @if($o->users->jenis_kelamin == 1)
                                            Laki-laki
                                         @else
                                             Perempuan
@@ -58,13 +58,13 @@
 
                                 </td>
                                
-                                <td>{{ $f->kota->nama_kota}}</td>
+                                <td>{{ $o->kota->nama_kota}}</td>
                                 
                                 
                                 <td>
                                     
-                                    <a href="/feeder/edit/{{ $f->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/feeder/delete/{{ $f->id_users }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/operator/edit/{{ $o->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/operator/delete/{{ $o->id_users }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
@@ -73,7 +73,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    <b>Anda yakin ingin menghapus data feeder ini ?</b><br><br>
+                                                    <b>Anda yakin ingin menghapus data operator ini ?</b><br><br>
                                                     <a class="btn btn-danger btn-ok"> Hapus</a>
                                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
                                                 </div>

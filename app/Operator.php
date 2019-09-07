@@ -8,6 +8,8 @@ class Operator extends Model
 {
     protected $table = "operator";
     protected $fillable = ['id_users', 'id_kota'];
+    protected $primaryKey = "id_users";
+    public $incrementing = false;
 
     public function users()
     {
