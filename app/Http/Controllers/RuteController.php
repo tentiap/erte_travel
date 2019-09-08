@@ -43,12 +43,18 @@ class RuteController extends Controller
     	// 	'harga' => $request->harga
     	// ]);
 
-        Rute::create([
+        $rute = Rute::create([
             'id_rute' => $request->id_rute,
             'id_kota_asal' => $request->id_kota_asal,
             'id_kota_tujuan' => $request->id_kota_tujuan,
             'harga' => $request->harga
         ]);
+
+        $rute->kota_asal()->create($request->only('id_kota_asal'));
+
+        $rute->kota_tujuan()->create($request->only('id_kota_tujuan'));
+
+
 
         // $rute = new Rute();
         // $rute->id_rute = $request->id_rute;
@@ -74,10 +80,11 @@ class RuteController extends Controller
     	// $kota_asal = Kota::all()->pluck('nama_kota');
     	// $kota_tujuan = Kota::all()->pluck('nama_kota');
 
-        $kota_asal = Kota::find($id_kota);
-        $kota_tujuan = Kota::find($id_kota);
+        // $kota_asal = Kota::find($id_kota);
+        // $kota_tujuan = Kota::find($id_kota);
 
-		    	
+		$kota_asal = Kota::all();
+        $kota_tujuan = Kota::all();    	
     	
     	return view('erte.rute.edit', ['rute' => $rute, 'kota_asal' => $kota_asal, 'kota_tujuan' => $kota_tujuan]);
 

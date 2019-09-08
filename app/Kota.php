@@ -11,7 +11,7 @@ class Kota extends Model
     
     //protected $primaryKey = 'id_kota';
     //protected $guarded = [];
-    protected $fillable = ['id_kota', 'nama_kota'];
+    protected $fillable = ['id_kota', 'nama_kota' ];
     public $incrementing = false;
 
      public function rute()

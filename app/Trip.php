@@ -13,11 +13,13 @@ class Trip extends Model
 	'id_users_feeder',
 	'id_rute',
 	'tanggal',
-	'jam']
+	'jam'];
+    protected $primaryKey = "id_trip";
+    public $incrementing = false;
 
     public function sopir()
     {
-        return $this->belongsTo(Sopir::class, 'id_users');
+        return $this->belongsTo(Sopir::class, 'id_users_sopir');
     }
 
     public function rute()
@@ -27,12 +29,12 @@ class Trip extends Model
 
     public function feeder()
     {
-        return $this->belongsTo(Feeder::class, 'id_users');
+        return $this->belongsTo(Feeder::class, 'id_users_feeder');
     }
 
     public function operator()
     {
-        return $this->belongsTo(Operator::class, 'id_users');
+        return $this->belongsTo(Operator::class, 'id_users_operator');
     }
 
     public function pesanan()

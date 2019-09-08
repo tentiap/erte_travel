@@ -84,6 +84,14 @@ Route::get('/operator/show/{id_users}', 'OperatorController@show');
 Route::put('/operator/update/{id_users}', 'OperatorController@update');
 Route::get('/operator/delete/{id_users}', 'OperatorController@delete');
 
+//------------------------------------------------------USERS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('trip', 'TripController@index');
+Route::get('/trip/create', 'TripController@create');
+Route::post('/trip/store', 'TripController@store');
+Route::get('/trip/edit/{id_trip}', 'TripController@edit');
+Route::put('/trip/update/{id_trip}', 'TripController@update');
+Route::get('/trip/delete/{id_trip}', 'TripController@delete');
+Route::get('/trip/show/{id_trip}', 'TripController@show');
 
 
 Route::get('/dashboard', function(){
