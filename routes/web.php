@@ -84,7 +84,7 @@ Route::get('/operator/show/{id_users}', 'OperatorController@show');
 Route::put('/operator/update/{id_users}', 'OperatorController@update');
 Route::get('/operator/delete/{id_users}', 'OperatorController@delete');
 
-//------------------------------------------------------USERS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------TRIP----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('trip', 'TripController@index');
 Route::get('/trip/create', 'TripController@create');
 Route::post('/trip/store', 'TripController@store');
@@ -92,6 +92,15 @@ Route::get('/trip/edit/{id_trip}', 'TripController@edit');
 Route::put('/trip/update/{id_trip}', 'TripController@update');
 Route::get('/trip/delete/{id_trip}', 'TripController@delete');
 Route::get('/trip/show/{id_trip}', 'TripController@show');
+
+//------------------------------------------------------PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('pesanan', 'PesananController@index');
+Route::get('/pesanan/create', 'PesananController@create');
+Route::post('/pesanan/store', 'PesananController@store');
+Route::get('/pesanan/edit/{id_trip}', 'PesananController@edit');
+Route::put('/pesanan/update/{id_trip}', 'PesananController@update');
+Route::get('/pesanan/delete/{id_trip}', 'PesananController@delete');
+Route::get('/pesanan/show/{id_trip}', 'PesananController@show');
 
 
 Route::get('/dashboard', function(){
