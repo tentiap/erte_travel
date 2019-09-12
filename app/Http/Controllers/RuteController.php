@@ -50,9 +50,9 @@ class RuteController extends Controller
             'harga' => $request->harga
         ]);
 
-        $rute->kota_asal()->create($request->only('id_kota_asal'));
+        // $rute->kota_asal()->create($request->only('id_kota_asal'));
 
-        $rute->kota_tujuan()->create($request->only('id_kota_tujuan'));
+        // $rute->kota_tujuan()->create($request->only('id_kota_tujuan'));
 
 
 

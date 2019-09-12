@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Trip;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,8 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/pesanan/date-time/{id_rute}', function($id){
+	return response()->json(Trip::where('id_rute',$id)->get());
 });

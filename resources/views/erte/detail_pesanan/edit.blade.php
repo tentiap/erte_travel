@@ -18,7 +18,7 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/pesanan/update/{{ $pesanan->id_trip}}/{{$pesanan->id_users_pemesan}}">
+                <form method="post" action="/pesanan/update/{{$pesanan->id_trip, $pesanan->id_users_pemesan}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}

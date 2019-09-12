@@ -19,34 +19,30 @@
             <div class="box-body">
                     
                 <form method="post" action="/pesanan/store">
+
                         {{ csrf_field() }}
+
                         <div class="form-group">
-                            <label>Rute</label>
-                            <select class="form-control" onchange="getDateTime()" id="id_rute" name="id_rute">
+                            <label>ID Trip</label>
+                            <select class="form-control" name="id_trip">
                                     @foreach($trip as $t)
-                                        <option value="{{$t->id_rute}}">{{$t->rute->kota_asal->nama_kota}} - {{$t->rute->kota_tujuan->nama_kota}} 
-                                         </option> 
+                                        <option name="id_trip" value="{{$t->id_trip}}">{{$t->rute->kota_asal->nama_kota}} - {{$t->rute->kota_tujuan->nama_kota}} -
+                                        {{$t->tanggal}} - {{$t->jam}} </option> 
                                     @endforeach
+
                                     @if($errors->has('id_trip'))
-                                        <div class="text-danger">
-                                            {{ $errors->first('id_trip')}}
-                                        </div>
-                                    @endif 
-                            </select>
-                        </div>
-                        <div class="form-group" id="form_date-time">
-                            <label>Tanggal dan Jam</label>
-                            <select class="form-control" onchange="" id="id_date-time" name="bangke">
+                                <div class="text-danger">
+                                    {{ $errors->first('id_trip')}}
+                                </div>
+                            @endif
                                     
-                                    @if($errors->has('id_trip'))
-                                        <div class="text-danger">
-                                            {{ $errors->first('id_trip')}}
-                                        </div>
-                                    @endif 
                             </select>
+
+                            
+
                         </div>
 
-                       <!--  <div class="form-group">
+                        <div class="form-group">
                             <label>Pemesan</label>
 
                              <select class="form-control" name="id_users_pemesan">
@@ -69,9 +65,9 @@
 
                         <div class="form-group">
                             <label>Tanggal Pesan</label>
-                            -->
+                           
                              <!--    <input type="hidden" name="tanggal_pesan" class="form-control" value="{{date('Y-m-d H:i:s')}}"> -->
-                          <!--   <input type="date" name="tanggal_pesan" class="form-control" placeholder="Tanggal Pesan" value="{{ old('tanggal_pesan') }}">
+                            <input type="date" name="tanggal_pesan" class="form-control" placeholder="Tanggal Pesan" value="{{ old('tanggal_pesan') }}">
 
 
                              @if($errors->has('tanggal_pesan'))
@@ -81,7 +77,7 @@
                             @endif
 
                         </div>
- -->
+
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
                         </div
@@ -104,37 +100,4 @@
     </section>
 
     
-@endsection
-
-@section('cs')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#form_date-time").hide()
-        });
-        
-        function getDateTime(){
-                let ayam = $("#id_rute option:selected").val()
-                
-                $.ajax({
-                            url: "/api/pesanan/date-time/" + ayam,
-                            type: "GET",
-                            contentType: "application/json;charset=utf-8",
-                            dataType: "json",
-
-                            success: function (result) {
-                                $("#form_date-time").show()
-                                $('#id_date-time').empty()
-                                $.each(result, function (i, item) {
-                                    $('#id_date-time').append($('<option>', { 
-                                        value: item.tanggal+"%"+item.jam,
-                                        text : "tanggal: "+item.tanggal+" jam: "+item.jam 
-                                    }));
-                                });     
-                            },
-                            error: function (errormessage) {
-                                alert(errormessage.responseText);
-                            }
-                        });
-            }
-    </script>
 @endsection

@@ -97,10 +97,20 @@ Route::get('/trip/show/{id_trip}', 'TripController@show');
 Route::get('pesanan', 'PesananController@index');
 Route::get('/pesanan/create', 'PesananController@create');
 Route::post('/pesanan/store', 'PesananController@store');
-Route::get('/pesanan/edit/{id_trip}', 'PesananController@edit');
-Route::put('/pesanan/update/{id_trip}', 'PesananController@update');
-Route::get('/pesanan/delete/{id_trip}', 'PesananController@delete');
-Route::get('/pesanan/show/{id_trip}', 'PesananController@show');
+Route::get('/pesanan/edit/{id_trip}/{id_users_pemesan}', 'PesananController@edit');
+Route::put('/pesanan/update/{id_trip}/{id_users_pemesan}', 'PesananController@update');
+Route::get('/pesanan/delete/{id_trip}/{id_users_pemesan}', 'PesananController@delete');
+Route::get('/pesanan/show/{id_trip}/{id_users_pemesan}', 'PesananController@show');
+
+//------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('detail_pesanan', 'DetailPesananController@index');
+Route::get('/detail_pesanan/create', 'DetailPesananController@create');
+Route::post('/detail_pesanan/store', 'DetailPesananController@store');
+Route::get('/detail_pesanan/edit/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@edit');
+Route::put('/detail_pesanan/update/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@update');
+Route::get('/detail_pesanan/delete/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@delete');
+Route::get('/detail_pesanan/show/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@show');
+
 
 
 Route::get('/dashboard', function(){

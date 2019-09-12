@@ -148,18 +148,9 @@
 
                         </div>
 
-
-
-                        
-
-                        
-                            
-
-                            
-
-                        
-
-                        
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Simpan">
+                        </div>                 
                 </form>
             </div>
         </div>

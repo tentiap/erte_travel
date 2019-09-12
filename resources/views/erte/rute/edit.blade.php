@@ -40,10 +40,10 @@
                                 <select class="form-control" name="id_kota_asal" >
                             
                                     <!-- <option name="id_kota_asal">{{$rute->kota_asal->nama_kota}}</option> -->
-                                 @foreach($kota_asal as $k)
+                                @foreach($kota_asal as $k)
                                         
-                                        <option value="{{ $k->id_kota }}" {{$rute->id_kota_asal == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
-                                    @endforeach
+                                        <option value="{{ $k->id_kota }}" {{($rute->id_kota_asal == $k->id_kota)  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
+                                @endforeach
                                    
                                 </select>
 
@@ -56,8 +56,8 @@
                                 <select class="form-control" name="id_kota_tujuan">
                                    
                                     <!-- <option name="id_kota_tujuan" >{{$rute->kota_tujuan->nama_kota}}</option>  -->
-
-                                <option value="{{ $k->id_kota }}" {{$rute->id_kota_tujuan == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
+                                    @foreach($kota_asal as $k)
+                                        <option value="{{ $k->id_kota }}" {{$rute->id_kota_tujuan == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
                                     @endforeach
                                    
                             </select>

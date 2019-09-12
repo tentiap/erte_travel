@@ -3,13 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CompositeKeyTrait;
 
 class Pesanan extends Model
 {
+    use CompositeKeyTrait;
     protected $table = "pesanan";
     protected $fillable = ['id_trip', 'id_users_pemesan', 'tanggal_pesan'];
-    protected $primaryKey = "id_users";
-    public $incrementing = false;
+    protected $primaryKey = ["id_trip", "id_users_pemesan"];
+    // public $incrementing = false;
 
     public function detail_pesanan()
     {

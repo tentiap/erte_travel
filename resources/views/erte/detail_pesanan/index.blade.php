@@ -63,8 +63,8 @@
                                     <a href="/pesanan/show/{{ $p->id_trip, $p->id_users_pemesan }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
 
 
-                                    <a href="/pesanan/edit/{{ $p->id_trip}}/{{$p->id_users_pemesan}}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $p->id_trip}}/{{$p->id_users_pemesan}}"><i class="fa fa-trash"></i></a>
+                                    <a href="/pesanan/edit/{{ $p->id_trip, $p->id_users_pemesan }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $p->id_trip, $p->id_users_pemesan }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
