@@ -69,9 +69,6 @@ class PesananController extends Controller
             $pesanan->save();
 
             session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
-
-        
-
          return redirect('/pesanan');
     }
 

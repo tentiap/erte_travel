@@ -14,12 +14,21 @@ class OperatorController extends Controller
         return view('erte.operator.index', ['operator' => $operator]);
     }
 
-    public function create(){
-    	$operator = Operator::all();
-    	$users = Users::all();
-    	$kota = Kota::all();
-    	 return view('erte.operator.create', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
-	}
+ //    public function create(){
+ //    	$operator = Operator::all();
+ //    	$users = Users::all();
+ //    	$kota = Kota::all();
+ //    	 return view('erte.operator.create', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
+	// }
+
+    public function register(){
+        $operator = Operator::all();
+        $users = Users::all();
+        $kota = Kota::all();
+         return view('erte.operator.register', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
+    }
+
+
 
 	public function store(Request $request){
     	$this->validate($request, 

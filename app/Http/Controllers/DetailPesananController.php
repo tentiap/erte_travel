@@ -16,6 +16,7 @@ class DetailPesananController extends Controller
     	$detail_pesanan = Detail_Pesanan::all();
     	$pesanan = Pesanan::all();
        	$users = Users::all();
+        $trip = Trip::all();
 
         return view('erte.detail_pesanan.index', ['detail_pesanan' => $detail_pesanan,'pesanan' => $pesanan, 'trip' => $trip,  'users' => $users]);
     }
@@ -65,12 +66,13 @@ class DetailPesananController extends Controller
     }
 
     public function edit($id_trip, $id_users_pemesan, $id_seat){
-    	$detail_pesanan = Detail_Pesanan::find($id_trip, $id_users_pemesan, $id_seat);
+    	$detail_pesanan = Detail_Pesanan::where(['id_trip' => $id_trip, 'id_users_pemesan' => $id_users_pemesan, 'id_seat' => $id_seat])->first();
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
     	$pemesan = Pemesan::all();
+        $users = Users::all();
         
-        return view('erte.pesanan.edit', ['detail_pesanan' => $detail_pesanan,'pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan]);
+        return view('erte.pesanan.edit', ['detail_pesanan' => $detail_pesanan,'pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'users' => $users]);
     }
 
     public function update($id_trip, $id_users_pemesan, $id_seat, Request $request){
@@ -84,7 +86,7 @@ class DetailPesananController extends Controller
             'detail_tujuan' => 'required'         
         ]);
 
-            $detail_pesanan = Detail_Pesanan::find($id_trip, $id_users_pemesan, $id_seat);
+            $detail_pesanan = Detail_Pesanan::where(['id_trip' => $id_trip, 'id_users_pemesan' => $id_users_pemesan, 'id_seat' => $id_seat])->first();
             $detail_pesanan->id_trip = $request->id_trip;
             $detail_pesanan->id_users_pemesan = $request->id_users_pemesan;
             $detail_pesanan->id_seat = $request->id_seat;
@@ -99,13 +101,11 @@ class DetailPesananController extends Controller
 
             session()->flash('flash_success', 'Berhasil mengupdate detail pesanan');
 
-        
-
          return redirect('/detail_pesanan');
     }
 
  	public function delete($id_trip, $id_users_pemesan, $id_seat){
-        $detail_pesanan = Detail_Pesanan::find($id_trip, $id_users_pemesan, $id_seat);
+        $detail_pesanan = Detail_Pesanan::where(['id_trip' => $id_trip, 'id_users_pemesan' => $id_users_pemesan, 'id_seat' => $id_seat])->first();
         $detail_pesanan->delete();
 
         session()->flash('flash_success', "Berhasil menghapus detail pesanan");

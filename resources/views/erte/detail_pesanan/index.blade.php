@@ -3,11 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Data Pesanan
+          Detail Pesanan
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="/pesanan">Pesanan</a></li>
+            <li><a href="/detail_pesanan">Detail Pesanan</a></li>
             <li class="active">Index</li>
           </ol>
   </section>
@@ -20,7 +21,7 @@
           <!-- <div class="box"> -->
               @include('messages')
               <div class="box-header" align="right">                
-                <a href="/pesanan/create" class="btn btn-primary">Tambah Pesanan</a>
+                <a href="/detail_pesanan/create" class="btn btn-primary">Tambah Detail Pesanan</a>
               </div>
 
               
@@ -29,42 +30,39 @@
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
-                        <th>Pemesan</th>
-                        <th>Waktu Keberangkatan</th>
-                        <th>Kota Asal</th>
-                        <th>Kota Tujuan</th>
-                        
-                        <th>Tanggal Pesan</th>
-
-                       
-                        <!-- <th>Username</th>
-                        <th>Email</th>
-                        <th>Kontak</th>
+                        <th>ID Trip</th>
+                        <th>ID Users Pemesan</th>
+                        <th>ID Seat</th>
+                        <th>Nama Penumpang</th>
                         <th>Jenis Kelamin</th>
-                        <th>Wilayah</th> -->
+                        <th>Detail Asal</th>
+                        <th>Detail Tujuan</th>
+                        <th>Biaya Tambahan</th>
+                        <th>Status</th>
+                        <th>Nomor HP</th>              
                         <th>OPSI</th>
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($pesanan as $p)
+                  @foreach($detail_pesanan as $d)
                       
                             <tr>
-                                <td>{{ $p->pemesan->users->nama }}</td>
-                                <td>{{ $p->trip->tanggal  }} - {{$p->trip->jam }}</td>
-                                <td>{{ $p->trip->rute->kota_asal->nama_kota }}</td>
-                                <td>{{ $p->trip->rute->kota_tujuan->nama_kota }}</td>
-
-                                <!-- <td>{{ $p->id_trip }}</td>         -->  
-                                <td>{{ $p->tanggal_pesan }}</td>          
-                                                                     
+                                <td>{{ $d->id_trip }}</td>
+                                <td>{{ $d->id_users_pemesan}}</td>
+                                <td>{{ $d->id_seat}}</td>
+                                <td>{{ $d->nama_penumpang }}</td>
+                                <td>{{ $d->jenis_kelamin }}</td>
+                                <td>{{ $d->detail_asal }}</td>
+                                <td>{{ $d->detail_tujuan }}</td>
+                                <td>{{ $d->biaya_tambahan }}</td>
+                                <td>{{ $d->status }}</td>
+                                <td>{{ $d->no_hp }}</td>                         
                                 
                                 <td>
-                                    
-                                    <a href="/pesanan/show/{{ $p->id_trip, $p->id_users_pemesan }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                    <a href="/detail_pesanan/show/{{ $d->id_trip, $d->id_users_pemesan, $d->id_seat }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                    <a href="/detail_pesanan/edit/{{ $d->id_trip}}/{{$d->id_users_pemesan}}/{{$d->id_seat}}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
 
-
-                                    <a href="/pesanan/edit/{{ $p->id_trip, $p->id_users_pemesan }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $p->id_trip, $p->id_users_pemesan }}"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/detail_pesanan/delete/{{ $d->id_trip}}/{{$d->id_users_pemesan}}/{{$d->id_seat}}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
@@ -73,7 +71,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    <b>Anda yakin ingin menghapus data pesanan ini ?</b><br><br>
+                                                    <b>Anda yakin ingin menghapus detail pesanan ini ?</b><br><br>
                                                     <a class="btn btn-danger btn-ok"> Hapus</a>
                                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
                                                 </div>

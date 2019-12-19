@@ -124,8 +124,7 @@
                         <div class="form-group">
                             <label>Detail Asal</label>
                             <br>
-                            <!-- <input type="text" name="detail_asal">
-                                <textarea rows="4" cols="50" name="detail_asal" value="{{old('detail_asal')}}"></textarea> -->
+                            <input type="text" name="detail_asal" class="form-control" placeholder="Detail Asal" value="{{ old('detail_asal') }}">
                             
 
                              @if($errors->has('detail_asal'))
@@ -139,7 +138,7 @@
                         <div class="form-group">
                             <label>Detail Tujuan</label>
 
-                            <!-- <textarea rows="4" cols="50" name="detail_tujuan" value="{{old('detail_tujuan')}}"></textarea> -->
+                            <input type="text" name="detail_tujuan" class="form-control" placeholder="Detail Tujuan" value="{{ old('detail_tujuan') }}">
 
                              @if($errors->has('detail_tujuan'))
                                 <div class="text-danger">

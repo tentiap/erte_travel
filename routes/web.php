@@ -11,9 +11,22 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
-    return view('laravel');
-});
+    return view('dashboard');
+})->middleware('auth');
+
+// Route::get('/home',function(){
+// 	return view('dashboard');
+// })->name('home');
+
+// Route::get('/home',function(){
+// 	return view('home');
+
+// Route::get('/dashboard', function(){
+// 	return view('dashboard');
+// });
 
 //------------------------------------------------------KOTA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/kota', 'KotaController@index');
@@ -78,6 +91,7 @@ Route::get('/pemesan/delete/{id_users}', 'PemesanController@delete');
 //------------------------------------------------------OPERATOR----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/operator', 'OperatorController@index');
 Route::get('/operator/create', 'OperatorController@create');
+Route::get('/operator/register', 'OperatorController@register');
 Route::post('/operator/store', 'OperatorController@store');
 Route::get('/operator/edit/{id_users}', 'OperatorController@edit');
 Route::get('/operator/show/{id_users}', 'OperatorController@show');
@@ -107,12 +121,10 @@ Route::get('detail_pesanan', 'DetailPesananController@index');
 Route::get('/detail_pesanan/create', 'DetailPesananController@create');
 Route::post('/detail_pesanan/store', 'DetailPesananController@store');
 Route::get('/detail_pesanan/edit/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@edit');
-Route::put('/detail_pesanan/update/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@update');
-Route::get('/detail_pesanan/delete/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@delete');
-Route::get('/detail_pesanan/show/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@show');
+Route::put('/detail_pesanan/update/{id_trip}/{id_users_pemesan}/{id_seat}', 'DetailPesananController@update');
+Route::get('/detail_pesanan/delete/{id_trip}/{id_users_pemesan}/{id_seat}', 'DetailPesananController@delete');
+Route::get('/detail_pesanan/show/{id_trip}/{id_users_pemesan}/{id_seat}', 'DetailPesananController@show');
 
 
 
-Route::get('/dashboard', function(){
-	return view('dashboard');
-});
+
