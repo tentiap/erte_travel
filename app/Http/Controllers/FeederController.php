@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Feeder;
-use App\Users;
+use App\User;
 use App\Kota;
 
 class FeederController extends Controller
@@ -16,7 +16,7 @@ class FeederController extends Controller
 
     public function create(){
     	$feeder = Feeder::all();
-    	$users = Users::all();
+    	$users = User::all();
     	$kota = Kota::all();
     	 return view('erte.feeder.create', ['users' => $users, 'feeder' => $feeder, 'kota' => $kota]);
 	}
@@ -35,7 +35,7 @@ class FeederController extends Controller
             'id_kota' => 'required',            
         ]);
 
-    	$users = Users::create([
+    	$users = User::create([
     		'id_users' => $request->id_users,
             'role' => $request->role,
             'username' => $request->username,
@@ -57,7 +57,7 @@ class FeederController extends Controller
 
     public function edit($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$feeder = Feeder::find($id_users);
     	// $kota = Kota::find($id_users);
         $kota = Kota::all();
@@ -69,7 +69,7 @@ class FeederController extends Controller
 
     public function show($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $feeder = Feeder::find($id_users);
         $kota = Kota::find($id_users);
                         
@@ -96,7 +96,7 @@ class FeederController extends Controller
 
     	// $kota = Feeder::with('kota')->get();
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $feeder = Feeder::find($id_users);
         $users->id_users = $request->id_users;
         $users->role = $request->role;
@@ -120,7 +120,7 @@ class FeederController extends Controller
 
     public function delete($id_users){
     	$feeder = Feeder::find($id_users);
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$feeder->delete();
         $users->delete();
 

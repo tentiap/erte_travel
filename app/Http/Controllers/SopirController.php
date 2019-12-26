@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Users;
+use App\User;
 use App\Sopir;
 
 class SopirController extends Controller
@@ -30,7 +30,7 @@ class SopirController extends Controller
     }
 
     public function create(){
-    	$users = Users::all();
+    	$users = User::all();
     	$sopir = Sopir::all();
     	 return view('erte.sopir.create', ['users' => $users, 'sopir' => $sopir]);
 	}
@@ -50,7 +50,7 @@ class SopirController extends Controller
             'merek_mobil' => 'required',
         ]);
 
-    	$users = Users::create([
+    	$users = User::create([
     		'id_users' => $request->id_users,
             'role' => $request->role,
             'username' => $request->username,
@@ -73,7 +73,7 @@ class SopirController extends Controller
 
     public function edit($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$sopir = Sopir::find($id_users);
     			    	
     	
@@ -83,7 +83,7 @@ class SopirController extends Controller
 
     public function show($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $sopir = Sopir::find($id_users);
                         
         
@@ -123,7 +123,7 @@ class SopirController extends Controller
         //     'plat_mobil',
         //     'merek_mobil'));
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $sopir = Sopir::find($id_users);
         $users->id_users = $request->id_users;
         $users->role = $request->role;
@@ -149,7 +149,7 @@ class SopirController extends Controller
 
     public function delete($id_users){
     	$sopir = Sopir::find($id_users);
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$sopir->delete();
         $users->delete();
 

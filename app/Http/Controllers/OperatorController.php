@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Operator;
-use App\Users;
+use App\User;
+use App\Role;
 use App\Kota;
+use Auth;
 
 class OperatorController extends Controller
 {
@@ -14,21 +16,13 @@ class OperatorController extends Controller
         return view('erte.operator.index', ['operator' => $operator]);
     }
 
- //    public function create(){
- //    	$operator = Operator::all();
- //    	$users = Users::all();
- //    	$kota = Kota::all();
- //    	 return view('erte.operator.create', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
-	// }
-
-    public function register(){
-        $operator = Operator::all();
-        $users = Users::all();
-        $kota = Kota::all();
-         return view('erte.operator.register', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
-    }
-
-
+    public function create(){
+            $operator = Operator::all();
+            $users = User::all();
+            $kota = Kota::all();
+            return view('erte.operator.create', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
+    	
+	}
 
 	public function store(Request $request){
     	$this->validate($request, 
@@ -44,9 +38,9 @@ class OperatorController extends Controller
             'id_kota' => 'required',            
         ]);
 
-    	$users = Users::create([
+    	$users = User::create([
     		'id_users' => $request->id_users,
-            'role' => $request->role,
+            'role' => 1,
             'username' => $request->username,
             'password' => bcrypt('password'),
             'email' => $request->email,
@@ -55,6 +49,8 @@ class OperatorController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin
 
     	]);
+
+        $users->attachRole('operator');
 
     	$users->operator()->create($request->only(
     		'id_kota'));
@@ -66,7 +62,7 @@ class OperatorController extends Controller
 
     public function edit($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$operator = Operator::find($id_users);
     	// $kota = Kota::find($id_users);
         $kota = Kota::all();
@@ -78,7 +74,7 @@ class OperatorController extends Controller
 
     public function show($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $operator = Operator::find($id_users);
         $kota = Kota::find($id_users);
                         
@@ -105,7 +101,7 @@ class OperatorController extends Controller
 
     	// $kota = Feeder::with('kota')->get();
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $operator = Operator::find($id_users);
         $users->id_users = $request->id_users;
         $users->role = $request->role;
@@ -129,7 +125,7 @@ class OperatorController extends Controller
 
     public function delete($id_users){
     	$operator = Operator::find($id_users);
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$operator->delete();
         $users->delete();
 

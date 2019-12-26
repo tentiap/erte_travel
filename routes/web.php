@@ -24,9 +24,9 @@ Route::get('/', function () {
 // Route::get('/home',function(){
 // 	return view('home');
 
-// Route::get('/dashboard', function(){
-// 	return view('dashboard');
-// });
+Route::get('/dashboard', function(){
+	return view('dashboard');
+});
 
 //------------------------------------------------------KOTA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/kota', 'KotaController@index');
@@ -126,5 +126,9 @@ Route::get('/detail_pesanan/delete/{id_trip}/{id_users_pemesan}/{id_seat}', 'Det
 Route::get('/detail_pesanan/show/{id_trip}/{id_users_pemesan}/{id_seat}', 'DetailPesananController@show');
 
 
+Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
 
 
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');

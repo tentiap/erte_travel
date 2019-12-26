@@ -3,19 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Users;
+use App\User;
+use App\Role;
+use Auth;
 
 class UsersController extends Controller
-{
-    public function index(){
-    	$users = Users::all();
-    	return view('erte.users.index', ['users' => $users]);
+{   
 
+    public function index(){
+        if (Auth::user() != null && Auth::user()->hasRole('operator')) {
+            $users = User::all();
+            return view('erte.users.index', ['users' => $users]);
+
+        }else{
+            abort(403, 'Unauthorized action.');
+        }
+    	
     }
 
     public function create(){
-        return view('erte.users.create');
-    	
+        if (Auth::user()->hasRole('operator')) {
+            return view('erte.users.create');
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request){
@@ -30,7 +41,7 @@ class UsersController extends Controller
             'jenis_kelamin' => 'required'
         ]);
 
-         Users::create([
+         User::create([
             'id_users' => $request->id_users,
             'role' => $request->role,
             'username' => $request->username,
@@ -48,7 +59,7 @@ class UsersController extends Controller
     }
 
     public function edit($id_users){
-    	$users = Users::find($id_users);
+    	$users = User::find($id_users);
         return view('erte.users.edit', ['users' => $users]);
     }
 
@@ -63,7 +74,7 @@ class UsersController extends Controller
             'kontak' => 'required',
             'jenis_kelamin' => 'required']);
 
-            $users = Users::find($id_users);
+            $users = User::find($id_users);
             $users->id_users = $request->id_users;
             $users->role = $request->role;
             $users->username = $request->username;
@@ -80,7 +91,7 @@ class UsersController extends Controller
     }
 
  	public function delete($id_users){
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $users->delete();
         return redirect('/users');
     	

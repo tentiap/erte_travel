@@ -102,6 +102,7 @@ class RuteController extends Controller
     	$rute->id_rute = $request->id_rute;
     	$rute->id_kota_asal = $request->id_kota_asal;
     	$rute->id_kota_tujuan = $request->id_kota_tujuan;
+        $rute->harga = $request->harga;
     	$rute->save();
 
         // Flash::success('Kota berhasil ditambahkan');

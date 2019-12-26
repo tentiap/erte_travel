@@ -7,7 +7,7 @@ use App\Pesanan;
 use App\Detail_Pesanan;
 use App\Trip;
 use App\Pemesan;
-use App\Users;
+use App\User;
 use App\Seat;
 
 class DetailPesananController extends Controller
@@ -15,7 +15,7 @@ class DetailPesananController extends Controller
     public function index(){
     	$detail_pesanan = Detail_Pesanan::all();
     	$pesanan = Pesanan::all();
-       	$users = Users::all();
+       	$users = User::all();
         $trip = Trip::all();
 
         return view('erte.detail_pesanan.index', ['detail_pesanan' => $detail_pesanan,'pesanan' => $pesanan, 'trip' => $trip,  'users' => $users]);
@@ -25,7 +25,7 @@ class DetailPesananController extends Controller
     	$detail_pesanan = Detail_Pesanan::all();
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
-    	$users = Users::all();
+    	$users = User::all();
     	$seat = Seat::all();
     	    	
      	return view('erte.detail_pesanan.create', ['detail_pesanan' => $detail_pesanan,'pesanan' => $pesanan, 'trip' => $trip, 'seat' => $seat, 'users' => $users]);

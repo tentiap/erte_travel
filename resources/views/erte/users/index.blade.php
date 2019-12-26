@@ -14,6 +14,7 @@
  @endsection
 
 @section('content') 
+  @if(Laratrust::hasRole('operator'))
     <section class="content">
       <div class="box">
         <div class="box-body">
@@ -151,5 +152,6 @@
         </div>        
       </div>    
    </section>
+   @endIf 
     
 @endsection

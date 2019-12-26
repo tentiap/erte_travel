@@ -13,7 +13,7 @@ class Operator extends Model
 
     public function users()
     {
-        return $this->belongsTo(Users::class, 'id_users');
+        return $this->belongsTo(User::class, 'id_users');
     }
 
     public function trip()

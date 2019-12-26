@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pemesan;
-use App\Users;
+use App\User;
 
 class PemesanController extends Controller
 {
@@ -15,7 +15,7 @@ class PemesanController extends Controller
 
     public function create(){
     	$pemesan = Pemesan::all();
-    	$users = Users::all();
+    	$users = User::all();
      	return view('erte.pemesan.create', ['users' => $users, 'pemesan' => $pemesan]);
 	}
 
@@ -33,7 +33,7 @@ class PemesanController extends Controller
             'alamat' => 'required',            
         ]);
 
-    	$users = Users::create([
+    	$users = User::create([
     		'id_users' => $request->id_users,
             'role' => $request->role,
             'username' => $request->username,
@@ -55,7 +55,7 @@ class PemesanController extends Controller
 
     public function edit($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$pemesan = Pemesan::find($id_users);
     	
        	return view('erte.pemesan.edit', ['users' => $users, 'pemesan' => $pemesan]);
@@ -64,7 +64,7 @@ class PemesanController extends Controller
 
     public function show($id_users){
 
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $pemesan = Pemesan::find($id_users);               
         
         return view('erte.pemesan.show', ['users' => $users, 'pemesan' => $pemesan]);
@@ -87,7 +87,7 @@ class PemesanController extends Controller
         ]);
 
     	
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
         $pemesan = Pemesan::find($id_users);
         $users->id_users = $request->id_users;
         $users->role = $request->role;
@@ -111,7 +111,7 @@ class PemesanController extends Controller
 
     public function delete($id_users){
     	$pemesan = Pemesan::find($id_users);
-        $users = Users::find($id_users);
+        $users = User::find($id_users);
     	$pemesan->delete();
         $users->delete();
 

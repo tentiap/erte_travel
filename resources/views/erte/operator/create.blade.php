@@ -35,24 +35,7 @@
 
                         </div>
 
-                        <div class="form-group">
-                            <label>Role</label>
-
-
-                            <select class="form-control" name="role">
-                                    
-                                    <option name="role" value="1">Operator</option> 
-                                    
-                            </select>
-
-                            @if($errors->has('role'))
-                                <div class="text-danger">
-                                    {{ $errors->first('role')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
+            
 
                         <div class="form-group">
                             <label>Username</label>

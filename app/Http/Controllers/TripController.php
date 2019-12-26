@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Trip;
-use App\Users;
+use App\User;
 use App\Rute;
 
 
@@ -18,7 +18,7 @@ class TripController extends Controller
 
     public function create(){
         $trip = Trip::all();
-        $users = Users::all();
+        $users = User::all();
         $rute = Rute::all();
         
         return view('erte.trip.create', ['trip' => $trip, 'users' => $users, 'rute' => $rute]);
@@ -59,14 +59,14 @@ class TripController extends Controller
 
     public function edit($id_trip){
     	$trip = Trip::find($id_trip);
-        $users = Users::all();
+        $users = User::all();
         $rute = Rute::all();
         return view('erte.trip.edit', ['trip' => $trip, 'users' => $users, 'rute' => $rute]);
     }
 
      public function show($id_trip){
 
-        $users = Users::find($id_trip);
+        $users = User::find($id_trip);
         $trip = Trip::find($id_trip);
         // $kota = Kota::find($id_trip);
                         

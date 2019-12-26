@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Pesanan;
 use App\Trip;
 use App\Pemesan;
-use App\Users;
+use App\User;
 
 class PesananController extends Controller
 {
@@ -14,14 +14,14 @@ class PesananController extends Controller
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
     	// $pemesan = Pemesan::all();
-    	$users = Users::all();
+    	$users = User::all();
         return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'users' => $users]);
     }
 
     public function create(){
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
-    	$users = Users::all();
+    	$users = User::all();
     	// $pemesan = Pemesan::all();
     	
      	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'users' => $users]);
@@ -52,7 +52,7 @@ class PesananController extends Controller
     	$pesanan = Pesanan::where(['id_trip' => $id_trip,'id_users_pemesan' => $id_users_pemesan])->first();
     	$trip = Trip::all();
     	$pemesan = Pemesan::all();
-        $users = Users::all();
+        $users = User::all();
         return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'users' => $users]);
     }
 
