@@ -6,12 +6,14 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laratrust\Traits\LaratrustUserTrait;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable
 {   
     // use Authenticatable, Authorizable, CanResetPassword, Notifiable;
-    use LaratrustUserTrait;
+    use Notifiable, HasRoles;
+
     // Use Notifiable;
     /**
      * The attributes that are mass assignable.

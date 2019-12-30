@@ -130,6 +130,9 @@
         <li><a href="/rute"><i class="fa  fa-pencil-square-o"></i> <span>Rute</span></a></li>
         <li><a href="/kota"><i class="fa  fa-pencil-square-o"></i> <span>Kota</span></a></li>
         <li><a href="/seat"><i class="fa  fa-pencil-square-o"></i> <span>Seat</span></a></li>
+        <li><a href="/roles"><i class="fa  fa-pencil-square-o"></i> <span>Manage Roles</span></a></li>
+        <li><a href="/permissions"><i class="fa  fa-pencil-square-o"></i> <span>Manage Permissions</span></a></li>
+        
        
       </ul>
     </section>

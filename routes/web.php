@@ -1,5 +1,9 @@
 <?php
 
+// use Spatie\Permission\Models\Role;
+// use Spatie\Permission\Models\Permission;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -127,6 +131,35 @@ Route::get('/detail_pesanan/show/{id_trip}/{id_users_pemesan}/{id_seat}', 'Detai
 
 
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
+
+//------------------------------------------------------ROLES----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('roles', 'RoleController@index');
+Route::get('/roles/create', 'RoleController@create');
+Route::post('/roles/store', 'RoleController@store');
+Route::get('/roles/edit/{id}', 'RoleController@edit');
+Route::put('/roles/update/{id}', 'RoleController@update')->name('roles.update');
+Route::get('/roles/delete/{id}', 'RoleController@delete');
+Route::get('/roles/show/{id}', 'RoleController@show');
+
+//------------------------------------------------------PERMISSIONS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('permissions', 'PermissionController@index');
+Route::get('/permissions/create', 'PermissionController@create');
+Route::post('/permissions/store', 'PermissionController@store');
+Route::get('/permissions/edit/{id}', 'PermissionController@edit');
+Route::put('/permissions/update/{id}', 'PermissionController@update')->name('permissions.update');
+Route::get('/permissions/delete/{id}', 'PermissionController@delete');
+Route::get('/permissions/show/{id}', 'PermissionController@show');
+
+// -----------Spatie---------------
+
+// Route::get('/roles', function(){
+// 	$role = Role::create(['name' => 'operator']);
+// 	$permission =  Permission::create(['name' => 'manage_users']);
+// 	Auth()->user()->assignRole('operator');
+// 	Auth()->user()->givePermissionTo('manage_users');
+
+
+// });
 
 
 // Auth::routes();

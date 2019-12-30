@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Operator;
 use App\User;
-use App\Role;
+// use App\Role;
 use App\Kota;
 use Auth;
 
@@ -28,7 +28,7 @@ class OperatorController extends Controller
     	$this->validate($request, 
             [
     		'id_users' => 'required',
-    		'role' => 'required',
+    		// 'role' => 'required',
     		'username' => 'required',
     		'password' => 'required',
             'email' => 'required',
@@ -40,7 +40,7 @@ class OperatorController extends Controller
 
     	$users = User::create([
     		'id_users' => $request->id_users,
-            'role' => 1,
+            // 'role' => 1,
             'username' => $request->username,
             'password' => bcrypt('password'),
             'email' => $request->email,
@@ -50,7 +50,7 @@ class OperatorController extends Controller
 
     	]);
 
-        $users->attachRole('operator');
+        // $users->attachRole('operator');
 
     	$users->operator()->create($request->only(
     		'id_kota'));
@@ -87,7 +87,7 @@ class OperatorController extends Controller
     	$this->validate($request, 
             [
     		'id_users' => 'required',
-            'role' => 'required',
+            // 'role' => 'required',
             'username' => 'required',
             'password' => 'required',
             'email' => 'required',
@@ -104,7 +104,7 @@ class OperatorController extends Controller
         $users = User::find($id_users);
         $operator = Operator::find($id_users);
         $users->id_users = $request->id_users;
-        $users->role = $request->role;
+        // $users->role = 1;
         $users->username = $request->username;
         $users->password = bcrypt('password');
         $users->email = $request->email;

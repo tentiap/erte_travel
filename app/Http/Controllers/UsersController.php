@@ -9,30 +9,34 @@ use Auth;
 
 class UsersController extends Controller
 {   
+    // public function __construct() {
+    //     $this->middleware(['auth', 'isAdmin']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
+    // }
+
 
     public function index(){
-        if (Auth::user() != null && Auth::user()->hasRole('operator')) {
+        // if (Auth::user() != null && Auth::user()->hasRole('operator')) {
             $users = User::all();
             return view('erte.users.index', ['users' => $users]);
 
-        }else{
-            abort(403, 'Unauthorized action.');
-        }
+        // }else{
+        //     abort(403, 'Unauthorized action.');
+        // }
     	
     }
 
     public function create(){
-        if (Auth::user()->hasRole('operator')) {
+        // if (Auth::user()->hasRole('operator')) {
             return view('erte.users.create');
-        }else{
-            return redirect()->back();
-        }
+        // }else{
+        //     return redirect()->back();
+        // }
     }
 
     public function store(Request $request){
         $this->validate($request, [
             'id_users' => 'required|unique:users, id_users',
-            'role' => 'required',
+            // 'role' => 'required',
             'username' => 'required',
             'password' => 'required',
             'email' => 'required',
@@ -43,7 +47,7 @@ class UsersController extends Controller
 
          User::create([
             'id_users' => $request->id_users,
-            'role' => $request->role,
+            // 'role' => $request->role,
             'username' => $request->username,
             'password' => $request->password,
             'email' => $request->email,
@@ -66,7 +70,7 @@ class UsersController extends Controller
     public function update($id_users, Request $request){
     	 $this->validate($request, [
             'id_users' => 'required',
-            'role' => 'required',
+            // 'role' => 'required',
             'username' => 'required',
             'password' => 'required',
             'email' => 'required',
@@ -76,7 +80,7 @@ class UsersController extends Controller
 
             $users = User::find($id_users);
             $users->id_users = $request->id_users;
-            $users->role = $request->role;
+            // $users->role = $request->role;
             $users->username = $request->username;
             $users->password = $request->password;
             $users->email = $request->email;
