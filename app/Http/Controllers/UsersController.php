@@ -9,9 +9,9 @@ use Auth;
 
 class UsersController extends Controller
 {   
-    // public function __construct() {
-    //     $this->middleware(['auth', 'isAdmin']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
-    // }
+    public function __construct() {
+        $this->middleware(['auth', 'isAdmin']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
+    }
 
 
     public function index(){
@@ -50,6 +50,7 @@ class UsersController extends Controller
             // 'role' => $request->role,
             'username' => $request->username,
             'password' => $request->password,
+            // 'password' => bcrypt('password'),
             'email' => $request->email,
             'nama' => $request->nama,
             'kontak' => $request->kontak,
@@ -82,6 +83,7 @@ class UsersController extends Controller
             $users->id_users = $request->id_users;
             // $users->role = $request->role;
             $users->username = $request->username;
+            // $users->password = bcrypt('password');
             $users->password = $request->password;
             $users->email = $request->email;
             $users->nama = $request->nama;

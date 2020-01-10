@@ -42,7 +42,8 @@ class OperatorController extends Controller
     		'id_users' => $request->id_users,
             // 'role' => 1,
             'username' => $request->username,
-            'password' => bcrypt('password'),
+            // 'password' => bcrypt('password'),
+            'password' => $request->password,
             'email' => $request->email,
             'nama' => $request->nama,
             'kontak' => $request->kontak,
@@ -106,7 +107,8 @@ class OperatorController extends Controller
         $users->id_users = $request->id_users;
         // $users->role = 1;
         $users->username = $request->username;
-        $users->password = bcrypt('password');
+        // $users->password = bcrypt('password');
+        $users->password = $request->password;
         $users->email = $request->email;
         $users->nama = $request->nama;
         $users->kontak = $request->kontak;

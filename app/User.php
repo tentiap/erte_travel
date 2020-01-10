@@ -51,6 +51,11 @@ class User extends Authenticatable
             
     public $incrementing = false;
 
+    public function setPasswordAttribute($password)
+    {   
+        $this->attributes['password'] = bcrypt($password);
+    }
+
 
     public function sopir()
     {

@@ -38,8 +38,11 @@
                     <tr>
 
                         <td>{{ $r->name }}</td>
-
-                        <td>{{ str_replace(array('[',']','"'),'', $r->permissions()->pluck('name')) }}</td>
+                        <td>
+                          @foreach ($r->permissions()->pluck('name') as $permission)
+                            <span class="badge badge-primary">{{ $permission }}</span>
+                          @endforeach
+                        </td>
 
                         <td>
 

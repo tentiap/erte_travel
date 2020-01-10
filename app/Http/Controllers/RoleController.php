@@ -23,6 +23,8 @@ class RoleController extends Controller {
     public function index() {
         $roles = Role::all();//Get all roles
         // return view('erte.users.index', ['users' => $users]);
+       
+        // return auth::user()->permissions;
         return view('roles.index')->with('roles', $roles);
     }
 
