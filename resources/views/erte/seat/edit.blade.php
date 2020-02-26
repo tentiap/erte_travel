@@ -17,9 +17,11 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="/seat" class="btn btn-primary">Kembali</a>
+               <!--  <a href="/seat" class="btn btn-primary">Kembali</a>
                     <br/>
-                    <br/>
+                    <br/> -->
+<!-- 
+                 @include('messages')     -->
                     
                 <form method="post" action="/seat/update/{{ $seat->id_seat }}">
 
@@ -35,7 +37,7 @@
                                     {{ $errors->first('id_seat')}}
                                 </div>
                             @endif
-
+                           
                         </div>
 
                         <div class="form-group">
@@ -50,7 +52,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="submit" class="btn btn-success" value="Simpan">
+                            <input type="submit" class="btn btn-primary" value="Simpan">
                         </div>
 
                     </form>

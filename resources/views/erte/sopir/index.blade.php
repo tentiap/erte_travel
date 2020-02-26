@@ -7,6 +7,7 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="../users">Users</a></li>
             <li><a href="../sopir">Sopir</a></li>
             <li class="active">Index</li>
           </ol>
@@ -18,9 +19,12 @@
       <div class="box">
         <div class="box-body">
           <!-- <div class="box"> -->
-              <div class="box-header" align="right">
-                <a href="/users/create" class="btn btn-primary">Tambah Sopir</a>
+              @include('messages')
+              <div class="box-header" align="right">                
+                <a href="/sopir/create" class="btn btn-primary">Tambah Sopir</a>
               </div>
+
+              
 
             <div class="box-body">
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
@@ -38,40 +42,61 @@
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($users as $u)
-                      @if($u->role == 2)
+                  @foreach($sopir as $s)
+                      
                             <tr>
-                                <td>{{ $u->id_users }}</td>     
-                                
-                                <td>{{ $u->nama }}</td>
-                                <td>{{ $u->username }}</td>
-                                <td>{{ $u->email }}</td>
-                                <td>{{ $u->kontak }}</td>
+                                <td>{{ $s->id_users }}</td>
+                                <td>{{ $s->users->nama }}</td>          
+                                <td>{{ $s->users->username }}</td>
+                                <td>{{ $s->users->email }}</td>
+                                <td>{{ $s->users->kontak }}</td>
                                 <td>
-                                        @if($u->jenis_kelamin == 1)
+                                        @if($s->users->jenis_kelamin == 1)
                                            Laki-laki
                                         @else
                                             Perempuan
                                         @endif
 
                                 </td>
-                            @foreach($sopir as $s)    
-                                <td>{{$s->plat_mobil}}</td>
-                                <td>{{$s->merek_mobil}}</td>
-                            @endforeach
+                               
+                                <td>{{ $s->plat_mobil}}</td>
+                                <td>{{ $s->merek_mobil}}</td>
+                                
                                 <td>
                                     
-                                    <a href="/users/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a href="/users/delete/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-trash"></i></a>
+                                    <a href="/sopir/edit/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $s->id_users }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
-                      @endif      
+
+
+                                    <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <b>Anda yakin ingin menghapus data sopir ini ?</b><br><br>
+                                                    <a class="btn btn-danger btn-ok"> Hapus</a>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+                                    <script type="text/javascript">
+                                      //Hapus Data
+                                      $(document).ready(function() {
+                                          $('#konfirmasi_hapus').on('show.bs.modal', function(e) {
+                                              $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+                                          });
+                                      });
+                                    </script>
+                      
                   @endforeach
                 </tbody>
               </table>
             </div>
 
-          <!-- </div> -->
         </div>
         <div class="box-footer">
         </div>        

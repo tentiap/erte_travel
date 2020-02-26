@@ -17,9 +17,9 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="/kota" class="btn btn-primary">Kembali</a>
+               <!--  <a href="/kota" class="btn btn-primary">Kembali</a>
                     <br/>
-                    <br/>
+                    <br/> -->
                     
                 <form method="post" action="/kota/update/{{ $kota->id_kota }}">
 
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="submit" class="btn btn-success" value="Simpan">
+                            <input type="submit" class="btn btn-primary" value="Simpan">
                         </div>
 
                     </form>

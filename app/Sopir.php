@@ -14,7 +14,7 @@ class Sopir extends Model
     public function users()
     {
         // return $this->hasOne(Users::class, 'id_users');
-         return $this->belongsTo(Users::class, 'id_users');
+         return $this->belongsTo(User::class, 'id_users');
     }
 
     public function trip()

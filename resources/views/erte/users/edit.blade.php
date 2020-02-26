@@ -6,8 +6,8 @@
           Edit Data Users
       </h1>
           <ol class="breadcrumb">
-            <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../users">Users</a></li>
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/users">Users</a></li>
             <li class="active">Edit</li>
           </ol>
   </section>

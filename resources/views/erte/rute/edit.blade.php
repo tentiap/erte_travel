@@ -6,8 +6,8 @@
           Edit Data Rute
       </h1>
           <ol class="breadcrumb">
-            <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../rute">Rute</a></li>
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/rute">Rute</a></li>
             <li class="active">Edit</li>
           </ol>
   </section>
@@ -17,10 +17,7 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <a href="/rute" class="btn btn-primary">Kembali</a>
-                    <br/>
-                    <br/>
-                    
+                                   
                 <form method="post" action="/rute/update/{{ $rute->id_rute }}">
 
                         {{ csrf_field() }}
@@ -40,10 +37,13 @@
 
                         <div class="form-group">
                             <label>Kota Asal</label>
-                                <select class="form-control" >
+                                <select class="form-control" name="id_kota_asal" >
                             
-                                    <option name="id_kota_asal">{{$rute->kota_asal->nama_kota}}</option>
-                         
+                                    <!-- <option name="id_kota_asal">{{$rute->kota_asal->nama_kota}}</option> -->
+                                @foreach($kota_asal as $k)
+                                        
+                                        <option value="{{ $k->id_kota }}" {{($rute->id_kota_asal == $k->id_kota)  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
+                                @endforeach
                                    
                                 </select>
 
@@ -53,9 +53,12 @@
 
                         <div class="form-group">
                             <label>Kota Tujuan</label>
-                                <select class="form-control">
+                                <select class="form-control" name="id_kota_tujuan">
                                    
-                                    <option name="id_kota_tujuan" >{{$rute->kota_tujuan->nama_kota}}</option> 
+                                    <!-- <option name="id_kota_tujuan" >{{$rute->kota_tujuan->nama_kota}}</option>  -->
+                                    @foreach($kota_asal as $k)
+                                        <option value="{{ $k->id_kota }}" {{$rute->id_kota_tujuan == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
+                                    @endforeach
                                    
                             </select>
 
@@ -66,14 +69,20 @@
 
                         <div class="form-group">
                             <label>Harga</label>
-                            <textarea name="posisi" class="form-control" placeholder="harga"> {{ $rute->harga }} </textarea>
+                            <input type="text" name="harga" class="form-control" placeholder="Harga" value="{{$rute->harga}}">
+
+                            @if($errors->has('harga'))
+                                <div class="text-danger">
+                                    {{ $errors->first('harga')}}
+                                </div>
+                            @endif
 
     
                         </div>
 
 
                         <div class="form-group">
-                            <input type="submit" class="btn btn-success" value="Simpan">
+                            <input type="submit" class="btn btn-primary" value="Simpan">
                         </div>
 
                     </form>

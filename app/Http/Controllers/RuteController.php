@@ -43,12 +43,18 @@ class RuteController extends Controller
     	// 	'harga' => $request->harga
     	// ]);
 
-        Rute::create([
+        $rute = Rute::create([
             'id_rute' => $request->id_rute,
             'id_kota_asal' => $request->id_kota_asal,
             'id_kota_tujuan' => $request->id_kota_tujuan,
             'harga' => $request->harga
         ]);
+
+        // $rute->kota_asal()->create($request->only('id_kota_asal'));
+
+        // $rute->kota_tujuan()->create($request->only('id_kota_tujuan'));
+
+
 
         // $rute = new Rute();
         // $rute->id_rute = $request->id_rute;
@@ -62,7 +68,7 @@ class RuteController extends Controller
         // Flash::success('Mahasiswa saved successfully.');
 
 
-        // session()->flash('flash_success', 'Berhasil menambahkan data kota dengan nama '. $request->input('nama_kota'));
+        session()->flash('flash_success', 'Berhasil menambahkan data rute dengan ID '. $request->input('id_rute'));
 
     	return redirect('/rute');
         // return redirect()->route('kota.index', [$kota->id_kota]);
@@ -71,9 +77,14 @@ class RuteController extends Controller
     public function edit($id_rute){
 
         $rute = Rute::find($id_rute);
-    	$kota_asal = Kota::all()->pluck('nama_kota');
-    	$kota_tujuan = Kota::all()->pluck('nama_kota');
-		    	
+    	// $kota_asal = Kota::all()->pluck('nama_kota');
+    	// $kota_tujuan = Kota::all()->pluck('nama_kota');
+
+        // $kota_asal = Kota::find($id_kota);
+        // $kota_tujuan = Kota::find($id_kota);
+
+		$kota_asal = Kota::all();
+        $kota_tujuan = Kota::all();    	
     	
     	return view('erte.rute.edit', ['rute' => $rute, 'kota_asal' => $kota_asal, 'kota_tujuan' => $kota_tujuan]);
 
@@ -91,10 +102,11 @@ class RuteController extends Controller
     	$rute->id_rute = $request->id_rute;
     	$rute->id_kota_asal = $request->id_kota_asal;
     	$rute->id_kota_tujuan = $request->id_kota_tujuan;
+        $rute->harga = $request->harga;
     	$rute->save();
 
         // Flash::success('Kota berhasil ditambahkan');
-        // session()->flash('flash_success', 'Berhasil mengupdate data kota '.$kota->nama_kota);
+        session()->flash('flash_success', 'Berhasil mengupdate data rute '.$rute->id_rute);
     	// return redirect()->route('kota.index', [$kota->id_kota] );
         return redirect('/rute');
     }
@@ -102,7 +114,7 @@ class RuteController extends Controller
     public function delete($id_rute){
     	$rute = Rute::find($id_rute);
     	$rute->delete();
-        // session()->flash('flash_success', "Berhasil menghapus kota ".$kota->nama_kota);
+        session()->flash('flash_success', "Berhasil menghapus rute ".$rute->id_rute);
     	// return redirect()->route('kota.index');
         return redirect('/rute');
     }
