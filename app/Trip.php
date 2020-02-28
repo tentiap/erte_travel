@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Trip extends Model
 {
     protected $table = "trip";
-    protected $fillable = ['id_trip', 
-    'id_users_operator',
-	'id_users_sopir', 
-	'id_users_feeder',
-	'id_rute',
-	'tanggal',
-	'jam'];
+    protected $fillable = [
+        'id_trip', 
+        'id_users_operator',
+	    'id_users_sopir', 
+	    'id_kota_asal',
+        'id_kota_tujuan',
+	    'jadwal'
+	];
+
     protected $primaryKey = "id_trip";
     public $incrementing = false;
 
@@ -22,14 +24,14 @@ class Trip extends Model
         return $this->belongsTo(Sopir::class, 'id_users_sopir');
     }
 
-    public function rute()
+    public function kota_asal()
     {
-        return $this->belongsTo(Rute::class, 'id_rute');
+        return $this->belongsTo(Kota::class, 'id_kota_asal');
     }
 
-    public function feeder()
+    public function kota_tujuan()
     {
-        return $this->belongsTo(Feeder::class, 'id_users_feeder');
+        return $this->belongsTo(Kota::class, 'id_kota_tujuan');
     }
 
     public function operator()

@@ -10,7 +10,7 @@ class Seat extends Model
     protected $primaryKey = 'id_seat';
     protected $fillable = [
     		'id_seat', 
-    		'posisi'];
+    		'keterangan'];
     public $incrementing = false;
 
    public function detail_pesanan()

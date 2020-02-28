@@ -7,20 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class Sopir extends Model
 {
     protected $table = "sopir";
-    protected $fillable = ['plat_mobil', 'merek_mobil'];
+    protected $fillable = [
+        'id_users',
+        'plat_mobil', 
+        'merek_mobil',
+        'username',
+        'email',
+        'password',
+        'nama',
+        'kontak',
+        'jenis_kelamin'
+    ];
+
     protected $primaryKey = "id_users";
     public $incrementing = false;
 
-    public function users()
-    {
-        // return $this->hasOne(Users::class, 'id_users');
-         return $this->belongsTo(User::class, 'id_users');
-    }
-
-    public function trip()
-    {
+    public function trip(){
         return $this->hasMany(Trip::class);
     }
-
 	
 }

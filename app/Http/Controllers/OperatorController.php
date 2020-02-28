@@ -4,47 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Operator;
-use App\User;
-// use App\Role;
 use App\Kota;
-use Auth;
 
 class OperatorController extends Controller
 {
     public function index(){
     	$operator = Operator::all();
-        return view('erte.operator.index', ['operator' => $operator]);
+        return view('erte.operator.index', ['operator' => $operator, 'kota' => $kota]);
     }
 
     public function create(){
             $operator = Operator::all();
-            $users = User::all();
             $kota = Kota::all();
-            return view('erte.operator.create', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
-    	
+            return view('erte.operator.create', ['operator' => $operator, 'kota' => $kota]);
 	}
 
 	public function store(Request $request){
     	$this->validate($request, 
             [
     		'id_users' => 'required',
-    		// 'role' => 'required',
+            'id_kota' => 'required',
     		'username' => 'required',
-    		'password' => 'required',
             'email' => 'required',
+            'password' => 'required',
             'nama' => 'required',
             'kontak' => 'required',
-            'jenis_kelamin' => 'required',
-            'id_kota' => 'required',            
+            'jenis_kelamin' => 'required'           
         ]);
 
-    	$users = User::create([
+    	$operator = Operator::create([
     		'id_users' => $request->id_users,
-            // 'role' => 1,
+            'id_kota' => $request->id_kota,
             'username' => $request->username,
             // 'password' => bcrypt('password'),
-            'password' => $request->password,
             'email' => $request->email,
+            'password' => $request->password,
             'nama' => $request->nama,
             'kontak' => $request->kontak,
             'jenis_kelamin' => $request->jenis_kelamin
@@ -53,9 +47,6 @@ class OperatorController extends Controller
 
         // $users->attachRole('operator');
 
-    	$users->operator()->create($request->only(
-    		'id_kota'));
-
         session()->flash('flash_success', 'Berhasil menambahkan data operator dengan nama '. $request->input('nama'));
 
     	return redirect('/operator');
@@ -63,24 +54,20 @@ class OperatorController extends Controller
 
     public function edit($id_users){
 
-        $users = User::find($id_users);
     	$operator = Operator::find($id_users);
-    	// $kota = Kota::find($id_users);
         $kota = Kota::all();
     			    	
-    	
-    	return view('erte.operator.edit', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
+    	return view('erte.operator.edit', ['operator' => $operator, 'kota' => $kota]);
 
     }
 
     public function show($id_users){
 
-        $users = User::find($id_users);
         $operator = Operator::find($id_users);
         $kota = Kota::find($id_users);
                         
         
-        return view('erte.operator.show', ['users' => $users, 'operator' => $operator, 'kota' => $kota]);
+        return view('erte.operator.show', ['operator' => $operator, 'kota' => $kota]);
 
     }
 
@@ -88,38 +75,29 @@ class OperatorController extends Controller
     	$this->validate($request, 
             [
     		'id_users' => 'required',
-            // 'role' => 'required',
+            'id_kota' => 'required',
             'username' => 'required',
-            'password' => 'required',
             'email' => 'required',
+            'password' => 'required',
             'nama' => 'required',
             'kontak' => 'required',
-            'jenis_kelamin' => 'required',
-            'id_kota' => 'required'
-            
+            'jenis_kelamin' => 'required'
         ]);
 
-
-    	// $kota = Feeder::with('kota')->get();
-
-        $users = User::find($id_users);
         $operator = Operator::find($id_users);
-        $users->id_users = $request->id_users;
-        // $users->role = 1;
-        $users->username = $request->username;
-        // $users->password = bcrypt('password');
-        $users->password = $request->password;
-        $users->email = $request->email;
-        $users->nama = $request->nama;
-        $users->kontak = $request->kontak;
-        $users->jenis_kelamin = $request->jenis_kelamin;
+        $operator->id_users = $request->id_users;
         $operator->id_kota = $request->id_kota;
+        $operator->username = $request->username;
+        $operator->email = $request->email;
+        // $users->password = bcrypt('password');
+        $operator->password = $request->password;
+        $operator->nama = $request->nama;
+        $operator->kontak = $request->kontak;
+        $operator->jenis_kelamin = $request->jenis_kelamin;
         
-        $users->save();
         $operator->save();
 
-
-        session()->flash('flash_success', 'Berhasil mengupdate data operator '.$users->nama);
+        session()->flash('flash_success', 'Berhasil mengupdate data operator '.$operator->nama);
         
         return redirect('/operator');
             
@@ -127,11 +105,9 @@ class OperatorController extends Controller
 
     public function delete($id_users){
     	$operator = Operator::find($id_users);
-        $users = User::find($id_users);
     	$operator->delete();
-        $users->delete();
 
-        session()->flash('flash_success', "Berhasil menghapus operator ".$users->nama);
+        session()->flash('flash_success', "Berhasil menghapus operator ".$operator->nama);
         return redirect('/operator');
         
 	}

@@ -9,7 +9,12 @@ class Pesanan extends Model
 {
     use CompositeKeyTrait;
     protected $table = "pesanan";
-    protected $fillable = ['id_trip', 'id_users_pemesan', 'tanggal_pesan'];
+    protected $fillable = [
+        'id_trip', 
+        'id_users_pemesan', 
+        'tanggal_pesan'
+    ];
+    
     protected $primaryKey = ["id_trip", "id_users_pemesan"];
     // public $incrementing = false;
 

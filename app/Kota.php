@@ -9,12 +9,14 @@ class Kota extends Model
     protected $table = 'kota';
     protected $primaryKey = 'id_kota';
     
-    //protected $primaryKey = 'id_kota';
-    //protected $guarded = [];
-    protected $fillable = ['id_kota', 'nama_kota' ];
+    protected $fillable = [
+        'id_kota', 
+        'nama_kota' 
+    ];
+
     public $incrementing = false;
 
-     public function rute()
+    public function rute()
     {
         return $this->hasMany(Rute::class);
     }
