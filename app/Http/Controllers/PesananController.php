@@ -6,63 +6,65 @@ use Illuminate\Http\Request;
 use App\Pesanan;
 use App\Trip;
 use App\Pemesan;
-use App\User;
 
 class PesananController extends Controller
 {
     public function index(){
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
-    	// $pemesan = Pemesan::all();
-    	$users = User::all();
-        return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'users' => $users]);
+    	$pemesan = Pemesan::all();
+
+        return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan]);
     }
 
     public function create(){
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
-    	$users = User::all();
-    	// $pemesan = Pemesan::all();
+    	$pemesan = Pemesan::all();
     	
-     	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'users' => $users]);
+     	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan]);
 	}
 
 	public function store(Request $request){
     	$this->validate($request, 
             [
+            'id_pesanan' => 'required',    
     		'id_trip' => 'required',
     		'id_users_pemesan' => 'required',
     		'tanggal_pesan' => 'required'
         ]);
 
     	Pesanan::create([
+            'id_pesanan' => $request->id_pesanan,
     		'id_trip' => $request->id_trip,
             'id_users_pemesan' => $request->id_users_pemesan,
             'tanggal_pesan' => $request->tanggal_pesan
     	]);
-
-    	
 
         session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
 
     	return redirect('/pesanan');
     }
 
-    public function edit($id_trip, $id_users_pemesan){
-    	$pesanan = Pesanan::where(['id_trip' => $id_trip,'id_users_pemesan' => $id_users_pemesan])->first();
+    public function edit($id_pesanan, $id_trip, $id_users_pemesan){
+    	$pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip,'id_users_pemesan' => $id_users_pemesan])->first();
+
     	$trip = Trip::all();
     	$pemesan = Pemesan::all();
-        $users = User::all();
-        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'users' => $users]);
+
+        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan]);
     }
 
-    public function update($id_trip, $id_users_pemesan, Request $request){
+    public function update($id_pesanan, $id_trip, $id_users_pemesan, Request $request){
     	 $this->validate($request, [
+            'id_pesanan' => 'required',
             'id_trip' => 'required',
             'id_users_pemesan' => 'required',
             'tanggal_pesan' => 'required']);
 
-            $pesanan = Pesanan::where(['id_trip' => $id_trip,'id_users_pemesan' => $id_users_pemesan])->first();
+            $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip,'id_users_pemesan' => $id_users_pemesan])->first();
+
+            $pesanan->id_pesanan = $request->id_pesanan;
             $pesanan->id_trip = $request->id_trip;
             $pesanan->id_users_pemesan = $request->id_users_pemesan;
             $pesanan->tanggal_pesan = $request->tanggal_pesan;
@@ -72,16 +74,14 @@ class PesananController extends Controller
          return redirect('/pesanan');
     }
 
- 	public function delete($id_trip, $id_users_pemesan){
-        $pesanan = Pesanan::where(['id_trip' => $id_trip,'id_users_pemesan' => $id_users_pemesan])->first();
+ 	public function delete($id_pesanan, $id_trip, $id_users_pemesan){
+        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip,'id_users_pemesan' => $id_users_pemesan])->first();
         $pesanan->delete();
 
         session()->flash('flash_success', "Berhasil menghapus pesanan");
         return redirect('/pesanan');
     	
     }
-
-
 
 
 }
