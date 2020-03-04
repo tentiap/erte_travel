@@ -16,7 +16,7 @@ class Pesanan extends Model
         'tanggal_pesan'
     ];
     
-    protected $primaryKey = ['id_pesanan', "id_trip", "id_users_pemesan"];
+    protected $primaryKey = ['id_pesanan', 'id_trip'];
     // public $incrementing = false;
 
     public function detail_pesanan()

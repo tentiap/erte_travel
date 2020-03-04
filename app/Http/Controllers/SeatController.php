@@ -20,17 +20,17 @@ class SeatController extends Controller
     public function store(Request $request){
     	$this->validate($request, [
     		'id_seat' => 'required|unique:seat,id_seat',
-    		'posisi' => 'required|max:30']);
+    		'keterangan' => 'required|max:30']);
 
     	Seat::create([
     		'id_seat' => $request->id_seat,
-    		'posisi' => $request->posisi
+    		'keterangan' => $request->keterangan
     	]);
 
         session()->flash('flash_success', 'Berhasil menambahkan data seat dengan id '. $request->input('id_seat'));
 
     	return redirect('/seat');
-        // return redirect()->route('kota.index', [$kota->id_kota]);
+
     }
 
     public function edit($id_seat){
@@ -45,12 +45,11 @@ class SeatController extends Controller
 
     	$seat = Seat::find($id_seat);
     	$seat->id_seat = $request->id_seat;
-    	$seat->posisi = $request->posisi;
+    	$seat->keterangan = $request->keterangan;
     	$seat->save();
 
-        // Flash::success('Kota berhasil ditambahkan');
         session()->flash('flash_success', 'Berhasil mengupdate data seat '.$seat->id_seat);
-    	// return redirect()->route('kota.index', [$kota->id_kota] );
+
         return redirect('/seat');
     }
 
@@ -58,7 +57,7 @@ class SeatController extends Controller
     	$seat = Seat::find($id_seat);
     	$seat->delete();
         session()->flash('flash_success', "Berhasil menghapus data seat ".$seat->id_seat);
-    	// return redirect()->route('kota.index');
+    
         return redirect('/seat');
     }
 

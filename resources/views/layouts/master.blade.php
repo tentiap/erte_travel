@@ -81,7 +81,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/adminlte/img/admin.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{auth::user()->nama}}</span>
+              <span class="hidden-xs">Nanti nama diganti</span>
               
             </a>
             <ul class="dropdown-menu">

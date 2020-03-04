@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/pemesan">Pemesan</a></li>
             <li class="active">Create</li>
           </ol>
@@ -36,27 +35,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Role</label>
-
-
-                            <select class="form-control" name="role">
-                                    
-                                    <option name="role" value="4">Pemesan</option> 
-                                    
-                            </select>
-
-                            @if($errors->has('role'))
-                                <div class="text-danger">
-                                    {{ $errors->first('role')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
-                        <div class="form-group">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
+                            <input type="text" name="username" class="form-control" placeholder="Username"  value="{{ old('username') }}">
 
                              @if($errors->has('username'))
                                 <div class="text-danger">
@@ -64,7 +44,6 @@
                                 </div>
                             @endif
 
-                            
                         </div>
 
                         <div class="form-group">
@@ -138,9 +117,7 @@
                         </div>
 
 
-                           
-
-                            <div class="form-group">
+                        <div class="form-group">
                             <label>Alamat</label>
                             <input type="text" name="alamat" class="form-control" placeholder="Alamat" value="{{ old('alamat') }}">
 
@@ -149,10 +126,7 @@
                                     {{ $errors->first('alamat')}}
                                 </div>
                             @endif
-
-                             
                         </div>
-
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
@@ -160,9 +134,6 @@
 
 
                         </div>
-
-                        
-
                         
                 </form>
             </div>

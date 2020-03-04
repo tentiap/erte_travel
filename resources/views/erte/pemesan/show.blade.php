@@ -7,18 +7,14 @@
       <h1>
           Detail Data Pemesan
       </h1>
-    
+
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/pemesan">Pemesan</a></li>
             <li class="active">Detail</li>
           </ol>
-
     </section>
-          
- 
- @endsection
+@endsection
 
  @section('content')     
     <section class="content">
@@ -55,10 +51,6 @@
                             });
                     </script>
 
-
-
-
-                   
       
                         <div class="form-group">
                             <label>ID Users</label>
@@ -71,11 +63,7 @@
 
                         <input type="text" name="role" class="form-control"  placeholder="Role" value="Pemesan" readonly>
                                                         
-                                        
-                                               
-                                    
-                          
-                             
+                                                                     
                         </div>
 
                         <div class="form-group">

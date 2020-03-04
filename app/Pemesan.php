@@ -14,8 +14,8 @@ class Pemesan extends Model
         'password',
         'nama',
         'kontak',
-        'jenis_kelamin' 
-        'alamat',
+        'jenis_kelamin', 
+        'alamat'
     ];
 
     protected $primaryKey = "id_users";

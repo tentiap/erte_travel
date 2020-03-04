@@ -7,7 +7,7 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../users">Users</a></li>
+            <!-- <li><a href="../users">Users</a></li> -->
             <li><a href="../pemesan">Pemesan</a></li>
             <li class="active">Index</li>
           </ol>
@@ -23,8 +23,6 @@
               <div class="box-header" align="right">                
                 <a href="/pemesan/create" class="btn btn-primary">Tambah Pemesan</a>
               </div>
-
-              
 
             <div class="box-body">
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
@@ -46,12 +44,12 @@
                       
                             <tr>
                                 <td>{{ $p->id_users }}</td>
-                                <td>{{ $p->users->nama }}</td>          
-                                <td>{{ $p->users->username }}</td>
-                                <td>{{ $p->users->email }}</td>
-                                <td>{{ $p->users->kontak }}</td>
+                                <td>{{ $p->nama }}</td>          
+                                <td>{{ $p->username }}</td>
+                                <td>{{ $p->email }}</td>
+                                <td>{{ $p->kontak }}</td>
                                 <td>
-                                        @if($p->users->jenis_kelamin == 1)
+                                        @if($p->jenis_kelamin == 1)
                                            Laki-laki
                                         @else
                                             Perempuan

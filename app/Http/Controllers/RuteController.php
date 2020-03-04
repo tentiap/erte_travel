@@ -66,7 +66,7 @@ class RuteController extends Controller
         $rute->harga = $request->harga;
     	$rute->save();
 
-        session()->flash('flash_success', 'Berhasil mengupdate data '.$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
+        session()->flash('flash_success', 'Berhasil mengupdate data');
     	
         return redirect('/rute');
     }
@@ -74,7 +74,7 @@ class RuteController extends Controller
     public function delete($id_kota_asal, $id_kota_tujuan){
     	$rute = Rute::where(['id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan])->first();
     	$rute->delete();
-        session()->flash('flash_success', "Berhasil menghapus rute";
+        session()->flash('flash_success', "Berhasil menghapus rute ".$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
     	// return redirect()->route('kota.index');
         return redirect('/rute');
     }

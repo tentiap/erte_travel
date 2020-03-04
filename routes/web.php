@@ -53,9 +53,9 @@ Route::get('/seat/delete/{id_seat}', 'SeatController@delete');
 Route::get('/rute', 'RuteController@index');
 Route::get('/rute/create', 'RuteController@create');
 Route::post('/rute/store', 'RuteController@store');
-Route::get('/rute/edit/{id_rute}', 'RuteController@edit');
-Route::put('/rute/update/{id_rute}', 'RuteController@update');
-Route::get('/rute/delete/{id_rute}', 'RuteController@delete');
+Route::get('/rute/edit/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@edit');
+Route::put('/rute/update/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@update');
+Route::get('/rute/delete/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@delete');
 
 //------------------------------------------------------USERS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/users', 'UsersController@index');
@@ -115,19 +115,19 @@ Route::get('/trip/show/{id_trip}', 'TripController@show');
 Route::get('pesanan', 'PesananController@index');
 Route::get('/pesanan/create', 'PesananController@create');
 Route::post('/pesanan/store', 'PesananController@store');
-Route::get('/pesanan/edit/{id_trip}/{id_users_pemesan}', 'PesananController@edit');
-Route::put('/pesanan/update/{id_trip}/{id_users_pemesan}', 'PesananController@update');
-Route::get('/pesanan/delete/{id_trip}/{id_users_pemesan}', 'PesananController@delete');
-Route::get('/pesanan/show/{id_trip}/{id_users_pemesan}', 'PesananController@show');
+Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
+Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
+Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
+Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
 
 //------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('detail_pesanan', 'DetailPesananController@index');
 Route::get('/detail_pesanan/create', 'DetailPesananController@create');
 Route::post('/detail_pesanan/store', 'DetailPesananController@store');
-Route::get('/detail_pesanan/edit/{id_trip}/{id_users_pemesan}/{{id_seat}}', 'DetailPesananController@edit');
-Route::put('/detail_pesanan/update/{id_trip}/{id_users_pemesan}/{id_seat}', 'DetailPesananController@update');
-Route::get('/detail_pesanan/delete/{id_trip}/{id_users_pemesan}/{id_seat}', 'DetailPesananController@delete');
-Route::get('/detail_pesanan/show/{id_trip}/{id_users_pemesan}/{id_seat}', 'DetailPesananController@show');
+Route::get('/detail_pesanan/edit/{id_trip}/{id_seat}}', 'DetailPesananController@edit');
+Route::put('/detail_pesanan/update/{id_trip}/{id_seat}', 'DetailPesananController@update');
+Route::get('/detail_pesanan/delete/{id_trip}/{id_seat}', 'DetailPesananController@delete');
+Route::get('/detail_pesanan/show/{id_trip}/{id_seat}', 'DetailPesananController@show');
 
 
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');

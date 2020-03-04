@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Feeder;
-use App\User;
 use App\Kota;
 
 class FeederController extends Controller
@@ -16,39 +15,33 @@ class FeederController extends Controller
 
     public function create(){
     	$feeder = Feeder::all();
-    	$users = User::all();
     	$kota = Kota::all();
-    	 return view('erte.feeder.create', ['users' => $users, 'feeder' => $feeder, 'kota' => $kota]);
+    	 return view('erte.feeder.create', ['feeder' => $feeder, 'kota' => $kota]);
 	}
 
 	public function store(Request $request){
     	$this->validate($request, 
             [
     		'id_users' => 'required',
-    		'role' => 'required',
+    		'id_kota' => 'required',
     		'username' => 'required',
-    		'password' => 'required',
             'email' => 'required',
+            'password' => 'required',
             'nama' => 'required',
             'kontak' => 'required',
-            'jenis_kelamin' => 'required',
-            'id_kota' => 'required',            
+            'jenis_kelamin' => 'required'           
         ]);
 
-    	$users = User::create([
+    	$feeder = Feeder::create([
     		'id_users' => $request->id_users,
-            'role' => $request->role,
+            'id_kota' => $request->id_kota,
             'username' => $request->username,
-            'password' => bcrypt('password'),
             'email' => $request->email,
+            'password' => bcrypt('password'),
             'nama' => $request->nama,
             'kontak' => $request->kontak,
             'jenis_kelamin' => $request->jenis_kelamin
-
     	]);
-
-    	$users->feeder()->create($request->only(
-    		'id_kota'));
 
         session()->flash('flash_success', 'Berhasil menambahkan data feeder dengan nama '. $request->input('nama'));
 
@@ -57,24 +50,18 @@ class FeederController extends Controller
 
     public function edit($id_users){
 
-        $users = User::find($id_users);
     	$feeder = Feeder::find($id_users);
-    	// $kota = Kota::find($id_users);
         $kota = Kota::all();
     			    	
-    	
-    	return view('erte.feeder.edit', ['users' => $users, 'feeder' => $feeder, 'kota' => $kota]);
-
+    	return view('erte.feeder.edit', ['feeder' => $feeder, 'kota' => $kota]);
     }
 
     public function show($id_users){
 
-        $users = User::find($id_users);
         $feeder = Feeder::find($id_users);
-        $kota = Kota::find($id_users);
-                        
+        $kota = Kota::find($id_users);          
         
-        return view('erte.feeder.show', ['users' => $users, 'feeder' => $feeder, 'kota' => $kota]);
+        return view('erte.feeder.show', ['feeder' => $feeder, 'kota' => $kota]);
 
     }
 
@@ -82,37 +69,28 @@ class FeederController extends Controller
     	$this->validate($request, 
             [
     		'id_users' => 'required',
-            'role' => 'required',
+            'id_kota' => 'required'
             'username' => 'required',
-            'password' => 'required',
             'email' => 'required',
+            'password' => 'required',
             'nama' => 'required',
             'kontak' => 'required',
             'jenis_kelamin' => 'required',
-            'id_kota' => 'required'
-            
         ]);
 
-
-    	// $kota = Feeder::with('kota')->get();
-
-        $users = User::find($id_users);
         $feeder = Feeder::find($id_users);
-        $users->id_users = $request->id_users;
-        $users->role = $request->role;
-        $users->username = $request->username;
-        $users->password = bcrypt('password');
-        $users->email = $request->email;
-        $users->nama = $request->nama;
-        $users->kontak = $request->kontak;
-        $users->jenis_kelamin = $request->jenis_kelamin;
+        $feeder->id_users = $request->id_users;
         $feeder->id_kota = $request->id_kota;
+        $feeder->username = $request->username;
+        $feeder->email = $request->email;
+        $feeder->password = bcrypt('password');
+        $feeder->nama = $request->nama;
+        $feeder->kontak = $request->kontak;
+        $feeder->jenis_kelamin = $request->jenis_kelamin;
         
-        $users->save();
         $feeder->save();
 
-
-        session()->flash('flash_success', 'Berhasil mengupdate data feeder '.$users->nama);
+        session()->flash('flash_success', 'Berhasil mengupdate data feeder '.$feeder->nama);
         
         return redirect('/feeder');
             
@@ -120,11 +98,9 @@ class FeederController extends Controller
 
     public function delete($id_users){
     	$feeder = Feeder::find($id_users);
-        $users = User::find($id_users);
     	$feeder->delete();
-        $users->delete();
 
-        session()->flash('flash_success', "Berhasil menghapus feeder ".$users->nama);
+        session()->flash('flash_success', "Berhasil menghapus feeder ".$feeder->nama);
         return redirect('/feeder');
         
 	}
