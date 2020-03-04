@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../users">Users</a></li>
             <li><a href="../operator">Operator</a></li>
             <li class="active">Index</li>
           </ol>
@@ -23,8 +22,6 @@
               <div class="box-header" align="right">                
                 <a href="/operator/create" class="btn btn-primary">Tambah Operator</a>
               </div>
-
-              
 
             <div class="box-body">
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
@@ -42,31 +39,25 @@
                 </thead>
                 <tbody>
                   @foreach($operator as $o)
-                      
-                            <tr>
-                                <td>{{ $o->id_users }}</td>
-                                <td>{{ $o->users->nama }}</td>          
-                                <td>{{ $o->users->username }}</td>
-                                <td>{{ $o->users->email }}</td>
-                                <td>{{ $o->users->kontak }}</td>
-                                <td>
-                                        @if($o->users->jenis_kelamin == 1)
-                                           Laki-laki
-                                        @else
-                                            Perempuan
-                                        @endif
-
-                                </td>
-                               
-                                <td>{{ $o->kota->nama_kota}}</td>
-                                
-                                
-                                <td>
-                                    
-                                    <a href="/operator/edit/{{ $o->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/operator/delete/{{ $o->id_users }}"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
+                      <tr>
+                          <td>{{ $o->id_users }}</td>
+                          <td>{{ $o->nama }}</td>          
+                          <td>{{ $o->username }}</td>
+                          <td>{{ $o->email }}</td>
+                          <td>{{ $o->kontak }}</td>
+                          <td>
+                                @if($o->jenis_kelamin == 1)
+                                   Laki-laki
+                                @else
+                                    Perempuan
+                                @endif
+                          </td>
+                          <td>{{ $o->kota->nama_kota}}</td>
+                          <td>    
+                              <a href="/operator/edit/{{ $o->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                              <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/operator/delete/{{ $o->id_users }}"><i class="fa fa-trash"></i></a>
+                          </td>
+                      </tr>
 
 
                                     <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

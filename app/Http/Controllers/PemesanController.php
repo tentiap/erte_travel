@@ -22,10 +22,10 @@ class PemesanController extends Controller
             [
     		'id_users' => 'required',
     		'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
             'nama' => 'required',
-            'kontak' => 'required',
+            'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required',
             'alamat' => 'required',            
         ]);
@@ -66,10 +66,10 @@ class PemesanController extends Controller
             [
     		'id_users' => 'required',
             'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
             'nama' => 'required',
-            'kontak' => 'required',
+            'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required',
             'alamat' => 'required'
         ]);

@@ -10,7 +10,7 @@ class OperatorController extends Controller
 {
     public function index(){
     	$operator = Operator::all();
-        return view('erte.operator.index', ['operator' => $operator, 'kota' => $kota]);
+        return view('erte.operator.index', ['operator' => $operator]);
     }
 
     public function create(){
@@ -25,10 +25,10 @@ class OperatorController extends Controller
     		'id_users' => 'required',
             'id_kota' => 'required',
     		'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
             'nama' => 'required',
-            'kontak' => 'required',
+            'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required'           
         ]);
 
@@ -36,9 +36,9 @@ class OperatorController extends Controller
     		'id_users' => $request->id_users,
             'id_kota' => $request->id_kota,
             'username' => $request->username,
-            // 'password' => bcrypt('password'),
+            'password' => bcrypt('password'),
             'email' => $request->email,
-            'password' => $request->password,
+            // 'password' => $request->password,
             'nama' => $request->nama,
             'kontak' => $request->kontak,
             'jenis_kelamin' => $request->jenis_kelamin
@@ -77,10 +77,10 @@ class OperatorController extends Controller
     		'id_users' => 'required',
             'id_kota' => 'required',
             'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
             'nama' => 'required',
-            'kontak' => 'required',
+            'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required'
         ]);
 
@@ -89,8 +89,8 @@ class OperatorController extends Controller
         $operator->id_kota = $request->id_kota;
         $operator->username = $request->username;
         $operator->email = $request->email;
-        // $users->password = bcrypt('password');
-        $operator->password = $request->password;
+        $operator->password = bcrypt('password');
+        // $operator->password = $request->password;
         $operator->nama = $request->nama;
         $operator->kontak = $request->kontak;
         $operator->jenis_kelamin = $request->jenis_kelamin;

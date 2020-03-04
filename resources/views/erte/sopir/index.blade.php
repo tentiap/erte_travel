@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../users">Users</a></li>
             <li><a href="../sopir">Sopir</a></li>
             <li class="active">Index</li>
           </ol>
@@ -46,12 +45,12 @@
                       
                             <tr>
                                 <td>{{ $s->id_users }}</td>
-                                <td>{{ $s->users->nama }}</td>          
-                                <td>{{ $s->users->username }}</td>
-                                <td>{{ $s->users->email }}</td>
-                                <td>{{ $s->users->kontak }}</td>
+                                <td>{{ $s->nama }}</td>          
+                                <td>{{ $s->username }}</td>
+                                <td>{{ $s->email }}</td>
+                                <td>{{ $s->kontak }}</td>
                                 <td>
-                                        @if($s->users->jenis_kelamin == 1)
+                                        @if($s->jenis_kelamin == 1)
                                            Laki-laki
                                         @else
                                             Perempuan

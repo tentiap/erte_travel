@@ -40,7 +40,7 @@ class SopirController extends Controller
             'plat_mobil' => 'required|unique:sopir,plat_mobil',
             'merek_mobil' => 'required',
     		'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
     		'password' => 'required',
             'nama' => 'required',
             'kontak' => 'required',

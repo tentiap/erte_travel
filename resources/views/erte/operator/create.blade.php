@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/operator">Operator</a></li>
             <li class="active">Create</li>
           </ol>
@@ -90,7 +89,7 @@
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="number" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
 
                             @if($errors->has('kontak'))
                                 <div class="text-danger">
@@ -146,7 +145,10 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/operator">Cancel</a></button>
                         </div>
+
+                        
 
 
                         </div>

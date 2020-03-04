@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/operator">Operator</a></li>
             <li class="active">Edit</li>
           </ol>
@@ -19,14 +18,14 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/operator/update/{{$users->id_users}}">
+                <form method="post" action="/operator/update/{{$operator->id_users}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{$users->id_users}}">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $operator->id_users)}}">
 
                              @if($errors->has('id_users'))
                                 <div class="text-danger">
@@ -37,27 +36,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Role</label>
-
-
-                            <select class="form-control" name="role">
-                                    
-                                    <option name="role" value="{{$users->role}}">Operator</option> 
-                                    
-                            </select>
-
-                            @if($errors->has('role'))
-                                <div class="text-danger">
-                                    {{ $errors->first('role')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
-                        <div class="form-group">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{$users->username}}">
+                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{old('username', $operator->username)}}">
 
                              @if($errors->has('username'))
                                 <div class="text-danger">
@@ -82,7 +62,7 @@
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{$users->email}}">
+                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{old('email', $operator->email)}}">
 
                              @if($errors->has('email'))
                                 <div class="text-danger">
@@ -95,7 +75,7 @@
 
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{$users->nama}}">
+                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{old('nama', $operator->nama)}}">
 
                             @if($errors->has('nama'))
                                 <div class="text-danger">
@@ -108,7 +88,7 @@
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="number" name="kontak" class="form-control" placeholder="Kontak" value="{{$users->kontak}}">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{old('kontak', $operator->kontak)}}">
 
                             @if($errors->has('kontak'))
                                 <div class="text-danger">
@@ -124,10 +104,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1" {{ $users->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="1" {{ $operator->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2" {{ $users->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="2" {{ $operator->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
                                 </label>
 
                                 @if($errors->has('jenis_kelamin'))
@@ -138,9 +118,6 @@
 
                               
                         </div>
-
-
-
 
                         <div class="form-group">
                             <label>Wilayah</label>
@@ -166,6 +143,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/operator">Cancel</a></button>
                         </div>
 
 
