@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/sopir">Sopir</a></li>
             <li class="active">Create</li>
           </ol>
@@ -36,25 +35,6 @@
                                 </div>
                             @endif
 
-                        </div>
-
-                        <div class="form-group">
-                            <label>Role</label>
-
-
-                            <select class="form-control" name="role">
-                                    
-                                    <option name="role" value="2">Sopir</option> 
-                                    
-                            </select>
-
-                            @if($errors->has('role'))
-                                <div class="text-danger">
-                                    {{ $errors->first('role')}}
-                                </div>
-                            @endif
-
-                            
                         </div>
 
                         <div class="form-group">
@@ -110,7 +90,7 @@
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="number" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
 
                             @if($errors->has('kontak'))
                                 <div class="text-danger">
@@ -141,9 +121,7 @@
                         </div>
 
 
-                           
-
-                            <div class="form-group">
+                        <div class="form-group">
                             <label>Plat Mobil</label>
                             <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{ old('plat_mobil') }}">
 
@@ -171,6 +149,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/sopir">Cancel</a></button>
                         </div>
 
 

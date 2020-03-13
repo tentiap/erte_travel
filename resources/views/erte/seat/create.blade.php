@@ -37,12 +37,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Posisi</label>
-                            <input type="text" name="posisi" class="form-control" placeholder="Posisi" value="{{ old('posisi') }}">
+                            <label>Keterangan</label>
+                            <input type="text" name="keterangan" class="form-control" placeholder="Keterangan" value="{{ old('keterangan') }}">
 
-                            @if($errors->has('posisi'))
+                            @if($errors->has('keterangan'))
                                 <div class="text-danger">
-                                    {{ $errors->first('posisi')}}
+                                    {{ $errors->first('keterangan')}}
                                 </div>
                             @endif
 
@@ -51,6 +51,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/seat">Cancel</a></button>
                         </div>
                 </form>
             </div>

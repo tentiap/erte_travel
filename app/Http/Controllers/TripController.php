@@ -13,8 +13,6 @@ class TripController extends Controller
 {
     public function index(){
     	$trip = Trip::all();
-        // $operator = Operator::all();
-        // $sopir = Sopir::all();
 
     	return view('erte.trip.index', ['trip' => $trip]);
 

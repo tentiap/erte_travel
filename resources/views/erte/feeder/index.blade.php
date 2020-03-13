@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../users">Users</a></li>
             <li><a href="../feeder">Feeder</a></li>
             <li class="active">Index</li>
           </ol>
@@ -31,9 +30,9 @@
                   <thead>
                       <tr>
                         <th>ID Users</th>
-                        <th>Nama</th>
                         <th>Username</th>
                         <th>Email</th>
+                        <th>Nama</th>
                         <th>Kontak</th>
                         <th>Jenis Kelamin</th>
                         <th>Wilayah</th>
@@ -42,15 +41,14 @@
                 </thead>
                 <tbody>
                   @foreach($feeder as $f)
-                      
                             <tr>
                                 <td>{{ $f->id_users }}</td>
-                                <td>{{ $f->users->nama }}</td>          
-                                <td>{{ $f->users->username }}</td>
-                                <td>{{ $f->users->email }}</td>
-                                <td>{{ $f->users->kontak }}</td>
+                                <td>{{ $f->username }}</td>
+                                <td>{{ $f->email }}</td>
+                                <td>{{ $f->nama }}</td>          
+                                <td>{{ $f->kontak }}</td>
                                 <td>
-                                        @if($f->users->jenis_kelamin == 1)
+                                        @if($f->jenis_kelamin == 1)
                                            Laki-laki
                                         @else
                                             Perempuan
@@ -60,7 +58,7 @@
                                
                                 <td>{{ $f->kota->nama_kota}}</td>
                                 
-                                
+                              
                                 <td>
                                     
                                     <a href="/feeder/edit/{{ $f->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>

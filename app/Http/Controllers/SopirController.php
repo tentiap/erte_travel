@@ -43,7 +43,7 @@ class SopirController extends Controller
             'email' => 'required|email',
     		'password' => 'required',
             'nama' => 'required',
-            'kontak' => 'required',
+            'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required',
             
         ]);
@@ -89,10 +89,10 @@ class SopirController extends Controller
             'plat_mobil' => 'required',
             'merek_mobil' => 'required',
             'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
             'nama' => 'required',
-            'kontak' => 'required',
+            'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required'
         ]);
 

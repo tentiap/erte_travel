@@ -69,7 +69,7 @@ class FeederController extends Controller
     	$this->validate($request, 
             [
     		'id_users' => 'required',
-            'id_kota' => 'required'
+            'id_kota' => 'required',
             'username' => 'required',
             'email' => 'required',
             'password' => 'required',

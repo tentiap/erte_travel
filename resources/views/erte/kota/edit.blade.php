@@ -51,6 +51,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/kota">Cancel</a></button>
                         </div>
 
                     </form>

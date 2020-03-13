@@ -10,7 +10,7 @@ class Rute extends Model
     use CompositeKeyTrait;
     protected $table = "rute";
 
-    protected $primaryKey = 'id_kota_asal', 'id_kota_tujuan';
+    protected $primaryKey = ['id_kota_asal', 'id_kota_tujuan'];
 
     protected $fillable = [
         'id_kota_asal', 

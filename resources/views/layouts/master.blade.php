@@ -23,7 +23,25 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ <!-- 
+  <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+   
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+   
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="/adminlte/css/datetimepicker/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="/adminlte/css/datetimepicker/bootstrap-datetimepicker.min.css">
+
+  
+
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -117,7 +135,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="/users"><i class="fa fa-circle"></i> All-Users </a></li>
+            <!-- <li><a href="/users"><i class="fa fa-circle"></i> All-Users </a></li> -->
             <li><a href="/operator"><i class="fa fa-circle"></i> Operator </a></li>
             <li><a href="/sopir"><i class="fa fa-circle"></i> Sopir </a></li>
             <li><a href="/feeder"><i class="fa fa-circle"></i> Feeders</a></li>
@@ -240,6 +258,21 @@
 <!-- DataTables -->
 <script src="{{asset('Adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('Adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
+  <!-- <script src="{{asset('Adminlte/js/datetimepicker/jquery.min.js')}}"></script> -->
+  <script src="{{asset('Adminlte/js/datetimepicker/moment-with-locales.min.js')}}"></script>
+  <!-- <script src="{{asset('Adminlte/js/datetimepicker/bootstrap.min.js')}}"></script> -->
+  <script src="{{asset('Adminlte/js/datetimepicker/bootstrap-datetimepicker.min.js')}}"></script>
+
+  <script>
+      $(function () {
+        $('#datetime').datetimepicker({
+          format:'YYYY-MM-DD HH:mm'
+        })
+      })
+  </script>
+
+
 
 @yield('cs')
 

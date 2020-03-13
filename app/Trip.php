@@ -24,15 +24,20 @@ class Trip extends Model
         return $this->belongsTo(Sopir::class, 'id_users_sopir');
     }
 
-    public function kota_asal()
+    public function rute()
     {
-        return $this->belongsTo(Kota::class, 'id_kota_asal');
+        return $this->belongsTo(Rute::class, 'id_kota_asal', 'id_kota_tujuan');
     }
 
-    public function kota_tujuan()
-    {
-        return $this->belongsTo(Kota::class, 'id_kota_tujuan');
-    }
+    // public function kota_asal()
+    // {
+    //     return $this->belongsTo(Rute::class, 'id_kota_asal');
+    // }
+
+    // public function kota_tujuan()
+    // {
+    //     return $this->belongsTo(Rute::class, 'id_kota_tujuan');
+    // }
 
     public function operator()
     {

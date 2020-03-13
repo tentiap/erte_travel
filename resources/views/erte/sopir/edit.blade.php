@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/sopir">Sopir</a></li>
             <li class="active">Edit</li>
           </ol>
@@ -23,14 +22,14 @@
                     <br/> -->
               <!--    @include('messages') -->
                     
-                <form method="post" action="/sopir/update/{{$users->id_users}}">
+                <form method="post" action="/sopir/update/{{$sopir->id_users}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{$users->id_users}}">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $sopir->id_users)}}">
 
                             @if($errors->has('id_users'))
                                 <div class="text-danger">
@@ -42,45 +41,10 @@
 
                         </div>
 
-                        <div class="form-group">
-                            <label>Role</label>
-                            <!-- <input type="text" name="role" class="form-control" placeholder="Role" value="{{$users->role}}"> -->
-
-                            <select class="form-control" name="role">
-                                    <option name="role" value="{{$users->role}}">Sopir
-
-                                        
-                                        <!-- @if($users->role == 1)
-                                           Operator
-                                        @elseif($users->role == 2)
-                                            Sopir
-                                        @elseif($users->role == 3)
-                                            Feeder
-                                        @elseif($users->role == 4)
-                                            Pemesan
-                                        @endif -->
-                                    </option>
-                                    
-                                    <!-- <option name="role" value="1">Operator</option> 
-                                    <option name="role" value="2">Sopir</option> 
-                                    <option name="role" value="3">Feeder</option> 
-                                    <option name="role" value="4">Pemesan</option>        -->
-                            
-                                    
-                            </select>
-
-                             @if($errors->has('role'))
-                                <div class="text-danger">
-                                    {{ $errors->first('role')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
+                    
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{$users->username}}">
+                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{old('username', $sopir->username)}}">
 
                           @if($errors->has('username'))
                                 <div class="text-danger">
@@ -100,14 +64,11 @@
                                         {{ $errors->first('password')}}
                                     </div>
                             @endif
-
-                            
-                           
                         </div>
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{$users->email}}">
+                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{old('email', $sopir->email)}}">
 
                             @if($errors->has('email'))
                                 <div class="text-danger">
@@ -120,7 +81,7 @@
 
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{$users->nama}}">
+                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{old('nama', $sopir->nama)}}">
 
                              @if($errors->has('nama'))
                                 <div class="text-danger">
@@ -131,7 +92,7 @@
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{$users->kontak}}">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{old('kontak', $sopir->kontak)}}">
 
                              @if($errors->has('kontak'))
                                 <div class="text-danger">
@@ -158,10 +119,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1" {{ $users->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="1" {{ $sopir->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2" {{ $users->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="2" {{ $sopir->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
                                 </label>
 
                                 @if($errors->has('jenis_kelamin'))
@@ -171,14 +132,11 @@
                                 @endif
 
                               
-                        </div>
-
-                        
-
+                        </div>                     
 
                         <div class="form-group">
                             <label>Plat Mobil</label>
-                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{$users->sopir->plat_mobil}}">
+                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $sopir->plat_mobil)}}">
 
                             @if($errors->has('plat_mobil'))
                                 <div class="text-danger">
@@ -189,7 +147,7 @@
                            
                         <div class="form-group">
                             <label>Merek Mobil</label>
-                            <input type="text" name="merek_mobil" class="form-control" placeholder="Merek Mobil" value="{{$users->sopir->merek_mobil}}">
+                            <input type="text" name="merek_mobil" class="form-control" placeholder="Merek Mobil" value="{{old('merek_mobil', $sopir->merek_mobil)}}">
 
                              @if($errors->has('merek_mobil'))
                                 <div class="text-danger">
@@ -202,10 +160,9 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/sopir">Cancel</a></
                         </div>    
                              
-                        </div>
-
                         
                 </form>
             </div>

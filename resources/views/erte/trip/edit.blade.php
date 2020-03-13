@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label>ID Trip</label>
-                            <input type="text" name="id_trip" class="form-control" placeholder="ID Trip" value="{{$trip->id_trip}}">
+                            <input type="text" name="id_trip" class="form-control" placeholder="ID Trip" value="{{old('id_trip', $trip->id_trip)}}">
 
                              @if($errors->has('id_trip'))
                                 <div class="text-danger">
@@ -35,15 +35,79 @@
 
                         </div>
 
+                        <div class="row">
+                            <div class="col-sm-6">
+                                    <label>Kota Asal</label>
+                                    <select class="form-control" name="id_kota_asal"> 
+                                            @foreach($rute as $r)
+                                                    <option value="{{ $r->id_kota_asal }}"{{$trip->id_kota_asal == $r->id_kota_asal ? 'selected' : ''}}>
+                                                    {{$r->kota_asal->nama_kota}}
+                                                    </option> 
+                                            @endforeach 
+                                    </select>
+                            </div>
+
+                                @if($errors->has('id_kota_asal'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('id_kota_asal')}}
+                                    </div>
+                                @endif
+
+                            <div class="col-sm-6">
+                                    <label>Kota Tujuan</label>
+                                    <select class="form-control" name="id_kota_tujuan">
+                                            @foreach($rute as $r)
+                                                    <option name="rute" value="{{ $r->id_kota_tujuan }}"{{$trip->id_kota_tujuan == $r->id_kota_tujuan ? 'selected' : ''}}>
+                                                    {{$r->kota_tujuan->nama_kota}}
+                                                    </option> 
+                                            @endforeach 
+                                    </select>
+                            </div>
+
+                                @if($errors->has('id_kota_tujuan'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('id_kota_tujuan')}}
+                                    </div>
+                                @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label>Jadwal</label>
+                                <div class='input-group date' id='datetime'>
+                                    <input type='text' class="form-control" name="jadwal" value="{{  old('jadwal', $trip->jadwal) }}" />
+                                      <span class="input-group-addon">
+                                          <span class="glyphicon glyphicon-calendar"></span>
+                                      </span>
+                                </div>
+
+                                @if($errors->has('jadwal'))
+                                        <div class="text-danger">
+                                            {{ $errors->first('jadwal')}}
+                                        </div>
+                                @endif
+                        </div>
+
+                       <div class="form-group">
+                            <label>Sopir</label>
+                            <select class="form-control" name="id_users_sopir">
+                                <option disabled selected value> -- Sopir -- </option>
+                                    @foreach($sopir as $s)
+                                            <option  value="{{$s->id_users}}"{{$trip->id_users_sopir == $s->id_users ? 'selected' : ''}}>{{$s->nama}}</option>  
+                                    @endforeach
+                            </select>
+
+                            @if($errors->has('id_users_sopir'))
+                                <div class="text-danger">
+                                    {{ $errors->first('id_users_sopir')}}
+                                </div>
+                            @endif
+                        </div>
+
                         <div class="form-group">
                             <label>Operator</label>
-
-
                             <select class="form-control" name="id_users_operator">
-                                    @foreach($users as $u)
-                                        @if($u->role == 1)
-                                            <option  value="{{$u->id_users}}"{{$trip->id_users_operator == $u->id_users ? 'selected' : ''}}>{{$u->nama}}</option> 
-                                        @endif
+                                    @foreach($operator as $o)
+                                            <option  value="{{$o->id_users}}"{{$trip->id_users_operator == $o->id_users ? 'selected' : ''}}>{{$o->nama}}</option> 
                                     @endforeach
                                     
                             </select>
@@ -53,119 +117,15 @@
                                     {{ $errors->first('id_users_operator')}}
                                 </div>
                             @endif
-
-                            
                         </div>
-
-                       <div class="form-group">
-                            <label>Sopir</label>
-
-
-                            <select class="form-control" name="id_users_sopir">
-                                    @foreach($users as $u)
-                                        @if($u->role == 2)
-                                            <option  value="{{$u->id_users}}"{{$trip->id_users_sopir == $u->id_users ? 'selected' : ''}}>{{$u->nama}}</option>  
-                                        @endif
-                                    @endforeach
-                                    
-                            </select>
-
-                            @if($errors->has('id_users_sopir'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users_sopir')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
-                        <div class="form-group">
-                            <label>Feeder</label>
-
-
-                            <select class="form-control" name="id_users_feeder">
-                                    @foreach($users as $u)
-                                        @if($u->role == 3)
-                                            <option  value="{{$u->id_users}}"{{$trip->id_users_feeder == $u->id_users ? 'selected' : ''}}>{{$u->nama}}</option>  
-                                        @endif
-                                    @endforeach
-                                    
-                            </select>
-
-                            @if($errors->has('id_users_feeder'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users_feeder')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
-                        <div class="form-group">
-                            <label>Rute</label>
-
-
-                            <select class="form-control" name="id_rute">
-                                   
-
-                                    @foreach($rute as $r)
-                                        
-                                            <option  value="{{$r->id_rute}}"{{$trip->id_rute == $r->id_rute ? 'selected' : ''}}>{{$r->kota_asal->nama_kota}} - {{$r->kota_tujuan->nama_kota}}</option> 
-                                        
-                                    @endforeach
-                                    
-                            </select>
-
-                            @if($errors->has('id_rute'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_rute')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tanggal</label>
-                            <input type="date" name="tanggal" class="form-control" placeholder="Tanggal" value="{{($trip->tanggal) }}">
-
-                             @if($errors->has('tanggal'))
-                                <div class="text-danger">
-                                    {{ $errors->first('tanggal')}}
-                                </div>
-                            @endif
-
-                        </div>
-
-                        <div class="form-group">
-                            <label>Jam</label>
-                            <input type="time" name="jam" class="form-control" placeholder="Jam" value="{{ ($trip->jam) }}" >
-
-                             @if($errors->has('jam'))
-                                <div class="text-danger">
-                                    {{ $errors->first('jam')}}
-                                </div>
-                            @endif
-
-                        </div>
-
-
-
-
-                        
-
-                        
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button>
                         </div>
 
 
                         </div>
-                        
-
-                        
-
                         
                 </form>
             </div>

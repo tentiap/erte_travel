@@ -27,7 +27,6 @@
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
-                        <th>ID Rute</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
                         <th>Harga</th>
@@ -37,14 +36,13 @@
                 <tbody>
                   @foreach($rute as $r)
                             <tr>
-                                <td>{{ $r->id_rute }}</td>     
                                 <td>{{ $r->kota_asal->nama_kota }}</td>
                                 <td>{{ $r->kota_tujuan->nama_kota }}</td>
                                 <td>{{ $r->harga }}</td>
                                 <td>
                                     
-                                    <a href="/rute/edit/{{ $r->id_rute }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/rute/delete/{{ $r->id_rute }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/rute/edit/{{ $r->id_kota_asal }}/{{ $r->id_kota_tujuan }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/rute/delete/{{ $r->id_kota_asal }}/{{ $r->id_kota_tujuan }}"><i class="fa fa-trash"></i></a>
                                     
                                 </td>
                             </tr>

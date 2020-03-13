@@ -28,7 +28,7 @@
                   <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Posisi</th>
+                        <th>Keterangan</th>
                         <th>OPSI</th>
                       </tr>
                 </thead>
@@ -36,7 +36,7 @@
                   @foreach($seat as $s)
                             <tr>
                                 <td>{{ $s->id_seat }}</td>
-                                <td>{{ $s->posisi }}</td>
+                                <td>{{ $s->keterangan }}</td>
                                 <td>
                                     
                                     <a href="/seat/edit/{{ $s->id_seat }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>

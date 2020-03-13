@@ -30,7 +30,7 @@
 
                         <div class="form-group">
                             <label>ID</label>
-                            <input type="text" name="id_seat" class="form-control" placeholder="ID seat" value=" {{ $seat->id_seat }}">
+                            <input type="text" name="id_seat" class="form-control" placeholder="ID seat" value=" {{ old('id_seat', $seat->id_seat) }}">
 
                             @if($errors->has('id_seat'))
                                 <div class="text-danger">
@@ -41,18 +41,20 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Posisi</label>
-                            <textarea name="posisi" class="form-control" placeholder="posisi"> {{ $seat->posisi }} </textarea>
+                            <label>Keterangan</label>
+                            <input type="text" name="keterangan" class="form-control" placeholder="Keterangan" value=" {{ old('keterangan', $seat->keterangan) }}">
+                            
 
-                             @if($errors->has('posisi'))
+                             @if($errors->has('keterangan'))
                                 <div class="text-danger">
-                                    {{ $errors->first('posisi')}}
+                                    {{ $errors->first('keterangan')}}
                                 </div>
                             @endif
                         </div>
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/pemesan">Cancel</a></button>
                         </div>
 
                     </form>

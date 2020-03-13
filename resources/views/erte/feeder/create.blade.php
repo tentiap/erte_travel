@@ -7,7 +7,6 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/feeder">Feeder</a></li>
             <li class="active">Create</li>
           </ol>
@@ -36,18 +35,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Role</label>
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
 
-
-                            <select class="form-control" name="role">
-                                    
-                                    <option name="role" value="3">Feeder</option> 
-                                    
-                            </select>
-
-                            @if($errors->has('role'))
+                             @if($errors->has('username'))
                                 <div class="text-danger">
-                                    {{ $errors->first('role')}}
+                                    {{ $errors->first('username')}}
                                 </div>
                             @endif
 
@@ -55,12 +48,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
 
-                             @if($errors->has('username'))
+                             @if($errors->has('email'))
                                 <div class="text-danger">
-                                    {{ $errors->first('username')}}
+                                    {{ $errors->first('email')}}
                                 </div>
                             @endif
 
@@ -80,19 +73,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
-
-                             @if($errors->has('email'))
-                                <div class="text-danger">
-                                    {{ $errors->first('email')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
-                        <div class="form-group">
                             <label>Nama</label>
                             <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ old('nama') }}">
 
@@ -107,7 +87,7 @@
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="number" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
 
                             @if($errors->has('kontak'))
                                 <div class="text-danger">
@@ -144,6 +124,7 @@
 
 
                             <select class="form-control" name="id_kota">
+                                <option disabled selected value> -- Wilayah -- </option>
                                     @foreach($kota as $k)
                                         <option name="id_kota" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
                                     @endforeach
@@ -159,10 +140,9 @@
                             
                         </div>
 
-                        
-
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/feeder">Cancel</a></button>
                         </div>
 
 

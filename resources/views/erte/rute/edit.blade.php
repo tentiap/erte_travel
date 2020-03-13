@@ -18,58 +18,35 @@
         <div class="box">
             <div class="box-body">
                                    
-                <form method="post" action="/rute/update/{{ $rute->id_rute }}">
+                <form method="post" action="/rute/update/{{ $rute->id_kota_asal }}/{{ $rute->id_kota_tujuan }}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute" value="{{ $rute->id_rute }}         "> 
-
-                             @if($errors->has('id_rute'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_rute')}}
-                                </div>
-                            @endif                 
-                        </div>
-
-
-                        <div class="form-group">
                             <label>Kota Asal</label>
                                 <select class="form-control" name="id_kota_asal" >
-                            
-                                    <!-- <option name="id_kota_asal">{{$rute->kota_asal->nama_kota}}</option> -->
-                                @foreach($kota_asal as $k)
-                                        
-                                        <option value="{{ $k->id_kota }}" {{($rute->id_kota_asal == $k->id_kota)  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
-                                @endforeach
-                                   
+                                    <option disabled selected value> -- Kota Asal -- </option>
+                                        @foreach($kota_asal as $k)       
+                                            <option value="{{ $k->id_kota }}" {{($rute->id_kota_asal == $k->id_kota)  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
+                                        @endforeach
                                 </select>
-
-    
-
                         </div>
 
                         <div class="form-group">
                             <label>Kota Tujuan</label>
                                 <select class="form-control" name="id_kota_tujuan">
-                                   
-                                    <!-- <option name="id_kota_tujuan" >{{$rute->kota_tujuan->nama_kota}}</option>  -->
-                                    @foreach($kota_asal as $k)
-                                        <option value="{{ $k->id_kota }}" {{$rute->id_kota_tujuan == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
-                                    @endforeach
-                                   
-                            </select>
-
-    
-                     </div>
-
-
+                                    <option disabled selected value> -- Kota Tujuan -- </option>
+                                        @foreach($kota_asal as $k)
+                                            <option value="{{ $k->id_kota }}" {{$rute->id_kota_tujuan == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
+                                        @endforeach
+                                </select>
+                        </div>
 
                         <div class="form-group">
                             <label>Harga</label>
                             <input type="text" name="harga" class="form-control" placeholder="Harga" value="{{$rute->harga}}">
+
 
                             @if($errors->has('harga'))
                                 <div class="text-danger">
@@ -83,6 +60,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/rute">Cancel</a></button>
                         </div>
 
                     </form>

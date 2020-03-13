@@ -24,42 +24,44 @@
               </div>
 
               
-
             <div class="box-body">
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
                         <th>ID Trip</th>
-                        <th>Tanggal</th>
-                        <th>Jam</th>
+                        <!-- <th>Tanggal</th>
+                        <th>Jam</th> -->
+                        <th>Jadwal</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
-                        <!-- <th>Username</th>
-                        <th>Email</th>
-                        <th>Kontak</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Wilayah</th> -->
+                        <th>Sopir</th>
+                        <th>Operator</th>
                         <th>OPSI</th>
                       </tr>
-                </thead>
-                <tbody>
-                  @foreach($trip as $t)
-                      
-                            <tr>
-                                <td>{{ $t->id_trip }}</td>
-                                <td>{{ $t->tanggal }}</td>          
-                                <td>{{ $t->jam }}</td>          
-                                <td>{{ $t->rute->kota_asal->nama_kota }}</td>        
-                                <td>{{ $t->rute->kota_tujuan->nama_kota }}</td>                                     
-                                
-                                <td>
-                                    
-                                    <a href="/trip/show/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                  </thead>
 
+                  <tbody>
+                    @foreach($trip as $t)
+                        <tr>
+                            <td>{{ $t->id_trip }}</td>
+                            <td>{{ $t->jadwal }}</td>
+                            <td>{{ $t->rute->kota_tujuan->nama_kota }}</td>        
+                            <td>{{ $t->rute->kota_asal->nama_kota }}</td>
+                            <td>
+                                    @if(empty($t->id_users_sopir))
+                                      <a href="/trip/edit/{{ $t->id_trip }}"><u>Tambah Sopir</u></a>
+                                    @else
+                                      {{ $t->sopir->nama }}
+                                    @endif
+                            </td>
+                            <td>{{ $t->operator->nama }}</td>                   
+                            <td>        
+                                <a href="/trip/show/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
 
-                                    <a href="/trip/edit/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $t->id_trip }}"><i class="fa fa-trash"></i></a>
-                                </td>
+                                <a href="/trip/edit/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+
+                                <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $t->id_trip }}"><i class="fa fa-trash"></i></a>
+                            </td>
                             </tr>
 
 

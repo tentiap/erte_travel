@@ -41,7 +41,7 @@ class SeatController extends Controller
     public function update($id_seat, Request $request){
     	$this->validate($request, [
     		'id_seat' => 'required',
-    		'posisi' => 'required|max:30']);
+    		'keterangan' => 'required|max:30']);
 
     	$seat = Seat::find($id_seat);
     	$seat->id_seat = $request->id_seat;

@@ -23,28 +23,11 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label>ID Rute</label>
-                            <input type="text" name="id_rute" class="form-control" placeholder="ID rute" value="{{ old('id_rute') }}">
-
-                            @if($errors->has('id_rute'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_rute')}}
-                                </div>
-                            @endif
-
-                            
-
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label>Kota Asal</label>
-                               
-
+                            <label>Kota Asal</label> 
                             <select class="form-control" name="id_kota_asal">
+                                <option disabled selected value> -- Kota Asal -- </option>
                                     @foreach($kota_asal as $k)
-                                    <option name="id_kota_asal" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
+                                        <option name="id_kota_asal" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
                                     @endforeach
                             </select>
 
@@ -53,19 +36,15 @@
                                     {{ $errors->first('id_kota_asal')}}
                                 </div>
                             @endif
-
-                           
                         </div>
 
                         <div class="form-group">
-                            <label>Kota Tujuan</label>
-                            
-                           
-
-                             <select class="form-control" name="id_kota_tujuan">
-                                    @foreach($kota_tujuan as $kt)
-                                    <option name="id_kota_tujuan" value="{{$kt->id_kota}}">{{$kt->nama_kota}}</option> 
-                                    @endforeach
+                            <label>Kota Tujuan</label>                           
+                            <select class="form-control" name="id_kota_tujuan">
+                                <option disabled selected value> -- Kota Tujuan -- </option>
+                                        @foreach($kota_tujuan as $kt)
+                                            <option name="id_kota_tujuan" value="{{$kt->id_kota}}">{{$kt->nama_kota}}</option> 
+                                        @endforeach
                             </select>
 
                             @if($errors->has('id_kota_tujuan'))
@@ -91,6 +70,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/rute">Cancel</a></button>
                         </div>
                 </form>
             </div>

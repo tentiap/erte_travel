@@ -31,43 +31,82 @@
                                     {{ $errors->first('id_trip')}}
                                 </div>
                             @endif
-
                         </div>
 
+                        <div class="row">
+                            <div class="col-sm-6">
+                                    <label>Kota Asal</label>
+                                    <select class="form-control" name="id_kota_asal">
+                                        <option disabled selected value> -- Kota Asal -- </option>
+                                            @foreach($rute as $r)
+                                                    <option name="rute" value="{{ $r->id_kota_asal }}">
+                                                    {{$r->kota_asal->nama_kota}}
+                                                    </option> 
+                                            @endforeach 
+                                    </select>
+                            </div>
+
+                                @if($errors->has('id_kota_asal'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('id_kota_asal')}}
+                                    </div>
+                                @endif
+
+                            <div class="col-sm-6">
+                                    <label>Kota Tujuan</label>
+                                    <select class="form-control" name="id_kota_tujuan">
+                                        <option disabled selected value> -- Kota Tujuan -- </option>
+                                            @foreach($rute as $r)
+                                                    <option name="id_kota_tujuan" value="{{ $r->id_kota_tujuan }}">
+                                                    {{$r->kota_tujuan->nama_kota}}
+                                                    </option> 
+                                            @endforeach 
+                                    </select>
+                            </div>
+
+                                @if($errors->has('id_kota_tujuan'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('id_kota_tujuan')}}
+                                    </div>
+                                @endif
+                    </div>
+
                         <div class="form-group">
-                            <label>Operator</label>
+                            <label>Jadwal</label>
+                                <div class='input-group date' id='datetime'>
+                                    <input type='text' class="form-control" name="jadwal" value="{{  old('jadwal') }}" />
+                                      <span class="input-group-addon">
+                                          <span class="glyphicon glyphicon-calendar"></span>
+                                      </span>
+                                </div>
 
+                                @if($errors->has('jadwal'))
+                                        <div class="text-danger">
+                                            {{ $errors->first('jadwal')}}
+                                        </div>
+                                @endif
+                        </div>
 
-                            <select class="form-control" name="id_users_operator">
-                                    @foreach($users as $u)
-                                        @if($u->role == 1)
-                                            <option name="id_users_operator" value="{{$u->id_users}}">{{$u->nama}}</option> 
-                                        @endif
-                                    @endforeach
-                                    
-                            </select>
+                        <!-- <div class="form-group">
+                            <label>Jadwal</label>
+                            <input type="datetime-local" name="jadwal" class="form-control" placeholder="Jadwal" value="{{ old('jadwal') }}">
 
-                            @if($errors->has('id_users_operator'))
+                             @if($errors->has('jadwal'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users_operator')}}
+                                    {{ $errors->first('jadwal')}}
                                 </div>
                             @endif
 
-                            
-                        </div>
+                        </div> -->
 
-                       <div class="form-group">
+                        <div class="form-group">
                             <label>Sopir</label>
-
-
-                            <select class="form-control" name="id_users_sopir">
-                                    @foreach($users as $u)
-                                        @if($u->role == 2)
-                                            <option name="id_users_sopir" value="{{$u->id_users}}">{{$u->nama}}</option> 
-                                        @endif
-                                    @endforeach
-                                    
-                            </select>
+                                <select class="form-control" name="id_users_sopir">
+                                    <option disabled selected value> -- Sopir -- </option>
+                                        @foreach($sopir as $s)
+                                            <option name="id_users_sopir" value="{{$s->id_users}}">{{$s->nama}}</option> 
+                                        @endforeach                                        
+                                </select>
 
                             @if($errors->has('id_users_sopir'))
                                 <div class="text-danger">
@@ -79,82 +118,31 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Feeder</label>
-
-
-                            <select class="form-control" name="id_users_feeder">
-                                    @foreach($users as $u)
-                                        @if($u->role == 3)
-                                            <option name="id_users_feeder" value="{{$u->id_users}}">{{$u->nama}}</option> 
-                                        @endif
-                                    @endforeach
-                                    
-                            </select>
-
-                            @if($errors->has('id_users_feeder'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users_feeder')}}
-                                </div>
-                            @endif
-
-                            
-                        </div>
-
-                        <div class="form-group">
-                            <label>Rute</label>
-
-
-                            <select class="form-control" name="id_rute">
-                                   
-
-                                    @foreach($rute as $r)
+                            <label>Operator</label>
+                                <select class="form-control" name="id_users_operator">
+                                    <option disabled selected value> -- Operator -- </option>
+                                        @foreach($operator as $o)
+                                                <option name="id_users_operator" value="{{$o->id_users}}">{{$o->nama}}</option> 
+                                        @endforeach
                                         
-                                            <option name="id_rute" value="{{$r->id_rute}}">{{$r->kota_asal->nama_kota}} - {{$r->kota_tujuan->nama_kota}}</option> 
-                                        
-                                    @endforeach
-                                    
-                            </select>
+                                </select>
 
-                            @if($errors->has('id_rute'))
+                            @if($errors->has('id_users_operator'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_rute')}}
+                                    {{ $errors->first('id_users_operator')}}
                                 </div>
                             @endif
-
-                            
                         </div>
-
-                        <div class="form-group">
-                            <label>Tanggal</label>
-                            <input type="date" name="tanggal" class="form-control" placeholder="Tanggal" value="{{ old('tanggal') }}">
-
-                             @if($errors->has('tanggal'))
-                                <div class="text-danger">
-                                    {{ $errors->first('tanggal')}}
-                                </div>
-                            @endif
-
-                        </div>
-
-                        <div class="form-group">
-                            <label>Jam</label>
-                            <input type="time" name="jam" class="form-control" placeholder="Jam" value="{{ old('jam') }}">
-
-                             @if($errors->has('jam'))
-                                <div class="text-danger">
-                                    {{ $errors->first('jam')}}
-                                </div>
-                            @endif
-
-                        </div>
-
+                
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button>
                         </div>                 
                 </form>
             </div>
         </div>
     </section>
 
+        <!--  -->
     
 @endsection
