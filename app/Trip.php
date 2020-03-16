@@ -19,6 +19,10 @@ class Trip extends Model
     protected $primaryKey = "id_trip";
     public $incrementing = false;
 
+    // protected $dates = ['jadwal'];
+    // protected $dateFormat = 'YYYY-MM-DD HH:mm';
+    // protected $dateFormat = 'Y-m-d H:i';
+    
     public function sopir()
     {
         return $this->belongsTo(Sopir::class, 'id_users_sopir');

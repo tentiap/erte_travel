@@ -29,9 +29,8 @@
                   <thead>
                       <tr>
                         <th>ID Trip</th>
-                        <!-- <th>Tanggal</th>
-                        <th>Jam</th> -->
-                        <th>Jadwal</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
                         <th>Sopir</th>
@@ -44,9 +43,28 @@
                     @foreach($trip as $t)
                         <tr>
                             <td>{{ $t->id_trip }}</td>
-                            <td>{{ $t->jadwal }}</td>
-                            <td>{{ $t->rute->kota_tujuan->nama_kota }}</td>        
-                            <td>{{ $t->rute->kota_asal->nama_kota }}</td>
+                            <td>{{ date('d-M-Y', strtotime($t->jadwal)) }} </td>
+                            <td>{{ date('H:i', strtotime($t->jadwal)) }} </td>
+                            <td>  
+                                  
+                                      @if($t->id_kota_asal == "K1")
+                                          Bukittinggi
+                                      @elseif($t->id_kota_asal == "K2")
+                                          Padang
+                                      @elseif($t->id_kota_asal == "K3")
+                                          Payakumbuh
+                                      @endif
+                                  
+                            </td>        
+                            <td>
+                                      @if($t->id_kota_tujuan == "K1")
+                                          Bukittinggi
+                                      @elseif($t->id_kota_tujuan == "K2")
+                                          Padang
+                                      @elseif($t->id_kota_tujuan == "K3")
+                                          Payakumbuh
+                                      @endif
+                            </td>
                             <td>
                                     @if(empty($t->id_users_sopir))
                                       <a href="/trip/edit/{{ $t->id_trip }}"><u>Tambah Sopir</u></a>
@@ -86,7 +104,7 @@
                                           });
                                       });
                                     </script>
-                      
+      
                   @endforeach
                 </tbody>
               </table>

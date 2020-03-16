@@ -13,8 +13,9 @@ class TripController extends Controller
 {
     public function index(){
     	$trip = Trip::all();
+        $rute = Rute::all();
 
-    	return view('erte.trip.index', ['trip' => $trip]);
+    	return view('erte.trip.index', ['trip' => $trip, 'rute'=> $rute]);
 
     }
 
