@@ -17,6 +17,17 @@ use Spatie\Permission\Models\Permission;
 
 Auth::routes();
 
+// Route::get('/', 'Auth\TeacherLoginController@showLoginForm')->name('teacher.login');
+// Route::post('/teacher/login', 'Auth\TeacherLoginController@login')->name('teacher.login.post');
+// Route::post('/teacher/logout', 'Auth\TeacherLoginController@logout')->name('teacher.logout');
+
+// /_*
+//  _  teacher profile routes
+//  */
+// Route::group(['middleware'=>'teacher'], function() {
+//     Route::get('/teacher/home', 'Teacher\HomeController@index');
+// });
+
 Route::get('/', function () {
     return view('dashboard');
 })->middleware('auth');

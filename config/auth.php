@@ -18,6 +18,11 @@ return [
         'passwords' => 'users',
     ],
 
+    // 'defaults' => [
+    //     'guard' => 'operator',
+    //     'passwords' => 'operators',
+    // ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -39,6 +44,11 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+
+        'operator'  => [
+          'driver'  => 'session',
+          'provider' => 'operator',
         ],
 
         'api' => [
@@ -69,6 +79,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'operators' => [
+            'driver' => 'eloquent',
+            'model'  => App\Operator::class,
         ],
 
         // 'users' => [
