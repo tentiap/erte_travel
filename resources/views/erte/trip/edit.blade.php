@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label>ID Trip</label>
-                            <input type="text" name="id_trip" class="form-control" placeholder="ID Trip" value="{{old('id_trip', $trip->id_trip)}}">
+                            <input type="text" name="id_trip" class="form-control" placeholder="ID Trip" value="{{old('id_trip', $trip->id_trip)}}" disabled>
 
                              @if($errors->has('id_trip'))
                                 <div class="text-danger">

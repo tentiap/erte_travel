@@ -31,7 +31,7 @@ class TripController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'id_trip' => 'required',
+            // 'id_trip' => 'required',
             'id_users_operator' => 'required',
             // 'id_users_sopir' => 'required',
             'id_kota_asal' => 'required',
@@ -40,16 +40,35 @@ class TripController extends Controller
             
         ]);
 
-         Trip::create([
-            'id_trip' => $request->id_trip,
-            'id_users_operator' => $request->id_users_operator,
-            'id_users_sopir' => $request->id_users_sopir,
-            'id_kota_asal' => $request->id_kota_asal,
-            'id_kota_tujuan' => $request->id_kota_tujuan,
-            'jadwal' => $request->jadwal
-        ]);
+        $trip = new Trip();
+            $trip_select = Trip::select('id_trip');
+            $trip_count = $trip_select->count();
+                if ($trip_count === 0) {
+                    $trip->id_trip = 'T1';
+                }else{
+                    // $lastrow = $trip_select->last();
+                    $lastrow=$trip_select->orderBy('created_at','desc')->first();
+                    $lastrow_id = explode('T', $lastrow->id_trip);
+                    $new_id = $lastrow_id[1]+1;
+                    $trip->id_trip = 'T'.$new_id;
+                }
+        $trip->id_users_operator = $request->id_users_operator;
+        $trip->id_users_sopir = $request->id_users_sopir;
+        $trip->id_kota_asal = $request->id_kota_asal;
+        $trip->id_kota_tujuan = $request->id_kota_tujuan;
+        $trip->jadwal = $request->jadwal;
+        $trip->save();
 
-                session()->flash('flash_success', 'Berhasil menambahkan data trip dengan ID '. $request->input('id_trip')); 
+        //  Trip::create([
+        //     // 'id_trip' => 10,
+        //     'id_users_operator' => $request->id_users_operator,
+        //     'id_users_sopir' => $request->id_users_sopir,
+        //     'id_kota_asal' => $request->id_kota_asal,
+        //     'id_kota_tujuan' => $request->id_kota_tujuan,
+        //     'jadwal' => $request->jadwal
+        // ]);
+
+                session()->flash('flash_success', 'Berhasil menambahkan data trip'); 
 
          return redirect('/trip');
     }
@@ -74,7 +93,7 @@ class TripController extends Controller
 
     public function update($id_trip, Request $request){
     	 $this->validate($request, [
-            'id_trip' => 'required',
+            // 'id_trip' => 'required',
             'id_users_operator' => 'required',
             // 'id_users_sopir' => 'required',
             'id_kota_asal' => 'required',
@@ -82,7 +101,7 @@ class TripController extends Controller
             'jadwal' => 'required']);
 
             $trip = Trip::find($id_trip);
-            $trip->id_trip = $request->id_trip;
+            // $trip->id_trip = $request->id_trip;
             $trip->id_users_operator = $request->id_users_operator;
             $trip->id_users_sopir = $request->id_users_sopir;
             $trip->id_kota_asal = $request->id_kota_asal;

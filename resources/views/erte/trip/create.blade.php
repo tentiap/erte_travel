@@ -22,7 +22,7 @@
 
                         {{ csrf_field() }}
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>ID Trip</label>
                             <input type="text" name="id_trip" class="form-control" placeholder="ID trip" value="{{ old('id_trip') }}">
 
@@ -31,7 +31,7 @@
                                     {{ $errors->first('id_trip')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
 
                         <div class="row">
                             <div class="col-sm-6">
