@@ -22,7 +22,7 @@
 
                         {{ csrf_field() }}
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>ID Users</label>
                             <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
 
@@ -33,7 +33,7 @@
                             @endif
 
                         </div>
-
+ -->
             
 
                         <div class="form-group">
@@ -126,6 +126,7 @@
 
 
                             <select class="form-control" name="id_kota">
+                                <option disable selected value>--Wilayah--</option>
                                     @foreach($kota as $k)
                                         <option name="id_kota" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
                                     @endforeach

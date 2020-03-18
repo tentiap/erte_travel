@@ -6,8 +6,18 @@ use Illuminate\Http\Request;
 use App\Operator;
 use App\Kota;
 
+
 class OperatorController extends Controller
 {
+//     public function __construct() {
+//         $this->middleware(['auth', 'isAdmin']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
+//     }
+
+    public function __construct()
+    {
+        $this->middleware('auth:operator');
+    }
+
     public function index(){
     	$operator = Operator::all();
         return view('erte.operator.index', ['operator' => $operator]);
@@ -22,7 +32,7 @@ class OperatorController extends Controller
 	public function store(Request $request){
     	$this->validate($request, 
             [
-    		'id_users' => 'required',
+    		// 'id_users' => 'required',
             'id_kota' => 'required',
     		'username' => 'required',
             'email' => 'required|email',
@@ -32,18 +42,40 @@ class OperatorController extends Controller
             'jenis_kelamin' => 'required'           
         ]);
 
-    	$operator = Operator::create([
-    		'id_users' => $request->id_users,
-            'id_kota' => $request->id_kota,
-            'username' => $request->username,
-            'password' => bcrypt('password'),
-            'email' => $request->email,
-            // 'password' => $request->password,
-            'nama' => $request->nama,
-            'kontak' => $request->kontak,
-            'jenis_kelamin' => $request->jenis_kelamin
+        $operator = new Operator();
+            $operator_select = Operator::select('id_users');
+            $operator_count = $operator_select->count();
+                // if ($operator_count === 1 && $operator->id_users === "admin" ) {
+                if ($operator_count === 1) {
+                    $operator->id_users = 'O1';
+                }else{
+                    // $lastrow = $trip_select->last();
+                    $lastrow=$operator_select->orderBy('created_at','desc')->first();
+                    $lastrow_id = explode('O', $lastrow->id_users);
+                    $new_id = $lastrow_id[1]+1;
+                    $operator->id_users = 'O'.$new_id;
+                }
+        $operator->id_kota = $request->id_kota;
+        $operator->username = $request->username;
+        $operator->email = $request->email;
+        $operator->password = $request->password;
+        $operator->nama = $request->nama;
+        $operator->kontak = $request->kontak;
+        $operator->jenis_kelamin = $request->jenis_kelamin;
+        $operator->save();    
 
-    	]);
+    	// $operator = Operator::create([
+    	// 	'id_users' => $request->id_users,
+     //        'id_kota' => $request->id_kota,
+     //        'username' => $request->username,
+     //        // 'password' => bcrypt('password'),
+     //        'email' => $request->email,
+     //        'password' => $request->password,
+     //        'nama' => $request->nama,
+     //        'kontak' => $request->kontak,
+     //        'jenis_kelamin' => $request->jenis_kelamin
+
+    	// ]);
 
         // $users->attachRole('operator');
 
@@ -74,22 +106,22 @@ class OperatorController extends Controller
     public function update($id_users, Request $request, Operator $operator){
     	$this->validate($request, 
             [
-    		'id_users' => 'required',
+    		// 'id_users' => 'required',
             'id_kota' => 'required',
             'username' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
+            // 'password' => 'required',
             'nama' => 'required',
             'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required'
         ]);
 
         $operator = Operator::find($id_users);
-        $operator->id_users = $request->id_users;
+        // $operator->id_users = $request->id_users;
         $operator->id_kota = $request->id_kota;
         $operator->username = $request->username;
         $operator->email = $request->email;
-        $operator->password = bcrypt('password');
+        // $operator->password = bcrypt('password');
         // $operator->password = $request->password;
         $operator->nama = $request->nama;
         $operator->kontak = $request->kontak;

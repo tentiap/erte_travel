@@ -15,7 +15,12 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'operator',
+    ],
+
+    'operator' => [
+        'driver' => 'eloquent',
+        'model' => App\Operator::class,
     ],
 
     /*
@@ -46,6 +51,18 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'operator'  => [
+          'driver'  => 'session',
+          'provider' => 'operator',
+        ],
+
+        'operator-api' => [
+            'driver' => 'token',
+            'provider' => 'operator',
+        ],
+
+
     ],
 
     /*
@@ -69,6 +86,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'operator' => [
+            'driver' => 'eloquent',
+            'model'  => App\Operator::class,
         ],
 
         // 'users' => [
@@ -97,6 +119,12 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
+        ],
+
+        'operator' => [
+            'provider' => 'operator',
+            'table' => 'password_resets',
+            'expire' => 15,
         ],
     ],
 

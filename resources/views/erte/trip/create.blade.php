@@ -102,7 +102,7 @@
                         <div class="form-group">
                             <label>Sopir</label>
                                 <select class="form-control" name="id_users_sopir">
-                                    <option disabled selected value> -- Sopir -- </option>
+                                    <option value=""> -- Sopir -- </option>
                                         @foreach($sopir as $s)
                                             <option name="id_users_sopir" value="{{$s->id_users}}">{{$s->nama}}</option> 
                                         @endforeach                                        
@@ -117,7 +117,7 @@
                             
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Operator</label>
                                 <select class="form-control" name="id_users_operator">
                                     <option disabled selected value> -- Operator -- </option>
@@ -132,7 +132,7 @@
                                     {{ $errors->first('id_users_operator')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
                 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">

@@ -99,11 +99,16 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/adminlte/img/admin.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Nanti nama diganti</span>
+              <span class="hidden-xs">{{ Auth::guard('operator')->user()->nama }}</span>
               
             </a>
-            <ul class="dropdown-menu">
-                <li><a href="/logout">Logout</a></li> 
+            <ul class="dropdown-menu" role="menu">
+                <li class="user-footer">
+                    
+                      <a href="/logout" class="btn btn-default btn-flat, fa fa-sign-out" >Logout</a>
+                    
+                </li>
+                
            </ul>
           </li>
 

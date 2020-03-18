@@ -17,9 +17,21 @@ use Spatie\Permission\Models\Permission;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware('auth');
+// Route::get('/operator/login', 'Auth\LoginController@showLoginForm')->name('operator.login');
+Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::post('/operator/login', 'Auth\LoginController@login')->name('operator.login.post');
+Route::post('/operator/logout', 'Auth\LoginController@logout')->name('operator.logout');
+
+/*
+ _  teacher profile routes
+ */
+// Route::group(['middleware'=>'operator'], function() {
+//     return view('dashboard');
+// });
+
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->middleware('auth');
 
 // Route::get('/home',function(){
 // 	return view('dashboard');

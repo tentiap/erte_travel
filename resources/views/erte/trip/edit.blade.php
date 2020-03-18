@@ -90,7 +90,7 @@
                        <div class="form-group">
                             <label>Sopir</label>
                             <select class="form-control" name="id_users_sopir">
-                                <option disabled selected value> -- Sopir -- </option>
+                                <option value=""> -- Sopir -- </option>
                                     @foreach($sopir as $s)
                                             <option  value="{{$s->id_users}}"{{$trip->id_users_sopir == $s->id_users ? 'selected' : ''}}>{{$s->nama}}</option>  
                                     @endforeach
@@ -103,7 +103,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Operator</label>
                             <select class="form-control" name="id_users_operator">
                                     @foreach($operator as $o)
@@ -117,7 +117,7 @@
                                     {{ $errors->first('id_users_operator')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
