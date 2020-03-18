@@ -29,16 +29,13 @@
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $sopir->id_users)}}">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $sopir->id_users)}}" disabled>
 
                             @if($errors->has('id_users'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_users')}}
                                 </div>
                             @endif
-
-                          
-
                         </div>
 
                     
@@ -55,7 +52,7 @@
                        
                         </div>
 
-                        <div class="form-group">
+<!--                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password" >
 
@@ -65,7 +62,7 @@
                                     </div>
                             @endif
                         </div>
-
+ -->
                         <div class="form-group">
                             <label>Email</label>
                             <input type="text" name="email" class="form-control" placeholder="Email" value="{{old('email', $sopir->email)}}">

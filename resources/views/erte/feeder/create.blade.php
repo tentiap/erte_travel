@@ -22,7 +22,7 @@
 
                         {{ csrf_field() }}
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>ID Users</label>
                             <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
 
@@ -32,7 +32,7 @@
                                 </div>
                             @endif
 
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Username</label>
@@ -115,8 +115,6 @@
                             @endif
 
                         </div>
-
-
 
 
                         <div class="form-group">

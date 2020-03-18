@@ -126,7 +126,7 @@
 
 
                             <select class="form-control" name="id_kota">
-                                <option disable selected value>--Wilayah--</option>
+                                <option disabled selected value>--Wilayah--</option>
                                     @foreach($kota as $k)
                                         <option name="id_kota" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
                                     @endforeach

@@ -123,6 +123,7 @@
                             <label>Wilayah</label>
 
                             <select class="form-control" name="id_kota">
+                                <option disabled selected value>---Wilayah---</option>
                                     @foreach($kota as $k)
                                         <!-- <option name="id_kota" value="{{$operator->kota->nama_kota}}">{{$k->nama_kota}}</option>  -->
                                         <option value="{{ $k->id_kota }}" {{$operator->id_kota == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>

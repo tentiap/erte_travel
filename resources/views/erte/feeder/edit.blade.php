@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $feeder->id_users)}}">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $feeder->id_users)}}" disabled>
 
                              @if($errors->has('id_users'))
                                 <div class="text-danger">
@@ -58,7 +58,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password" >
 
@@ -67,7 +67,7 @@
                                     {{ $errors->first('password')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Nama</label>
@@ -113,6 +113,7 @@
                         <div class="form-group">
                             <label>Wilayah</label>
                             <select class="form-control" name="id_kota">
+                                <option disabled selected value>---Wilayah---</option>
                                     @foreach($kota as $k)
                                         <!-- <option name="id_kota" value="{{$feeder->kota->nama_kota}}">{{$k->nama_kota}}</option>  -->
                                         <option value="{{ $k->id_kota }}" {{$feeder->id_kota == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
