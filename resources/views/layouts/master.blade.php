@@ -277,6 +277,21 @@
       })
   </script>
 
+  <script>
+    $('#trip_kota_asal').change(function(){
+        var selected_kota_asal = $('trip_kota_asal').val();
+        $.get('/trip_id_kota_tujuan?trip_kota_asal' +selected_kota_asal, function(data){
+              $('#trip_kota_tujuan').empty();
+              $('#trip_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
+              $.each(data, function(index, kota_tujuan){
+                $('#trip_kota_tujuan').append('<option value='+kota_tujuan.id_kota_tujuan+'">'+kota_tujuan.nama_kota+'</option>');
+              });
+        });  
+    });
+  </script>
+
+
+
 
 
 @yield('cs')

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Trip;
 use App\Rute;
 use App\Sopir;
 use App\Operator;
+use App\Kota;
 use Auth;
 
 
@@ -17,7 +19,6 @@ class TripController extends Controller
         $rute = Rute::all();
 
     	return view('erte.trip.index', ['trip' => $trip, 'rute'=> $rute]);
-
     }
 
     public function create(){
@@ -25,10 +26,18 @@ class TripController extends Controller
         $operator = Operator::all();
         $sopir = Sopir::all();
         $rute = Rute::all();
+        $kota = Kota::all();
         
-        return view('erte.trip.create', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute]);
+        return view('erte.trip.create', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
     	
     }
+
+    public function getIdKotaTujuan(){
+        $id_kota_asal = Input::get('id_kota_asal');
+        $id_kota_tujuan = Rute::where('id_kota_asal', $id_kota_asal)->get();
+        return response()->json($id_kota_tujuan);
+
+    } 
 
     public function store(Request $request){
         $this->validate($request, [
