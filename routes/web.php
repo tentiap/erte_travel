@@ -122,7 +122,7 @@ Route::get('/trip/edit/{id_trip}', 'TripController@edit');
 Route::put('/trip/update/{id_trip}', 'TripController@update');
 Route::get('/trip/delete/{id_trip}', 'TripController@delete');
 Route::get('/trip/show/{id_trip}', 'TripController@show');
-Route::get('/trip_id_kota_tujuan', 'TripController@getIdKotaTujuan');
+Route::get('/trip_kota_tujuan', 'TripController@getKotaTujuan');
 
 //------------------------------------------------------PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('pesanan', 'PesananController@index');

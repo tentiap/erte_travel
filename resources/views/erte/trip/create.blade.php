@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                     <label>Kota Asal</label>
-                                    <select class="form-control" name="id_kota_asal" id="trip_kota_asal">
+                                    <select class="form-control" name="id_kota_asal" id="id_kota_asal">
                                         <option disabled selected value> -- Kota Asal -- </option>
                                             @foreach($kota as $k)
                                                     <option value="{{ $k->id_kota }}">
@@ -54,7 +54,7 @@
 
                             <div class="col-sm-6">
                                     <label>Kota Tujuan</label>
-                                    <select class="form-control" name="id_kota_tujuan" id="trip_kota_tujuan">
+                                    <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan">
                                         <option disabled selected value> -- Kota Tujuan -- </option>
                                             <!-- @foreach($rute as $r)
                                                     <option name="id_kota_tujuan" value="{{ $r->id_kota_tujuan }}">

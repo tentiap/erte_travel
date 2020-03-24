@@ -278,15 +278,22 @@
   </script>
 
   <script>
-    $('#trip_kota_asal').change(function(){
-        var selected_kota_asal = $('trip_kota_asal').val();
-        $.get('/trip_id_kota_tujuan?trip_kota_asal' +selected_kota_asal, function(data){
-              $('#trip_kota_tujuan').empty();
-              $('#trip_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
-              $.each(data, function(index, kota_tujuan){
-                $('#trip_kota_tujuan').append('<option value='+kota_tujuan.id_kota_tujuan+'">'+kota_tujuan.nama_kota+'</option>');
-              });
-        });  
+    $(document).ready(function() {
+        $('#id_kota_asal').change(function(){
+            // console.log("Tenti");
+            var selected_kota_asal = $('#id_kota_asal').val();
+            // console.log(selected_kota_asal);
+            $.get('/trip_kota_tujuan?id_kota_asal=' +selected_kota_asal, function(data){
+                  $('#id_kota_tujuan').empty();
+                  // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
+                  $.each(data, function(index, id_kota_tujuanObj){
+                    // return Rute::get()->load('kota_tujuan');
+                    // console.log(id_kota_tujuanObj);
+                    // console.log(id_kota_tujuanObj.kota_tujuan.nama_kota);
+                    $('#id_kota_tujuan').append('<option value='+id_kota_tujuanObj.id_kota_tujuan+'">'+id_kota_tujuanObj.id_kota_tujuan+'</option>');
+                  });
+            });  
+        });
     });
   </script>
 

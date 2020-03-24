@@ -32,12 +32,13 @@ class TripController extends Controller
     	
     }
 
-    public function getIdKotaTujuan(){
+    public function getKotaTujuan(){
         $id_kota_asal = Input::get('id_kota_asal');
         $id_kota_tujuan = Rute::where('id_kota_asal', $id_kota_asal)->get();
         return response()->json($id_kota_tujuan);
-
-    } 
+        // $tes2 = Rute::get()->load('kota_tujuan');
+        
+    }
 
     public function store(Request $request){
         $this->validate($request, [
