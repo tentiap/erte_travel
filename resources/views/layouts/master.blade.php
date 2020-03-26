@@ -289,8 +289,8 @@
                   $.each(data, function(index, id_kota_tujuanObj){
                     // return Rute::get()->load('kota_tujuan');
                     // console.log(id_kota_tujuanObj);
-                    // console.log(id_kota_tujuanObj.kota_tujuan.nama_kota);
-                    $('#id_kota_tujuan').append('<option value='+id_kota_tujuanObj.id_kota_tujuan+'">'+id_kota_tujuanObj.id_kota_tujuan+'</option>');
+                    console.log(id_kota_tujuanObj.kota_tujuan.nama_kota);
+                    $('#id_kota_tujuan').append('<option value='+id_kota_tujuanObj.id_kota_tujuan+'>'+id_kota_tujuanObj.kota_tujuan.nama_kota+'</option>');
                   });
             });  
         });

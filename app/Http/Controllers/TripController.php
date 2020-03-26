@@ -33,12 +33,35 @@ class TripController extends Controller
     }
 
     public function getKotaTujuan(){
-        $id_kota_asal = Input::get('id_kota_asal');
-        $id_kota_tujuan = Rute::where('id_kota_asal', $id_kota_asal)->get();
-        return response()->json($id_kota_tujuan);
-        // $tes2 = Rute::get()->load('kota_tujuan');
+        $id_kota_a = Input::get('id_kota_asal');
+        // $rute = Rute::with(['kota_tujuan' => function ($query) use ($id_kota_a){
+        //     $query->where('kota.id_kota', $id_kota_a);
+        // }])->get();
+        // $query->where('kota.id_kota', $id_kota_a);
+
+        $rute = Rute::with("kota_tujuan")->whereHas("kota_asal",function($query) use($id_kota_a){
+            $query->where("id_kota","=",$id_kota_a);
+        })->get();
+
+        // $query->where('userid','=' ,$id_kota_asal);
+        // dd($id_kota_asal, response()->json($rute));
+        // dd($id_kota_a);
+        // dd( response()->json($rute));
+        return response()->json($rute);
+
+        //  $id_kota_tujuan = Rute::where('id_kota_asal', $id_kota_asal)->get();
+        // return response()->json($id_kota_tujuan);
+        // return Rute::get()->load('kota_tujuan');
         
     }
+
+    // public function getkotatujuan(){
+    //     $id_kota_asal = Input::get('id_kota_asal');
+    //     $rute = Rute::with(['kota_tujuan' => function ($query) use ($id_kota_asal){
+    //         $query->where('id', $id_kota_asal);
+    //     }])->get();
+    //     return response()->json($rute);
+    // }
 
     public function store(Request $request){
         $this->validate($request, [

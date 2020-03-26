@@ -60,7 +60,7 @@
                                                     <option name="id_kota_tujuan" value="{{ $r->id_kota_tujuan }}">
                                                     {{$r->kota_tujuan->nama_kota}}
                                                     </option> 
-                                            @endforeach --> 
+                                            @endforeach  -->
                                     </select>
                             </div>
 
