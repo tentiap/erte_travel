@@ -45,7 +45,7 @@
                             <td>{{ $t->id_trip }}</td>
                             <td>{{ date('d-M-Y', strtotime($t->jadwal)) }} </td>
                             <td>{{ date('H:i', strtotime($t->jadwal)) }} </td>
-                            <td>  
+                            <td>
                                   
                                       @if($t->id_kota_asal == "K1")
                                           Bukittinggi

@@ -7,7 +7,7 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/feeder">Trip</a></li>
+            <li><a href="/trip">Trip</a></li>
             <li class="active">Create</li>
           </ol>
   </section>

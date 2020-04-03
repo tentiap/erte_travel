@@ -33,6 +33,7 @@
                         <a href="/trip/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Trip</a>                       
                     </div>
                         </br>
+                        </br>
 
                     <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -56,64 +57,89 @@
                             });
                     </script>
 
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                          <i class="fa fa-map-pin"></i>
+                          <h3 class="box-title">Trip {{ $trip->id_trip }}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <dl class="dl-horizontal">
+                                <dt>Tanggal</dt>
+                                <dd>{{ date('d M Y', strtotime($trip->jadwal)) }} </dd>
+                                <dt>Kota Asal</dt>
+                                <dd>
+                                      @if($trip->id_kota_asal == "K1")
+                                          Bukittinggi
+                                      @elseif($trip->id_kota_asal == "K2")
+                                          Padang
+                                      @elseif($trip->id_kota_asal == "K3")
+                                          Payakumbuh
+                                      @endif
+                                </dd>
+                                <dt>Sopir</dt>
+                                <dd>
+                                    @if(empty($trip->id_users_sopir))
+                                      <a href="/trip/edit/{{ $trip->id_trip }}"><u>Tambah Sopir</u></a>
+                                    @else
+                                      {{ $trip->sopir->nama }}
+                                    @endif
+                                </dd>
+                              </dl>
+                            </div>
 
+                            <div class="col-sm-6">
+                              <dl class="dl-horizontal">
+                                <dt>Jam</dt>
+                                <dd>{{ date('H:i', strtotime($trip->jadwal)) }}</dd>
+                                <dt>Kota Tujuan</dt>
+                                <dd>
+                                      @if($trip->id_kota_tujuan == "K1")
+                                          Bukittinggi
+                                      @elseif($trip->id_kota_tujuan == "K2")
+                                          Padang
+                                      @elseif($trip->id_kota_tujuan == "K3")
+                                          Payakumbuh
+                                      @endif
+                                </dd>
+                                <dt>Operator</dt>
+                                <dd>{{ $trip->operator->nama }}</dd>
+                              </dl>
+                            </div>
+                        </div>
 
+                <div class="box-body">
+                <table class="table table-bordered table-hover table-striped">
+                  <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Seat</th>
+                        <th>Penumpang</th>
+                        <th>Detail Asal</th>
+                        <th>Detail Tujuan</th>
+                        <th>OPSI</th>
+                      </tr>
+                  </thead>
 
-                   
+                  <tbody>
+                    @foreach($pesanan as $p)
+                        <tr>
+                            <td>{{ $p->detail_pesanan->id_seat }}</td>
+                            <td>{{ date('d-M-Y', strtotime($trip->jadwal)) }} </td>
+                            <td>{{ date('H:i', strtotime($trip->jadwal)) }} </td>
+                            <td>{{ date('H:i', strtotime($trip->jadwal)) }} </td>        
+                            <td>        
+                                <a href="/trip/show/{{ $trip->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
       
-                        <div class="form-group">
-                            <label>ID Trip</label>
-                            <input type="text" name="id_trip" class="form-control"  value="{{$trip->id_trip}}" readonly>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tanggal</label>
-
-                            <input type="text" name="tanggal" class="form-control" value="{{$trip->tanggal}}" readonly>                                                  
-                        </div>
-
-                        <div class="form-group">
-                            <label>Jam</label>
-                            <input type="text" name="jam" class="form-control"  value="{{$trip->jam}}" readonly>
-
-                             
-                        </div>
-
-                        
-
-                        <div class="form-group">
-                            <label>Rute</label>
-                            <input type="text" name="rute" class="form-control"  value="{{$trip->rute->kota_asal->nama_kota}} - {{$trip->rute->kota_tujuan->nama_kota}}" readonly>
-
-                             
-                        </div>
-
-                        <div class="form-group">
-                            <label>Sopir</label>
-                            <input type="text" name="sopir" class="form-control"  value="{{$trip->sopir->users->nama}}" readonly>
-
-                             
-                        </div>
-
-                        <div class="form-group">
-                            <label>Feeder</label>
-                            <input type="text" name="feeder" class="form-control"  value="{{$trip->feeder->users->nama}}" readonly>
-
-                             
-                        </div>
-
-                        <div class="form-group">
-                            <label>Operator</label>
-                            <input type="text" name="operator" class="form-control"  value="{{$trip->operator->users->nama}}" readonly>
-
-                             
-                        </div>
-
-                        
-
-                       
-
+                  
+                </tbody>
+              </table>
+            </div>
 
             </div>
         </div>

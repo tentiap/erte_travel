@@ -8,6 +8,7 @@ use App\Trip;
 use App\Rute;
 use App\Sopir;
 use App\Operator;
+use App\Pesanan;
 use App\Kota;
 use Auth;
 
@@ -112,16 +113,20 @@ class TripController extends Controller
         $operator = Operator::all();
         $sopir = Sopir::all();
         $rute = Rute::all();
-        return view('erte.trip.edit', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute]);
+        $kota = Kota::all();
+        
+        return view('erte.trip.edit', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
     }
 
      public function show($id_trip){
 
-        // $operator = Operator::
         $trip = Trip::find($id_trip);
-        // $kota = Kota::find($id_trip);
+        // $pesanan = Pesanan::with("detail_pesanan")->whereHas("detail_pesanan",function($query) use($id_trip){
+        //     $query->where("id_trip","=",$trip);
+        // })->get();
+        $pesanan = Pesanan::all();
         
-        return view('erte.trip.show', ['trip' => $trip]);
+        return view('erte.trip.show', ['trip' => $trip, 'pesanan' => $pesanan]);
 
     }
 

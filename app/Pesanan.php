@@ -13,10 +13,11 @@ class Pesanan extends Model
         'id_pesanan',
         'id_trip', 
         'id_users_pemesan', 
-        'tanggal_pesan'
+        'tanggal_pesan',
+        'id_users_operator'
     ];
     
-    protected $primaryKey = ['id_pesanan', 'id_trip'];
+    protected $primaryKey = ['id_pesanan', 'id_trip', 'id_users_pemesan'];
     // public $incrementing = false;
 
     public function detail_pesanan()
@@ -32,5 +33,10 @@ class Pesanan extends Model
     public function trip()
     {
         return $this->belongsTo(Trip::class, 'id_trip');
+    }
+
+    public function operator()
+    {
+        return $this->belongsTo(Operator::class, 'id_users_operator');
     }
 }

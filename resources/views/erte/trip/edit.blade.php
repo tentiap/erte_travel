@@ -38,10 +38,10 @@
                         <div class="row">
                             <div class="col-sm-6">
                                     <label>Kota Asal</label>
-                                    <select class="form-control" name="id_kota_asal"> 
-                                            @foreach($rute as $r)
-                                                    <option value="{{ $r->id_kota_asal }}"{{$trip->id_kota_asal == $r->id_kota_asal ? 'selected' : ''}}>
-                                                    {{$r->kota_asal->nama_kota}}
+                                    <select class="form-control" name="id_kota_asal" id="id_kota_asal"> 
+                                            @foreach($kota as $k)
+                                                    <option value="{{ $k->id_kota }}"{{$trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
+                                                    {{$k->nama_kota}}
                                                     </option> 
                                             @endforeach 
                                     </select>
@@ -55,10 +55,10 @@
 
                             <div class="col-sm-6">
                                     <label>Kota Tujuan</label>
-                                    <select class="form-control" name="id_kota_tujuan">
-                                            @foreach($rute as $r)
-                                                    <option name="rute" value="{{ $r->id_kota_tujuan }}"{{$trip->id_kota_tujuan == $r->id_kota_tujuan ? 'selected' : ''}}>
-                                                    {{$r->kota_tujuan->nama_kota}}
+                                    <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan">
+                                            @foreach($kota as $k)
+                                                    <option value="{{ $k->id_kota }}"{{$trip->id_kota_tujuan == $k->id_kota ? 'selected' : ''}}>
+                                                    {{$k->nama_kota}}
                                                     </option> 
                                             @endforeach 
                                     </select>

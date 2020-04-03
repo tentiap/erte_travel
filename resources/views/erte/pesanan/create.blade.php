@@ -22,11 +22,13 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label>Rute</label>
-                            <select class="form-control" onchange="getDateTime()" id="id_rute" name="id_rute">
+                            <!-- <select class="form-control" onchange="getDateTime()" id="id_rute" name="id_rute"> -->
+                            <select class="form-control" id="id_rute" name="id_rute">
                                     @foreach($trip as $t)
-                                        <option value="{{$t->id_rute}}">{{$t->rute->kota_asal->nama_kota}} - {{$t->rute->kota_tujuan->nama_kota}} 
+                                        <option value="{{$t->rute->kota_asal->id_kota_asal}}">{{$t->rute->kota_asal->nama_kota}}
                                          </option> 
                                     @endforeach
+
                                     @if($errors->has('id_trip'))
                                         <div class="text-danger">
                                             {{ $errors->first('id_trip')}}
@@ -34,6 +36,7 @@
                                     @endif 
                             </select>
                         </div>
+                        
                         <div class="form-group" id="form_date-time">
                             <label>Tanggal dan Jam</label>
                             <select class="form-control" onchange="" id="id_date-time" name="bangke">
