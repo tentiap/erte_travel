@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CompositeKeyTrait;
+// use Awobaz\Compoships\Compoships; 
 
 class Pesanan extends Model
 {
@@ -17,12 +18,16 @@ class Pesanan extends Model
         'id_users_operator'
     ];
     
-    protected $primaryKey = ['id_pesanan', 'id_trip', 'id_users_pemesan'];
+    protected $primaryKey = ['id_pesanan', 'id_trip'];
     // public $incrementing = false;
 
     public function detail_pesanan()
-    {
-        return $this->hasMany(Detail_Pesanan::class);
+    {   
+        // return $this->hasMany(Detail_Pesanan::class, ['id_pesanan', 'id_trip'], ['id_trip', 'id_seat']);   
+
+        return $this->hasMany(Detail_Pesanan::class, ['id_pesanan', 'id_trip'], ['id_pesanan', 'id_trip']);   
+
+        // return $this->hasMany(Detail_Pesanan::class);   
     }
 
     public function pemesan()

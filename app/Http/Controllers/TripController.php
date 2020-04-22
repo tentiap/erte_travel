@@ -10,6 +10,7 @@ use App\Sopir;
 use App\Operator;
 use App\Pesanan;
 use App\Kota;
+use App\Detail_Pesanan;
 use Auth;
 
 
@@ -121,12 +122,23 @@ class TripController extends Controller
      public function show($id_trip){
 
         $trip = Trip::find($id_trip);
-        // $pesanan = Pesanan::with("detail_pesanan")->whereHas("detail_pesanan",function($query) use($id_trip){
-        //     $query->where("id_trip","=",$trip);
-        // })->get();
-        $pesanan = Pesanan::all();
+        // $pesanan = Pesanan::all();
+        // $pesanan = Pesanan::where('id_trip', $id_trip)->get();
+        $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+                    ->select('pesanan.id_trip as pesanan_trip',
+                             'detail_pesanan.id_seat as detail_seat',
+                             'detail_pesanan.nama_penumpang as detail_nama')->get();
+        $detail_pesanan = Detail_Pesanan::all();
         
-        return view('erte.trip.show', ['trip' => $trip, 'pesanan' => $pesanan]);
+        // $pesanan = Pesanan::with(['detail_pesanan' => function ($query) use($trip) {
+        //     $query->where('id_pesanan', '=', $trip);
+        // }])->get();
+
+        // $pesanan = Pesanan::with('detail_pesanan'->whereHas('detail_pesanan', function($query) use($trip){
+        //     $query->where('id_trip',$trip);
+        // }))->get();
+        
+        return view('erte.trip.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail_pesanan' => $detail_pesanan]);
 
     }
 

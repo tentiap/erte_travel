@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-
-
 @section('breadcrumb')
     <section class="content-header">
       <h1>
@@ -114,7 +112,6 @@
                 <table class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
-                        <th>No</th>
                         <th>Seat</th>
                         <th>Penumpang</th>
                         <th>Detail Asal</th>
@@ -124,17 +121,7 @@
                   </thead>
 
                   <tbody>
-                    @foreach($pesanan as $p)
-                        <tr>
-                            <td>{{ $p->detail_pesanan->id_seat }}</td>
-                            <td>{{ date('d-M-Y', strtotime($trip->jadwal)) }} </td>
-                            <td>{{ date('H:i', strtotime($trip->jadwal)) }} </td>
-                            <td>{{ date('H:i', strtotime($trip->jadwal)) }} </td>        
-                            <td>        
-                                <a href="/trip/show/{{ $trip->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
-                            </td>
-                        </tr>
-                    @endforeach
+                    
       
                   
                 </tbody>
