@@ -44,4 +44,6 @@ class Pesanan extends Model
     {
         return $this->belongsTo(Operator::class, 'id_users_operator');
     }
+
+    
 }

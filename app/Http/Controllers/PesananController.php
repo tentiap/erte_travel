@@ -25,9 +25,6 @@ class PesananController extends Controller
         // dd($pesanan);
 
 
-
-       
-
         return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
     }
 
@@ -110,15 +107,24 @@ class PesananController extends Controller
 
         $trip = Trip::find($id_trip);
         $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
+        $detail_pesanan = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
         $detail = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
                     ->where('pesanan.id_pesanan', $id_pesanan)
                     ->select('pesanan.id_trip as pesanan_trip',
                              'pesanan.id_pesanan as pesanan_id',
+                             'pesanan.id_users_pemesan as pesanan_pemesan',
+                             'pesanan.tanggal_pesan as pesanan_tanggal',
                              'detail_pesanan.id_seat as detail_seat',
-                             'detail_pesanan.nama_penumpang as detail_nama')
+                             'detail_pesanan.nama_penumpang as detail_nama',
+                             'detail_pesanan.jenis_kelamin as detail_jk',
+                             'detail_pesanan.detail_asal as detail_asal',
+                             'detail_pesanan.detail_tujuan as detail_tujuan',
+                             'detail_pesanan.no_hp as detail_hp',
+                             'detail_pesanan.status as detail_status',
+                             'detail_pesanan.biaya_tambahan as detail_biaya')
                     ->get();
         
-        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail]);
+        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'detail_pesanan' => $detail_pesanan]);
 
     }
 

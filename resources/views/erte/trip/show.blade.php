@@ -109,7 +109,7 @@
                         </div>
 
                 <div class="box-body">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="sortdata">
                   <thead>
                       <tr>
                         <th>Seat</th>
@@ -121,7 +121,17 @@
                   </thead>
 
                   <tbody>
-                    
+                    @foreach($detail_pesanan as $d)
+                      <tr>
+                        <td>{{ $d->id_seat}}</td>
+                        <td>{{ $d->nama_penumpang}}</a></td>
+                        <td>{{ $d->detail_asal}}</td>
+                        <td>{{ $d->detail_tujuan}}</td>
+                        <td><a href="/pesanan/show/{{ $d->id_pesanan }}/{{ $d->id_trip}}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>
+                        
+                      </tr>
+                    @endforeach
+                      
       
                   
                 </tbody>

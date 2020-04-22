@@ -25,6 +25,11 @@ class Feeder extends Model
         return $this->belongsTo(Kota::class, 'id_kota');
     }
 
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class);
+    }
+
     public function detail_pesanan()
     {
         return $this->hasMany(detail_pesanan::class);
