@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Pesanan;
 use App\Trip;
 use App\Pemesan;
 use App\Operator;
 use App\Detail_Pesanan;
+use App\Kota;
+use DateTime;
+use Carbon\Carbon;
 
 class PesananController extends Controller
 {
     public function index(){
     	$pesanan = Pesanan::all();
+        $jumlah = Pesanan::with('detail_pesanan')->where('id_pesanan', 'id_pesanan')->get();
         // $pesanan = Pesanan::with("detail_pesanan")->where("id_pesanan", 1)->get();
         // $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
         //             ->select('pesanan.id_trip as pesanan_trip',
@@ -32,9 +37,59 @@ class PesananController extends Controller
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
     	$pemesan = Pemesan::all();
+        $kota = Kota::all();
     	
-     	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan]);
+     	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'kota' => $kota]);
 	}
+
+    public function getTrip(){
+        $id_kota_a = Input::get('id_kota_asal');
+        $id_kota_t = Input::get('id_kota_tujuan');
+        // $date = new DateTime();
+        // $date->format('YYYY-MM-DD HH:mm');
+        // $date = Carbon::now();
+        // dd($date);
+        // $date = Carbon::today();
+        // $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'Europe/Stockholm');
+        // $id_kota_a = 'K1';
+        // $id_kota_t = 'K2';
+        // echo $date->format('Y-m-d H:i:s');
+        // $trip_a = Trip::where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
+        //             ->whereDate('jadwal', '>', Carbon::now())
+        //             ->get();                  
+
+        $tes = Trip::select('jadwal')
+                ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
+                ->whereDate('jadwal', '>', Carbon::now())
+                ->get();
+
+        // $d = Carbon::createFromFormat('Y-m-d H:i:s', $d)->format('d/m/Y');            
+        // dd($d); 
+
+        
+        // $tes = Carbon::parse($jadwal)->format('d/m/Y');
+        // dd($tes);
+
+        // $tes = $jadwal('d-m-Y H:i:s', strtotime($jadwal));        
+       
+        // $tanggal = Trip::with(array('posts' => function($query){
+        //     $query->where('title', 'like', '%first%');
+        // }))->get();
+
+        // $rute = Rute::with("kota_tujuan")->whereHas("kota_asal",function($query) use($id_kota_a){
+        //     $query->where("id_kota","=",$id_kota_a);
+        // })->get();
+
+        // return Carbon::parse($jadwal)->format('d/m/Y');  
+        // return Carbon::createFromFormat('d/m/Y', $request->jadwal);      
+        return response()->json($tes);
+        // return date('d-M-Y', strtotime($trip_a));
+
+        //  $id_kota_tujuan = Rute::where('id_kota_asal', $id_kota_asal)->get();
+        // return response()->json($id_kota_tujuan);
+        // return Rute::get()->load('kota_tujuan');
+        
+    }
 
 	public function store(Request $request){
     	$this->validate($request, 

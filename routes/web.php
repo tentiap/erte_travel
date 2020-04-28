@@ -132,6 +132,7 @@ Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
 Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
 Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
+Route::get('/pesanan_trip', 'PesananController@getTrip');
 
 //------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('detail_pesanan', 'DetailPesananController@index');

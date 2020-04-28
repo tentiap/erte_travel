@@ -19,6 +19,8 @@ class Pesanan extends Model
     ];
     
     protected $primaryKey = ['id_pesanan', 'id_trip'];
+
+    // protected $dates = ['jadwal'];
     // public $incrementing = false;
 
     public function detail_pesanan()

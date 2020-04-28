@@ -272,7 +272,8 @@
   <script>
       $(function () {
         $('#datetime').datetimepicker({
-          format:'YYYY-MM-DD HH:mm'
+          format:'YYYY-MM-DD HH:mm',
+          minDate:new Date()
         })
       })
   </script>
@@ -286,11 +287,35 @@
             $.get('/trip_kota_tujuan?id_kota_asal=' +selected_kota_asal, function(data){
                   $('#id_kota_tujuan').empty();
                   // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
-                  $.each(data, function(index, id_kota_tujuanObj){
+                  $.each(data, function(index, value){
                     // return Rute::get()->load('kota_tujuan');
                     // console.log(id_kota_tujuanObj);
-                    console.log(id_kota_tujuanObj.kota_tujuan.nama_kota);
-                    $('#id_kota_tujuan').append('<option value='+id_kota_tujuanObj.id_kota_tujuan+'>'+id_kota_tujuanObj.kota_tujuan.nama_kota+'</option>');
+                    console.log(value.kota_tujuan.nama_kota);
+                    $('#id_kota_tujuan').append('<option value='+value.id_kota_tujuan+'>'+value.kota_tujuan.nama_kota+'</option>');
+                  });
+            });  
+        });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function() {
+        $('#tanggal').click(function(){
+            // console.log("Tenti");
+            var selected_asal = $('#id_kota_asal').val();
+            var selected_tujuan = $('#id_kota_tujuan').val();
+            // console.log(selected_asal, selected_tujuan);
+            // localhost:8000/pesanan_trip?id_kota_asal=K1&id_kota_tujuan=K2
+            $.get('/pesanan_trip?id_kota_asal=' +selected_asal+'&id_kota_tujuan=' +selected_tujuan,
+             function(data){
+                  $('#tanggal').empty();
+                  // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
+                  $.each(data, function(index, value){
+                    // return Rute::get()->load('kota_tujuan');
+                    console.log(value.jadwal);
+                    // var tes = tanggalObj.jadwal.format('d-M-Y');
+                    // console.log(tes);
+                    $('#tanggal').append('<option value='+value.jadwal+'>'+value.jadwal+'</option>');
                   });
             });  
         });

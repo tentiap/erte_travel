@@ -36,6 +36,7 @@ class TripController extends Controller
 
     public function getKotaTujuan(){
         $id_kota_a = Input::get('id_kota_asal');
+         // $id_kota_a = 'K1';
         // $rute = Rute::with(['kota_tujuan' => function ($query) use ($id_kota_a){
         //     $query->where('kota.id_kota', $id_kota_a);
         // }])->get();

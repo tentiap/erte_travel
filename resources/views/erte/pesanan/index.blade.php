@@ -29,12 +29,13 @@
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
-                        <th>ID Pesanan</th>
+                        <th>ID</th>
                         <th>Pemesan</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
+                        <th>Jumlah</th>
                         <th>Tanggal Pesan</th>
                         <th>Operator</th>
                         <th>OPSI</th>
@@ -69,7 +70,8 @@
                                       @elseif($p->trip->id_kota_tujuan == "K3")
                                           Payakumbuh
                                       @endif
-                              </td>
+                                </td>
+                                <td>{{ $p->operator->nama }}</td>
                                 <td>{{ date('d M Y H:i', strtotime($p->tanggal_pesan)) }} </td>
                                 <td>{{ $p->operator->nama }}</td>          
                                                                      
