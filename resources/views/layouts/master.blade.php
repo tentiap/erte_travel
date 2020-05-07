@@ -279,6 +279,26 @@
   </script>
 
   <script>
+      $(function () {
+          $('#date').datetimepicker({
+              format: 'YYYY-MM-DD',
+              minDate: new Date()
+          });
+      });
+  </script>
+
+  <!-- <script>
+      $(function () {
+        $('#date').datetimepicker({
+          format:'YYYY-MM-DD HH:mm',
+          minDate:new Date()
+        })
+      })
+  </script> -->
+
+
+
+  <script>
     $(document).ready(function() {
         $('#id_kota_asal').change(function(){
             // console.log("Tenti");

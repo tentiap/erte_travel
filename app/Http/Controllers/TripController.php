@@ -17,10 +17,12 @@ use Auth;
 class TripController extends Controller
 {
     public function index(){
-    	$trip = Trip::all();
-        $rute = Rute::all();
-
-    	return view('erte.trip.index', ['trip' => $trip, 'rute'=> $rute]);
+        $trip = Trip::all();
+    	// $trip = Trip::orderBy('jadwal')->get();
+        // $trip = Trip::all()->sortByDesc('jadwal');
+        // $results = Project::all()->sortByDesc("name");
+        // $results = Project::orderBy('name')->get();
+    	return view('erte.trip.index', ['trip' => $trip]);
     }
 
     public function create(){

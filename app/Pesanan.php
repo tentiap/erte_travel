@@ -15,13 +15,25 @@ class Pesanan extends Model
         'id_trip', 
         'id_users_pemesan', 
         'tanggal_pesan',
-        'id_users_operator'
+        'id_users_operator',
+        'jumlah_penumpang'
     ];
     
     protected $primaryKey = ['id_pesanan', 'id_trip'];
 
-    // protected $dates = ['jadwal'];
-    // public $incrementing = false;
+    // protected $casts = [
+    //     'jadwal' => 'datetime',
+    // ];
+
+    // public function getJadwalAttribute($value)
+    // {
+    //     return $value->format('d F Y');
+    // }
+
+    // public function setJadwalAttribute($value)
+    // {
+    //     $this->attributes['jadwal'] = Carbon::parse($value);
+    // }
 
     public function detail_pesanan()
     {   
@@ -31,6 +43,13 @@ class Pesanan extends Model
 
         // return $this->hasMany(Detail_Pesanan::class);   
     }
+
+    // public function getJadwalAttribute($value)
+    // {
+    //     return $value->format('d F Y');
+    // }
+
+
 
     public function pemesan()
     {

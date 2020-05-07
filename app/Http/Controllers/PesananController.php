@@ -10,6 +10,7 @@ use App\Pemesan;
 use App\Operator;
 use App\Detail_Pesanan;
 use App\Kota;
+use App\Seat;
 use DateTime;
 use Carbon\Carbon;
 
@@ -33,14 +34,72 @@ class PesananController extends Controller
         return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
     }
 
+
     public function create(){
     	$pesanan = Pesanan::all();
     	$trip = Trip::all();
     	$pemesan = Pemesan::all();
         $kota = Kota::all();
+        $seat = Seat::all();
     	
-     	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'kota' => $kota]);
+     	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'kota' => $kota, 'seat' => $seat]);
 	}
+
+    public function search($id_kota_asal, $id_kota_tujuan, $tanggal, $jadwal){
+
+            $id_kota_asal = Input::get('id_kota_asal');
+            $id_kota_tujuan = Input::get('id_kota_tujuan');
+            $tanggal = Input::get('tanggal');
+            $filter = '%'.$tanggal.'%';
+            $jumlah_penumpang = Input::get('jumlah_penumpang');
+
+        $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
+                               'id_kota_tujuan' => $id_kota_tujuan,])
+                    ->where('jadwal', 'like', $filter)
+                    ->get();
+        $trip_a->jumlah_penumpang = $jumlah_penumpang;
+
+        if(!$trip_a->isEmpty()){
+            // return response()->json($trip_a);
+            return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang]);
+            // dd($trip_a->jumlah_penumpang);
+        }else{
+            session()->flash('flash_danger', 'Tidak ada trip');
+            return redirect('/pesanan/create');
+        }  
+
+        
+    }
+
+    // public function search(Request $request){
+    //     $this->validate($request, [
+    //         'id_kota_asal' => 'required',    
+    //         'id_kota_tujuan' => 'required',
+    //         'tanggal' => 'required',
+    //         'jumlah_penumpang' => 'required',
+    //     ]);
+
+    //         $id_kota_asal = Input::get('id_kota_asal');
+    //         $id_kota_tujuan = Input::get('id_kota_tujuan');
+    //         $tanggal = Input::get('tanggal');
+    //         $filter = '%'.$tanggal.'%';
+    //         $jumlah_penumpang = Input::get('jumlah_penumpang');
+
+    //     $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
+    //                            'id_kota_tujuan' => $id_kota_tujuan,])
+    //                 ->where('jadwal', 'like', $filter)
+    //                 ->get();
+
+    //     if(!$trip_a->isEmpty()){
+    //         // return response()->json($trip_a);
+    //         return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang]);
+    //     }else{
+    //         session()->flash('flash_danger', 'Tidak ada trip');
+    //         return redirect('/pesanan/create');
+    //     }  
+
+        
+    // }
 
     public function getTrip(){
         $id_kota_a = Input::get('id_kota_asal');
@@ -51,8 +110,8 @@ class PesananController extends Controller
         // dd($date);
         // $date = Carbon::today();
         // $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'Europe/Stockholm');
-        // $id_kota_a = 'K1';
-        // $id_kota_t = 'K2';
+        // $id_kota_a = 'K2';
+        // $id_kota_t = 'K1';
         // echo $date->format('Y-m-d H:i:s');
         // $trip_a = Trip::where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
         //             ->whereDate('jadwal', '>', Carbon::now())
@@ -62,6 +121,28 @@ class PesananController extends Controller
                 ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
                 ->whereDate('jadwal', '>', Carbon::now())
                 ->get();
+
+        // $jadwal = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $trip_a->jadwal)->format('d-m-Y');
+        
+        // $data = DB::table('tablename')->where('condition',$condition)->first();
+        // $newtime = strtotime($tes);
+        // $tes->time = date('d M Y',$newtime);
+
+        // foreach($tes as $d){
+        //     $newtime = strtotime($d);
+        //     $d->time = date('M d, Y',$newtime);
+        // }
+
+        // $date = date('Y-m-d H:i:s');
+
+        // $newDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $tes)->format('d-m-Y');
+
+        // dd($newDate);        
+
+        // dd($tes->time);
+       
+
+        // 'jadwal' => date('Y-m-d', strtotime($tes));
 
         // $d = Carbon::createFromFormat('Y-m-d H:i:s', $d)->format('d/m/Y');            
         // dd($d); 
@@ -91,43 +172,49 @@ class PesananController extends Controller
         
     }
 
-	public function store(Request $request){
-    	$this->validate($request, 
-            [
-            // 'id_pesanan' => 'required',    
-    		'id_trip' => 'required',
-    		'id_users_pemesan' => 'required'
-    		// 'tanggal_pesan' => 'required'
-        ]);
-
-        $pesanan = new Pesanan();
-            $pesanan_select = Pesanan::select('id_pesanan');
-            $pesanan_count = $pesanan_select->count();
-                if ($pesanan_count === 0) {
-                    $pesanan->id_pesanan = 'P1';
-                }else{
-                    $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
-                    $lastrow_id = explode('P', $lastrow->id_pesanan);
-                    $new_id = $lastrow_id[1]+1;
-                    $pesanan->id_pesanan = 'P'.$new_id;
-                }
-        $pesanan->id_trip = $request->id_trip;
-        $pesanan->id_users_pemesan = $request->id_users_pemesan;            
-        $pesanan->tanggal_pesan = date('YYYY-MM-DD HH:mm');
-        $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
-        $pesanan->save();
-
-    	// Pesanan::create([
-     //        'id_pesanan' => $request->id_pesanan,
-    	// 	'id_trip' => $request->id_trip,
-     //        'id_users_pemesan' => $request->id_users_pemesan,
-     //        'tanggal_pesan' => date('YYYY-MM-DD HH:mm')
-    	// ]);
-
-        session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
-
-    	return redirect('/pesanan');
+    public function store($trip){
+        dd($trip);
     }
+
+	// public function store(Request $request, $trip){
+ //    	$this->validate($request, 
+ //            [
+ //            // 'id_pesanan' => 'required',    
+ //    		'id_trip' => 'required',
+ //    		'id_users_pemesan' => 'required'
+ //    		// 'tanggal_pesan' => 'required'
+ //        ]);
+
+ //        dd($t);
+
+ //        $pesanan = new Pesanan();
+ //            $pesanan_select = Pesanan::select('id_pesanan');
+ //            $pesanan_count = $pesanan_select->count();
+ //                if ($pesanan_count === 0) {
+ //                    $pesanan->id_pesanan = 'P1';
+ //                }else{
+ //                    $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
+ //                    $lastrow_id = explode('P', $lastrow->id_pesanan);
+ //                    $new_id = $lastrow_id[1]+1;
+ //                    $pesanan->id_pesanan = 'P'.$new_id;
+ //                }
+ //        $pesanan->id_trip = $request->id_trip;
+ //        $pesanan->id_users_pemesan = $request->id_users_pemesan;            
+ //        $pesanan->tanggal_pesan = date('YYYY-MM-DD HH:mm');
+ //        $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
+ //        $pesanan->save();
+
+ //    	// Pesanan::create([
+ //     //        'id_pesanan' => $request->id_pesanan,
+ //    	// 	'id_trip' => $request->id_trip,
+ //     //        'id_users_pemesan' => $request->id_users_pemesan,
+ //     //        'tanggal_pesan' => date('YYYY-MM-DD HH:mm')
+ //    	// ]);
+
+ //        session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
+
+ //    	return redirect('/pesanan');
+ //    }
 
     public function edit($id_pesanan, $id_trip){
     	$pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();

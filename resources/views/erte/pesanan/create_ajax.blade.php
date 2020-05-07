@@ -16,10 +16,9 @@
  @section('content')     
     <section class="content">
         <div class="box">
-            @include('messages')
             <div class="box-body">
                     
-                <form method="post" action="/pesanan/create/{id_kota_asal}/{id_kota_tujuan}/{jadwal}/{jumlah_penumpang}">
+                <form method="get" action="/pesanan/search">
                         {{ csrf_field() }}
                         <div class="form-group">
                         <div class="row">
@@ -65,23 +64,21 @@
                                     </select>
                             </div> -->
                             <div class="col-sm-6">
-                                <label>Jadwal</label>
-                                    <div class='input-group date' id='date'>
-                                        <input type='text' class="form-control" name="tanggal" value="{{  old('tanggal') }}" />
-                                      <span class="input-group-addon">
-                                          <span class="glyphicon glyphicon-calendar"></span>
-                                      </span>
-                                    </div>
+                                <label>Tanggal</label>
+                                    <select class="form-control" name="tanggal" id="tanggal">
+                                        <option disabled selected value> -- Tanggal -- </option>
+                                            
+                                    </select>
+                            </div>
 
                                 @if($errors->has('tanggal'))
-                                        <div class="text-danger">
-                                            {{ $errors->first('tanggal')}}
-                                        </div>
+                                    <div class="text-danger">
+                                        {{ $errors->first('tanggal')}}
+                                    </div>
                                 @endif
-                        </div>
 
                                 
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-6">
                                 <label>Jumlah penumpang</label>
                                     <select class="form-control" name="jumlah_penumpang">
                                         <option disabled selected value> -- Jumlah Penumpang -- </option>
@@ -96,15 +93,26 @@
                                         <div class="text-danger">
                                             {{ $errors->first('jumlah_penumpang')}}
                                         </div>
-                                @endif        
+                                @endif -->        
                         </div>
                     </br>
 
-                <!--     <button><a href="/pesanan/create/{id_kota_asal}/{id_kota_tujuan}/{jadwal}/{jumlah_penumpang}">Button Text</a></button> -->
-
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Cari">
-                        </div>                     
+                        </div
+
+                        
+
+                        
+
+                        
+                            
+
+                            
+
+                        
+
+                        
                 </form>
             </div>
         </div>
@@ -113,37 +121,3 @@
     
 @endsection
 
-@yield('trip')
-
-@section('cs')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#form_date-time").hide()
-        });
-        
-        function getDateTime(){
-                let ayam = $("#id_rute option:selected").val()
-                
-                $.ajax({
-                            url: "/api/pesanan/date-time/" + ayam,
-                            type: "GET",
-                            contentType: "application/json;charset=utf-8",
-                            dataType: "json",
-
-                            success: function (result) {
-                                $("#form_date-time").show()
-                                $('#id_date-time').empty()
-                                $.each(result, function (i, item) {
-                                    $('#id_date-time').append($('<option>', { 
-                                        value: item.tanggal+"%"+item.jam,
-                                        text : "tanggal: "+item.tanggal+" jam: "+item.jam 
-                                    }));
-                                });     
-                            },
-                            error: function (errormessage) {
-                                alert(errormessage.responseText);
-                            }
-                        });
-            }
-    </script>
-@endsection
