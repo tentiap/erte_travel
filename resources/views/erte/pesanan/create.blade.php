@@ -19,7 +19,7 @@
             @include('messages')
             <div class="box-body">
                     
-                <form method="post" action="/pesanan/create/{id_kota_asal}/{id_kota_tujuan}/{jadwal}/{jumlah_penumpang}">
+                <form method="post" action="/pesanan/create_search">
                         {{ csrf_field() }}
                         <div class="form-group">
                         <div class="row">

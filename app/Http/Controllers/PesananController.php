@@ -45,7 +45,7 @@ class PesananController extends Controller
      	return view('erte.pesanan.create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'kota' => $kota, 'seat' => $seat]);
 	}
 
-    public function search($id_kota_asal, $id_kota_tujuan, $tanggal, $jadwal){
+    public function search(){
 
             $id_kota_asal = Input::get('id_kota_asal');
             $id_kota_tujuan = Input::get('id_kota_tujuan');
@@ -172,8 +172,10 @@ class PesananController extends Controller
         
     }
 
-    public function store($trip){
-        dd($trip);
+    public function detail($jumlah_penumpang, $id_trip){
+        $trip = Trip::where(['id_trip' => $id_trip])->get();
+        $jumlah_penumpang = $jumlah_penumpang;
+        return view('erte.pesanan.detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang]);
     }
 
 	// public function store(Request $request, $trip){
