@@ -83,7 +83,7 @@
                                           {{ $t->sopir->nama }}
                                       @endif
                               </td>
-                              <td>Sekian Trip Tersedia</td>
+                              <td>{{$t->seat}} Trip Tersedia</td>
                               <td>
                                 <a href="/pesanan/create_detail/{{$jumlah_penumpang}}/{{$t->id_trip}}"><button type="button" class="btn btn-info">Pesan</button></a>
                               </td>

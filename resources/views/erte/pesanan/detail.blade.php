@@ -82,16 +82,99 @@
                                 </div>
                                   <!-- /.box-header -->
                                   <div class="box-body">
-                                        <div class="form-group">
-                                            <label>ID</label>
-                                            <input type="text" name="id_seat" class="form-control" placeholder="ID seat" value="">  
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Nama</label>
+                                                <input type="text" name="nama_penumpang" class="form-control" placeholder="Nama" value="{{ old('nama_penumpang') }}">
 
-                                            @if($errors->has('id_seat'))
-                                                <div class="text-danger">
-                                                    {{ $errors->first('id_seat')}}
-                                                </div>
-                                            @endif                         
+                                                    @if($errors->has('nama_penumpang'))
+                                                        <div class="text-danger">
+                                                            {{ $errors->first('nama_penumpang')}}
+                                                        </div>
+                                                    @endif
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label>Seat</label>
+                                                <select class="form-control" name="id_kota_asal" id="id_kota_asal">
+                                                    <option disabled selected value> -- Seat -- </option>
+                                                        @foreach($seat as $s)
+                                                                <option value="{{ $s->id_seat }}">
+                                                                {{$s->id_seat}}
+                                                                </option> 
+                                                        @endforeach 
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label>Jenis Kelamin</label>
+                                                <br>
+                                                    <label class = "radio-inline">
+                                                        <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                                    </label>
+                                                    <label class = "radio-inline"> 
+                                                        <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                                    </label>
+
+                                                @if($errors->has('jenis_kelamin'))
+                                                    <div class="text-danger">
+                                                        {{ $errors->first('jenis_kelamin')}}
+                                                    </div>
+                                                @endif
+                                            </div>
+
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Detail Asal</label>
+                                                <textarea name="detail_asal" class="form-control" placeholder="Alamat asal penumpang" value="{{ old('detail_asal') }}"></textarea> 
+
+                                                    @if($errors->has('detail_asal'))
+                                                        <div class="text-danger">
+                                                            {{ $errors->first('detail_asal')}}
+                                                        </div>
+                                                    @endif
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label>Detail Tujuan</label>
+                                                <textarea name="detail_tujuan" class="form-control" placeholder="Alamat tujuan penumpang" value="{{ old('detail_tujuan') }}"></textarea> 
+
+                                                    @if($errors->has('detail_tujuan'))
+                                                        <div class="text-danger">
+                                                            {{ $errors->first('detail_tujuan')}}
+                                                        </div>
+                                                    @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Nomor HP</label>
+                                                <input type="text" name="no_hp" class="form-control" placeholder="Nomor HP jika berbeda dengan pemesan" value="{{ old('no_hp') }}">
+
+                                                    @if($errors->has('no_hp'))
+                                                        <div class="text-danger">
+                                                            {{ $errors->first('no_hp')}}
+                                                        </div>
+                                                    @endif
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label>Biaya Tambahan</label>
+                                                <input type="number" name="biaya_tambahan" class="form-control" placeholder="Biaya Tambahan" value="{{ old('biaya_tambahan') }}">
+
+                                                    @if($errors->has('biaya_tambahan'))
+                                                        <div class="text-danger">
+                                                            {{ $errors->first('biaya_tambahan')}}
+                                                        </div>
+                                                    @endif
+                                            </div>
+                                        </div>
+
+
+
                                   </div>
                                 <!-- <div class="box-body"> -->
                             </div>

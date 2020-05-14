@@ -14,7 +14,8 @@ class Trip extends Model
 	    'id_users_sopir', 
 	    'id_kota_asal',
         'id_kota_tujuan',
-	    'jadwal'
+	    'jadwal',
+        'seat'
 	];
 
     protected $primaryKey = "id_trip";

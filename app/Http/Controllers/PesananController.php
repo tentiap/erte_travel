@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use DB;
 use App\Pesanan;
 use App\Trip;
 use App\Pemesan;
@@ -52,16 +53,27 @@ class PesananController extends Controller
             $tanggal = Input::get('tanggal');
             $filter = '%'.$tanggal.'%';
             $jumlah_penumpang = Input::get('jumlah_penumpang');
+            
 
         $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                'id_kota_tujuan' => $id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
                     ->get();
-        $trip_a->jumlah_penumpang = $jumlah_penumpang;
 
-        if(!$trip_a->isEmpty()){
+        $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+                    ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                    ->where(['trip.id_kota_asal' => $id_kota_asal, 
+                               'trip.id_kota_tujuan' => $id_kota_tujuan,])
+                    ->where('jadwal', 'like', $filter)
+                    ->select('detail_pesanan.id_seat')
+                    ->get();
+        $jumlah_seat = $seat_a->count();
+        $seat = 7 - $jumlah_seat;
+               
+
+        if(!$trip_a->isEmpty() && $seat > $jumlah_penumpang){
             // return response()->json($trip_a);
-            return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang]);
+            return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat]);
             // dd($trip_a->jumlah_penumpang);
         }else{
             session()->flash('flash_danger', 'Tidak ada trip');
@@ -175,7 +187,13 @@ class PesananController extends Controller
     public function detail($jumlah_penumpang, $id_trip){
         $trip = Trip::where(['id_trip' => $id_trip])->get();
         $jumlah_penumpang = $jumlah_penumpang;
-        return view('erte.pesanan.detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang]);
+        // $tes = Trip::select('jadwal')
+        //         ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
+        //         ->whereDate('jadwal', '>', Carbon::now())
+        //         ->get();
+        $seat = Seat::all();
+        return view('erte.pesanan.detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat]);
+
     }
 
 	// public function store(Request $request, $trip){
