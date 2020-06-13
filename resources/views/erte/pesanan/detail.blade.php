@@ -65,7 +65,7 @@
 
             
                     
-                    <form method="post" action="">
+                    <form method="post" action="/pesanan/store/">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}
@@ -108,14 +108,25 @@
 
                                             <div class="col-sm-3">
                                                 <label>Jenis Kelamin</label>
-                                                <br>
+                                                <select class="form-control" name="id_kota_asal">
+                                                    <option disabled selected value> -- Jenis Kelamin -- </option>
+                                                        <option value="1">
+                                                            Laki-laki
+                                                        </option>
+
+                                                        <option value="2">
+                                                            Perempuan
+                                                        </option>  
+                                                       
+                                                </select>
+                                                <!-- <br>
                                                     <label class = "radio-inline">
-                                                        <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                                        <input type="radio" name="jenis_kelamin[]" value="1"> Laki-laki
                                                     </label>
                                                     <label class = "radio-inline"> 
-                                                        <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                                        <input type="radio" name="jenis_kelamin[]" value="2"> Perempuan 
                                                     </label>
-
+ -->
                                                 @if($errors->has('jenis_kelamin'))
                                                     <div class="text-danger">
                                                         {{ $errors->first('jenis_kelamin')}}

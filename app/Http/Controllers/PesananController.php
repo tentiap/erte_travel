@@ -196,45 +196,36 @@ class PesananController extends Controller
 
     }
 
-	// public function store(Request $request, $trip){
- //    	$this->validate($request, 
- //            [
- //            // 'id_pesanan' => 'required',    
- //    		'id_trip' => 'required',
- //    		'id_users_pemesan' => 'required'
- //    		// 'tanggal_pesan' => 'required'
- //        ]);
+	public function store(Request $request){
+        
+        $pesanan = new Pesanan();
+            $pesanan_select = Pesanan::select('id_pesanan');
+            $pesanan_count = $pesanan_select->count();
+                if ($pesanan_count === 0) {
+                    $pesanan->id_pesanan = 'P1';
+                }else{
+                    $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
+                    $lastrow_id = explode('P', $lastrow->id_pesanan);
+                    $new_id = $lastrow_id[1]+1;
+                    $pesanan->id_pesanan = 'P'.$new_id;
+                }
+        $pesanan->id_trip = $request->id_trip;
+        $pesanan->id_users_pemesan = $request->id_users_pemesan;            
+        $pesanan->tanggal_pesan = date('YYYY-MM-DD HH:mm');
+        $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
+        $pesanan->save();
 
- //        dd($t);
+    	// // Pesanan::create([
+     // //        'id_pesanan' => $request->id_pesanan,
+    	// // 	'id_trip' => $request->id_trip,
+     // //        'id_users_pemesan' => $request->id_users_pemesan,
+     // //        'tanggal_pesan' => date('YYYY-MM-DD HH:mm')
+    	// // ]);
 
- //        $pesanan = new Pesanan();
- //            $pesanan_select = Pesanan::select('id_pesanan');
- //            $pesanan_count = $pesanan_select->count();
- //                if ($pesanan_count === 0) {
- //                    $pesanan->id_pesanan = 'P1';
- //                }else{
- //                    $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
- //                    $lastrow_id = explode('P', $lastrow->id_pesanan);
- //                    $new_id = $lastrow_id[1]+1;
- //                    $pesanan->id_pesanan = 'P'.$new_id;
- //                }
- //        $pesanan->id_trip = $request->id_trip;
- //        $pesanan->id_users_pemesan = $request->id_users_pemesan;            
- //        $pesanan->tanggal_pesan = date('YYYY-MM-DD HH:mm');
- //        $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
- //        $pesanan->save();
+     //    // session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
 
- //    	// Pesanan::create([
- //     //        'id_pesanan' => $request->id_pesanan,
- //    	// 	'id_trip' => $request->id_trip,
- //     //        'id_users_pemesan' => $request->id_users_pemesan,
- //     //        'tanggal_pesan' => date('YYYY-MM-DD HH:mm')
- //    	// ]);
-
- //        session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
-
- //    	return redirect('/pesanan');
- //    }
+    	// return redirect('/pesanan');
+    }
 
     public function edit($id_pesanan, $id_trip){
     	$pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
@@ -285,8 +276,9 @@ class PesananController extends Controller
                              'detail_pesanan.status as detail_status',
                              'detail_pesanan.biaya_tambahan as detail_biaya')
                     ->get();
+        $jk = [1,2]; 
         
-        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'detail_pesanan' => $detail_pesanan]);
+        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'detail_pesanan' => $detail_pesanan, 'jk' => $jk]);
 
     }
 

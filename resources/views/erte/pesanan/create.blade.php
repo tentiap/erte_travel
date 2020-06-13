@@ -79,7 +79,6 @@
                                         </div>
                                 @endif
                         </div>
-
                                 
                             <div class="col-sm-6">
                                 <label>Jumlah penumpang</label>
