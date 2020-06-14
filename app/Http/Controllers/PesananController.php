@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use DB;
+use Auth;
 use App\Pesanan;
 use App\Trip;
 use App\Pemesan;
@@ -69,6 +70,7 @@ class PesananController extends Controller
                     ->get();
         $jumlah_seat = $seat_a->count();
         $seat = 7 - $jumlah_seat;
+
                
 
         if(!$trip_a->isEmpty() && $seat > $jumlah_penumpang){
@@ -196,8 +198,8 @@ class PesananController extends Controller
 
     }
 
-	public function store(Request $request){
-        
+	public function store($id_trip, Request $request){
+        // $trip = Trip::where(['id_trip' => $id_trip])->get();
         $pesanan = new Pesanan();
             $pesanan_select = Pesanan::select('id_pesanan');
             $pesanan_count = $pesanan_select->count();
@@ -209,22 +211,39 @@ class PesananController extends Controller
                     $new_id = $lastrow_id[1]+1;
                     $pesanan->id_pesanan = 'P'.$new_id;
                 }
-        $pesanan->id_trip = $request->id_trip;
-        $pesanan->id_users_pemesan = $request->id_users_pemesan;            
-        $pesanan->tanggal_pesan = date('YYYY-MM-DD HH:mm');
+        $pesanan->id_trip = $id_trip;
+        $pesanan->id_users_pemesan = Auth::guard('operator')->user()->id_users;            
+        $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
         $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
         $pesanan->save();
 
-    	// // Pesanan::create([
-     // //        'id_pesanan' => $request->id_pesanan,
-    	// // 	'id_trip' => $request->id_trip,
-     // //        'id_users_pemesan' => $request->id_users_pemesan,
-     // //        'tanggal_pesan' => date('YYYY-MM-DD HH:mm')
-    	// // ]);
+        // dd($pesanan->id_pesanan);
 
-     //    // session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
+        // $pesanan=[];
 
-    	// return redirect('/pesanan');
+                // foreach($request->title as $key => $value){
+        // array_push(pesanan,[
+
+
+        foreach($request->nama_penumpang as $key => $value){
+            Detail_Pesanan::create([
+                'id_trip' => $pesanan->id_trip,
+                'id_seat' => $request->id_seat[$key],
+                'id_pesanan' => $pesanan->id_pesanan,
+                'nama_penumpang' => $request->nama_penumpang[$key],
+                'jenis_kelamin' => $request->jenis_kelamin[$key],
+                'detail_asal' => $request->detail_asal[$key],
+                'detail_tujuan' => $request->detail_tujuan[$key],
+                'no_hp' => $request->no_hp[$key],
+                'biaya_tambahan' => $request->biaya_tambahan[$key],
+                'status' => 1
+            ]);
+        }
+
+        // Detail_Pesanan::insert($pesanan);
+        session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
+
+        return redirect('/pesanan');
     }
 
     public function edit($id_pesanan, $id_trip){

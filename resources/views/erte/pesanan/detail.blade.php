@@ -65,7 +65,7 @@
 
             
                     
-                    <form method="post" action="/pesanan/store/">
+                    <form method="post" action="/pesanan/store/{{$t->id_trip}}">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}
@@ -85,7 +85,7 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Nama</label>
-                                                <input type="text" name="nama_penumpang" class="form-control" placeholder="Nama" value="{{ old('nama_penumpang') }}">
+                                                <input type="text" name="nama_penumpang[]" class="form-control" placeholder="Nama" value="{{ old('nama_penumpang') }}">
 
                                                     @if($errors->has('nama_penumpang'))
                                                         <div class="text-danger">
@@ -96,8 +96,8 @@
 
                                             <div class="col-sm-3">
                                                 <label>Seat</label>
-                                                <select class="form-control" name="id_kota_asal" id="id_kota_asal">
-                                                    <option disabled selected value> -- Seat -- </option>
+                                                <select class="form-control" name="id_seat[]" id="id_kota_asal">
+                                                    <option value="">  Seat  </option>
                                                         @foreach($seat as $s)
                                                                 <option value="{{ $s->id_seat }}">
                                                                 {{$s->id_seat}}
@@ -108,8 +108,8 @@
 
                                             <div class="col-sm-3">
                                                 <label>Jenis Kelamin</label>
-                                                <select class="form-control" name="id_kota_asal">
-                                                    <option disabled selected value> -- Jenis Kelamin -- </option>
+                                                <select class="form-control" name="jenis_kelamin[]">
+                                                    <option value=""> Jenis Kelamin  </option>
                                                         <option value="1">
                                                             Laki-laki
                                                         </option>
@@ -139,7 +139,7 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Detail Asal</label>
-                                                <textarea name="detail_asal" class="form-control" placeholder="Alamat asal penumpang" value="{{ old('detail_asal') }}"></textarea> 
+                                                <textarea name="detail_asal[]" class="form-control" placeholder="Alamat asal penumpang" value="{{ old('detail_asal') }}"></textarea> 
 
                                                     @if($errors->has('detail_asal'))
                                                         <div class="text-danger">
@@ -150,7 +150,7 @@
 
                                             <div class="col-sm-6">
                                                 <label>Detail Tujuan</label>
-                                                <textarea name="detail_tujuan" class="form-control" placeholder="Alamat tujuan penumpang" value="{{ old('detail_tujuan') }}"></textarea> 
+                                                <textarea name="detail_tujuan[]" class="form-control" placeholder="Alamat tujuan penumpang" value="{{ old('detail_tujuan') }}"></textarea> 
 
                                                     @if($errors->has('detail_tujuan'))
                                                         <div class="text-danger">
@@ -163,7 +163,7 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Nomor HP</label>
-                                                <input type="text" name="no_hp" class="form-control" placeholder="Nomor HP jika berbeda dengan pemesan" value="{{ old('no_hp') }}">
+                                                <input type="text" name="no_hp[]" class="form-control" placeholder="Nomor HP jika berbeda dengan pemesan" value="{{ old('no_hp') }}">
 
                                                     @if($errors->has('no_hp'))
                                                         <div class="text-danger">
@@ -174,7 +174,7 @@
 
                                             <div class="col-sm-6">
                                                 <label>Biaya Tambahan</label>
-                                                <input type="number" name="biaya_tambahan" class="form-control" placeholder="Biaya Tambahan" value="{{ old('biaya_tambahan') }}">
+                                                <input type="number" name="biaya_tambahan[]" class="form-control" placeholder="Biaya Tambahan" value="{{ old('biaya_tambahan') }}">
 
                                                     @if($errors->has('biaya_tambahan'))
                                                         <div class="text-danger">
