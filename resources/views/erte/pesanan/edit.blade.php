@@ -87,6 +87,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
+                            <a class="btn btn-default btn-close" href="/pesanan">Cancel</a>
                         </div>
 
 

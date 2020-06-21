@@ -280,6 +280,14 @@
 
   <script>
       $(function () {
+        $('#datetime_edit').datetimepicker({
+          format:'YYYY-MM-DD HH:mm'
+        })
+      })
+  </script>
+
+  <script>
+      $(function () {
           $('#date').datetimepicker({
               format: 'YYYY-MM-DD',
               minDate: new Date()

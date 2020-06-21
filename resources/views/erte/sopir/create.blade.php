@@ -149,7 +149,8 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <button class="btn btn-default btn-close"><a href="/sopir">Cancel</a></button>
+                            <!-- <button class="btn btn-default btn-close"><a href="/sopir">Cancel</a></button> -->
+                            <a class="btn btn-default btn-close" href="/sopir">Cancel</a>
                         </div>
 
 

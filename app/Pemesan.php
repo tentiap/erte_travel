@@ -21,6 +21,11 @@ class Pemesan extends Model
     protected $primaryKey = "id_users";
     public $incrementing = false;
 
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = \Hash::make($password);
+    }
+
     public function pesanan()
     {
         return $this->hasMany(Pesanan::class);

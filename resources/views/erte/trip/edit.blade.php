@@ -73,8 +73,8 @@
 
                         <div class="form-group">
                             <label>Jadwal</label>
-                                <div class='input-group date' id='datetime'>
-                                    <input type='text' class="form-control" name="jadwal" value="{{  old('jadwal', $trip->jadwal) }}" />
+                                <div class='input-group date' id='datetime_edit'>
+                                    <input type='text' class="form-control" name="jadwal" value="{{ $trip->jadwal }}" />
                                       <span class="input-group-addon">
                                           <span class="glyphicon glyphicon-calendar"></span>
                                       </span>
@@ -121,13 +121,14 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button>
+                            <a class="btn btn-default btn-close" href="/trip">Cancel</a>
                         </div>
+                    </form>
 
-
-                        </div>
+                        <!-- <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button>
+                        </div> -->
                         
-                </form>
+                
             </div>
         </div>
     </section>

@@ -13,10 +13,10 @@ class OperatorController extends Controller
 //         $this->middleware(['auth', 'isAdmin']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
 //     }
 
-    public function __construct()
-    {
-        $this->middleware('auth:operator');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:operator');
+    // }
 
     public function index(){
     	$operator = Operator::all();
