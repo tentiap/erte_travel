@@ -58,6 +58,10 @@
                         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('H:i', strtotime($t->jadwal)) }}
 
                         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{$jumlah_penumpang}} penumpang
+
+                        <a href="/pesanan/create" style="position: absolute; top: 50px;right: 16px;"><i class="fa fa-edit"></i> Ubah Pencarian</a>
+
+
                     @endforeach                    
                 </div>
 

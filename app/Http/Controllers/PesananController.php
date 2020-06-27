@@ -248,28 +248,41 @@ class PesananController extends Controller
 
     public function edit($id_pesanan, $id_trip){
     	$pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
+        $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();
+        $jumlah = $detail->count();
 
     	$trip = Trip::all();
     	$pemesan = Pemesan::all();
+        $seat = Seat::all();
 
-        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan]);
+        // dd(response()->json($detail));
+
+        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah]);
     }
 
     public function update($id_pesanan, $id_trip, Request $request){
-    	 $this->validate($request, [
-            // 'id_pesanan' => 'required',
-            'id_trip' => 'required',
-            'id_users_pemesan' => 'required',
-            // 'tanggal_pesan' => 'required'
-        ]);
 
             $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
-
             // $pesanan->id_pesanan = $request->id_pesanan;
             $pesanan->id_trip = $request->id_trip;
-            $pesanan->id_users_pemesan = $request->id_users_pemesan;
+            $pesanan->id_users_pemesan = Auth::guard('operator')->user()->id_users;            
+            $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
             // $pesanan->tanggal_pesan = $request->tanggal_pesan;
             $pesanan->save();
+
+            foreach($request->nama_penumpang as $key => $value){
+            Detail_Pesanan::update([
+                'id_trip' => $pesanan->id_trip,
+                'id_seat' => $request->id_seat[$key],
+                'id_pesanan' => $pesanan->id_pesanan,
+                'nama_penumpang' => $request->nama_penumpang[$key],
+                'jenis_kelamin' => $request->jenis_kelamin[$key],
+                'detail_asal' => $request->detail_asal[$key],
+                'detail_tujuan' => $request->detail_tujuan[$key],
+                'no_hp' => $request->no_hp[$key],
+                'biaya_tambahan' => $request->biaya_tambahan[$key],
+            ]);
+        }
 
             session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
          return redirect('/pesanan');

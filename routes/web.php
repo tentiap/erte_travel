@@ -130,7 +130,7 @@ Route::get('/pesanan/create', 'PesananController@create');
 Route::post('/pesanan/create_search', 'PesananController@search');
 Route::get('/pesanan/create_detail/{jumlah_penumpang}/{id_trip}', 'PesananController@detail');
 Route::post('/pesanan/store/{id_trip}', 'PesananController@store');
-Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
+Route::get('/pesanan/edit/{id_pesanan}/{id_trip}/', 'PesananController@edit');
 Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
 Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
