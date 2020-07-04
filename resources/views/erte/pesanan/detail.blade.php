@@ -101,19 +101,25 @@
                                             <div class="col-sm-3">
                                                 <label>Seat</label>
                                                 <select class="form-control" name="id_seat[]" id="id_kota_asal">
-                                                    <option value="">  Seat  </option>
+                                                    <option disabled selected value>  Seat  </option>
                                                         @foreach($seat as $s)
                                                                 <option value="{{ $s->id_seat }}">
                                                                 {{$s->id_seat}}
                                                                 </option> 
                                                         @endforeach 
                                                 </select>
+
+                                                 @if($errors->has('id_seat'))
+                                                    <div class="text-danger">
+                                                        {{ $errors->first('id_seat')}}
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <label>Jenis Kelamin</label>
                                                 <select class="form-control" name="jenis_kelamin[]">
-                                                    <option value=""> Jenis Kelamin  </option>
+                                                    <option disabled selected value> Jenis Kelamin </option>
                                                         <option value="1">
                                                             Laki-laki
                                                         </option>

@@ -9,6 +9,7 @@ use Auth;
 use App\Pesanan;
 use App\Trip;
 use App\Pemesan;
+use App\Feeder;
 use App\Operator;
 use App\Detail_Pesanan;
 use App\Kota;
@@ -199,6 +200,15 @@ class PesananController extends Controller
     }
 
 	public function store($id_trip, Request $request){
+        $this->validate($request, 
+            [
+            // 'id_users' => 'required',
+            'nama_penumpang' => 'required',
+            'jenis_kelamin' => 'required',
+            'id_seat' => 'required',
+            'detail_asal' => 'required',
+            'detail_tujuan' => 'required'            
+        ]);
         // $trip = Trip::where(['id_trip' => $id_trip])->get();
         $pesanan = new Pesanan();
             $pesanan_select = Pesanan::select('id_pesanan');
@@ -270,19 +280,23 @@ class PesananController extends Controller
             // $pesanan->tanggal_pesan = $request->tanggal_pesan;
             $pesanan->save();
 
-            foreach($request->nama_penumpang as $key => $value){
-            Detail_Pesanan::update([
-                'id_trip' => $pesanan->id_trip,
-                'id_seat' => $request->id_seat[$key],
-                'id_pesanan' => $pesanan->id_pesanan,
-                'nama_penumpang' => $request->nama_penumpang[$key],
-                'jenis_kelamin' => $request->jenis_kelamin[$key],
-                'detail_asal' => $request->detail_asal[$key],
-                'detail_tujuan' => $request->detail_tujuan[$key],
-                'no_hp' => $request->no_hp[$key],
-                'biaya_tambahan' => $request->biaya_tambahan[$key],
-            ]);
-        }
+            // $detail =  Detail_Order::where('order_id', $order->id)->get();
+            $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();
+
+            if(count($request->id_seat) > 0){
+                for($i = 0; $i < count($request->id_seat); $i++){
+                    $detail[$i]->id_trip = $pesanan->id_trip;
+                    $detail[$i]->id_seat = $request->id_seat[$i];
+                    $detail[$i]->id_pesanan = $pesanan->id_pesanan;
+                    $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
+                    $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
+                    $detail[$i]->detail_asal = $request->detail_asal[$i];
+                    $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
+                    $detail[$i]->no_hp = $request->no_hp[$i];
+                    $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
+                    $detail[$i]->save();
+                }
+            }
 
             session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
          return redirect('/pesanan');
@@ -308,10 +322,44 @@ class PesananController extends Controller
                              'detail_pesanan.status as detail_status',
                              'detail_pesanan.biaya_tambahan as detail_biaya')
                     ->get();
-        $jk = [1,2]; 
-        
-        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'detail_pesanan' => $detail_pesanan, 'jk' => $jk]);
 
+        $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();
+       // return response()->json($feeder);
+        
+        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'detail_pesanan' => $detail_pesanan, 'feeder' => $feeder]);
+
+    }
+
+    // public function getFeeder(){
+    //     $id_kota_a = Input::get('id_kota_asal');
+
+    //     $feeder = Feeder::where('id_kota', $id_kota_a)->get();
+
+    //     // $query->where('userid','=' ,$id_kota_asal);
+    //     // dd($id_kota_asal, response()->json($rute));
+    //     // dd($id_kota_a);
+    //     // dd( response()->json($rute));
+    //     return response()->json($feeder);
+
+    //     //  $id_kota_tujuan = Rute::where('id_kota_asal', $id_kota_asal)->get();
+    //     // return response()->json($id_kota_tujuan);
+    //     // return Rute::get()->load('kota_tujuan');
+        
+    // }
+
+    public function update_feeder($id_pesanan, $id_trip){
+
+        $trip = Trip::find($id_trip);
+        $feeder = Input::get('id_users_feeder');
+        // dd($feeder);
+        Detail_Pesanan::where('id_pesanan', $id_pesanan)
+          ->update(['id_users_feeder' => $feeder]);  
+
+        session()->flash('flash_success', 'Berhasil mengubah data feeder');
+        // return redirect('/pesanan');
+        // return redirect('/pesanan/show/{id_pesanan}/{id_trip}');
+        return redirect('/pesanan/show/'. $id_pesanan .'/' . $id_trip);
+        
     }
 
  	public function delete($id_pesanan, $id_trip){

@@ -330,6 +330,22 @@
     });
   </script>
 
+  <!-- <script>
+    $(document).ready(function() {
+        $('#id_users_feeder').on('click', function(){
+            var selected_kota_asal = $('#id_kota_asal').val();
+            // console.log(selected_kota_asal);
+            $.get('/pesanan/getFeeder?id_kota_asal=' +selected_kota_asal, function(data){
+                  // $('#id_users_feeder').empty();
+                  $.each(data, function(index, value){
+                    console.log(value.nama);
+                    $('#id_users_feeder').append('<option value='+value.id_users+'>'+value.nama+'</option>');
+                  });
+            });  
+        });
+    });
+  </script> -->
+
   <script>
     $(document).ready(function() {
         $('#tanggal').click(function(){

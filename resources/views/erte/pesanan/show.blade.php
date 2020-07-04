@@ -2,6 +2,7 @@
 
 @section('breadcrumb')
     <section class="content-header">
+      @include('messages')
       <h1>
           Detail Pesanan
       </h1>
@@ -19,6 +20,38 @@
  @section('content')     
     <section class="content">
         <div class="box box-solid">
+
+                    <div style="position: absolute; right: 0;">
+                        <a href="/pesanan/edit/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><i class="fa fa-trash"></i> Hapus Pesanan</a>
+                        <a href="/pesanan/" class="btn btn-md" ><i class="fa fa-list"></i> List Pesanan</a>
+                        <a href="/pesanan/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Pesanan</a>                       
+                    </div>
+                        </br>
+                        </br>
+
+                    <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <b>Anda yakin ingin menghapus data pesanan ini ?</b><br><br>
+                                    <a class="btn btn-danger btn-ok"> Hapus</a>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+                        <script type="text/javascript">
+                            //Hapus Data
+                            $(document).ready(function() {
+                                $('#konfirmasi_hapus').on('show.bs.modal', function(e) {
+                                    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+                                });
+                            });
+                    </script>
+
                         <div class="box-header with-border">
                           <i class="fa fa-map-pin"></i>
                           <h3 class="box-title">Pesanan {{ $pesanan->id_pesanan }}</h3>
@@ -62,14 +95,71 @@
                                 <dt>Feeder</dt>
                                 <dd>
                                         @if(empty($detail_pesanan->feeder->nama))
-                                          <a href="/detail_pesanan/edit//{{ $detail_pesanan->id_trip }}/{{ $detail_pesanan->id_seat }}"><u>Tambah Feeder</u></a>
+                                          <a data-toggle='modal' data-target='#update_feeder' data-href="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><u>Tambah Feeder</u></a>
                                         @else
-                                          {{ $detail_pesanan->feeder->nama }}
+                                          <a data-toggle='modal' data-target='#update_feeder' data-href="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><u>{{ $detail_pesanan->feeder->nama }}</u></a>
                                         @endif
                                 </dd>
                               </dl>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="update_feeder" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                      <form method="get" action="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}">
+                                        <input type="hidden" id="id_kota_asal" name="id_kota_asal" value="{{$trip->id_kota_asal}}">
+                                        <label>Feeder</label>
+                                        <select class="form-control" name="id_users_feeder" id="id_users_feeder">
+                                            <option value=""> Belum Ada Feeder </option>
+                                                @foreach($feeder as $f)
+                                                        <option  value="{{$f->id_users}}"{{$detail_pesanan->id_users_feeder == $f->id_users ? 'selected' : ''}}>{{$f->nama}}</option>                                         
+                                                @endforeach
+                                        </select>
+
+                                        @if($errors->has('id_users_feeder'))
+                                            <div class="text-danger">
+                                                {{ $errors->first('id_users_feeder')}}
+                                            </div>
+                                        @endif
+    
+                                        <input type="submit" class="btn btn-primary" value="Simpan">                                    
+                                        <!-- <a class="btn btn-primary btn-ok">Simpan</a> -->
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>
+                                      
+                                        
+                                     </form>
+                                  </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+                        <script type="text/javascript">
+                            //Hapus Data
+                            $(document).ready(function() {
+                                // $( "#update_feeder" ).change(function() {
+                                //    var id_users_feeder = $( "#feeder option:selected" ).val();
+                                //    // console.log(id_users_feeder);                       
+                                //    });
+                                $('#update_feeder').on('show.bs.modal', function(e) {
+                                    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+                                });
+                            });
+                    </script>
+ -->
+                    <!-- <script>
+                       $( "#update_feeder" ).change(function() {
+                       var id_users_feeder = $( "#feeder option:selected" ).val();
+                       console.log(id_users_feeder);                       
+                       });
+                    </script> -->
+
+
+
 
                 <div class="box-body">
                 <table class="table table-bordered table-hover table-striped">
@@ -91,7 +181,13 @@
                         <tr>
                             <td>{{ $d->detail_seat}}</td>
                             <td>{{ $d->detail_nama }} </td>
-                            <td>{{ $d->detail_jk }} </td>
+                            <td>
+                                @if($d->detail_jk == 1)
+                                   Laki-laki
+                                @elseif($d->detail_jk == 2)
+                                    Perempuan
+                                @endif 
+                            </td>
                             <td>{{ $d->detail_asal }} </td>
                             <td>{{ $d->detail_tujuan }} </td>
                             <td>{{ $d->detail_hp }} </td>
