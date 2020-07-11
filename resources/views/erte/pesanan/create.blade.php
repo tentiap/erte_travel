@@ -56,15 +56,8 @@
                                 @endif
                         </div>
 
-                        <div class="row">
-                            <!-- <div class="col-sm-6">
-                                <label>Tanggal</label>
-                                    <select class="form-control" name="tanggal" id="tanggal">
-                                        <option disabled selected value> -- Tanggal -- </option>
-                                            
-                                    </select>
-                            </div> -->
-                            <div class="col-sm-6">
+                        <!-- <div class="row">
+                            <div class="col-sm-6"> -->
                                 <label>Jadwal</label>
                                     <div class='input-group date' id='date'>
                                         <input type='text' class="form-control" name="tanggal" value="{{  old('tanggal') }}" />
@@ -78,9 +71,9 @@
                                             {{ $errors->first('tanggal')}}
                                         </div>
                                 @endif
-                        </div>
+                            </div>
                                 
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-6"> -->
                                 <label>Jumlah penumpang</label>
                                     <select class="form-control" name="jumlah_penumpang">
                                         <option disabled selected value> -- Jumlah Penumpang -- </option>
@@ -90,21 +83,156 @@
                                                     </option> 
                                             @endforeach 
                                     </select>
-                            </div>
+                            <!-- </div> -->
                                 @if($errors->has('jumlah_penumpang'))
                                         <div class="text-danger">
                                             {{ $errors->first('jumlah_penumpang')}}
                                         </div>
-                                @endif        
-                        </div>
-                    </br>
+                                @endif
 
-                <!--     <button><a href="/pesanan/create/{id_kota_asal}/{id_kota_tujuan}/{jadwal}/{jumlah_penumpang}">Button Text</a></button> -->
+                                <label>Nama Pemesan</label>
+                                    <select class="form-control" name="id_users_pemesan">
+                                        <option disabled selected value> -- Nama Pemesan -- </option>
+                                            @foreach($pemesan as $p)
+                                                    <option value="{{ $p->id_users }}">
+                                                    {{$p->nama}}
+                                                    </option> 
+                                            @endforeach 
+                                    </select>
+                            
+                                @if($errors->has('id_users_pemesan'))
+                                        <div class="text-danger">
+                                            {{ $errors->first('id_users_pemesan')}}
+                                        </div>
+                                @endif
 
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-primary" value="Cari">
-                        </div>                     
-                </form>
+                                <a data-toggle='modal' data-target='#tambah_pemesan' style="position: absolute; right: 16px;">Buat akun pemesan</a>
+
+                                                    
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" value="Cari">
+                                    </div>                     
+                </form>                
+            </div>
+                    
+
+            <div class="modal fade" id="tambah_pemesan" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><b>Tambah Data Pemesan</b></h4>
+                                            </div> 
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                  <form method="post" action="/pemesan/store1">
+
+                                                        {{ csrf_field() }}
+
+                                                        
+                                                        <div class="form-group">
+                                                            <label>Username</label>
+                                                            <input type="text" name="username" class="form-control" placeholder="Username"  value="{{ old('username') }}">
+
+                                                             @if($errors->has('username'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('username')}}
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Password</label>
+                                                            <input type="password" name="password" class="form-control" placeholder="Password" value="{{ old('password') }}">
+
+                                                             @if($errors->has('password'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('password')}}
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+
+                                                             @if($errors->has('email'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('email')}}
+                                                                </div>
+                                                            @endif
+
+                                                            
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Nama</label>
+                                                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ old('nama') }}">
+
+                                                            @if($errors->has('nama'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('nama')}}
+                                                                </div>
+                                                            @endif
+
+                                                             
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Kontak</label>
+                                                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
+
+                                                            @if($errors->has('kontak'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('kontak')}}
+                                                                </div>
+                                                            @endif
+
+                                                             
+                                                        </div>
+
+                                                        
+                                                        <div class = "form-group">
+                                                            <label>Jenis Kelamin</label>
+                                                            <br>
+                                                                <label class = "radio-inline">
+                                                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                                                </label>
+                                                                <label class = "radio-inline"> 
+                                                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                                                </label>
+
+                                                            @if($errors->has('jenis_kelamin'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('jenis_kelamin')}}
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label>Alamat</label>
+                                                            <input type="text" name="alamat" class="form-control" placeholder="Alamat" value="{{ old('alamat') }}">
+
+                                                            @if($errors->has('alamat'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('alamat')}}
+                                                                </div>
+                                                            @endif
+                                                        </div>
+
+                                                        <input type="submit" class="btn btn-primary" value="Simpan">                                    
+                                                    
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button> 
+                                                  </form>
+                                                </div>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
             </div>
         </div>
     </section>

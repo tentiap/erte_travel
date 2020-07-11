@@ -68,6 +68,7 @@ Route::post('/rute/store', 'RuteController@store');
 Route::get('/rute/edit/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@edit');
 Route::put('/rute/update/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@update');
 Route::get('/rute/delete/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@delete');
+Route::get('/rute/export', 'RuteController@export');
 
 //------------------------------------------------------USERS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/users', 'UsersController@index');
@@ -99,6 +100,7 @@ Route::get('/feeder/delete/{id_users}', 'FeederController@delete');
 Route::get('/pemesan', 'PemesanController@index');
 Route::get('/pemesan/create', 'PemesanController@create');
 Route::post('/pemesan/store', 'PemesanController@store');
+Route::post('/pemesan/store1', 'PemesanController@store1');
 Route::get('/pemesan/edit/{id_users}', 'PemesanController@edit');
 Route::get('/pemesan/show/{id_users}', 'PemesanController@show');
 Route::put('/pemesan/update/{id_users}', 'PemesanController@update');
@@ -128,15 +130,16 @@ Route::get('/trip_kota_tujuan', 'TripController@getKotaTujuan');
 Route::get('pesanan', 'PesananController@index');
 Route::get('/pesanan/create', 'PesananController@create');
 Route::post('/pesanan/create_search', 'PesananController@search');
-Route::get('/pesanan/create_detail/{jumlah_penumpang}/{id_trip}', 'PesananController@detail');
-Route::post('/pesanan/store/{id_trip}', 'PesananController@store');
-Route::get('/pesanan/edit/{id_pesanan}/{id_trip}/', 'PesananController@edit');
+Route::get('/pesanan/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@detail');
+Route::post('/pesanan/store/{id_trip}/{id_users_pemesan}', 'PesananController@store');
+Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
 Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
 Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
 Route::get('/pesanan_trip', 'PesananController@getTrip');
 // Route::get('/pesanan/getFeeder', 'PesananController@getFeeder');
 Route::get('/pesanan/update_feeder/{id_pesanan}/{id_trip}', 'PesananController@update_feeder');
+// Route::get('/pesanan/update_biaya/{id_pesanan}/{id_seat}', 'PesananController@update_biaya');
 
 
 //------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

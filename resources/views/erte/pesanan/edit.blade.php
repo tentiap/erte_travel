@@ -57,6 +57,8 @@
 
                         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{$jumlah}} penumpang
 
+                        
+
 
                         <a href="" data-toggle='modal' data-target='#edit_pesanan' style="position: absolute; top: 50px;right: 16px;"><i class="fa fa-edit"></i> Ubah</a>
 
@@ -174,7 +176,7 @@
                                                     @endif
                                             </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <label>Biaya Tambahan</label>
                                                 <input type="number" name="biaya_tambahan[]" class="form-control" placeholder="Biaya Tambahan" value="{{old('biaya_tambahan', $detail->biaya_tambahan)}}">
 
@@ -183,6 +185,32 @@
                                                             {{ $errors->first('biaya_tambahan')}}
                                                         </div>
                                                     @endif
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label>Status</label>
+                                                <select class="form-control" name="status[]" id="status">
+                                                    <option disabled selected value>  -----Status-----  </option>
+                                                        <option value="1" {{$detail->status == 1 ? 'selected' : ''}}>
+                                                                    Booking
+                                                        </option>
+
+                                                        <option value="2" {{$detail->status == 2 ? 'selected' : ''}}>
+                                                                    Picked Up
+                                                        </option>
+
+                                                        <option value="3" {{$detail->status == 3 ? 'selected' : ''}}>
+                                                                    On Going
+                                                        </option>
+
+                                                        <option value="4" {{$detail->status == 4 ? 'selected' : ''}}>
+                                                                    Arrived
+                                                        </option>
+
+                                                        <option value="5" {{$detail->status == 5 ? 'selected' : ''}}>
+                                                                    Cancelled
+                                                        </option>
+                                                </select>
                                             </div>
                                         </div>
 

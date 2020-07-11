@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Rute;
+use App\Exports\RuteExport;
 use App\Kota;
+use App\Rute;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RuteController extends Controller
 {
@@ -77,5 +79,10 @@ class RuteController extends Controller
         session()->flash('flash_success', "Berhasil menghapus rute ".$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
     	// return redirect()->route('kota.index');
         return redirect('/rute');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new RuteExport, 'rute.xlsx');
     }
 }

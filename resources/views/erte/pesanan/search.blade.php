@@ -57,8 +57,14 @@
 
                         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{$jumlah_penumpang}} penumpang
 
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
+                        @foreach($pemesan as $p)
+                          {{$p->nama}}
+                        @endforeach
+
                         
                         <a href="/pesanan/create" style="position: absolute; top: 50px;right: 16px;"><i class="fa fa-edit"></i> Ubah Pencarian</a>
+
 
                         <div class="box-body">
                         <table class="table table-bordered table-hover table-striped">
@@ -85,7 +91,7 @@
                               </td>
                               <td>{{$seat}} Trip Tersedia</td>
                               <td>
-                                <a href="/pesanan/create_detail/{{$jumlah_penumpang}}/{{$t->id_trip}}"><button type="button" class="btn btn-info">Pesan</button></a>
+                                <a href="/pesanan/create_detail/{{$jumlah_penumpang}}/{{$t->id_trip}}/{{$p->id_users}}"><button type="button" class="btn btn-info">Pesan</button></a>
                               </td>
                             </tr>
                           @endforeach

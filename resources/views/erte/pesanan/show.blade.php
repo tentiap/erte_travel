@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
     <section class="content-header">
-      @include('messages')
+      
       <h1>
           Detail Pesanan
       </h1>
@@ -20,6 +20,7 @@
  @section('content')     
     <section class="content">
         <div class="box box-solid">
+          @include('messages')
 
                     <div style="position: absolute; right: 0;">
                         <a href="/pesanan/edit/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
@@ -95,7 +96,7 @@
                                 <dt>Feeder</dt>
                                 <dd>
                                         @if(empty($detail_pesanan->feeder->nama))
-                                          <a data-toggle='modal' data-target='#update_feeder' data-href="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><u>Tambah Feeder</u></a>
+                                          <a data-toggle='modal' data-target='#update_feeder' data-href="/pesanan/edit/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><u>Tambah Feeder</u></a>
                                         @else
                                           <a data-toggle='modal' data-target='#update_feeder' data-href="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><u>{{ $detail_pesanan->feeder->nama }}</u></a>
                                         @endif
@@ -190,19 +191,25 @@
                             </td>
                             <td>{{ $d->detail_asal }} </td>
                             <td>{{ $d->detail_tujuan }} </td>
-                            <td>{{ $d->detail_hp }} </td>
                             <td>
-                                @if(empty($d->detail_biaya))
-                                          <a href="/detail_pesanan/edit//{{ $detail_pesanan->id_trip }}/{{ $detail_pesanan->id_seat }}"><u>Tambah Biaya Tambahan</u></a>
-                                @else
-                                    {{ $d->detail_biaya }} 
-                                @endif
+                                  @if(empty($d->detail_hp))
+                                            -
+                                  @else
+                                      {{ $d->detail_hp }} 
+                                  @endif    
+                            </td>
+                            <td>
+                                  @if(empty($d->detail_biaya))
+                                             -
+                                  @else
+                                      @currency($d->detail_biaya)
+                                  @endif                                
                             </td>
                             <td>
                                 @if($d->detail_status == 1)
                                     <span class="badge bg-grey">Booking</span>
                                 @elseif($d->detail_status == 2)
-                                    <span class="badge bg-light-blue">Picked Up</span>
+                                    <span class="badge bg-lime">Picked Up</span>
                                 @elseif($d->detail_status == 3)
                                     <span class="badge bg-light-blue">On Going</span>
                                 @elseif($d->detail_status == 4)
@@ -212,8 +219,7 @@
                                 @endif             
                             </td>
                         </tr>
-                    @endforeach
-      
+                    @endforeach            
                   
                 </tbody>
               </table>
@@ -221,19 +227,7 @@
 
             </div>
         </div>
-        
-
-
-
-                   
-      
-                       
-                        
-
-                       
-
-
-        
+       
     </section>
 
     
