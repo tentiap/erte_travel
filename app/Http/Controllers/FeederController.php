@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Feeder;
 use App\Kota;
+use Auth;
 
 class FeederController extends Controller
 {
     public function index(){
-    	$feeder = Feeder::all();
-        return view('erte.feeder.index', ['feeder' => $feeder]);
+        if (Auth::guard('operator')->user()->id_users == 'admin') {
+            $feeder = Feeder::all();
+            return view('erte.feeder.index', ['feeder' => $feeder]);
+
+        }else{
+            $kota = Auth::guard('operator')->user()->id_kota;
+            $feeder = Feeder::where('id_kota', $kota)->get();
+            return view('erte.feeder.index', ['feeder' => $feeder]);    
+        }        
     }
 
     public function create(){

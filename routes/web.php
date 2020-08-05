@@ -40,9 +40,10 @@ Route::post('/operator/logout', 'Auth\LoginController@logout')->name('operator.l
 // Route::get('/home',function(){
 // 	return view('home');
 
-Route::get('/dashboard', function(){
-	return view('dashboard');
-});
+// Route::get('/dashboard', function(){
+// 	return view('dashboard');
+// });
+Route::get('/dashboard', 'DashboardController@index');
 
 //------------------------------------------------------KOTA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/kota', 'KotaController@index');
@@ -133,6 +134,9 @@ Route::post('/pesanan/create_search', 'PesananController@search');
 Route::get('/pesanan/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@detail');
 Route::post('/pesanan/store/{id_trip}/{id_users_pemesan}', 'PesananController@store');
 Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
+Route::get('/pesanan/update_create/{id_pesanan}/{id_trip}', 'PesananController@update_create');
+Route::get('/pesanan/update_search/{id_pesanan}', 'PesananController@update_search');
+Route::get('/pesanan/update_detail/{jumlah_penumpang}/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_detail');
 Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
 Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');

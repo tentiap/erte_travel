@@ -20,21 +20,34 @@ use Carbon\Carbon;
 class PesananController extends Controller
 {
     public function index(){
-    	$pesanan = Pesanan::all();
-        $jumlah = Pesanan::with('detail_pesanan')->where('id_pesanan', 'id_pesanan')->get();
-        // $pesanan = Pesanan::with("detail_pesanan")->where("id_pesanan", 1)->get();
-        // $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
-        //             ->select('pesanan.id_trip as pesanan_trip',
-        //                      'detail_pesanan.id_seat as detail_seat',
-        //                      'detail_pesanan.nama_penumpang as detail_nama')->get();
-    	$trip = Trip::all();
-    	$pemesan = Pemesan::all();
-        $operator = Operator::all();
+        if (Auth::guard('operator')->user()->id_users == 'admin') {
+            $pesanan = Pesanan::all();
+            // $pesanan = Pesanan::orderBy('tanggal_pesan', 'DESC')->get();
+            // $jumlah = Pesanan::with('detail_pesanan')->where('id_pesanan', 'id_pesanan')->get();
+            // $pesanan = Pesanan::with("detail_pesanan")->where("id_pesanan", 1)->get();
+            // $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+            //             ->select('pesanan.id_trip as pesanan_trip',
+            //                      'detail_pesanan.id_seat as detail_seat',
+            //                      'detail_pesanan.nama_penumpang as detail_nama')->get();
+            $jjj = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+                ->select('detail_pesanan.id_seat as seat')->get();
+            $trip = Trip::all();
+            $pemesan = Pemesan::all();
+            $operator = Operator::all();
 
-        // dd($pesanan);
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator, 'jjj' => $jjj]);
 
+        }else{
+            $kota = Auth::guard('operator')->user()->id_kota;
+            $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                        ->where('trip.id_kota_asal',  $kota)
+                        ->get();
+            $trip = Trip::all();
+            $pemesan = Pemesan::all();
+            $operator = Operator::all();
 
-        return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
+        }    
     }
 
 
@@ -208,6 +221,17 @@ class PesananController extends Controller
 
     }
 
+    public function update_detail($jumlah_penumpang, $id_pesanan, $id_trip, $id_users_pemesan){
+        $trip = Trip::where(['id_trip' => $id_trip])->get();
+        dd($id_pesanan);
+        $pemesan = Pemesan::where('id_users', $id_users_pemesan)->get();
+        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
+        $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();
+        $seat = Seat::all();
+        
+        return view('erte.pesanan.update_detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'pesanan' => $pesanan, 'detail' => $detail, 'seat' => $seat]);
+    }
+
 	public function store($id_trip, $id_users_pemesan, Request $request){
         $this->validate($request, 
             [
@@ -269,6 +293,7 @@ class PesananController extends Controller
     	$pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
         $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();
         $jumlah = $detail->count();
+        $kota = Kota::all();
 
     	$trip = Trip::all();
     	$pemesan = Pemesan::all();
@@ -276,7 +301,20 @@ class PesananController extends Controller
 
         // dd(response()->json($detail));
 
-        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah]);
+        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota]);
+    }
+
+    public function update_create($id_pesanan, $id_trip){
+        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
+        $detail = Detail_Pesanan::where('id_pesanan', $id_pesanan)->get();
+        $jumlah = $detail->count();
+        $kota = Kota::all();
+
+        $trip = Trip::all();
+        $pemesan = Pemesan::all();
+        $seat = Seat::all();
+
+        return view('erte.pesanan.update_create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota]);
     }
 
     public function update($id_pesanan, $id_trip, Request $request){
@@ -310,6 +348,55 @@ class PesananController extends Controller
 
             session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
                  return redirect('/pesanan/show/'. $id_pesanan .'/' . $id_trip);
+    }
+
+    public function update_search($id_pesanan){
+
+            $id_kota_asal = Input::get('id_kota_asal');
+            $id_kota_tujuan = Input::get('id_kota_tujuan');
+            $tanggal = Input::get('tanggal');
+            $filter = '%'.$tanggal.'%';
+            $jumlah_penumpang = Input::get('jumlah_penumpang');
+            $pesanan = Pesanan::where('id_pesanan', $id_pesanan)->get();
+            // dd($pesanan);
+        
+            // dd($id_kota_asal, $id_kota_tujuan, $tanggal, $jumlah_penumpang, $id_pesanan);
+            // return response()->json($pemesan);            
+
+            $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
+                                       'id_kota_tujuan' => $id_kota_tujuan,])
+                            ->where('jadwal', 'like', $filter)
+                            ->get();
+
+                $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+                            ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                            ->where(['trip.id_kota_asal' => $id_kota_asal, 
+                                       'trip.id_kota_tujuan' => $id_kota_tujuan,])
+                            ->where('jadwal', 'like', $filter)
+                            ->select('detail_pesanan.id_seat')
+                            ->get();
+                $jumlah_seat = $seat_a->count();
+                $seat = 7 - $jumlah_seat;
+
+                $trip_b = Trip::where(['id_kota_asal' => $id_kota_asal, 
+                                       'id_kota_tujuan' => $id_kota_tujuan,])
+                            ->where('jadwal', 'like', $filter)
+                            ->select('id_trip')
+                            ->get();
+
+                // $id_trip = $trip_a->id_trip;
+                // dd($trip_b);
+
+                       
+
+                if(!$trip_a->isEmpty() && $seat > $jumlah_penumpang){
+                    // return response()->json($trip_a);
+                    return view('erte.pesanan.update_search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pesanan' => $pesanan]);
+                    // dd($trip_a->jumlah_penumpang);
+                }else{
+                    session()->flash('flash_danger', 'Tidak ada trip');
+                    return redirect('/pesanan/update_create/'.$id_pesanan);
+                }  
     }
 
      public function show($id_pesanan, $id_trip){

@@ -35,7 +35,6 @@
                         <th>Jam</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
-                        <th>Jumlah</th>
                         <th>Tanggal Pesan</th>
                         <th>Operator</th>
                         <th>OPSI</th>
@@ -71,7 +70,6 @@
                                           Payakumbuh
                                       @endif
                                 </td>
-                                <td>{{ $p->operator->nama }}</td>
                                 <td>{{ date('d M Y H:i', strtotime($p->tanggal_pesan)) }} </td>
                                 <td>{{ $p->operator->nama }}</td>          
                                                                      

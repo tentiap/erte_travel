@@ -17,12 +17,20 @@ use Auth;
 class TripController extends Controller
 {
     public function index(){
-        $trip = Trip::all();
-    	// $trip = Trip::orderBy('jadwal')->get();
-        // $trip = Trip::all()->sortByDesc('jadwal');
-        // $results = Project::all()->sortByDesc("name");
-        // $results = Project::orderBy('name')->get();
-    	return view('erte.trip.index', ['trip' => $trip]);
+        if (Auth::guard('operator')->user()->id_users == 'admin') {
+            $trip = Trip::all();
+            // $trip = Trip::orderBy('jadwal')->get();
+            // $trip = Trip::all()->sortByDesc('jadwal');
+            // $results = Project::all()->sortByDesc("name");
+            // $results = Project::orderBy('name')->get();
+            return view('erte.trip.index', ['trip' => $trip]);
+
+        }else{
+            $kota = Auth::guard('operator')->user()->id_kota;
+            $trip = Trip::where('id_kota_asal', $kota)->get();
+            return view('erte.trip.index', ['trip' => $trip]);
+        }   
+        
     }
 
     public function create(){
@@ -131,7 +139,13 @@ class TripController extends Controller
         //             ->select('pesanan.id_trip as pesanan_trip',
         //                      'detail_pesanan.id_seat as detail_seat',
         //                      'detail_pesanan.nama_penumpang as detail_nama')->get();
-        $detail_pesanan = Detail_Pesanan::where('id_trip', $id_trip)->get();   
+        $detail_pesanan = Detail_Pesanan::where('id_trip', $id_trip)->get();
+
+        $seat = Trip::join('pesanan', 'trip.id_trip', '=', 'pesanan.id_trip')
+                    ->join('detail_pesanan', 'pesanan.id_trip', '=', 'detail_pesanan.id_trip')
+                    ->where('trip.id_trip', $id_trip)
+                    ->select('detail_pesanan.id_seat')
+                    ->count();
         
         // $pesanan = Pesanan::with(['detail_pesanan' => function ($query) use($trip) {
         //     $query->where('id_pesanan', '=', $trip);
@@ -141,7 +155,7 @@ class TripController extends Controller
         //     $query->where('id_trip',$trip);
         // }))->get();
         
-        return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan]);
+        return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat]);
 
     }
 

@@ -58,7 +58,8 @@
                     <div class="box box-solid">
                         <div class="box-header with-border">
                           <i class="fa fa-map-pin"></i>
-                          <h3 class="box-title">Trip {{ $trip->id_trip }}</h3>
+                          <h3 class="box-title">Trip {{ $trip->id_trip }}    
+                            <small class="badge bg-green">{{7 - $seat}} seat tersedia</small></h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

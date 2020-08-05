@@ -243,16 +243,16 @@
 @yield('trip')
 
 @section('cs')
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $(document).ready(function () {
             $("#form_date-time").hide()
         });
         
         function getDateTime(){
-                let ayam = $("#id_rute option:selected").val()
+                let jadwal = $("#id_rute option:selected").val()
                 
                 $.ajax({
-                            url: "/api/pesanan/date-time/" + ayam,
+                            url: "/api/pesanan/date-time/" + jadwal,
                             type: "GET",
                             contentType: "application/json;charset=utf-8",
                             dataType: "json",
@@ -272,5 +272,5 @@
                             }
                         });
             }
-    </script>
+    </script> -->
 @endsection

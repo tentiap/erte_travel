@@ -3,12 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Edit Data Pesanan {{$pesanan->id_pesanan}}
+          Update Data Pesanan 
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="/pesanan">Pesanan</a></li>
-            <li class="active">Edit Pesanan</li>
+            <li class="active">Update Pesanan</li>
           </ol>
   </section>
  @endsection
@@ -32,33 +32,33 @@
                 </div>
                   <!-- /.box-header -->
                 <div class="box-body">
-                        @if($pesanan->trip->id_kota_asal == "K1")
+                        @if($trip->id_kota_asal == "K1")
                                 Bukittinggi
-                        @elseif($pesanan->trip->id_kota_asal == "K2")
+                        @elseif($trip->id_kota_asal == "K2")
                                           Padang
-                        @elseif($pesanan->trip->id_kota_asal == "K3")
+                        @elseif($trip->id_kota_asal == "K3")
                                           Payakumbuh
                         @endif
 
                         -  
 
-                        @if($pesanan->trip->id_kota_tujuan == "K1")
+                        @if($trip->id_kota_tujuan == "K1")
                                 Bukittinggi
-                        @elseif($pesanan->trip->id_kota_tujuan == "K2")
+                        @elseif($trip->id_kota_tujuan == "K2")
                                 Padang
-                        @elseif($pesanan->trip->id_kota_tujuan == "K3")
+                        @elseif($trip->id_kota_tujuan == "K3")
                                 Payakumbuh
                         @endif
 
                         
-                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('D, d M Y', strtotime($pesanan->trip->jadwal)) }}
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('D, d M Y', strtotime($trip->jadwal)) }}
 
-                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('H:i', strtotime($pesanan->trip->jadwal)) }}
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('H:i', strtotime($trip->jadwal)) }}
 
-                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{$jumlah}} penumpang
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{$jumlah_penumpang}} penumpang
 
 
-                        <!-- <a href="/pesanan/update_create/{{ $pesanan->id_pesanan}}/{{$pesanan->id_trip}}" style="position: absolute; top: 50px;right: 16px;"><i class="fa fa-edit"></i> Ubah</a> -->
+                        <a href="/pesanan/update_create/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" style="position: absolute; top: 50px;right: 16px;"><i class="fa fa-edit"></i> Ubah</a>
 
                 </div>
 
@@ -66,14 +66,14 @@
 
                     <form method="post" action="/pesanan/update/{{$pesanan->id_pesanan}}/{{$pesanan->trip->id_trip}}">
 
-                        @foreach($detail as $detail)
+                        @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
 
                             <div class="box box-default collapsed-box box-solid">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Detail Penumpang di seat {{$detail->id_seat}}  </h3>
+                                    <h3 class="box-title">Detail Penumpang {{$i + 1}}  </h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
@@ -210,7 +210,7 @@
                                 <!-- <div class="box-body"> -->
                             </div>
                         <!-- /.box -->
-                            @endforeach
+                            @endfor
 
 
 
@@ -225,109 +225,7 @@
         <!-- Jangan -->                                               
             </div> 
 
-            <div class="modal fade" id="ubah_pesanan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <!-- Awal Modal Body -->
-                            <b>Ubah Pesanan</b><br><br>
-                                <form method="post" action="/pesanan/update1/{{$pesanan->id_pesanan}}/{{$pesanan->id_trip}}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('PUT') }}
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                        <label>Kota Asal</label>
-                                                        <select class="form-control" name="id_kota_asal" id="id_kota_asal">
-                                                            <option disabled selected value> -- Kota Asal -- </option>
-                                                                @foreach($kota as $k)
-                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
-                                                                        {{$k->nama_kota}}
-                                                                        </option>
-                                                                @endforeach 
-                                                        </select>
-
-                                                        @if($errors->has('id_kota_asal'))
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('id_kota_asal')}}
-                                                            </div>
-                                                        @endif
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                        <label>Kota Tujuan</label>
-                                                        <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan">
-                                                            <option disabled selected value> -- Kota Tujuan -- </option>
-                                                            @foreach($kota as $k)
-                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_tujuan == $k->id_kota ? 'selected' : ''}}>
-                                                                        {{$k->nama_kota}}
-                                                                        </option>
-                                                            @endforeach                                                            
-                                                        </select>
-
-                                                        @if($errors->has('id_kota_tujuan'))
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('id_kota_tujuan')}}
-                                                            </div>
-                                                        @endif
-                                                </div>                                                
-                                            </div>
-
-
-                                                <label>Jadwal</label>
-                                                    <div class='input-group date' id='date'>
-                                                        <input type='text' class="form-control" name="tanggal" value="{{ $pesanan->trip->jadwal }}" />
-                                                              <span class="input-group-addon">
-                                                                  <span class="glyphicon glyphicon-calendar"></span>
-                                                              </span>
-                                                        @if($errors->has('tanggal'))
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('tanggal')}}
-                                                            </div>
-                                                        @endif      
-                                                    </div>
-
-                                                
-                                            </div>
-                                                
-                                            <!-- <div class="col-sm-6"> -->
-                                                <label>Jumlah penumpang</label>
-                                                    <select class="form-control" name="jumlah_penumpang">
-                                                        <option disabled selected value> -- Jumlah Penumpang -- </option>
-                                                            @foreach($seat as $s)
-                                                                    <option value="{{ $s->id_seat }}" {{$jumlah == $s->id_seat ? 'selected' : ''}}>
-                                                                    {{$s->id_seat}}
-                                                                    </option> 
-                                                            @endforeach 
-                                                        @if($errors->has('jumlah_penumpang'))
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('jumlah_penumpang')}}
-                                                            </div>
-                                                        @endif            
-                                                            
-                                                    </select>
-                                                             
-                                                    <div class="form-group">
-                                                        <input type="submit" class="btn btn-primary" value="Cari">
-                                                    </div>                     
-                                </form>                
-                            <!-- Akhir Modal body -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-                <script type="text/javascript">
-                    //Hapus Data
-                    $(document).ready(function() {
-                        $('#edit_pesanan').on('show.bs.modal', function(e) {
-                            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-                        });
-                    });
-                </script>
- -->
-        </div>
+            
            
         </div>
         <div class="box-footer">
