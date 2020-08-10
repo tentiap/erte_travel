@@ -28,6 +28,15 @@ class TripController extends Controller
         }else{
             $kota = Auth::guard('operator')->user()->id_kota;
             $trip = Trip::where('id_kota_asal', $kota)->get();
+
+            // $filter = '%'.'2020-08-06'.'%';
+            // $trip = Trip::join('pesanan', 'trip.id_trip', '=', 'pesanan.id_trip')
+            //         ->join('detail_pesanan', 'detail_pesanan.id_trip', '=', 'pesanan.id_trip')
+            //         ->where('trip.jadwal', 'like', $filter)
+            //         ->select('detail_pesanan.id_seat')
+            //         ->count();
+            // $seat = 7 - $trip;        
+            // dd($seat);        
             return view('erte.trip.index', ['trip' => $trip]);
         }   
         

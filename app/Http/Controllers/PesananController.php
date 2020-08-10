@@ -29,13 +29,13 @@ class PesananController extends Controller
             //             ->select('pesanan.id_trip as pesanan_trip',
             //                      'detail_pesanan.id_seat as detail_seat',
             //                      'detail_pesanan.nama_penumpang as detail_nama')->get();
-            $jjj = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
-                ->select('detail_pesanan.id_seat as seat')->get();
+            // $jjj = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+            //     ->select('detail_pesanan.id_seat as seat')->get();
             $trip = Trip::all();
             $pemesan = Pemesan::all();
             $operator = Operator::all();
 
-            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator, 'jjj' => $jjj]);
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
 
         }else{
             $kota = Auth::guard('operator')->user()->id_kota;
@@ -78,7 +78,7 @@ class PesananController extends Controller
         $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                'id_kota_tujuan' => $id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
-                    ->get();
+                    ->get();    
 
         $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
                     ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
@@ -86,9 +86,9 @@ class PesananController extends Controller
                                'trip.id_kota_tujuan' => $id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
                     ->select('detail_pesanan.id_seat')
-                    ->get();
-        $jumlah_seat = $seat_a->count();
-        $seat = 7 - $jumlah_seat;
+                    ->count();
+        // $jumlah_seat = $seat_a->count();
+        $seat = 7 - $seat_a;
 
                
 
