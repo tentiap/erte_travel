@@ -20,7 +20,7 @@
           <!-- <div class="box"> -->
               @include('messages')
               <div class="box-header" align="right">
-                <a href="/rute/export" class="btn btn-sm btn-primary">Export Excel</a>
+                <!-- <a href="/rute/export" class="btn btn-sm btn-primary">Export Excel</a> -->
                 <a href="/rute/create" class="btn btn-sm btn-primary">Tambah Rute</a>
               </div>
 

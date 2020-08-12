@@ -100,7 +100,7 @@
                       
                             <tr>
                                 <td><a href="/trip/show/{{ $t->id_trip }}"><u>{{ $t->id_trip }}</u></a></td>
-                                <td>{{ date('H:i', strtotime($t->jadwal)) }} </td>
+                                <td id="tes_id">{{ date('H:i', strtotime($t->jadwal)) }} </td>
                                 <td>
                                   
                                       @if($t->id_kota_asal == "K1")
@@ -128,7 +128,7 @@
                                         {{ $t->sopir->nama }}
                                       @endif
                                 </td>
-                                <td></td>  
+                                <td ><a href="/trip/show/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>  
                     @endforeach             
                   
                   </tbody>
@@ -142,5 +142,7 @@
      
     </section>
     <!-- /.content -->
+
+
 
  @endsection

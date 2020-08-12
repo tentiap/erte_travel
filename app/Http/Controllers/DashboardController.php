@@ -39,6 +39,12 @@ class DashboardController extends Controller
 	    	$trip = Trip::where('id_kota_asal', $kota)
 	    				->where('jadwal', 'like', $filter)
 	    				->get();
+
+	    	// $trip = Trip::join('pesanan', 'trip.id_trip', '=', 'pesanan.id_trip')
+	    	// 		->join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+      //               ->where('trip.id_kota_asal', $kota)
+      //               ->where('trip.jadwal', 'like', $filter)
+      //               ->get();
 	                    
 	        return view('dashboard', ['feeder' => $feeder, 'pemesan' => $pemesan, 'sopir' => $sopir, 'pesanan' => $pesanan, 'today' => $today, 'trip' => $trip]);
         }

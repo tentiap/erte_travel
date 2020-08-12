@@ -82,10 +82,10 @@
         });
         
         function getDateTime(){
-                let ayam = $("#id_rute option:selected").val()
+                let tes = $("#id_rute option:selected").val()
                 
                 $.ajax({
-                            url: "/api/pesanan/date-time/" + ayam,
+                            url: "/api/pesanan/date-time/" + tes,
                             type: "GET",
                             contentType: "application/json;charset=utf-8",
                             dataType: "json",
