@@ -12,6 +12,7 @@ class Detail_Pesanan extends Model
 
     protected $table = "detail_pesanan";
     protected $fillable = [
+        'id_detail_pesanan',
         'id_trip',  
         'id_seat',
         'id_users_feeder', 
@@ -24,7 +25,7 @@ class Detail_Pesanan extends Model
         'biaya_tambahan',
         'id_pesanan'
     ];
-    protected $primaryKey = ['id_trip', 'id_seat'];
+    protected $primaryKey = ['id_detail_pesanan'];
 
     public function pesanan()
     {

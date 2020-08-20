@@ -74,6 +74,16 @@
                             <div class="box box-default collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Detail Penumpang di seat {{$detail->id_seat}}  </h3>
+                                    <small>
+                                        Seat yang sudah diisi : 
+                                            @foreach($seat_b as $sb)
+                                                @if(empty($sb->id_seat))
+                                                  <p>Belum ada</p>
+                                                @else
+                                                  {{$sb->id_seat}},
+                                                @endif                                               
+                                            @endforeach      
+                                    </small>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
@@ -97,8 +107,8 @@
 
                                             <div class="col-sm-3">
                                                 <label>Seat</label>
-                                                <select class="form-control" name="id_seat[]" id="id_kota_asal">
-                                                    <option value="">  Seat  </option>
+                                                <select class="form-control" name="id_seat[]">
+                                                    <option disabled value="">  Seat  </option>
                                                         @foreach($seat as $s)                                                               
                                                                 <option value="{{$s->id_seat}}" {{$detail->id_seat == $s->id_seat ? 'selected' : ''}}>
                                                                     {{$s->id_seat}}
@@ -155,7 +165,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <label>Nomor HP</label>
                                                 <input type="text" name="no_hp[]" class="form-control" placeholder="Nomor HP jika berbeda dengan pemesan" value="{{old('no_hp', $detail->no_hp)}}">
 
@@ -164,6 +174,18 @@
                                                             {{ $errors->first('no_hp')}}
                                                         </div>
                                                     @endif
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label>Feeder</label>
+                                                <select class="form-control" name="id_users_feeder[]">
+                                                    <option value="">  Belum ada feeder  </option>
+                                                        @foreach($feeder as $f)                                                               
+                                                                <option value="{{$f->id_users}}" {{$detail->id_users_feeder == $f->id_users ? 'selected' : ''}}>
+                                                                    {{$f->nama}}
+                                                                </option>
+                                                        @endforeach 
+                                                </select>
                                             </div>
 
                                             <div class="col-sm-3">

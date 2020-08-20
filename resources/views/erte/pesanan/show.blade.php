@@ -55,7 +55,7 @@
 
                         <div class="box-header with-border">
                           <i class="fa fa-map-pin"></i>
-                          <h3 class="box-title">Pesanan {{ $pesanan->id_pesanan }}</h3>
+                          <h3 class="box-title">Pesanan {{ $pesanan->id_pesanan }} di Trip<a href="/trip/show/{{ $trip->id_trip}}" class="btn btn-md"><h4>{{$trip->id_trip}}</h4></a></h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -95,48 +95,13 @@
                                 <dd>{{ date('H:i', strtotime($trip->jadwal)) }}</dd>
                                 <dt>Feeder</dt>
                                 <dd>
-                                        @if(empty($detail_pesanan->feeder->nama))
-                                          <a data-toggle='modal' data-target='#update_feeder' data-href="/pesanan/edit/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><u>Tambah Feeder</u></a>
-                                        @else
-                                          <a data-toggle='modal' data-target='#update_feeder' data-href="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><u>{{ $detail_pesanan->feeder->nama }}</u></a>
-                                        @endif
+                                        
                                 </dd>
                               </dl>
                             </div>
                         </div>
 
-                        <div class="modal fade" id="update_feeder" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                      <form method="get" action="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}">
-                                        <input type="hidden" id="id_kota_asal" name="id_kota_asal" value="{{$trip->id_kota_asal}}">
-                                        <label>Feeder</label>
-                                        <select class="form-control" name="id_users_feeder" id="id_users_feeder">
-                                            <option value=""> Belum Ada Feeder </option>
-                                                @foreach($feeder as $f)
-                                                        <option  value="{{$f->id_users}}"{{$detail_pesanan->id_users_feeder == $f->id_users ? 'selected' : ''}}>{{$f->nama}}</option>                                         
-                                                @endforeach
-                                        </select>
-
-                                        @if($errors->has('id_users_feeder'))
-                                            <div class="text-danger">
-                                                {{ $errors->first('id_users_feeder')}}
-                                            </div>
-                                        @endif
-    
-                                        <input type="submit" class="btn btn-primary" value="Simpan">                                    
-                                        <!-- <a class="btn btn-primary btn-ok">Simpan</a> -->
-                                        <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>
-                                      
-                                        
-                                     </form>
-                                  </div>    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        
 
                     <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
                         <script type="text/javascript">
@@ -166,13 +131,14 @@
                 <table class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
-                        <th>Seat</th>
-                        <th>Penumpang</th>
+                        <th>Nama Penumpang</th>
                         <th>Jenis Kelamin</th>
+                        <th>Nomor HP</th>
                         <th>Detail Asal</th>
                         <th>Detail Tujuan</th>
-                        <th>Nomor HP</th>
+                        <th>Seat</th>
                         <th>Biaya Tambahan</th>
+                        <th>Feeder</th>
                         <th>Status</th>
                       </tr>
                   </thead>
@@ -180,41 +146,48 @@
                   <tbody>
                     @foreach($detail as $d)
                         <tr>
-                            <td>{{ $d->detail_seat}}</td>
-                            <td>{{ $d->detail_nama }} </td>
+                            <td>{{ $d->nama_penumpang }} </td>
                             <td>
-                                @if($d->detail_jk == 1)
+                                @if($d->jenis_kelamin == 1)
                                    Laki-laki
-                                @elseif($d->detail_jk == 2)
+                                @elseif($d->jenis_kelamin == 2)
                                     Perempuan
                                 @endif 
                             </td>
-                            <td>{{ $d->detail_asal }} </td>
-                            <td>{{ $d->detail_tujuan }} </td>
                             <td>
-                                  @if(empty($d->detail_hp))
+                                  @if(empty($d->no_hp))
                                             -
                                   @else
-                                      {{ $d->detail_hp }} 
+                                      {{ $d->no_hp }} 
                                   @endif    
                             </td>
+                            <td>{{ $d->detail_asal }} </td>
+                            <td>{{ $d->detail_tujuan }} </td>
+                            <td>{{ $d->id_seat}}</td>
                             <td>
-                                  @if(empty($d->detail_biaya))
+                                  @if(empty($d->biaya_tambahan))
                                              -
                                   @else
-                                      @currency($d->detail_biaya)
+                                      @currency($d->biaya_tambahan)
                                   @endif                                
                             </td>
                             <td>
-                                @if($d->detail_status == 1)
+                                  @if(empty($d->feeder->nama))
+                                      Belum ada Feeder
+                                  @else
+                                      {{ $d->feeder->nama }}
+                                  @endif
+                            </td>
+                            <td>
+                                @if($d->status == 1)
                                     <span class="badge bg-grey">Booking</span>
-                                @elseif($d->detail_status == 2)
+                                @elseif($d->status == 2)
                                     <span class="badge bg-lime">Picked Up</span>
-                                @elseif($d->detail_status == 3)
+                                @elseif($d->status == 3)
                                     <span class="badge bg-light-blue">On Going</span>
-                                @elseif($d->detail_status == 4)
+                                @elseif($d->status == 4)
                                     <span class="badge bg-green">Arrived</span>
-                                @elseif($d->detail_status == 5)
+                                @elseif($d->status == 5)
                                    <span class="badge bg-red">Cancelled</span>
                                 @endif             
                             </td>
@@ -224,6 +197,39 @@
                 </tbody>
               </table>
             </div>
+
+            <div class="modal fade" id="update_feeder" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                      <form method="get" action="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}">
+                                        <input type="hidden" id="id_kota_asal" name="id_kota_asal" value="{{$trip->id_kota_asal}}">
+                                        <label>Feeder</label>
+                                        <select class="form-control" name="id_users_feeder" id="id_users_feeder">
+                                            <option value=""> Belum Ada Feeder </option>
+                                                @foreach($feeder as $f)
+                                                        <option  value="{{$f->id_users}}"{{$d->id_users_feeder == $f->id_users ? 'selected' : ''}}>{{$f->nama}}</option>                                         
+                                                @endforeach
+                                        </select>
+
+                                        @if($errors->has('id_users_feeder'))
+                                            <div class="text-danger">
+                                                {{ $errors->first('id_users_feeder')}}
+                                            </div>
+                                        @endif
+    
+                                        <input type="submit" class="btn btn-primary" value="Simpan">                                    
+                                        <!-- <a class="btn btn-primary btn-ok">Simpan</a> -->
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>
+                                      
+                                        
+                                     </form>
+                                  </div>    
+                                </div>
+                            </div>
+                        </div>
+                        </div>
 
             </div>
         </div>

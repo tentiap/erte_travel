@@ -125,6 +125,7 @@ Route::get('/trip/edit/{id_trip}', 'TripController@edit');
 Route::put('/trip/update/{id_trip}', 'TripController@update');
 Route::get('/trip/delete/{id_trip}', 'TripController@delete');
 Route::get('/trip/show/{id_trip}', 'TripController@show');
+Route::get('/trip/show/{id_trip}/cancel', 'TripController@show_cancel');
 Route::get('/trip_kota_tujuan', 'TripController@getKotaTujuan');
 
 //------------------------------------------------------PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -147,13 +148,13 @@ Route::get('/pesanan/update_feeder/{id_pesanan}/{id_trip}', 'PesananController@u
 
 
 //------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Route::get('detail_pesanan', 'DetailPesananController@index');
-Route::get('/detail_pesanan/create', 'DetailPesananController@create');
-Route::post('/detail_pesanan/store', 'DetailPesananController@store');
-Route::get('/detail_pesanan/edit/{id_trip}/{id_seat}}', 'DetailPesananController@edit');
-Route::put('/detail_pesanan/update/{id_trip}/{id_seat}', 'DetailPesananController@update');
-Route::get('/detail_pesanan/delete/{id_trip}/{id_seat}', 'DetailPesananController@delete');
-Route::get('/detail_pesanan/show/{id_trip}/{id_seat}', 'DetailPesananController@show');
+// Route::get('detail_pesanan', 'DetailPesananController@index');
+// Route::get('/detail_pesanan/create', 'DetailPesananController@create');
+// Route::post('/detail_pesanan/store', 'DetailPesananController@store');
+// Route::get('/detail_pesanan/edit/{id_trip}/{id_seat}}', 'DetailPesananController@edit');
+// Route::put('/detail_pesanan/update/{id_trip}/{id_seat}', 'DetailPesananController@update');
+// Route::get('/detail_pesanan/delete/{id_trip}/{id_seat}', 'DetailPesananController@delete');
+// Route::get('/detail_pesanan/show/{id_trip}/{id_seat}', 'DetailPesananController@show');
 
 
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');

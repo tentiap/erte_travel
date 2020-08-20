@@ -73,7 +73,7 @@
 
             </div>
 
-            
+                    
                     
                     <form method="post" action="/pesanan/store/{{$t->id_trip}}/{{$p->id_users}}">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
@@ -83,6 +83,16 @@
                             <div class="box box-default collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Detail Penumpang {{$i + 1}}</h3>
+                                    <small>
+                                        Seat yang sudah diisi : 
+                                            @foreach($seat_b as $sb)
+                                                @if(empty($sb->id_seat))
+                                                  <p>Belum ada</p>
+                                                @else
+                                                  {{$sb->id_seat}},
+                                                @endif                                               
+                                            @endforeach      
+                                    </small>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>

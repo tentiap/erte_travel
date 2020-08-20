@@ -148,13 +148,17 @@ class TripController extends Controller
         //             ->select('pesanan.id_trip as pesanan_trip',
         //                      'detail_pesanan.id_seat as detail_seat',
         //                      'detail_pesanan.nama_penumpang as detail_nama')->get();
-        $detail_pesanan = Detail_Pesanan::where('id_trip', $id_trip)->get();
+        $detail_pesanan = Detail_Pesanan::where('id_trip', $id_trip)
+                            ->where('status', '!=', 5)
+                            ->get();
+                            // dd($detail_pesanan);
 
-        $seat = Trip::join('pesanan', 'trip.id_trip', '=', 'pesanan.id_trip')
-                    ->join('detail_pesanan', 'pesanan.id_trip', '=', 'detail_pesanan.id_trip')
+        $seat = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
                     ->where('trip.id_trip', $id_trip)
-                    ->select('detail_pesanan.id_seat')
+                    ->where('detail_pesanan.status', '!=', 5)
+                    ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
                     ->count();
+                    // dd($seat);
         
         // $pesanan = Pesanan::with(['detail_pesanan' => function ($query) use($trip) {
         //     $query->where('id_pesanan', '=', $trip);
@@ -165,6 +169,23 @@ class TripController extends Controller
         // }))->get();
         
         return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat]);
+
+    }
+
+     public function show_cancel($id_trip){
+
+        $trip = Trip::find($id_trip);
+        $detail_pesanan = Detail_Pesanan::where('id_trip', $id_trip)
+                            ->where('status', 5)
+                            ->get();
+                            
+        $seat = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+                    ->where('trip.id_trip', $id_trip)
+                    ->where('detail_pesanan.status', 5)
+                    ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
+                    ->count();
+        
+        return view('erte.trip.show_cancel', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat]);
 
     }
 

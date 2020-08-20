@@ -39,7 +39,7 @@ class Pesanan extends Model
     {   
         // return $this->hasMany(Detail_Pesanan::class, ['id_pesanan', 'id_trip'], ['id_trip', 'id_seat']);   
 
-        return $this->hasMany(Detail_Pesanan::class, ['id_pesanan', 'id_trip'], ['id_pesanan', 'id_trip']);   
+        return $this->hasMany(Detail_Pesanan::class);   
 
         // return $this->hasMany(Detail_Pesanan::class);   
     }

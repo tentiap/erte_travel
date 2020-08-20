@@ -96,13 +96,20 @@ class PesananController extends Controller
                     ->where('jadwal', 'like', $filter)
                     ->get();    
 
-        $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
-                    ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                    ->where(['trip.id_kota_asal' => $id_kota_asal, 
-                               'trip.id_kota_tujuan' => $id_kota_tujuan,])
+        // $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+        //             ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+        //             ->where(['trip.id_kota_asal' => $id_kota_asal, 
+        //                        'trip.id_kota_tujuan' => $id_kota_tujuan,])
+        //             ->where('jadwal', 'like', $filter)
+        //             ->select('detail_pesanan.id_seat')
+        //             ->count();
+
+        $seat_a = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
                     ->where('jadwal', 'like', $filter)
+                    ->where('detail_pesanan.status', '!=', 5)
                     ->select('detail_pesanan.id_seat')
                     ->count();
+                    
         // // $jumlah_seat = $seat_a->count();
         //             dd($seat_a);
         $seat = 7 - $seat_a;
@@ -223,9 +230,26 @@ class PesananController extends Controller
     }
 
     public function detail($jumlah_penumpang, $id_trip, $id_users_pemesan){
-        $trip = Trip::where(['id_trip' => $id_trip])->get();
-        $jumlah_penumpang = $jumlah_penumpang;
-        $pemesan = Pemesan::where('id_users', $id_users_pemesan)->get();
+
+        // if (Pesanan::where('id_users_pemesan', $id_users_pemesan)->exists() && (Trip::where('id_trip', $id_trip))->exists) {
+        //     session()->flash('flash_danger', 'Data pemesan di trip ini sudah ada');
+        //     return redirect('/pesanan/create_search');  
+        // }
+            $trip = Trip::where(['id_trip' => $id_trip])->get();
+            $jumlah_penumpang = $jumlah_penumpang;
+            $pemesan = Pemesan::where('id_users', $id_users_pemesan)->get();
+            $seat = Seat::all();
+            $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
+                        ->where('status', '!=', 5)
+                        ->select('id_seat')
+                        ->get();
+                      
+            return view('erte.pesanan.detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_b' => $seat_b]);
+
+        
+
+        
+
         // dd($pemesan);
         // return response()->json($pemesan);
 
@@ -233,8 +257,7 @@ class PesananController extends Controller
         //         ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
         //         ->whereDate('jadwal', '>', Carbon::now())
         //         ->get();
-        $seat = Seat::all();
-        return view('erte.pesanan.detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan]);
+        
 
     }
 
@@ -312,13 +335,18 @@ class PesananController extends Controller
         $jumlah = $detail->count();
         $kota = Kota::all();
 
-    	$trip = Trip::all();
+    	$trip = Trip::find($id_trip);
+
     	$pemesan = Pemesan::all();
         $seat = Seat::all();
+        $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();
 
-        // dd(response()->json($detail));
+        $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
+                        ->where('status', '!=', 5)
+                        ->select('id_seat')
+                        ->get();
 
-        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota]);
+        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'seat_b' => $seat_b, 'feeder' => $feeder]);
     }
 
     public function update_create($id_pesanan, $id_trip){
@@ -357,6 +385,7 @@ class PesananController extends Controller
                     $detail[$i]->detail_asal = $request->detail_asal[$i];
                     $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
                     $detail[$i]->no_hp = $request->no_hp[$i];
+                    $detail[$i]->id_users_feeder = $request->id_users_feeder[$i];
                     $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
                     $detail[$i]->status = $request->status[$i];
                     $detail[$i]->save();
@@ -385,15 +414,15 @@ class PesananController extends Controller
                             ->where('jadwal', 'like', $filter)
                             ->get();
 
-                $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
-                            ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                            ->where(['trip.id_kota_asal' => $id_kota_asal, 
-                                       'trip.id_kota_tujuan' => $id_kota_tujuan,])
-                            ->where('jadwal', 'like', $filter)
-                            ->select('detail_pesanan.id_seat')
-                            ->get();
-                $jumlah_seat = $seat_a->count();
-                $seat = 7 - $jumlah_seat;
+                // $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+                //             ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                //             ->where(['trip.id_kota_asal' => $id_kota_asal, 
+                //                        'trip.id_kota_tujuan' => $id_kota_tujuan,])
+                //             ->where('jadwal', 'like', $filter)
+                //             ->select('detail_pesanan.id_seat')
+                //             ->get();
+                // $jumlah_seat = $seat_a->count();
+                // $seat = 7 - $jumlah_seat;
 
                 $trip_b = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                        'id_kota_tujuan' => $id_kota_tujuan,])
@@ -420,26 +449,35 @@ class PesananController extends Controller
 
         $trip = Trip::find($id_trip);
         $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
-        $detail_pesanan = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
-        $detail = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
-                    ->where('pesanan.id_pesanan', $id_pesanan)
-                    ->select('pesanan.id_trip as pesanan_trip',
-                             'pesanan.id_pesanan as pesanan_id',
-                             'pesanan.id_users_pemesan as pesanan_pemesan',
-                             'pesanan.tanggal_pesan as pesanan_tanggal',
-                             'detail_pesanan.id_seat as detail_seat',
-                             'detail_pesanan.nama_penumpang as detail_nama',
-                             'detail_pesanan.jenis_kelamin as detail_jk',
-                             'detail_pesanan.detail_asal as detail_asal',
-                             'detail_pesanan.detail_tujuan as detail_tujuan',
-                             'detail_pesanan.no_hp as detail_hp',
-                             'detail_pesanan.status as detail_status',
-                             'detail_pesanan.biaya_tambahan as detail_biaya')
+        $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])
+                    ->orderBy('id_seat', 'ASC')
                     ->get();
+        // $detail = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+        //             ->join('feeder', 'feeder.id_users', 'detail_pesanan.id_users_feeder')
+        //             ->where('pesanan.id_pesanan', $id_pesanan)
+        //             ->select('pesanan.id_trip as pesanan_trip',
+        //                      'pesanan.id_pesanan as pesanan_id',
+        //                      'pesanan.id_users_pemesan as pesanan_pemesan',
+        //                      'pesanan.tanggal_pesan as pesanan_tanggal',
+        //                      'detail_pesanan.id_seat as detail_seat',
+        //                      'detail_pesanan.nama_penumpang as detail_nama',
+        //                      'detail_pesanan.jenis_kelamin as detail_jk',
+        //                      'detail_pesanan.detail_asal as detail_asal',
+        //                      'detail_pesanan.detail_tujuan as detail_tujuan',
+        //                      'detail_pesanan.no_hp as detail_hp',
+        //                      'detail_pesanan.status as detail_status',
+        //                      'detail_pesanan.biaya_tambahan as detail_biaya',
+        //                      'feeder.nama as feeder')
+        //             ->orderBy('detail_pesanan.id_seat', 'ASC')
+        //             ->get();
+
+        // $detail = Detail_Pesanan::join('feeder', 'detail_pesanan.id')
+
+                   
         $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();
        // return response()->json($feeder);
         
-        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'detail_pesanan' => $detail_pesanan, 'feeder' => $feeder]);
+        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'feeder' => $feeder]);
 
     }
 
@@ -464,8 +502,9 @@ class PesananController extends Controller
 
         $trip = Trip::find($id_trip);
         $feeder = Input::get('id_users_feeder');
+        $id_seat = Input::get('id_seat');
         // dd($feeder);
-        Detail_Pesanan::where('id_pesanan', $id_pesanan)
+        Detail_Pesanan::where('id_seat', $id_seat)
           ->update(['id_users_feeder' => $feeder]);  
 
         session()->flash('flash_success', 'Berhasil mengubah data feeder');
