@@ -34,6 +34,7 @@
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
+                      
                         @if($id_kota_asal == "K1")
                                 Bukittinggi
                         @elseif($id_kota_asal == "K2")
@@ -71,7 +72,6 @@
                                 <th>ID</th>
                                 <th>Jam</th>
                                 <th>Sopir</th>
-                                <th>Keterangan</th>
                                 <th>#</th>
                               </tr>
                           </thead>
@@ -87,7 +87,6 @@
                                           {{ $t->sopir->nama }}
                                       @endif
                               </td>
-                              <td>{{$seat}} Trip Tersedia</td>
                               <td>
                                 <a href="/pesanan/update_detail/{{jumlah_penumpang}}/{{$pesanan->id_pesanan}}/{{$t->id_trip}}/{{$detail->id_users_pemesan}}"><button type="button" class="btn btn-info">Pesan</button></a>
                               </td>

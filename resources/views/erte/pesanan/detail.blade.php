@@ -75,10 +75,12 @@
 
                     
                     
-                    <form method="post" action="/pesanan/store/{{$t->id_trip}}/{{$p->id_users}}">
+                    <form method="post" action="/pesanan/store/{{$jumlah_penumpang}}/{{$t->id_trip}}/{{$p->id_users}}">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}
+
+                                 <input id="invisible_id" name="invisible" type="hidden" value="secret1">
 
                             <div class="box box-default collapsed-box box-solid">
                                 <div class="box-header with-border">

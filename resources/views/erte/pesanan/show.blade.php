@@ -26,7 +26,8 @@
                         <a href="/pesanan/edit/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
                         <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><i class="fa fa-trash"></i> Hapus Pesanan</a>
                         <a href="/pesanan/" class="btn btn-md" ><i class="fa fa-list"></i> List Pesanan</a>
-                        <a href="/pesanan/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Pesanan</a>                       
+                        <a href="/pesanan/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Pesanan Baru</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#update_penumpang' data-href=""><i class="fa  fa-plus-circle"></i>Tambah Penumpang</a>
                     </div>
                         </br>
                         </br>
@@ -93,7 +94,7 @@
                                 </dd>
                                 <dt>Jam</dt>
                                 <dd>{{ date('H:i', strtotime($trip->jadwal)) }}</dd>
-                                <dt>Feeder</dt>
+                                <!-- <dt>Feeder</dt> -->
                                 <dd>
                                         
                                 </dd>
@@ -198,7 +199,7 @@
               </table>
             </div>
 
-            <div class="modal fade" id="update_feeder" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
+           <!--  <div class="modal fade" id="update_feeder" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
@@ -220,8 +221,36 @@
                                         @endif
     
                                         <input type="submit" class="btn btn-primary" value="Simpan">                                    
-                                        <!-- <a class="btn btn-primary btn-ok">Simpan</a> -->
-                                        <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>
+                                         <a class="btn btn-primary btn-ok">Simpan</a> -->
+                                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>
+                                      
+                                        
+                                     </form>
+                                  </div>    
+                                </div>
+                            </div>
+                        </div>
+                        </div>  -->
+
+                         <div class="modal fade" id="update_penumpang" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                      <form method="get" action="/pesanan/update_create/{{$pesanan->id_pesanan}}/{{$trip->id_trip}}">
+                                        <label>Trip {{$trip->id_trip}}</label>
+                                            
+                                                @if($seat_tersedia == 0)
+                                                    <p>Trip sudah penuh !</p>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>          
+                                                @else
+                                                    <p>{{$seat_tersedia}} seat tersedia</p>
+                                                    <input type="submit" class="btn btn-primary" value="Tambah">                           
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>          
+                                                @endif    
+                                              
+    
+                                        
                                       
                                         
                                      </form>
@@ -231,7 +260,7 @@
                         </div>
                         </div>
 
-            </div>
+                    </div>
         </div>
        
     </section>
