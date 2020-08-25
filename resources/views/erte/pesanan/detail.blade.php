@@ -39,7 +39,7 @@
                         @elseif($t->id_kota_asal == "K2")
                                           Padang
                         @elseif($t->id_kota_asal == "K3")
-                                          Payakumbuh
+                                          Pekanbaru
                         @endif
 
                         -  
@@ -49,7 +49,7 @@
                         @elseif($t->id_kota_tujuan == "K2")
                                 Padang
                         @elseif($t->id_kota_tujuan == "K3")
-                                Payakumbuh
+                                Pekanbaru
                         @endif
 
                         

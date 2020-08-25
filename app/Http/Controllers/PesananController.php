@@ -365,14 +365,62 @@ class PesananController extends Controller
                         'no_hp' => $request->no_hp[$key],
                         'biaya_tambahan' => $request->biaya_tambahan[$key],
                         'status' => 1
-            ]);
-        }
+                    ]);
+                }
 
                 // Detail_Pesanan::insert($pesanan);
                 session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
                 return redirect('/pesanan');
 
             }
+    }
+
+    public function update_store($jumlah_penumpang, $id_pesanan, $id_trip, $id_users_pemesan, Request $request){
+        $this->validate($request, 
+            [
+            // 'id_users' => 'required',
+            'nama_penumpang' => 'required',
+            'jenis_kelamin' => 'required',
+            'id_seat' => 'required',
+            'detail_asal' => 'required',
+            'detail_tujuan' => 'required'            
+        ]);
+
+        // dd($jumlah_penumpang, $id_pesanan, $id_trip, $id_users_pemesan);
+        $trip = Trip::where(['id_trip' => $id_trip])->get();
+
+        // $seat = Input::get('id_seat');
+        //     if(Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $seat])
+        //         ->where('status', '!=', 5)
+        //         ->exists()) {
+        //                 // dd("Seat sudah ada, tapi status nya ndak cancel. Berarti ndak  bisa pesan seat ni lagi, karena dah booking");
+        //             session()->flash('flash_danger', 'Seat sudah dibooking');
+        //             return redirect('/pesanan/create_detail/'.$jumlah_penumpang. '/' .$id_trip. '/' .$id_users_pemesan);
+
+        //     }else{
+                // dd("Seat belum ada, bisa pesan. Atau seat sebelumnya sudah dicancel");
+                //     
+
+                foreach($request->nama_penumpang as $key => $value){
+                    Detail_Pesanan::create([
+                        'id_trip' => $id_trip,
+                        'id_seat' => $request->id_seat[$key],
+                        'id_pesanan' => $id_pesanan,
+                        'nama_penumpang' => $request->nama_penumpang[$key],
+                        'jenis_kelamin' => $request->jenis_kelamin[$key],
+                        'detail_asal' => $request->detail_asal[$key],
+                        'detail_tujuan' => $request->detail_tujuan[$key],
+                        'no_hp' => $request->no_hp[$key],
+                        'biaya_tambahan' => $request->biaya_tambahan[$key],
+                        'status' => 1
+                    ]);
+                }
+
+                // Detail_Pesanan::insert($pesanan);
+                session()->flash('flash_success', 'Berhasil menambahkan data penumpang' );
+                return redirect('/pesanan/show/' .$id_pesanan. '/' .$id_trip);
+
+            // }
     }
 
     public function edit($id_pesanan, $id_trip){
@@ -406,7 +454,12 @@ class PesananController extends Controller
 
         $trip = Trip::all();
         $pemesan = Pemesan::all();
-        $seat = Seat::all();
+        // $seat = Seat::all();
+
+        $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
+                        ->where('status', '!=', 5)
+                        ->count();
+        $seat = 7 - $seat_b;
 
         return view('erte.pesanan.update_create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota]);
     }

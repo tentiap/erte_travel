@@ -138,6 +138,7 @@ Route::post('/pesanan/store/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'P
 Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
 Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
 Route::get('/pesanan/update_create/{id_pesanan}/{id_trip}', 'PesananController@update_create');
+Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_store');
 // Route::get('/pesanan/update_search/{id_pesanan}/{id_trip}', 'PesananController@update_search');
 Route::get('/pesanan/update_detail/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_detail');
 

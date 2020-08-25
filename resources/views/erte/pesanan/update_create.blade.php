@@ -93,11 +93,11 @@
 
                                                     <label>Jumlah seat yang ingin ditambah</label>
                                                     <select class="form-control" name="jumlah_penumpang">
-                                                            @foreach($seat as $s)
-                                                                    <option value="{{ $s->id_seat }}" {{$jumlah == $s->id_seat ? 'selected' : ''}}>
-                                                                    {{$s->id_seat}}
+                                                            @for($i = 0; $i < $seat; $i++)
+                                                                    <option value="{{$i + 1}}">
+                                                                    {{$i + 1}}
                                                                     </option> 
-                                                            @endforeach 
+                                                            @endfor 
                                                         @if($errors->has('jumlah_penumpang'))
                                                             <div class="text-danger">
                                                                 {{ $errors->first('jumlah_penumpang')}}
