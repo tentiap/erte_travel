@@ -22,6 +22,11 @@ class Sopir extends Model
     protected $primaryKey = "id_users";
     public $incrementing = false;
 
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = \Hash::make($password);
+    }
+
     public function trip(){
         return $this->hasMany(Trip::class);
     }

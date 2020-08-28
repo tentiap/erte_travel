@@ -20,8 +20,13 @@
           <!-- <div class="box"> -->
               @include('messages')
               <div class="box-header" align="right">
-                <a href="/rute/create" class="btn btn-primary">Tambah Rute</a>
+                <!-- <a href="/rute/export" class="btn btn-sm btn-primary">Export Excel</a> -->
+                <a href="/rute/create" class="btn btn-sm btn-primary">Tambah Rute</a>
               </div>
+
+              <!-- <div class="box-header" align="right">
+                
+              </div> -->
 
             <div class="box-body">
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
@@ -38,7 +43,7 @@
                             <tr>
                                 <td>{{ $r->kota_asal->nama_kota }}</td>
                                 <td>{{ $r->kota_tujuan->nama_kota }}</td>
-                                <td>{{ $r->harga }}</td>
+                                <td>@currency($r->harga)</td>
                                 <td>
                                     
                                     <a href="/rute/edit/{{ $r->id_kota_asal }}/{{ $r->id_kota_tujuan }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>

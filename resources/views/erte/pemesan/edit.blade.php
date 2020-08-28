@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $pemesan->id_users)}}">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $pemesan->id_users)}}" disabled>
 
                             @if($errors->has('id_users'))
                                 <div class="text-danger">
@@ -47,7 +47,7 @@
                        
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password" >
 
@@ -56,10 +56,7 @@
                                         {{ $errors->first('password')}}
                                     </div>
                             @endif
-
-                            
-                           
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Email</label>
@@ -127,7 +124,8 @@
                            
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <button class="btn btn-default btn-close"><a href="/pemesan">Cancel</a></button>
+                            <a class="btn btn-default btn-close" href="/pemesan">Cancel</a>
+                            <!-- <button class="btn btn-default btn-close"><a href="/pemesan">Cancel</a></button> -->
                         </div>    
                              
                         </div>

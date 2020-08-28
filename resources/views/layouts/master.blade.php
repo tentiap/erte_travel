@@ -99,11 +99,16 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/adminlte/img/admin.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Nanti nama diganti</span>
+              <span class="hidden-xs">{{ Auth::guard('operator')->user()->nama }}</span>
               
             </a>
-            <ul class="dropdown-menu">
-                <li><a href="/logout">Logout</a></li> 
+            <ul class="dropdown-menu" role="menu">
+                <li class="user-footer">
+                    
+                      <a href="/logout" class="btn btn-default btn-flat, fa fa-sign-out" >Logout</a>
+                    
+                </li>
+                
            </ul>
           </li>
 
@@ -148,8 +153,8 @@
         <li><a href="/rute"><i class="fa  fa-pencil-square-o"></i> <span>Rute</span></a></li>
         <li><a href="/kota"><i class="fa  fa-pencil-square-o"></i> <span>Kota</span></a></li>
         <li><a href="/seat"><i class="fa  fa-pencil-square-o"></i> <span>Seat</span></a></li>
-        <li><a href="/roles"><i class="fa  fa-pencil-square-o"></i> <span>Manage Roles</span></a></li>
-        <li><a href="/permissions"><i class="fa  fa-pencil-square-o"></i> <span>Manage Permissions</span></a></li>
+        <!-- <li><a href="/roles"><i class="fa  fa-pencil-square-o"></i> <span>Manage Roles</span></a></li>
+        <li><a href="/permissions"><i class="fa  fa-pencil-square-o"></i> <span>Manage Permissions</span></a></li> -->
         
        
       </ul>
@@ -267,10 +272,107 @@
   <script>
       $(function () {
         $('#datetime').datetimepicker({
+          format:'YYYY-MM-DD HH:mm',
+          minDate:new Date()
+        })
+      })
+  </script>
+
+  <script>
+      $(function () {
+        $('#datetime_edit').datetimepicker({
           format:'YYYY-MM-DD HH:mm'
         })
       })
   </script>
+
+  <script>
+      $(function () {
+          $('#date').datetimepicker({
+              format: 'YYYY-MM-DD',
+              minDate: new Date()
+          });
+      });
+  </script>
+
+ 
+
+
+
+  
+
+  <!-- <script>
+      $(function () {
+        $('#date').datetimepicker({
+          format:'YYYY-MM-DD HH:mm',
+          minDate:new Date()
+        })
+      })
+  </script> -->
+
+
+
+  <script>
+    $(document).ready(function() {
+        $('#id_kota_asal').change(function(){
+            // console.log("Tenti");
+            var selected_kota_asal = $('#id_kota_asal').val();
+            // console.log(selected_kota_asal);
+            $.get('/trip_kota_tujuan?id_kota_asal=' +selected_kota_asal, function(data){
+                  $('#id_kota_tujuan').empty();
+                  // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
+                  $.each(data, function(index, value){
+                    // return Rute::get()->load('kota_tujuan');
+                    // console.log(id_kota_tujuanObj);
+                    console.log(value.kota_tujuan.nama_kota);
+                    $('#id_kota_tujuan').append('<option value='+value.id_kota_tujuan+'>'+value.kota_tujuan.nama_kota+'</option>');
+                  });
+            });  
+        });
+    });
+  </script>
+
+  <!-- <script>
+    $(document).ready(function() {
+        $('#id_users_feeder').on('click', function(){
+            var selected_kota_asal = $('#id_kota_asal').val();
+            // console.log(selected_kota_asal);
+            $.get('/pesanan/getFeeder?id_kota_asal=' +selected_kota_asal, function(data){
+                  // $('#id_users_feeder').empty();
+                  $.each(data, function(index, value){
+                    console.log(value.nama);
+                    $('#id_users_feeder').append('<option value='+value.id_users+'>'+value.nama+'</option>');
+                  });
+            });  
+        });
+    });
+  </script> -->
+
+  <script>
+    $(document).ready(function() {
+        $('#tanggal').click(function(){
+            // console.log("Tenti");
+            var selected_asal = $('#id_kota_asal').val();
+            var selected_tujuan = $('#id_kota_tujuan').val();
+            // console.log(selected_asal, selected_tujuan);
+            // localhost:8000/pesanan_trip?id_kota_asal=K1&id_kota_tujuan=K2
+            $.get('/pesanan_trip?id_kota_asal=' +selected_asal+'&id_kota_tujuan=' +selected_tujuan,
+             function(data){
+                  $('#tanggal').empty();
+                  // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
+                  $.each(data, function(index, value){
+                    // return Rute::get()->load('kota_tujuan');
+                    console.log(value.jadwal);
+                    // var tes = tanggalObj.jadwal.format('d-M-Y');
+                    // console.log(tes);
+                    $('#tanggal').append('<option value='+value.jadwal+'>'+value.jadwal+'</option>');
+                  });
+            });  
+        });
+    });
+  </script>
+
+
 
 
 

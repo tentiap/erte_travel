@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $operator->id_users)}}">
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $operator->id_users)}}" disabled>
 
                              @if($errors->has('id_users'))
                                 <div class="text-danger">
@@ -48,7 +48,7 @@
                             
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password" >
 
@@ -58,7 +58,7 @@
                                 </div>
                             @endif
 
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Email</label>
@@ -123,6 +123,7 @@
                             <label>Wilayah</label>
 
                             <select class="form-control" name="id_kota">
+                                <option disabled selected value>---Wilayah---</option>
                                     @foreach($kota as $k)
                                         <!-- <option name="id_kota" value="{{$operator->kota->nama_kota}}">{{$k->nama_kota}}</option>  -->
                                         <option value="{{ $k->id_kota }}" {{$operator->id_kota == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
@@ -143,7 +144,8 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <button class="btn btn-default btn-close"><a href="/operator">Cancel</a></button>
+                            <!-- <button class="btn btn-default btn-close"><a href="/operator">Cancel</a></button> -->
+                            <a class="btn btn-default btn-close" href="/operator">Cancel</a>
                         </div>
 
 

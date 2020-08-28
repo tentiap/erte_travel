@@ -20,9 +20,19 @@ class Feeder extends Model
     protected $primaryKey = "id_users";
     public $incrementing = false;
 
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = \Hash::make($password);
+    }
+
     public function kota()
     {
         return $this->belongsTo(Kota::class, 'id_kota');
+    }
+
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class);
     }
 
     public function detail_pesanan()

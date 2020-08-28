@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CompositeKeyTrait;
+// use Awobaz\Compoships\Compoships; 
 
 class Pesanan extends Model
 {
@@ -13,16 +14,42 @@ class Pesanan extends Model
         'id_pesanan',
         'id_trip', 
         'id_users_pemesan', 
-        'tanggal_pesan'
+        'tanggal_pesan',
+        'id_users_operator',
+        'jumlah_penumpang'
     ];
     
     protected $primaryKey = ['id_pesanan', 'id_trip'];
-    // public $incrementing = false;
+
+    // protected $casts = [
+    //     'jadwal' => 'datetime',
+    // ];
+
+    // public function getJadwalAttribute($value)
+    // {
+    //     return $value->format('d F Y');
+    // }
+
+    // public function setJadwalAttribute($value)
+    // {
+    //     $this->attributes['jadwal'] = Carbon::parse($value);
+    // }
 
     public function detail_pesanan()
-    {
-        return $this->hasMany(Detail_Pesanan::class);
+    {   
+        // return $this->hasMany(Detail_Pesanan::class, ['id_pesanan', 'id_trip'], ['id_trip', 'id_seat']);   
+
+        return $this->hasMany(Detail_Pesanan::class);   
+
+        // return $this->hasMany(Detail_Pesanan::class);   
     }
+
+    // public function getJadwalAttribute($value)
+    // {
+    //     return $value->format('d F Y');
+    // }
+
+
 
     public function pemesan()
     {
@@ -33,4 +60,11 @@ class Pesanan extends Model
     {
         return $this->belongsTo(Trip::class, 'id_trip');
     }
+
+    public function operator()
+    {
+        return $this->belongsTo(Operator::class, 'id_users_operator');
+    }
+
+    
 }

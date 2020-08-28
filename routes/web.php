@@ -17,9 +17,21 @@ use Spatie\Permission\Models\Permission;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware('auth');
+// Route::get('/operator/login', 'Auth\LoginController@showLoginForm')->name('operator.login');
+Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::post('/operator/login', 'Auth\LoginController@login')->name('operator.login.post');
+Route::post('/operator/logout', 'Auth\LoginController@logout')->name('operator.logout');
+
+/*
+ _  teacher profile routes
+ */
+// Route::group(['middleware'=>'operator'], function() {
+//     return view('dashboard');
+// });
+
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->middleware('auth');
 
 // Route::get('/home',function(){
 // 	return view('dashboard');
@@ -28,9 +40,10 @@ Route::get('/', function () {
 // Route::get('/home',function(){
 // 	return view('home');
 
-Route::get('/dashboard', function(){
-	return view('dashboard');
-});
+// Route::get('/dashboard', function(){
+// 	return view('dashboard');
+// });
+Route::get('/dashboard', 'DashboardController@index');
 
 //------------------------------------------------------KOTA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/kota', 'KotaController@index');
@@ -56,6 +69,7 @@ Route::post('/rute/store', 'RuteController@store');
 Route::get('/rute/edit/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@edit');
 Route::put('/rute/update/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@update');
 Route::get('/rute/delete/{id_kota_asal}/{id_kota_tujuan}', 'RuteController@delete');
+Route::get('/rute/export', 'RuteController@export');
 
 //------------------------------------------------------USERS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/users', 'UsersController@index');
@@ -87,6 +101,7 @@ Route::get('/feeder/delete/{id_users}', 'FeederController@delete');
 Route::get('/pemesan', 'PemesanController@index');
 Route::get('/pemesan/create', 'PemesanController@create');
 Route::post('/pemesan/store', 'PemesanController@store');
+Route::post('/pemesan/store1', 'PemesanController@store1');
 Route::get('/pemesan/edit/{id_users}', 'PemesanController@edit');
 Route::get('/pemesan/show/{id_users}', 'PemesanController@show');
 Route::put('/pemesan/update/{id_users}', 'PemesanController@update');
@@ -110,24 +125,39 @@ Route::get('/trip/edit/{id_trip}', 'TripController@edit');
 Route::put('/trip/update/{id_trip}', 'TripController@update');
 Route::get('/trip/delete/{id_trip}', 'TripController@delete');
 Route::get('/trip/show/{id_trip}', 'TripController@show');
+Route::get('/trip/show/{id_trip}/cancel', 'TripController@show_cancel');
+Route::get('/trip_kota_tujuan', 'TripController@getKotaTujuan');
 
 //------------------------------------------------------PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('pesanan', 'PesananController@index');
 Route::get('/pesanan/create', 'PesananController@create');
-Route::post('/pesanan/store', 'PesananController@store');
+Route::post('/pesanan/create_search', 'PesananController@search');
+Route::get('/pesanan/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@detail');
+Route::post('/pesanan/store/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@store');
+
 Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
 Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
+Route::get('/pesanan/update_create/{id_pesanan}/{id_trip}', 'PesananController@update_create');
+Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_store');
+// Route::get('/pesanan/update_search/{id_pesanan}/{id_trip}', 'PesananController@update_search');
+Route::get('/pesanan/update_detail/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_detail');
+
 Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
+Route::get('/pesanan_trip', 'PesananController@getTrip');
+// Route::get('/pesanan/getFeeder', 'PesananController@getFeeder');
+// Route::get('/pesanan/update_feeder/{id_pesanan}/{id_trip}', 'PesananController@update_feeder');
+// Route::get('/pesanan/update_biaya/{id_pesanan}/{id_seat}', 'PesananController@update_biaya');
+
 
 //------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Route::get('detail_pesanan', 'DetailPesananController@index');
-Route::get('/detail_pesanan/create', 'DetailPesananController@create');
-Route::post('/detail_pesanan/store', 'DetailPesananController@store');
-Route::get('/detail_pesanan/edit/{id_trip}/{id_seat}}', 'DetailPesananController@edit');
-Route::put('/detail_pesanan/update/{id_trip}/{id_seat}', 'DetailPesananController@update');
-Route::get('/detail_pesanan/delete/{id_trip}/{id_seat}', 'DetailPesananController@delete');
-Route::get('/detail_pesanan/show/{id_trip}/{id_seat}', 'DetailPesananController@show');
+// Route::get('detail_pesanan', 'DetailPesananController@index');
+// Route::get('/detail_pesanan/create', 'DetailPesananController@create');
+// Route::post('/detail_pesanan/store', 'DetailPesananController@store');
+// Route::get('/detail_pesanan/edit/{id_trip}/{id_seat}}', 'DetailPesananController@edit');
+// Route::put('/detail_pesanan/update/{id_trip}/{id_seat}', 'DetailPesananController@update');
+// Route::get('/detail_pesanan/delete/{id_trip}/{id_seat}', 'DetailPesananController@delete');
+// Route::get('/detail_pesanan/show/{id_trip}/{id_seat}', 'DetailPesananController@show');
 
 
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');

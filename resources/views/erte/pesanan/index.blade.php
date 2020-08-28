@@ -29,19 +29,14 @@
                 <table id="sortdata" class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
+                        <th>ID</th>
                         <th>Pemesan</th>
-                        <th>Waktu Keberangkatan</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
-                        
                         <th>Tanggal Pesan</th>
-
-                       
-                        <!-- <th>Username</th>
-                        <th>Email</th>
-                        <th>Kontak</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Wilayah</th> -->
+                        <th>Operator</th>
                         <th>OPSI</th>
                       </tr>
                 </thead>
@@ -49,22 +44,43 @@
                   @foreach($pesanan as $p)
                       
                             <tr>
-                                <td>{{ $p->pemesan->users->nama }}</td>
-                                <td>{{ $p->trip->tanggal  }} - {{$p->trip->jam }}</td>
-                                <td>{{ $p->trip->rute->kota_asal->nama_kota }}</td>
-                                <td>{{ $p->trip->rute->kota_tujuan->nama_kota }}</td>
-
-                                <!-- <td>{{ $p->id_trip }}</td>         -->  
-                                <td>{{ $p->tanggal_pesan }}</td>          
+                                <td>{{ $p->id_pesanan }}</td>
+                                <td>{{ $p->pemesan->nama }}</td>
+                                <td>{{ date('d M Y', strtotime($p->trip->jadwal)) }} </td>
+                                <td>{{ date('H:i', strtotime($p->trip->jadwal)) }} </td>
+                                <!-- <td>{{ $p->trip->rute->kota_asal->nama_kota }}</td>
+                                <td>{{ $p->trip->rute->kota_tujuan->nama_kota }}</td> -->
+                                <td>
+                                  
+                                      @if($p->trip->id_kota_asal == "K1")
+                                          Bukittinggi
+                                      @elseif($p->trip->id_kota_asal == "K2")
+                                          Padang
+                                      @elseif($p->trip->id_kota_asal == "K3")
+                                          Pekanbaru
+                                      @endif
+                                  
+                                </td>        
+                                <td>
+                                      @if($p->trip->id_kota_tujuan == "K1")
+                                          Bukittinggi
+                                      @elseif($p->trip->id_kota_tujuan == "K2")
+                                          Padang
+                                      @elseif($p->trip->id_kota_tujuan == "K3")
+                                          Pekanbaru
+                                      @endif
+                                </td>
+                                <td>{{ date('d M Y H:i', strtotime($p->tanggal_pesan)) }} </td>
+                                <td>{{ $p->operator->nama }}</td>          
                                                                      
                                 
                                 <td>
                                     
-                                    <a href="/pesanan/show/{{ $p->id_trip, $p->id_users_pemesan }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                    <a href="/pesanan/show/{{$p->id_pesanan}}/{{$p->id_trip}}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
 
 
-                                    <a href="/pesanan/edit/{{ $p->id_trip}}/{{$p->id_users_pemesan}}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $p->id_trip}}/{{$p->id_users_pemesan}}"><i class="fa fa-trash"></i></a>
+                                    <!-- <a href="/pesanan/edit/{{ $p->id_pesanan}}/{{ $p->id_trip}}" class="btn btn-lg"><i class="fa fa-edit"></i></a> -->
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $p->id_pesanan}}/{{ $p->id_trip}}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 

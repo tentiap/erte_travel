@@ -38,10 +38,10 @@
                         <div class="row">
                             <div class="col-sm-6">
                                     <label>Kota Asal</label>
-                                    <select class="form-control" name="id_kota_asal"> 
-                                            @foreach($rute as $r)
-                                                    <option value="{{ $r->id_kota_asal }}"{{$trip->id_kota_asal == $r->id_kota_asal ? 'selected' : ''}}>
-                                                    {{$r->kota_asal->nama_kota}}
+                                    <select class="form-control" name="id_kota_asal" id="id_kota_asal"> 
+                                            @foreach($kota as $k)
+                                                    <option value="{{ $k->id_kota }}"{{$trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
+                                                    {{$k->nama_kota}}
                                                     </option> 
                                             @endforeach 
                                     </select>
@@ -55,10 +55,10 @@
 
                             <div class="col-sm-6">
                                     <label>Kota Tujuan</label>
-                                    <select class="form-control" name="id_kota_tujuan">
-                                            @foreach($rute as $r)
-                                                    <option name="rute" value="{{ $r->id_kota_tujuan }}"{{$trip->id_kota_tujuan == $r->id_kota_tujuan ? 'selected' : ''}}>
-                                                    {{$r->kota_tujuan->nama_kota}}
+                                    <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan">
+                                            @foreach($kota as $k)
+                                                    <option value="{{ $k->id_kota }}"{{$trip->id_kota_tujuan == $k->id_kota ? 'selected' : ''}}>
+                                                    {{$k->nama_kota}}
                                                     </option> 
                                             @endforeach 
                                     </select>
@@ -73,8 +73,8 @@
 
                         <div class="form-group">
                             <label>Jadwal</label>
-                                <div class='input-group date' id='datetime'>
-                                    <input type='text' class="form-control" name="jadwal" value="{{  old('jadwal', $trip->jadwal) }}" />
+                                <div class='input-group date' id='datetime_edit'>
+                                    <input type='text' class="form-control" name="jadwal" value="{{ $trip->jadwal }}" />
                                       <span class="input-group-addon">
                                           <span class="glyphicon glyphicon-calendar"></span>
                                       </span>
@@ -90,7 +90,7 @@
                        <div class="form-group">
                             <label>Sopir</label>
                             <select class="form-control" name="id_users_sopir">
-                                <option disabled selected value> -- Sopir -- </option>
+                                <option value=""> -- Sopir -- </option>
                                     @foreach($sopir as $s)
                                             <option  value="{{$s->id_users}}"{{$trip->id_users_sopir == $s->id_users ? 'selected' : ''}}>{{$s->nama}}</option>  
                                     @endforeach
@@ -103,7 +103,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Operator</label>
                             <select class="form-control" name="id_users_operator">
                                     @foreach($operator as $o)
@@ -117,17 +117,18 @@
                                     {{ $errors->first('id_users_operator')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button>
+                            <a class="btn btn-default btn-close" href="/trip">Cancel</a>
                         </div>
+                    </form>
 
-
-                        </div>
+                        <!-- <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button>
+                        </div> -->
                         
-                </form>
+                
             </div>
         </div>
     </section>

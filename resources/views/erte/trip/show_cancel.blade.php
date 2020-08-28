@@ -59,7 +59,7 @@
                         <div class="box-header with-border">
                           <i class="fa fa-map-pin"></i>
                           <h3 class="box-title">Trip {{ $trip->id_trip }}    
-                            <small class="badge bg-green">{{7 - $seat}} seat tersedia</small></h3>
+                            <small class="badge bg-red">{{$seat}} seat dibatalkan</small></h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -75,7 +75,7 @@
                                       @elseif($trip->id_kota_asal == "K2")
                                           Padang
                                       @elseif($trip->id_kota_asal == "K3")
-                                          Pekanbaru
+                                          Payakumbuh
                                       @endif
                                 </dd>
                                 <dt>Sopir</dt>
@@ -100,7 +100,7 @@
                                       @elseif($trip->id_kota_tujuan == "K2")
                                           Padang
                                       @elseif($trip->id_kota_tujuan == "K3")
-                                          Pekanbaru
+                                          Payakumbuh
                                       @endif
                                 </dd>
                                 <dt>Operator</dt>

@@ -7,7 +7,7 @@
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/feeder">Trip</a></li>
+            <li><a href="/trip">Trip</a></li>
             <li class="active">Create</li>
           </ol>
   </section>
@@ -36,11 +36,11 @@
                         <div class="row">
                             <div class="col-sm-6">
                                     <label>Kota Asal</label>
-                                    <select class="form-control" name="id_kota_asal">
+                                    <select class="form-control" name="id_kota_asal" id="id_kota_asal">
                                         <option disabled selected value> -- Kota Asal -- </option>
-                                            @foreach($rute as $r)
-                                                    <option name="rute" value="{{ $r->id_kota_asal }}">
-                                                    {{$r->kota_asal->nama_kota}}
+                                            @foreach($kota as $k)
+                                                    <option value="{{ $k->id_kota }}">
+                                                    {{$k->nama_kota}}
                                                     </option> 
                                             @endforeach 
                                     </select>
@@ -54,13 +54,13 @@
 
                             <div class="col-sm-6">
                                     <label>Kota Tujuan</label>
-                                    <select class="form-control" name="id_kota_tujuan">
+                                    <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan">
                                         <option disabled selected value> -- Kota Tujuan -- </option>
-                                            @foreach($rute as $r)
+                                            <!-- @foreach($rute as $r)
                                                     <option name="id_kota_tujuan" value="{{ $r->id_kota_tujuan }}">
                                                     {{$r->kota_tujuan->nama_kota}}
                                                     </option> 
-                                            @endforeach 
+                                            @endforeach  -->
                                     </select>
                             </div>
 
@@ -102,7 +102,7 @@
                         <div class="form-group">
                             <label>Sopir</label>
                                 <select class="form-control" name="id_users_sopir">
-                                    <option disabled selected value> -- Sopir -- </option>
+                                    <option value=""> -- Sopir -- </option>
                                         @foreach($sopir as $s)
                                             <option name="id_users_sopir" value="{{$s->id_users}}">{{$s->nama}}</option> 
                                         @endforeach                                        
@@ -117,7 +117,7 @@
                             
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Operator</label>
                                 <select class="form-control" name="id_users_operator">
                                     <option disabled selected value> -- Operator -- </option>
@@ -132,11 +132,12 @@
                                     {{ $errors->first('id_users_operator')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
                 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button>
+                            <!-- <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button> -->
+                            <a class="btn btn-default btn-close" href="/trip">Cancel</a>
                         </div>                 
                 </form>
             </div>

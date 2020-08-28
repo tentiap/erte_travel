@@ -45,14 +45,14 @@
                             <td>{{ $t->id_trip }}</td>
                             <td>{{ date('d-M-Y', strtotime($t->jadwal)) }} </td>
                             <td>{{ date('H:i', strtotime($t->jadwal)) }} </td>
-                            <td>  
+                            <td>
                                   
                                       @if($t->id_kota_asal == "K1")
                                           Bukittinggi
                                       @elseif($t->id_kota_asal == "K2")
                                           Padang
                                       @elseif($t->id_kota_asal == "K3")
-                                          Payakumbuh
+                                          Pekanbaru
                                       @endif
                                   
                             </td>        
@@ -62,7 +62,7 @@
                                       @elseif($t->id_kota_tujuan == "K2")
                                           Padang
                                       @elseif($t->id_kota_tujuan == "K3")
-                                          Payakumbuh
+                                          Pekanbaru
                                       @endif
                             </td>
                             <td>

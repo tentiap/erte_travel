@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Trip extends Model
 {
@@ -13,11 +14,26 @@ class Trip extends Model
 	    'id_users_sopir', 
 	    'id_kota_asal',
         'id_kota_tujuan',
-	    'jadwal'
+	    'jadwal',
+        'seat'
 	];
 
     protected $primaryKey = "id_trip";
     public $incrementing = false;
+
+    // protected $casts = [
+    //     'jadwal' => 'datetime',
+    // ];
+
+    // public function getJadwalAttribute($value)
+    // {
+    //     return Carbon::parse($value)->format('d F Y H:i');
+    // }
+
+    // public function setJadwalAttribute($value)
+    // {
+    //     $this->attributes['jadwal'] = Carbon::parse($value);
+    // }
 
     // protected $dates = ['jadwal'];
     // protected $dateFormat = 'YYYY-MM-DD HH:mm';
