@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Trip;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +16,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/pesanan/date-time/{id_rute}', function($id){
-	return response()->json(Trip::where('id_rute',$id)->get());
+Route::namespace('api')->group(function () {
+	Route::post('/loginPemesan', 'ApiController@loginPemesan');
+	Route::get('/history/{id_users_pemesan}', 'ApiController@riwayatTrip');
+	Route::get('/trip', 'ApiController@lihatTrip');
+	Route::post('/create_pesanan/', 'ApiController@create_pesanan');
+
+
 });
+
+

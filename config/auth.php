@@ -23,6 +23,21 @@ return [
         'model' => App\Operator::class,
     ],
 
+    'pemesan' => [
+        'driver' => 'eloquent',
+        'model' => App\Pemesan::class,
+    ],
+
+    'sopir' => [
+        'driver' => 'eloquent',
+        'model' => App\Sopir::class,
+    ],
+
+    'feeder' => [
+        'driver' => 'eloquent',
+        'model' => App\Feeder::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -62,6 +77,36 @@ return [
             'provider' => 'operator',
         ],
 
+        'pemesan'  => [
+          'driver'  => 'session',
+          'provider' => 'pemesan',
+        ],
+
+        'pemesan-api' => [
+            'driver' => 'token',
+            'provider' => 'pemesan',
+        ],
+
+        'sopir'  => [
+          'driver'  => 'session',
+          'provider' => 'sopir',
+        ],
+
+        'sopir-api' => [
+            'driver' => 'token',
+            'provider' => 'sopir',
+        ],
+
+        'feeder'  => [
+          'driver'  => 'session',
+          'provider' => 'feeder',
+        ],
+
+        'feeder-api' => [
+            'driver' => 'token',
+            'provider' => 'feeder',
+        ],
+
 
     ],
 
@@ -91,6 +136,21 @@ return [
         'operator' => [
             'driver' => 'eloquent',
             'model'  => App\Operator::class,
+        ],
+
+        'pemesan' => [
+            'driver' => 'eloquent',
+            'model'  => App\Pemesan::class,
+        ],
+
+        'sopir' => [
+            'driver' => 'eloquent',
+            'model'  => App\Sopir::class,
+        ],
+
+        'feeder' => [
+            'driver' => 'eloquent',
+            'model'  => App\Feeder::class,
         ],
 
         // 'users' => [
@@ -123,6 +183,24 @@ return [
 
         'operator' => [
             'provider' => 'operator',
+            'table' => 'password_resets',
+            'expire' => 15,
+        ],
+
+        'pemesan' => [
+            'provider' => 'pemesan',
+            'table' => 'password_resets',
+            'expire' => 15,
+        ],
+
+        'sopir' => [
+            'provider' => 'sopir',
+            'table' => 'password_resets',
+            'expire' => 15,
+        ],
+
+        'feeder' => [
+            'provider' => 'feeder',
             'table' => 'password_resets',
             'expire' => 15,
         ],
