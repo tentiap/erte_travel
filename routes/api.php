@@ -17,7 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::namespace('api')->group(function () {
+	Route::post('/register', 'ApiController@register');
 	Route::post('/loginPemesan', 'ApiController@loginPemesan');
+	Route::post('/loginSopir', 'ApiController@loginSopir');
+	Route::post('/loginFeeder', 'ApiController@loginFeeder');
+	
 	Route::get('/history/{id_users_pemesan}', 'ApiController@riwayatTrip');
 	Route::get('/trip', 'ApiController@lihatTrip');
 	Route::post('/create_pesanan/', 'ApiController@create_pesanan');
