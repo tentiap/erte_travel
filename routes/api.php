@@ -21,6 +21,8 @@ Route::namespace('api')->group(function () {
 	Route::post('/loginPemesan', 'ApiController@loginPemesan');
 	Route::post('/loginSopir', 'ApiController@loginSopir');
 	Route::post('/loginFeeder', 'ApiController@loginFeeder');
+
+	Route::post('/search', 'ApiController@pesananSearch');
 	
 	Route::get('/history/{id_users_pemesan}', 'ApiController@riwayatTrip');
 	Route::get('/trip', 'ApiController@lihatTrip');

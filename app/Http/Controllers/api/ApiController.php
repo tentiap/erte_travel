@@ -22,9 +22,9 @@ class ApiController extends Controller
         if($pemesan){
             if(password_verify($request->password, $pemesan->password)){
                 return response()->json([
-                    'success' => 1,
+                    'status' => true,
                     'message' => "Welcome ".$pemesan->nama,
-                    'user' => $pemesan
+                    'data' => $pemesan
                 ]);
             }
             return $this->error('Password salah');
@@ -38,9 +38,9 @@ class ApiController extends Controller
         if($sopir){
             if(password_verify($request->password, $sopir->password)){
                 return response()->json([
-                    'success' => 1,
+                    'status' => true,
                     'message' => "Welcome ".$sopir->nama,
-                    'user' => $sopir
+                    'data' => $sopir
                 ]);
             }
             return $this->error('Password salah');
@@ -54,9 +54,9 @@ class ApiController extends Controller
         if($feeder){
             if(password_verify($request->password, $feeder->password)){
                 return response()->json([
-                    'success' => 1,
+                    'status' => true,
                     'message' => "Welcome ".$feeder->nama,
-                    'user' => $feeder
+                    'data' => $feeder
                 ]);
             }
             return $this->error('Password salah');
@@ -104,8 +104,9 @@ class ApiController extends Controller
 
         if($pemesan){
             return response()->json([
-                    'success' => 1,
-                    'message' => "Register berhasil"
+                    'status' => true,
+                    'message' => "Register berhasil",
+                    'data' => $pemesan
             ]);
         }
 
@@ -114,9 +115,51 @@ class ApiController extends Controller
         
     }
 
+    public function pesananSearch(Request $request){
+        $tanggal = $request->tanggal;
+        $filter = '%'.$tanggal.'%';
+        // $feeder = Feeder::where('email', $request->email)->first();
+        $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
+                               'id_kota_tujuan' => $request->id_kota_tujuan,])
+                    ->where('jadwal', 'like', $filter)
+                    ->get();
+        $trip_booking = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+                    ->where(['id_kota_asal' => $request->id_kota_asal, 
+                               'id_kota_tujuan' => $request->id_kota_tujuan,])
+                    ->where('jadwal', 'like', $filter)
+                    ->where('detail_pesanan.status', '!=', 5)
+                    ->select('detail_pesanan.id_seat')
+                    ->count();
+        $seat_available = ($trip->count() * 7) - $trip_booking;
+
+        // return response()->json([
+        //     'success' => 1,
+        //     'message' => $seat_available,
+        //     'user' => $trip
+        // ]);
+
+        if(!$trip->isEmpty() && $seat_available >= $request->jumlah_penumpang){
+            return response()->json($trip);
+        }else{
+            return "Tidak ada trip";
+        }  
+
+        // if($feeder){
+        //     if(password_verify($request->password, $feeder->password)){
+        //         return response()->json([
+        //             'success' => 1,
+        //             'message' => "Welcome ".$feeder->nama,
+        //             'user' => $feeder
+        //         ]);
+        //     }
+        //     return $this->error('Password salah');
+        // }
+        // return $this->error('Email tidak terdaftar');
+    }
+
     public function error($pesan){
         return response()->json([
-            'success' => 0,
+            'status' => false,
             'message' => $pesan
         ]);
     }    
@@ -152,7 +195,7 @@ class ApiController extends Controller
     //     $filter = '%'.$tanggal.'%';
     //     $jumlah_penumpang = $input['jumlah_penumpang'];
     //     $trip = Trip::where(['id_kota_asal' => $input['id_kota_asal'], 
-    //                            'id_kota_tujuan' => $input['id_kota_asal']])
+    //                            'id_kota_tujuan' => $input['id_kota_tujuan']])
     //                 ->where('jadwal', 'like', $filter)
     //                 ->get();
 
