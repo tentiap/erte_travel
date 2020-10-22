@@ -135,11 +135,11 @@
                                                 <label>Jenis Kelamin</label>
                                                 <select class="form-control" name="jenis_kelamin[]">
                                                     <option disabled selected value> Jenis Kelamin </option>
-                                                        <option value="1">
+                                                        <option value="Laki-laki">
                                                             Laki-laki
                                                         </option>
 
-                                                        <option value="2">
+                                                        <option value="Perempuan">
                                                             Perempuan
                                                         </option>  
                                                        

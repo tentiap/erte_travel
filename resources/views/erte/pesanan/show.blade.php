@@ -148,13 +148,7 @@
                     @foreach($detail as $d)
                         <tr>
                             <td>{{ $d->nama_penumpang }} </td>
-                            <td>
-                                @if($d->jenis_kelamin == 1)
-                                   Laki-laki
-                                @elseif($d->jenis_kelamin == 2)
-                                    Perempuan
-                                @endif 
-                            </td>
+                            <td>{{ $d->jenis_kelamin }} </td>
                             <td>
                                   @if(empty($d->no_hp))
                                             -

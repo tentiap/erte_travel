@@ -182,11 +182,25 @@ class ApiController extends Controller
     // }
 
 	//Pemesan
-    // public function riwayatTrip($id_users_pemesan){
-    // 	$pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', 'detail_pesanan.id_pesanan')
+    public function riwayatTripPemesan($id_users_pemesan){
+    	$pesanan = Pesanan::where('id_users_pemesan', $id_users_pemesan)->get();
+    	
+        if(!$pesanan->isEmpty()){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Riwayat Trip Pemesan ".$id_users_pemesan,
+                    'data' => $pesanan
+            ]);
+        }
+
+        return $this->error("Belum ada pesanan");
+    }
+
+    // public function riwayatTripPemesan($id_users_pemesan){
+    //     $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', 'detail_pesanan.id_pesanan')
     //                 ->where('pesanan.id_users_pemesan', $id_users_pemesan)
     //                 ->get();
-    // 	return response($pesanan);
+    //     return response($pesanan);
     // }
 
     // public function lihatTrip(Request $request){
@@ -215,6 +229,10 @@ class ApiController extends Controller
     //         return("Tidak ada trip");
     //     }                          
     // }
+
+    public function lihatTrip(Request $request){
+        return "Api berhasil"; 
+    }
 
     // public function create_pesanan(Request $request){
     // 	$pesanan = new Pesanan;
