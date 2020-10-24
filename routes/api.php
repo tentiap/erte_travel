@@ -24,7 +24,7 @@ Route::namespace('api')->group(function () {
 
 	Route::post('/search', 'ApiController@pesananSearch');
 	
-	Route::get('/history/{id_users_pemesan}', 'ApiController@riwayatTripPemesan');
+	Route::post('/history', 'ApiController@riwayatTripPemesan');
 	Route::get('/trip', 'ApiController@lihatTrip');
 	Route::post('/create_pesanan/', 'ApiController@create_pesanan');
 
