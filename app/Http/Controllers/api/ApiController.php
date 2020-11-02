@@ -110,19 +110,32 @@ class ApiController extends Controller
             ]);
         }
 
-        return $this->error("Registrasi gagal");
-
-        
+        return $this->error("Registrasi gagal");     
     }
 
     public function pesananSearch(Request $request){
         $tanggal = $request->tanggal;
         $filter = '%'.$tanggal.'%';
         // $feeder = Feeder::where('email', $request->email)->first();
-        $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
+        // $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
+        //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
+        //             ->where('jadwal', 'like', $filter)
+        //             ->get();
+        $trip = Trip::join('sopir', 'trip.id_users_sopir', 'sopir.id_users')
+                    ->where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
                     ->get();
+
+        // $trip = Trip::join('kota', function($join){
+        //     $join->on('trip.id_kota_asal', '=', 'kota.id_kota')
+        //          ->orOn('trip.id_kota_tujuan', '=', 'kota.id_kota')})
+        //             ->where(['id_kota_asal' => $request->id_kota_asal, 
+        //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
+        //             ->where('jadwal', 'like', $filter)
+        //             ->get();
+
+
         $trip_booking = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
                     ->where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
