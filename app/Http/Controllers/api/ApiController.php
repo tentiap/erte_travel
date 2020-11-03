@@ -248,6 +248,34 @@ class ApiController extends Controller
     //     }                          
     // }
 
+    public function createDetail(Request $request){
+
+        if(Pesanan::where(['id_trip' => $request->id_trip, 'id_users_pemesan' => $request->id_users_pemesan])->exists()){
+            return $this->error('Data penumpang sudah ada di trip ini');
+
+        }else{
+            $trip = Trip::where('id_trip', $request->id_trip)->get();
+            $pemesan = Pemesan::where('id_users', $request->id_users_pemesan)->get();
+            $seat_b = Detail_Pesanan::where('id_trip', $request->id_trip)
+                        ->where('status', '!=', 5)
+                        ->orderBy('id_seat', 'ASC')
+                        ->get();
+            $seat_tersedia = 7 - ($seat_b->count());
+            
+            if($seat_tersedia == 0){
+                 return $this->error('Trip ini sudah penuh');
+            }else if($seat_tersedia >= $request->jumlah_penumpang){
+                 return response()->json([
+                    'status' => true,
+                    'message' => "Bisa Pesan",
+                    'data' => $pemesan
+                ]);   
+            }else if($seat_tersedia < $request->jumlah_penumpang){
+                return $this->error('Hanya ' .$seat_tersedia. ' seat yang tersedia');
+            }
+        }
+    }
+
     public function lihatTrip(Request $request){
         return "Api berhasil"; 
     }
