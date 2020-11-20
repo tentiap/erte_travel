@@ -198,15 +198,20 @@ class ApiController extends Controller
     public function riwayatTripPemesan(Request $request){
     	
         // $pesanan = Pesanan::where('id_users_pemesan', $request->id_users_pemesan)->get();
+        // $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+        //                 ->join('detail_pesanan', 'pesanan.id_pesanan', 'detail_pesanan.id_pesanan')
+        //                 ->where('pesanan.id_users_pemesan',  $request->id_users_pemesan)
+        //                 ->get();
         $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                        ->join('detail_pesanan', 'pesanan.id_pesanan', 'detail_pesanan.id_pesanan')
                         ->where('pesanan.id_users_pemesan',  $request->id_users_pemesan)
                         ->get();
-    	
+
+        $pemesan = Pemesan::where('id_users', $request->id_users_pemesan)->first();                
+    	// $feeder = Feeder::where('email', $request->email)->first();
         if(!$pesanan->isEmpty()){
             return response()->json([
                     'status' => true,
-                    'message' => "Riwayat Trip Pemesan",
+                    'message' => "Riwayat Trip Pemesan  " .$pemesan->id_users,
                     'data' => $pesanan
             ]);
         }
