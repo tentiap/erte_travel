@@ -219,6 +219,23 @@ class ApiController extends Controller
         return $this->error("Belum ada pesanan");
     }
 
+    public function detailRiwayatTripPemesan(Request $request){
+        
+        $detail = Detail_Pesanan::join('trip', 'detail_pesanan.id_trip', '=', 'trip.id_trip')
+                        ->where('detail_pesanan.id_pesanan',  $request->id_pesanan)
+                        ->get();
+
+        if(!$detail->isEmpty()){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Detail order  " .$request->id_pesanan,
+                    'data' => $detail
+            ]);
+        }
+
+        return $this->error("Belum ada detail");
+    }
+
     // public function riwayatTripPemesan($id_users_pemesan){
     //     $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', 'detail_pesanan.id_pesanan')
     //                 ->where('pesanan.id_users_pemesan', $id_users_pemesan)
@@ -283,6 +300,7 @@ class ApiController extends Controller
 
     public function lihatTrip(Request $request){
         return "Api berhasil"; 
+        
     }
 
     // public function create_pesanan(Request $request){

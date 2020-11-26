@@ -121,11 +121,11 @@
                                                 <label>Jenis Kelamin</label>
                                                 <select class="form-control" name="jenis_kelamin[]">
                                                     <option value=""> Jenis Kelamin  </option>
-                                                        <option value="1" {{$detail->jenis_kelamin == "Laki-laki" ? 'selected' : ''}}>
+                                                        <option value="Laki-laki" {{$detail->jenis_kelamin == "Laki-laki" ? 'selected' : ''}}>
                                                             Laki-laki
                                                         </option>
 
-                                                        <option value="2" {{$detail->jenis_kelamin == "Perempuan" ? 'selected' : ''}}>
+                                                        <option value="Perempuan" {{$detail->jenis_kelamin == "Perempuan" ? 'selected' : ''}}>
                                                             Perempuan
                                                         </option>  
                                                        
