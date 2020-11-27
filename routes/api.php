@@ -22,7 +22,7 @@ Route::namespace('api')->group(function () {
 	Route::post('/loginSopir', 'ApiController@loginSopir');
 	Route::post('/loginFeeder', 'ApiController@loginFeeder');
 
-	Route::post('/search', 'ApiController@pesananSearch');
+	Route::get('/search/{id_kota_asal}/{id_kota_tujuan}/{tanggal}/{jumlah_penumpang}', 'ApiController@pesananSearch');
 	Route::post('/create_detail', 'ApiController@createDetail');
 	
 	Route::get('/history/{id_users_pemesan}', 'ApiController@riwayatTripPemesan');

@@ -152,22 +152,15 @@ class ApiController extends Controller
         // ]);
 
         if(!$trip->isEmpty() && $seat_available >= $request->jumlah_penumpang){
-            return response()->json($trip);
-        }else{
-            return "Tidak ada trip";
-        }  
+            return response()->json([
+                    'status' => true,
+                    'message' => "Trip on  " .$tanggal,
+                    'data' => $trip
+            ]);
+        }
 
-        // if($feeder){
-        //     if(password_verify($request->password, $feeder->password)){
-        //         return response()->json([
-        //             'success' => 1,
-        //             'message' => "Welcome ".$feeder->nama,
-        //             'user' => $feeder
-        //         ]);
-        //     }
-        //     return $this->error('Password salah');
-        // }
-        // return $this->error('Email tidak terdaftar');
+        return $this->error("Tidak ada pesanan");
+
     }
 
     public function error($pesan){
@@ -296,6 +289,10 @@ class ApiController extends Controller
                 return $this->error('Hanya ' .$seat_tersedia. ' seat yang tersedia');
             }
         }
+    }
+
+    public function editPesanan(Request $request){
+        $pesanan = Pesanan::where(['id_pesanan' => $request->id_pesanan, 'id_trip' => $request->id_trip])->first();
     }
 
     public function lihatTrip(Request $request){
