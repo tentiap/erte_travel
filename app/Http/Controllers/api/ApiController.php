@@ -121,8 +121,13 @@ class ApiController extends Controller
         //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
         //             ->where('jadwal', 'like', $filter)
         //             ->get();
-        $trip = Trip::join('sopir', 'trip.id_users_sopir', 'sopir.id_users')
-                    ->where(['id_kota_asal' => $request->id_kota_asal, 
+        // $trip = Trip::join('sopir', 'trip.id_users_sopir', 'sopir.id_users')
+        //             ->where(['id_kota_asal' => $request->id_kota_asal, 
+        //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
+        //             ->where('jadwal', 'like', $filter)
+        //             ->get();
+
+        $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
                     ->get();
@@ -154,12 +159,54 @@ class ApiController extends Controller
         if(!$trip->isEmpty() && $seat_available >= $request->jumlah_penumpang){
             return response()->json([
                     'status' => true,
-                    'message' => "Trip on  " .$tanggal,
+                    'message' => "Trip on  " .$request->tanggal,
                     'data' => $trip
             ]);
         }
 
-        return $this->error("Tidak ada pesanan");
+        return $this->error("Tidak ada trip");
+
+    }
+
+    public function check(Request $request){
+
+        if(Pesanan::where(['id_trip' => $request->id_trip, 'id_users_pemesan' => $request->id_users_pemesan])->exists()){
+            
+            return $this->error("Anda sudah memesan Trip ini");
+
+        }else{
+
+            $trip = Trip::where(['id_trip' => $request->id_trip])->get();
+            $jumlah_penumpang = $request->jumlah_penumpang;
+            $pemesan = Pemesan::where('id_users', $request->id_users_pemesan)->get();
+            $seat = Seat::all();
+            $seat_b = Detail_Pesanan::where('id_trip', $request->id_trip)
+                        ->where('status', '!=', 5)
+                        ->orderBy('id_seat', 'ASC')
+                        ->get();
+            $seat_tersedia = 7 - ($seat_b->count());
+            
+            if($seat_tersedia == 0){
+                return $this->error("Trip ini sudah penuh");
+            }else if($seat_tersedia >= $jumlah_penumpang){
+                return response()->json([
+                    'status' => true,
+                    'message' => "Silakan isi data penumpang",
+                    'data' => $trip
+            ]);  
+            }else if($seat_tersedia < $jumlah_penumpang){
+                return $this->error("Hanya " .$seat_tersedia. " seat yang tersedia");
+            }
+        }
+             
+        // dd($pemesan);
+        // return response()->json($pemesan);
+
+        // $tes = Trip::select('jadwal')
+        //         ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
+        //         ->whereDate('jadwal', '>', Carbon::now())
+        //         ->get();
+        
 
     }
 
