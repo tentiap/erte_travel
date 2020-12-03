@@ -30,6 +30,7 @@ Route::namespace('api')->group(function () {
 	Route::get('/detail/{id_pesanan}', 'ApiController@detailRiwayatTripPemesan');
 	Route::get('/trip/', 'ApiController@lihatTrip');
 	Route::post('/create_pesanan/', 'ApiController@create_pesanan');
+	Route::get('/seat/{id_trip}', 'ApiController@seat');
 
 
 });

@@ -172,8 +172,7 @@ class ApiController extends Controller
 
         if(Pesanan::where(['id_trip' => $request->id_trip, 'id_users_pemesan' => $request->id_users_pemesan])->exists()){
             
-            return $this->error("Anda sudah memesan Trip ini");
-
+            return $this->error("Anda sudah memesan Trip ini. Silakan edit data pesanan anda ");
         }else{
 
             $trip = Trip::where(['id_trip' => $request->id_trip])->get();
@@ -191,8 +190,7 @@ class ApiController extends Controller
             }else if($seat_tersedia >= $jumlah_penumpang){
                 return response()->json([
                     'status' => true,
-                    'message' => "Silakan isi data penumpang",
-                    'data' => $trip
+                    'message' => "Silakan isi data penumpang"
             ]);  
             }else if($seat_tersedia < $jumlah_penumpang){
                 return $this->error("Hanya " .$seat_tersedia. " seat yang tersedia");
@@ -210,6 +208,28 @@ class ApiController extends Controller
 
     }
 
+    public function seat(Request $request){
+        $seat = Detail_Pesanan::where('id_trip', $request->id_trip)
+                    ->where('status', '!=', 5)
+                    ->orderBy('id_seat', 'ASC')                    
+                    ->get();
+        
+        return response()->json([
+                'status' => true,
+                'message' => "Data seat di Trip ".$request->id_trip,
+                'data' => $seat
+        ]);  
+
+    }
+             
+        // dd($pemesan);
+        // return response()->json($pemesan);
+
+        // $tes = Trip::select('jadwal')
+        //         ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
+        //         ->whereDate('jadwal', '>', Carbon::now())
+        //         ->get();
+        
     public function error($pesan){
         return response()->json([
             'status' => false,
