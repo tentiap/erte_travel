@@ -14,6 +14,8 @@ use App\Feeder;
 use App\Detail_Pesanan;
 use App\Seat;
 
+use Carbon\Carbon;
+
 class ApiController extends Controller
 {   
     public function loginPemesan(Request $request){
@@ -221,14 +223,79 @@ class ApiController extends Controller
         ]);  
 
     }
-             
-        // dd($pemesan);
-        // return response()->json($pemesan);
 
-        // $tes = Trip::select('jadwal')
-        //         ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
-        //         ->whereDate('jadwal', '>', Carbon::now())
-        //         ->get();
+    public function tripSopir(Request $request){
+
+        $today = Carbon::today();
+
+        $trip = Trip::where('id_users_sopir', $request->id_users)
+                    ->where('jadwal', '>=', $today)
+                    ->orderBy('jadwal', 'ASC')
+                    ->get();
+                  
+        return response()->json([
+                'status' => true,
+                'message' => "Trip Sopir ".$request->id_users,
+                'data' => $trip
+        ]);  
+
+    }
+
+    public function riwayatTripSopir(Request $request){
+
+        $today = Carbon::today();
+
+        $trip = Trip::where('id_users_sopir', $request->id_users)
+                    ->where('jadwal', '<=', $today)
+                    ->orderBy('jadwal', 'DESC')
+                    ->get();
+
+        // $seat = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+        //             ->where('trip.id_trip', $id_trip)
+        //             ->where('detail_pesanan.status', 4)
+        //             ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
+        //             ->count();  
+        // dd($seat);      
+                       
+                  
+        return response()->json([
+                'status' => true,
+                'message' => "Trip Sopir ".$request->id_users,
+                'data' => $trip
+        ]);  
+
+    }
+
+    public function detailTripSopir(Request $request){
+        // $detail = Detail_Pesanan::where('id_trip', $request->id_trip)
+        //     ->where('status', '!=', 5)
+        //     ->orderBy('id_seat', 'ASC')
+        //     ->get();
+
+
+        $detail = Detail_Pesanan::join('pesanan', 'detail_pesanan.id_trip', '=', 'pesanan.id_trip')
+                    ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
+                    ->where('detail_pesanan.id_trip', $request->id_trip)
+                    ->where('status', '!=', 5)
+                    ->select('detail_pesanan.nama_penumpang',
+                             'detail_pesanan.jenis_kelamin',
+                             'detail_pesanan.id_seat',
+                             'detail_pesanan.detail_asal',
+                             'detail_pesanan.detail_tujuan',
+                             'detail_pesanan.no_hp',
+                             'detail_pesanan.status',
+                             'detail_pesanan.biaya_tambahan',
+                             'pemesan.kontak as kontak_pemesan')
+                    ->orderBy('id_seat', 'ASC')
+                    ->get();                
+
+        return response()->json([
+                'status' => true,
+                'message' => "Detail trip ".$request->id_trip,
+                'data' => $detail
+        ]);     
+    }
+        
         
     public function error($pesan){
         return response()->json([
