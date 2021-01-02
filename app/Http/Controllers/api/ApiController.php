@@ -14,6 +14,7 @@ use App\Feeder;
 use App\Detail_Pesanan;
 use App\Seat;
 
+use DB;
 use Carbon\Carbon;
 
 class ApiController extends Controller
@@ -267,14 +268,12 @@ class ApiController extends Controller
     }
 
     public function detailTripSopir(Request $request){
-        // $detail = Detail_Pesanan::where('id_trip', $request->id_trip)
-        //     ->where('status', '!=', 5)
-        //     ->orderBy('id_seat', 'ASC')
-        //     ->get();
 
-
-        $detail = Detail_Pesanan::join('pesanan', 'detail_pesanan.id_trip', '=', 'pesanan.id_trip')
-                    ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
+        $detail = DB::table('detail_pesanan')
+                    ->join('pesanan', function ($join) {
+                        $join->on('detail_pesanan.id_pesanan', '=', 'pesanan.id_pesanan')->On('detail_pesanan.id_trip', '=', 'pesanan.id_trip');
+                      })
+                     ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
                     ->where('detail_pesanan.id_trip', $request->id_trip)
                     ->where('status', '!=', 5)
                     ->select('detail_pesanan.nama_penumpang',
@@ -287,14 +286,114 @@ class ApiController extends Controller
                              'detail_pesanan.biaya_tambahan',
                              'pemesan.kontak as kontak_pemesan')
                     ->orderBy('id_seat', 'ASC')
-                    ->get();                
+                    ->get();
 
-        return response()->json([
+        // $detail = DB::table('$table')
+        //         ->join('pesanan', function($join) use ($table)
+        //         {
+        //             $join->on($table . '.id_trip', '=',  'pesanan.id_trip');
+        //             $join->on($table . '.id_pesanan','=', 'pesanan.id_pesanan');
+        //         })
+        //         ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
+        //             ->where('detail_pesanan.id_trip', $request->id_trip)
+        //             ->where('status', '!=', 5)
+        //             ->select('detail_pesanan.nama_penumpang',
+        //                      'detail_pesanan.jenis_kelamin',
+        //                      'detail_pesanan.id_seat',
+        //                      'detail_pesanan.detail_asal',
+        //                      'detail_pesanan.detail_tujuan',
+        //                      'detail_pesanan.no_hp',
+        //                      'detail_pesanan.status',
+        //                      'detail_pesanan.biaya_tambahan',
+        //                      'pemesan.kontak as kontak_pemesan')
+        //             ->orderBy('id_seat', 'ASC')
+        //             ->get();
+
+
+
+
+        // $detail = Detail_Pesanan::join('pesanan', 'detail_pesanan.id_trip', '=', 'pesanan.id_trip', 'detail_pesanan.id_pesanan', '=', 'pesanan.id_pesanan')
+        //             ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
+        //             ->where('detail_pesanan.id_trip', $request->id_trip)
+        //             ->where('status', '!=', 5)
+        //             ->select('detail_pesanan.nama_penumpang',
+        //                      'detail_pesanan.jenis_kelamin',
+        //                      'detail_pesanan.id_seat',
+        //                      'detail_pesanan.detail_asal',
+        //                      'detail_pesanan.detail_tujuan',
+        //                      'detail_pesanan.no_hp',
+        //                      'detail_pesanan.status',
+        //                      'detail_pesanan.biaya_tambahan',
+        //                      'pemesan.kontak as kontak_pemesan')
+        //             ->orderBy('id_seat', 'ASC')
+        //             ->get();
+
+        $today = Carbon::today();            
+
+        if(!$detail->isEmpty()){
+            return response()->json([
                 'status' => true,
                 'message' => "Detail trip ".$request->id_trip,
                 'data' => $detail
-        ]);     
+            ]);
+        }                         
+
+        return $this->error("Belum ada pemesan di trip ini");
+
     }
+
+    public function Feeder(Request $request){
+        $detail = DB::table('detail_pesanan')
+                    ->join('pesanan', function ($join) {
+                        $join->on('detail_pesanan.id_pesanan', '=', 'pesanan.id_pesanan')->On('detail_pesanan.id_trip', '=', 'pesanan.id_trip');
+                      })
+                    ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
+                    ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                    ->where('detail_pesanan.id_users_feeder', $request->id_users_feeder)
+                    ->where('status', '!=', 5)
+                    ->select('detail_pesanan.nama_penumpang',
+                             'detail_pesanan.jenis_kelamin',
+                             'detail_pesanan.id_seat',
+                             'detail_pesanan.detail_asal',
+                             'detail_pesanan.no_hp',
+                             'detail_pesanan.status',
+                             'detail_pesanan.biaya_tambahan',
+                             'pemesan.kontak',
+                             'trip.jadwal')
+                    ->orderBy('jadwal', 'ASC')
+                    ->get();
+
+        // Versi Trip Feeder sesuai hari ini
+        // $today = Carbon::today();
+        // $filter = '%'.date('Y-m-d', strtotime($today)).'%';   
+
+        // $detail = Detail_Pesanan::join('feeder', 'detail_pesanan.id_users_feeder', '=', 'feeder.id_users')
+        //             ->join('trip', 'detail_pesanan.id_trip', '=', 'trip.id_trip')
+        //             ->where('detail_pesanan.id_users_feeder', $request->id_users_feeder)
+        //             ->where('trip.jadwal', 'like', $filter)
+        //             ->select('detail_pesanan.nama_penumpang',
+        //                      'detail_pesanan.jenis_kelamin',
+        //                      'detail_pesanan.id_seat',
+        //                      'detail_pesanan.detail_asal',
+        //                      'detail_pesanan.detail_tujuan',
+        //                      'detail_pesanan.no_hp',
+        //                      'detail_pesanan.status',
+        //                      'detail_pesanan.biaya_tambahan')
+        //             ->orderBy('id_seat', 'ASC')
+        //             ->get();
+
+        if(!$detail->isEmpty()){
+            return response()->json([
+                'status' => true,
+                'message' => "Feeder ".$request->id_users_feeder,
+                'data' => $detail
+            ]);
+        }                         
+
+        return $this->error("Belum ada penumpang yang akan dijemput");     
+    }
+
+
         
         
     public function error($pesan){
