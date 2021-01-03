@@ -351,7 +351,9 @@ class ApiController extends Controller
                     ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
                     ->where('detail_pesanan.id_users_feeder', $request->id_users_feeder)
                     ->where('status', '!=', 5)
-                    ->select('detail_pesanan.nama_penumpang',
+                    ->select('detail_pesanan.id_trip',
+                             'detail_pesanan.id_pesanan',
+                             'detail_pesanan.nama_penumpang',
                              'detail_pesanan.jenis_kelamin',
                              'detail_pesanan.id_seat',
                              'detail_pesanan.detail_asal',
@@ -394,7 +396,20 @@ class ApiController extends Controller
     }
 
 
-        
+    public function changeStatusFeeder(Request $request){
+        $detail = Detail_Pesanan::where(['id_pesanan' => $request->id_pesanan, 'id_trip' => $request->id_trip, 'id_seat' => $request->id_seat])->first();
+
+        $detail->status = $request->status;
+        $detail->save();
+
+        return response()->json([
+                'status' => true,
+                'message' => "Data berhasil diupdate",
+                'data' => $detail
+            ]);
+    }
+
+
         
     public function error($pesan){
         return response()->json([
@@ -524,9 +539,9 @@ class ApiController extends Controller
         }
     }
 
-    public function editPesanan(Request $request){
-        $pesanan = Pesanan::where(['id_pesanan' => $request->id_pesanan, 'id_trip' => $request->id_trip])->first();
-    }
+    // public function editPesanan(Request $request){
+    //     $pesanan = Pesanan::where(['id_pesanan' => $request->id_pesanan, 'id_trip' => $request->id_trip])->first();
+    // }
 
     public function lihatTrip(Request $request){
         return "Api berhasil"; 
