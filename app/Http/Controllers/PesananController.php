@@ -363,7 +363,7 @@ class PesananController extends Controller
                         'detail_asal' => $request->detail_asal[$key],
                         'detail_tujuan' => $request->detail_tujuan[$key],
                         'no_hp' => $request->no_hp[$key],
-                        'biaya_tambahan' => $request->biaya_tambahan[$key],
+                        'biaya_tambahan' => 0,
                         'status' => 1
                     ]);
                 }
