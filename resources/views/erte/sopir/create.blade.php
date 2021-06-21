@@ -106,10 +106,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="Laki-laki"> Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="Perempuan"> Perempuan 
                                 </label>
 
                             @if($errors->has('jenis_kelamin'))

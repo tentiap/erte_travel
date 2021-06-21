@@ -47,15 +47,7 @@
                                 <td>{{ $f->email }}</td>
                                 <td>{{ $f->nama }}</td>          
                                 <td>{{ $f->kontak }}</td>
-                                <td>
-                                        @if($f->jenis_kelamin == 1)
-                                           Laki-laki
-                                        @else
-                                            Perempuan
-                                        @endif
-
-                                </td>
-                               
+                                <td>{{ $f->jenis_kelamin }}</td>                              
                                 <td>{{ $f->kota->nama_kota}}</td>
                                 
                               

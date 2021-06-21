@@ -49,15 +49,7 @@
                                 <td>{{ $s->username }}</td>
                                 <td>{{ $s->email }}</td>
                                 <td>{{ $s->kontak }}</td>
-                                <td>
-                                        @if($s->jenis_kelamin == 1)
-                                           Laki-laki
-                                        @else
-                                            Perempuan
-                                        @endif
-
-                                </td>
-                               
+                                <td>{{ $s->jenis_kelamin }}</td>                         
                                 <td>{{ $s->plat_mobil}}</td>
                                 <td>{{ $s->merek_mobil}}</td>
                                 

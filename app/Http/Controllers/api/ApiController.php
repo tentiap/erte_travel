@@ -404,13 +404,45 @@ class ApiController extends Controller
         $detail->status = $status;
         $detail->save();
 
-        if($detail && $status != null){
+        // if($detail && $status != null){
+        //     return response()->json([
+        //             'status' => true,
+        //             'message' => "Data berhasil diupdate"
+        //             // 'data' => $detail
+        //         ]);
+        // }    
+        // return $this->error("Data gagal diupdate");
+
+        if($detail){
             return response()->json([
                     'status' => true,
-                    'message' => "Data berhasil diupdate"
-                    // 'data' => $detail
-                ]);
-        }    
+                    'message' => "Data berhasil diupdate",
+                    'data' => $detail
+            ]);
+        }
+
+        return $this->error("Data gagal diupdate");
+    }
+
+    public function updateDataPemesan(Request $request){
+        $pemesan = Pemesan::where('id_users', $request->id_users)->first();
+                
+        $pemesan->username = $request->username;
+        $pemesan->email = $request->email;
+        $pemesan->nama = $request->nama;
+        $pemesan->kontak = $request->kontak;
+        $pemesan->jenis_kelamin = $request->jenis_kelamin;
+        $pemesan->alamat = $request->alamat;
+        $pemesan->save();
+
+        if($pemesan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Data berhasil diupdate",
+                    'data' => $pemesan
+            ]);
+        }
+
         return $this->error("Data gagal diupdate");
     }
 
