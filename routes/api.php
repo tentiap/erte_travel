@@ -31,6 +31,9 @@ Route::namespace('api')->group(function () {
 	Route::get('/historySopir/{id_users}', 'ApiController@riwayatTripSopir');
 	Route::get('/detailTripSopir/{id_trip}', 'ApiController@detailTripSopir');
 
+	Route::get('/getBookedSeat/{id_trip}', 'ApiController@getBookedSeat');
+
+
 	Route::get('/tripFeeder/{id_users_feeder}', 'ApiController@Feeder');
 	Route::post('/changeStatus/', 'ApiController@changeStatus');
 	Route::post('/updateDataPemesan/', 'ApiController@updateDataPemesan');
