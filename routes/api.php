@@ -22,6 +22,9 @@ Route::namespace('api')->group(function () {
 	Route::post('/loginSopir', 'ApiController@loginSopir');
 	Route::post('/loginFeeder', 'ApiController@loginFeeder');
 
+	Route::post('/createPesanan', 'ApiController@create_pesanan');
+
+
 	Route::get('/search/{id_kota_asal}/{id_kota_tujuan}/{tanggal}/{jumlah_penumpang}', 'ApiController@pesananSearch');
 	Route::get('/check/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'ApiController@check');
 	Route::post('/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'ApiController@createDetail');

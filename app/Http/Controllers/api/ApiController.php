@@ -547,6 +547,36 @@ class ApiController extends Controller
     //         return("Tidak ada trip");
     //     }                          
     // }
+    public function create_pesanan(Request $request){
+        
+       
+                    $pesanan = new Pesanan();
+                    $pesanan_select = Pesanan::select('id_pesanan');
+                    $pesanan_count = $pesanan_select->count();
+                        if ($pesanan_count === 0) {
+                            $pesanan->id_pesanan = 'P1';
+                        }else{
+                            $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
+                            $lastrow_id = explode('P', $lastrow->id_pesanan);
+                            $new_id = $lastrow_id[1]+1;
+                            $pesanan->id_pesanan = 'P'.$new_id;
+                        }
+                $pesanan->id_trip = $request->id_trip;
+                $pesanan->id_users_pemesan = $request->id_users_pemesan;            
+                $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
+                $pesanan->id_users_operator = 'O4';
+                $pesanan->save();
+
+        if($pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Create Pesanan berhasil",
+                    'data' => $pesanan
+            ]);
+        }
+     
+    }
+
 
     public function getBookedSeat(Request $request){
        
@@ -565,6 +595,7 @@ class ApiController extends Controller
 
     }
 
+    //Ini untuk multiple save data, tapi error
     public function createDetail($jumlah_penumpang, $id_trip, $id_users_pemesan, Request $request){
 
         // $jumlah_penumpang = $request->jumlah_penumpang;
@@ -598,7 +629,37 @@ class ApiController extends Controller
                 $pesanan->id_users_operator = 'O4';
                 $pesanan->save();
 
+                // 
+
                 // foreach($request->nama_penumpang as $key => $value){
+                //     $detail_pesanan = new Detail_Pesanan();
+                //     $detail_pesanan->id_trip =  $pesanan->id_trip;
+                //     $detail_pesanan->id_seat = $request->id_seat[$key];
+                //     $detail_pesanan->id_pesanan = $pesanan->id_pesanan;
+                //     $detail_pesanan->nama_penumpang = $request->nama_penumpang[$key];
+                //     $detail_pesanan->jenis_kelamin = $request->jenis_kelamin[$key];
+                //     $detail_pesanan->detail_asal = $request->detail_asal[$key];
+                //     $detail_pesanan->detail_tujuan = $request->detail_tujuan[$key];
+                //     $detail_pesanan->no_hp = $request->no_hp[$key];
+                //     $detail_pesanan->biaya_tambahan = $request->biaya_tambahan[$key];
+                //     $detail_pesanan->status = 1;
+                //     $detail_pesanan->save();
+                // }
+                
+
+                // Detail_Pesanan::create('id_trip' => $pesanan->id_trip,
+                //         'id_seat' => $request->id_seat[$key],
+                //         'id_pesanan' => $pesanan->id_pesanan,
+                //         'nama_penumpang' => $request->nama_penumpang[$key],
+                //         'jenis_kelamin' => $request->jenis_kelamin[$key],
+                //         'detail_asal' => $request->detail_asal[$key],
+                //         'detail_tujuan' => $request->detail_tujuan[$key],
+                //         'no_hp' => $request->no_hp[$key],
+                //         'biaya_tambahan' => $request->biaya_tambahan[$key],
+                //         'status' => 1);
+
+                // if (is_array($request->nama_penumpang)) || is_object($request->nama_penumpang)){
+                //     foreach($request->nama_penumpang as $key => $value){
                 //     Detail_Pesanan::create([
                 //         'id_trip' => $pesanan->id_trip,
                 //         'id_seat' => $request->id_seat[$key],
@@ -610,23 +671,49 @@ class ApiController extends Controller
                 //         'no_hp' => $request->no_hp[$key],
                 //         'biaya_tambahan' => $request->biaya_tambahan[$key],
                 //         'status' => 1
-                //         ]);
+                //     ]);
+                //     }
+                // }else{
+                //     return $this->error("An error occured");
                 // }
 
                 foreach($request->nama_penumpang as $key => $value){
                     Detail_Pesanan::create([
                         'id_trip' => $pesanan->id_trip,
-                        'id_seat' => Input::get('id_seat'),
+                        'id_seat' => $request->id_seat[$key],
                         'id_pesanan' => $pesanan->id_pesanan,
-                        'nama_penumpang' => Input::get('nama_penumpang'),
-                        'jenis_kelamin' => Input::get('jenis_kelamin'),
-                        'detail_asal' => Input::get('detai_asal'),
-                        'detail_tujuan' => Input::get('detail_tujuan'),
-                        'no_hp' => Input::get('no_hp'),
-                        'biaya_tambahan' => Input::get('biaya_tambahan'),
+                        'nama_penumpang' => $request->nama_penumpang[$key],
+                        'jenis_kelamin' => $request->jenis_kelamin[$key],
+                        'detail_asal' => $request->detail_asal[$key],
+                        'detail_tujuan' => $request->detail_tujuan[$key],
+                        'no_hp' => $request->no_hp[$key],
+                        'biaya_tambahan' => $request->biaya_tambahan[$key],
                         'status' => 1
-                        ]);
-                }    
+                    ]);
+                }
+
+            return response()->json([
+                'status' => true,
+                'message' => "Berhasil menyimpan data",
+                'data' => $detail_pesanan
+            ]);    
+  
+
+
+                // foreach($request->id_seat as $key => $value){
+                //     Detail_Pesanan::create([
+                //         'id_trip' => $pesanan->id_trip,
+                //         'id_seat' => Input::get('id_seat'),
+                //         'id_pesanan' => $pesanan->id_pesanan,
+                //         'nama_penumpang' => Input::get('nama_penumpang'),
+                //         'jenis_kelamin' => Input::get('jenis_kelamin'),
+                //         'detail_asal' => Input::get('detai_asal'),
+                //         'detail_tujuan' => Input::get('detail_tujuan'),
+                //         'no_hp' => Input::get('no_hp'),
+                //         'biaya_tambahan' => Input::get('biaya_tambahan'),
+                //         'status' => 1
+                //         ]);
+                // }    
                 
                 // foreach($request as $value){
                 //     Detail_Pesanan::create([
@@ -646,11 +733,7 @@ class ApiController extends Controller
                 
 
                 // Detail_Pesanan::insert($pesanan);
-            return response()->json([
-                'status' => true,
-                'message' => "Berhasil menyimpan data",
-                'data' => $pesanan
-            ]);
+            
 
     }
 
@@ -695,38 +778,38 @@ class ApiController extends Controller
     }
 
     // public function create_pesanan(Request $request){
-    //  $pesanan = new Pesanan;
-    //      $pesanan_select = Pesanan::select('id_pesanan');
-    //      $pesanan_count = $pesanan_select->count();
-    //          if($pesanan_count === 0){
-    //              $pesanan->id_pesanan = 'P1';
-    //          }else{
-    //              $lastrow = $pesanan_select->orderBy('created_at', 'desc')->first();
-    //              $lastrow_id = explode('P', $lastrow->id_pesanan);
-    //              $new_id = $lastrow_id[1]+1;
-    //              $pesanan->id_pesanan = 'P'.$new_id;
-    //          }
-    //     $pesanan->id_pesanan = $request->id_pesanan;
-    //  $pesanan->id_trip = $request->id_trip;
-    //  $pesanan->id_users_pemesan = $request->id_users_pemesan;
-    //  $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
-    //  $pesanan->id_users_operator = $request->id_users;
-    //     $pesanan->save();
+    //     $pesanan = new Pesanan;
+    //         $pesanan_select = Pesanan::select('id_pesanan');
+    //         $pesanan_count = $pesanan_select->count();
+    //             if($pesanan_count === 0){
+    //                 $pesanan->id_pesanan = 'P1';
+    //             }else{
+    //                 $lastrow = $pesanan_select->orderBy('created_at', 'desc')->first();
+    //                 $lastrow_id = explode('P', $lastrow->id_pesanan);
+    //                 $new_id = $lastrow_id[1]+1;
+    //                 $pesanan->id_pesanan = 'P'.$new_id;
+    //             }
+    //         $pesanan->id_pesanan = $request->id_pesanan;
+    //         $pesanan->id_trip = $request->id_trip;
+    //         $pesanan->id_users_pemesan = $request->id_users_pemesan;
+    //         $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
+    //         $pesanan->id_users_operator = $request->id_users_operator;
+    //         $pesanan->save();
 
-    //     foreach($request->nama_penumpang as $key => $value){
-    //                 Detail_Pesanan::create([
-    //                     'id_trip' => $pesanan->id_trip,
-    //                     'id_seat' => $request->id_seat[$key],
-    //                     'id_pesanan' => $pesanan->id_pesanan,
-    //                     'nama_penumpang' => $request->nama_penumpang[$key],
-    //                     'jenis_kelamin' => $request->jenis_kelamin[$key],
-    //                     'detail_asal' => $request->detail_asal[$key],
-    //                     'detail_tujuan' => $request->detail_tujuan[$key],
-    //                     'no_hp' => $request->no_hp[$key],
-    //                     'biaya_tambahan' => $request->biaya_tambahan[$key],
-    //                     'status' => 1
-    //                 ]);
-    //     }
+        // foreach($request->nama_penumpang as $key => $value){
+        //             Detail_Pesanan::create([
+        //                 'id_trip' => $pesanan->id_trip,
+        //                 'id_seat' => $request->id_seat[$key],
+        //                 'id_pesanan' => $pesanan->id_pesanan,
+        //                 'nama_penumpang' => $request->nama_penumpang[$key],
+        //                 'jenis_kelamin' => $request->jenis_kelamin[$key],
+        //                 'detail_asal' => $request->detail_asal[$key],
+        //                 'detail_tujuan' => $request->detail_tujuan[$key],
+        //                 'no_hp' => $request->no_hp[$key],
+        //                 'biaya_tambahan' => $request->biaya_tambahan[$key],
+        //                 'status' => 1
+        //             ]);
+        // }
 
     // }
 
