@@ -446,6 +446,29 @@ class ApiController extends Controller
         return $this->error("Data gagal diupdate");
     }
 
+    public function updateDetailPesanan(Request $request){
+        
+        $detail_pesanan = Detail_Pesanan::where('id_detail_pesanan', $request->id_detail_pesanan)->first();
+        $detail_pesanan->id_seat = $request->id_seat;
+        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
+        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
+        $detail_pesanan->detail_asal = $request->detail_asal;
+        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
+        $detail_pesanan->no_hp = $request->no_hp;
+        $detail_pesanan->save();
+
+        if($detail_pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Update Detail Pesanan berhasil",
+                    'data' => $detail_pesanan
+            ]);
+        }
+
+        return $this->error("Data gagal diupdate");
+
+    }
+
 
         
     public function error($pesan){
@@ -576,6 +599,64 @@ class ApiController extends Controller
         }
      
     }
+
+    public function create_detail_pesanan(Request $request){
+        
+        $detail_pesanan = new Detail_Pesanan();
+        $detail_pesanan->id_trip =  $request->id_trip;
+        $detail_pesanan->id_seat = $request->id_seat;
+        $detail_pesanan->id_pesanan = $request->id_pesanan;
+        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
+        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
+        $detail_pesanan->detail_asal = $request->detail_asal;
+        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
+        $detail_pesanan->no_hp = $request->no_hp;
+        $detail_pesanan->biaya_tambahan = 0;
+        $detail_pesanan->status = 1;
+        $detail_pesanan->save();
+
+        if($detail_pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Create Detail Pesanan berhasil",
+                    'data' => $detail_pesanan
+            ]);
+        }
+     
+    }
+
+    public function getIdPesanan(Request $request){
+        
+        $pesanan = Pesanan::where('id_trip', $request->id_trip)
+                        ->where('id_users_pemesan', $request->id_users_pemesan)
+                        ->select('id_pesanan')
+                        ->get();
+
+
+        if($pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Berhasil mengambil Id Pesanan",
+                    'data' => $pesanan
+            ]);
+        }
+    }
+
+    public function getDetailPesanan(Request $request){
+        
+        $detail = Detail_Pesanan::where(['id_pesanan' => $request->id_pesanan, 'id_trip' => $request->id_trip])->orderBy('id_seat', 'ASC')->get();
+
+
+        if($detail){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Berhasil mengambil Data Detail Pesanan",
+                    'data' => $detail
+            ]);
+        }
+    }
+
+
 
 
     public function getBookedSeat(Request $request){

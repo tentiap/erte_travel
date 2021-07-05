@@ -23,6 +23,8 @@ Route::namespace('api')->group(function () {
 	Route::post('/loginFeeder', 'ApiController@loginFeeder');
 
 	Route::post('/createPesanan', 'ApiController@create_pesanan');
+	Route::post('/createDetailPesanan', 'ApiController@create_detail_pesanan');
+
 
 
 	Route::get('/search/{id_kota_asal}/{id_kota_tujuan}/{tanggal}/{jumlah_penumpang}', 'ApiController@pesananSearch');
@@ -35,11 +37,16 @@ Route::namespace('api')->group(function () {
 	Route::get('/detailTripSopir/{id_trip}', 'ApiController@detailTripSopir');
 
 	Route::get('/getBookedSeat/{id_trip}', 'ApiController@getBookedSeat');
+	Route::get('/getIdPesanan/{id_trip}/{id_users_pemesan}', 'ApiController@getIdPesanan');
+	Route::get('/getDetailPesanan/{id_pesanan}/{id_trip}', 'ApiController@getDetailPesanan');
+
 
 
 	Route::get('/tripFeeder/{id_users_feeder}', 'ApiController@Feeder');
 	Route::post('/changeStatus/', 'ApiController@changeStatus');
 	Route::post('/updateDataPemesan/', 'ApiController@updateDataPemesan');
+	Route::post('/updateDetailPesanan/', 'ApiController@updateDetailPesanan');
+
 	
 	Route::get('/history/{id_users_pemesan}', 'ApiController@riwayatTripPemesan');
 	Route::get('/detail/{id_pesanan}', 'ApiController@detailRiwayatTripPemesan');
