@@ -39,7 +39,7 @@ Route::namespace('api')->group(function () {
 	Route::get('/getBookedSeat/{id_trip}', 'ApiController@getBookedSeat');
 	Route::get('/getIdPesanan/{id_trip}/{id_users_pemesan}', 'ApiController@getIdPesanan');
 	Route::get('/getDetailPesanan/{id_pesanan}/{id_trip}', 'ApiController@getDetailPesanan');
-
+	Route::get('/checkAvailableSeat/{id_trip}', 'ApiController@checkAvailableSeat');
 
 
 	Route::get('/tripFeeder/{id_users_feeder}', 'ApiController@Feeder');

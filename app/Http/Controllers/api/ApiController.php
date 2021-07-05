@@ -447,7 +447,7 @@ class ApiController extends Controller
     }
 
     public function updateDetailPesanan(Request $request){
-        
+
         $detail_pesanan = Detail_Pesanan::where('id_detail_pesanan', $request->id_detail_pesanan)->first();
         $detail_pesanan->id_seat = $request->id_seat;
         $detail_pesanan->nama_penumpang = $request->nama_penumpang;
@@ -466,6 +466,35 @@ class ApiController extends Controller
         }
 
         return $this->error("Data gagal diupdate");
+
+    }
+
+    public function checkAvailableSeat(Request $request){
+        
+        $bookedSeat = Detail_Pesanan::where('id_trip', $request->id_trip)
+                        ->where('status', '!=', 5)
+                        ->count();
+
+        $seat_available = 7 - $bookedSeat;
+
+        if ($seat_available == 0) {
+            return response()->json([
+                'status' => false,
+                'message' => "Sorry, this trip is fully booked"
+            ]);
+        }else{
+            return response()->json([
+                'status' => true,
+                'message' => $seat_available. " seat(s) available"
+            ]);
+        }
+
+        
+        // return response()->json([
+        //         'status' => true,
+        //         'message' => "Update Detail Pesanan berhasil",
+        //         'data' => $seat_available
+        // ]);  
 
     }
 
