@@ -482,6 +482,7 @@ class ApiController extends Controller
         $detail_pesanan->detail_asal = $request->detail_asal;
         $detail_pesanan->detail_tujuan = $request->detail_tujuan;
         $detail_pesanan->no_hp = $request->no_hp;
+        $detail_pesanan->status = $request->status;
         $detail_pesanan->save();
 
         if($detail_pesanan){
