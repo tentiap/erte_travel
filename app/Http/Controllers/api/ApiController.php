@@ -211,6 +211,33 @@ class ApiController extends Controller
 
     }
 
+     public function check_update(Request $request){
+
+            $trip = Trip::where(['id_trip' => $request->id_trip])->get();
+            $tambah = $request->tambah;
+            $pemesan = Pemesan::where('id_users', $request->id_users_pemesan)->get();
+            $seat = Seat::all();
+            $seat_b = Detail_Pesanan::where('id_trip', $request->id_trip)
+                        ->where('status', '!=', 5)
+                        ->orderBy('id_seat', 'ASC')
+                        ->get();
+            $seat_tersedia = 7 - ($seat_b->count());
+            
+            if($seat_tersedia == 0){
+                return $this->error("Trip ini sudah penuh");
+            }else if($seat_tersedia >= $tambah){
+                return response()->json([
+                    'status' => true,
+                    'message' => "Silakan isi data penumpang"
+            ]);  
+            }else if($seat_tersedia < $tambah){
+                return $this->error("Hanya " .$seat_tersedia. " seat yang tersedia");
+            }
+       
+        
+
+    }
+
     public function seat(Request $request){
         $seat = Detail_Pesanan::where('id_trip', $request->id_trip)
                     ->where('status', '!=', 5)
