@@ -8,7 +8,8 @@ use App\Pemesan;
 class PemesanController extends Controller
 {
     public function index(){
-    	$pemesan = Pemesan::all();
+    	// $pemesan = Pemesan::all();
+        $pemesan = Pemesan::orderBy('created_at', 'desc')->paginate(10);
         return view('erte.pemesan.index', ['pemesan' => $pemesan]);
     }
 

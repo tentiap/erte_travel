@@ -26,7 +26,9 @@
               
 
             <div class="box-body">
-                <table id="sortdata" class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped">
+<!--                 <table id="sortdata" class="table table-bordered table-hover table-striped">
+ -->  
                   <thead>
                       <tr>
                         <th>ID</th>
@@ -108,9 +110,15 @@
                                     </script>
                       
                   @endforeach
+
+                 
+
+
                 </tbody>
               </table>
             </div>
+             {{ $pesanan->links() }}
+
 
         </div>
         <div class="box-footer">

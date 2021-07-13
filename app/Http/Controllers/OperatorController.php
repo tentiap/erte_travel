@@ -19,7 +19,9 @@ class OperatorController extends Controller
     // }
 
     public function index(){
-    	$operator = Operator::all();
+    	// $operator = Operator::all();
+        $operator = Operator::orderBy('created_at', 'asc')->paginate(10);
+
         return view('erte.operator.index', ['operator' => $operator]);
     }
 

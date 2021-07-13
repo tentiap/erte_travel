@@ -18,7 +18,8 @@ class TripController extends Controller
 {
     public function index(){
         if (Auth::guard('operator')->user()->id_users == 'admin') {
-            $trip = Trip::all();
+            // $trip = Trip::all();
+            $trip = Trip::orderBy('jadwal', 'desc')->paginate(10);
             // $trip = Trip::orderBy('jadwal')->get();
             // $trip = Trip::all()->sortByDesc('jadwal');
             // $results = Project::all()->sortByDesc("name");
@@ -27,7 +28,8 @@ class TripController extends Controller
 
         }else{
             $kota = Auth::guard('operator')->user()->id_kota;
-            $trip = Trip::where('id_kota_asal', $kota)->get();
+            $trip = Trip::where('id_kota_asal', $kota)
+                        ->orderBy('jadwal', 'desc')->paginate(10);
 
             // $filter = '%'.'2020-08-06'.'%';
             // $trip = Trip::join('pesanan', 'trip.id_trip', '=', 'pesanan.id_trip')
@@ -96,7 +98,11 @@ class TripController extends Controller
             
         ]);
 
-        $trip = new Trip();
+        if (Auth::guard('operator')->user()->id_kota != $request->id_kota_asal) {
+            session()->flash('flash_danger', 'Trip berada di luar wilayah operasional operator');
+            return redirect('/trip/create');
+        }else{
+            $trip = new Trip();
             $trip_select = Trip::select('id_trip');
             $trip_count = $trip_select->count();
                 if ($trip_count === 0) {
@@ -127,6 +133,9 @@ class TripController extends Controller
                 session()->flash('flash_success', 'Berhasil menambahkan data trip'); 
 
          return redirect('/trip');
+
+        }
+        
     }
 
     public function edit($id_trip){

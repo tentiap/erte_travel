@@ -149,6 +149,9 @@ Route::get('/pesanan_trip', 'PesananController@getTrip');
 // Route::get('/pesanan/update_feeder/{id_pesanan}/{id_trip}', 'PesananController@update_feeder');
 // Route::get('/pesanan/update_biaya/{id_pesanan}/{id_seat}', 'PesananController@update_biaya');
 
+//----------------------------------------------------REPORT-------------------------------------------------
+Route::get('report', 'ReportController@index');
+
 
 //------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Route::get('detail_pesanan', 'DetailPesananController@index');

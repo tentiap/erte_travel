@@ -11,12 +11,16 @@ class FeederController extends Controller
 {
     public function index(){
         if (Auth::guard('operator')->user()->id_users == 'admin') {
-            $feeder = Feeder::all();
+            // $feeder = Feeder::all();
+            $feeder = Feeder::orderBy('created_at', 'asc')->paginate(10);
+
             return view('erte.feeder.index', ['feeder' => $feeder]);
 
         }else{
             $kota = Auth::guard('operator')->user()->id_kota;
-            $feeder = Feeder::where('id_kota', $kota)->get();
+            $feeder = Feeder::where('id_kota', $kota)
+                                    ->orderBy('created_at', 'asc')->paginate(10)
+                                    ->get();
             return view('erte.feeder.index', ['feeder' => $feeder]);    
         }        
     }

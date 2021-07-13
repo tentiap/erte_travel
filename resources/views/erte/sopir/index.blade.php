@@ -26,7 +26,7 @@
               
 
             <div class="box-body">
-                <table id="sortdata" class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
                         <th>ID Users</th>
@@ -87,6 +87,8 @@
                 </tbody>
               </table>
             </div>
+
+            {{ $sopir->links() }}
 
         </div>
         <div class="box-footer">

@@ -25,7 +25,7 @@
 
               
             <div class="box-body">
-                <table id="sortdata" class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
                         <th>ID Trip</th>
@@ -109,6 +109,8 @@
                 </tbody>
               </table>
             </div>
+
+            {{ $trip->links() }}
 
         </div>
         <div class="box-footer">

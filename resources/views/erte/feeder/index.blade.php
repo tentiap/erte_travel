@@ -86,6 +86,8 @@
               </table>
             </div>
 
+            {{ $feeder->links() }}
+
         </div>
         <div class="box-footer">
         </div>        

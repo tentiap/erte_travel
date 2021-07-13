@@ -22,7 +22,9 @@ class SopirController extends Controller
 
     public function index(){
 
-    	$sopir = Sopir::all();
+        $sopir = Sopir::orderBy('created_at', 'asc')->paginate(10);
+
+    	// $sopir = Sopir::all();
     	return view('erte.sopir.index', ['sopir' => $sopir]);
 
     }

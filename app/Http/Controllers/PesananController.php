@@ -21,7 +21,12 @@ class PesananController extends Controller
 {
     public function index(){
         if (Auth::guard('operator')->user()->id_users == 'admin') {
-            $pesanan = Pesanan::all();
+            // $pesanan = Pesanan::all();
+            $sortedPesanan = Pesanan::orderBy('tanggal_pesan', 'desc')->paginate(10);
+            // $sortedPesanan = Pesanan::all();
+
+            // $posts = Post::orderBy('created_at', 'desc')->get();
+            // ->orderBy('id_seat', 'ASC')->get(); 
             // $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', 'detail_pesanan.id_pesanan')
             //     ->join('trip', 'pesanan.id_trip', 'trip.id_trip')
             //     ->select('pesanan.id_pesanan', 
@@ -43,13 +48,15 @@ class PesananController extends Controller
             $pemesan = Pemesan::all();
             $operator = Operator::all();
 
-            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
+
+            return view('erte.pesanan.index', ['pesanan' => $sortedPesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
 
         }else{
             $kota = Auth::guard('operator')->user()->id_kota;
             $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
                         ->where('trip.id_kota_asal',  $kota)
-                        ->get();
+                        ->orderBy('tanggal_pesan', 'desc')->paginate(10);
+                        // ->get();
             $trip = Trip::all();
             $pemesan = Pemesan::all();
             $operator = Operator::all();
