@@ -22,8 +22,10 @@ class PesananController extends Controller
     public function index(){
         if (Auth::guard('operator')->user()->id_users == 'admin') {
             // $pesanan = Pesanan::all();
-            $sortedPesanan = Pesanan::orderBy('tanggal_pesan', 'desc')->paginate(10);
+            // $sortedPesanan = Pesanan::orderBy('jadwal', 'desc')->paginate(10);
             // $sortedPesanan = Pesanan::all();
+            $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                                    ->orderBy('trip.jadwal', 'desc')->paginate(10);
 
             // $posts = Post::orderBy('created_at', 'desc')->get();
             // ->orderBy('id_seat', 'ASC')->get(); 
@@ -49,13 +51,13 @@ class PesananController extends Controller
             $operator = Operator::all();
 
 
-            return view('erte.pesanan.index', ['pesanan' => $sortedPesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
 
         }else{
             $kota = Auth::guard('operator')->user()->id_kota;
             $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
                         ->where('trip.id_kota_asal',  $kota)
-                        ->orderBy('tanggal_pesan', 'desc')->paginate(10);
+                        ->orderBy('trip.jadwal', 'desc')->paginate(10);
                         // ->get();
             $trip = Trip::all();
             $pemesan = Pemesan::all();
@@ -85,6 +87,9 @@ class PesananController extends Controller
             $jumlah_penumpang = Input::get('jumlah_penumpang');
             $p = Input::get('id_users_pemesan');
             $pemesan = Pemesan::where('id_users', $p)->get();
+            $today = Carbon::now();
+            $filter_today = date('Y-m-d H:i:s', strtotime($today));
+            // dd($filter_today);
             // dd($pemesan);
             // return response()->json($pemesan);
 
@@ -98,44 +103,81 @@ class PesananController extends Controller
         //             ->get();
         //             dd($trip_a);
 
-                          
-
-        $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
+        if (Auth::guard('operator')->user()->id_users == 'admin') {
+            $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                'id_kota_tujuan' => $id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
-                    ->get();                        
+                    ->where('jadwal', '>', $filter_today)
+                    ->get(); 
+                
 
-
-        // $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
-        //             ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-        //             ->where(['trip.id_kota_asal' => $id_kota_asal, 
-        //                        'trip.id_kota_tujuan' => $id_kota_tujuan,])
-        //             ->where('jadwal', 'like', $filter)
-        //             ->select('detail_pesanan.id_seat')
-        //             ->count();
-
-        $seat_a = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
-                    ->where(['id_kota_asal' => $id_kota_asal, 
-                               'id_kota_tujuan' => $id_kota_tujuan,])
-                    ->where('jadwal', 'like', $filter)
-                    ->where('detail_pesanan.status', '!=', 5)
-                    ->select('detail_pesanan.id_seat')
-                    ->count();
-                    
-        // // $jumlah_seat = $seat_a->count();
-        //             dd($seat_a);
-        $seat = ($trip_a->count() * 7) - $seat_a;
+            $seat_a = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+                            ->where(['id_kota_asal' => $id_kota_asal, 
+                                       'id_kota_tujuan' => $id_kota_tujuan,])
+                            ->where('jadwal', 'like', $filter)
+                            ->where('detail_pesanan.status', '!=', 5)
+                            ->select('detail_pesanan.id_seat')
+                            ->count();
+                            
               
-        if(!$trip_a->isEmpty() && $seat >= $jumlah_penumpang){
-            // return response()->json($trip_a);
+            $seat = ($trip_a->count() * 7) - $seat_a;
+                      
+            if(!$trip_a->isEmpty() && $seat >= $jumlah_penumpang){
 
-            return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_a' => $seat_a]);
-            // dd($trip_a->jumlah_penumpang);
+                    return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_a' => $seat_a]);
+            }else{
+                    session()->flash('flash_danger', 'Tidak ada trip');
+                    return redirect('/pesanan/create');
+            }
+
         }else{
-            session()->flash('flash_danger', 'Tidak ada trip');
-            return redirect('/pesanan/create');
-        }  
+            if (Auth::guard('operator')->user()->id_kota != $id_kota_asal) {
+                session()->flash('flash_danger', 'Pesanan berada di luar wilayah operasional operator');
+                return redirect('/pesanan/create');
+            }else{
+            
+                $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
+                               'id_kota_tujuan' => $id_kota_tujuan,])
+                    ->where('jadwal', 'like', $filter)
+                    ->where('jadwal', '>', $filter_today)
+                    ->get(); 
+                    // ->where('date', '<=', '2014-07-10 23:59:59')
 
+
+
+                // $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
+                //             ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                //             ->where(['trip.id_kota_asal' => $id_kota_asal, 
+                //                        'trip.id_kota_tujuan' => $id_kota_tujuan,])
+                //             ->where('jadwal', 'like', $filter)
+                //             ->select('detail_pesanan.id_seat')
+                //             ->count();
+
+                $seat_a = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+                            ->where(['id_kota_asal' => $id_kota_asal, 
+                                       'id_kota_tujuan' => $id_kota_tujuan,])
+                            ->where('jadwal', 'like', $filter)
+                            ->where('detail_pesanan.status', '!=', 5)
+                            ->select('detail_pesanan.id_seat')
+                            ->count();
+                            
+                // // $jumlah_seat = $seat_a->count();
+                //             dd($seat_a);
+                $seat = ($trip_a->count() * 7) - $seat_a;
+                      
+                if(!$trip_a->isEmpty() && $seat >= $jumlah_penumpang){
+                    // return response()->json($trip_a);
+
+                    return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_a' => $seat_a]);
+                    // dd($trip_a->jumlah_penumpang);
+                }else{
+                    session()->flash('flash_danger', 'Tidak ada trip');
+                    return redirect('/pesanan/create');
+                }   
+        }
+
+    }
+        
         
     }
 
@@ -265,7 +307,14 @@ class PesananController extends Controller
                 session()->flash('flash_danger', 'Trip ini sudah penuh');
                 return redirect('/pesanan/create');
             }else if($seat_tersedia >= $jumlah_penumpang){
-                return view('erte.pesanan.detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_b' => $seat_b]);    
+                json_decode($seat_b, true);
+                
+
+                for ($i=0; $i < $seat_b->count() ; $i++) { 
+                    array_push($seat_booked, $seat_b[$i]['id_seat']);
+                }
+
+                return view('erte.pesanan.detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_b' => $seat_b, 'seat_booked' => $seat_booked]);    
             }else if($seat_tersedia < $jumlah_penumpang){
                 session()->flash('flash_danger', 'Hanya ' .$seat_tersedia. ' seat yang tersedia');
                 return redirect('/pesanan/create');
@@ -331,10 +380,10 @@ class PesananController extends Controller
             'detail_asal' => 'required',
             'detail_tujuan' => 'required'            
         ]);
-        $trip = Trip::where(['id_trip' => $id_trip])->get();
+        // $trip = Trip::where(['id_trip' => $id_trip])->get();
 
-        $seat = Input::get('id_seat');
-            if(Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $seat])
+        // $seat = Input::get('id_seat');
+            if(Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $request->id_seat])
                 ->where('status', '!=', 5)
                 ->exists()) {
                         // dd("Seat sudah ada, tapi status nya ndak cancel. Berarti ndak  bisa pesan seat ni lagi, karena dah booking");
@@ -444,10 +493,39 @@ class PesananController extends Controller
 
         $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
                         ->where('status', '!=', 5)
+                        // ->select('id_seat')
                         ->orderBy('id_seat', 'ASC')
                         ->get();
 
-        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'seat_b' => $seat_b, 'feeder' => $feeder]);
+        // for (int i = 0; i < bookedSeatData.size(); i++){
+        //                 listBookedSeat.add(bookedSeatData.get(i).getIdSeat());
+        //             }
+
+        //             String[] array = listBookedSeat.toArray(new String[0]);
+
+        //             for (int i = 1; i < 8; i++){
+        //                 boolean checkBookedSeat = Arrays.asList(array).contains(String.valueOf(i));
+
+        //                 if (checkBookedSeat == true) {
+        //                     System.out.println("Skip aja ya, seat udah dibooking");
+        //                 } else {
+        //                     listSpinner.add(String.valueOf(i));
+        //                 }
+        //             }
+//                
+        json_decode($seat_b, true);
+        for ($i=0; $i < $seat_b->count() ; $i++) { 
+            $seat_available = array();
+            array_push($seat_available, $seat_b[$i]['id_seat']);
+        }
+
+                    // echo $seat_b[$i]['id_seat'];   
+        dd($seat_available);
+
+
+                    
+
+        // return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'seat_b' => $seat_b, 'feeder' => $feeder]);
     }
 
     public function update_create($id_pesanan, $id_trip){
