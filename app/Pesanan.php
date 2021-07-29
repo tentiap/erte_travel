@@ -17,6 +17,7 @@ class Pesanan extends Model
         'tanggal_pesan',
         'id_users_operator',
         'jumlah_penumpang',
+        'created_at'
     ];
     
     protected $primaryKey = ['id_pesanan', 'id_trip'];
