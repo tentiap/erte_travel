@@ -13,8 +13,7 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
+    public function index(){
     	if (Auth::guard('operator')->user()->id_users == 'admin') {
     		$kota = Auth::guard('operator')->user()->id_kota;
 	    	$feeder = Feeder::all()->count();

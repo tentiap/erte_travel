@@ -715,45 +715,32 @@ class PesananController extends Controller
     public function update($id_pesanan, $id_trip, Request $request){
 
             $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
-            // $pesanan->id_pesanan = $request->id_pesanan;
-            $pesanan->id_trip = $request->id_trip;
-            // $pesanan->id_users_pemesan = Auth::guard('operator')->user()->id_users;            
+            $pesanan->id_trip = $request->id_trip;          
             $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
-            // $pesanan->tanggal_pesan = $request->tanggal_pesan;
             $pesanan->save();
 
-            // $detail =  Detail_Order::where('order_id', $order->id)->get();
-            // $seat = Input::get('id_seat');
-            // if(Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $seat])
-            //     ->where('status', '!=', 5)
-            //     ->exists()) {
-            //         session()->flash('flash_danger', 'Seat sudah dibooking');
-            //         return redirect('/pesanan/edit/'.$id_pesanan. '/' .$id_trip);
+            $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();
 
-            // }else{
+            if(count($request->id_seat) > 0){
+                for($i = 0; $i < count($request->id_seat); $i++){
+                    $detail[$i]->id_trip = $pesanan->id_trip;
+                    $detail[$i]->id_seat = $request->id_seat[$i];
+                    $detail[$i]->id_pesanan = $pesanan->id_pesanan;
+                    $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
+                    $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
+                    $detail[$i]->detail_asal = $request->detail_asal[$i];
+                    $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
+                    $detail[$i]->no_hp = $request->no_hp[$i];
+                    $detail[$i]->id_users_feeder = $request->id_users_feeder[$i];
+                    $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
+                    $detail[$i]->status = $request->status[$i];
+                    $detail[$i]->save();
+                }
+            }
 
-                    $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();
-
-                    if(count($request->id_seat) > 0){
-                        for($i = 0; $i < count($request->id_seat); $i++){
-                            $detail[$i]->id_trip = $pesanan->id_trip;
-                            $detail[$i]->id_seat = $request->id_seat[$i];
-                            $detail[$i]->id_pesanan = $pesanan->id_pesanan;
-                            $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
-                            $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
-                            $detail[$i]->detail_asal = $request->detail_asal[$i];
-                            $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
-                            $detail[$i]->no_hp = $request->no_hp[$i];
-                            $detail[$i]->id_users_feeder = $request->id_users_feeder[$i];
-                            $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
-                            $detail[$i]->status = $request->status[$i];
-                            $detail[$i]->save();
-                        }
-                    }
-
-                    session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
-                         return redirect('/pesanan/show/'. $id_pesanan .'/' . $id_trip);
-            // }             
+            session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
+            return redirect('/pesanan/show/'. $id_pesanan .'/' . $id_trip);
+                       
     }
 
     public function update_search($id_pesanan, $id_trip){
