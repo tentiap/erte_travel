@@ -119,6 +119,9 @@ class ApiController extends Controller
     public function pesananSearch(Request $request){
         $tanggal = $request->tanggal;
         $filter = '%'.$tanggal.'%';
+
+        $today = Carbon::now();
+        $filter_jam = date('Y-m-d H:i:s', strtotime($today));
         // $feeder = Feeder::where('email', $request->email)->first();
         // $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
         //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
@@ -133,6 +136,8 @@ class ApiController extends Controller
         $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
+                    ->where('jadwal', '>', $filter_jam)
+                    ->orderBy('jadwal', 'asc')
                     ->get();
 
         // $trip = Trip::join('kota', function($join){
@@ -568,6 +573,7 @@ class ApiController extends Controller
         //                 ->get();
         $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
                         ->where('pesanan.id_users_pemesan',  $request->id_users_pemesan)
+                        ->orderBy('pesanan.tanggal_pesan', 'desc')
                         ->get();
 
         $pemesan = Pemesan::where('id_users', $request->id_users_pemesan)->first();                
@@ -587,6 +593,7 @@ class ApiController extends Controller
         
         $detail = Detail_Pesanan::join('trip', 'detail_pesanan.id_trip', '=', 'trip.id_trip')
                         ->where('detail_pesanan.id_pesanan',  $request->id_pesanan)
+                        ->orderBy('detail_pesanan.status', 'asc')
                         ->get();
 
         if(!$detail->isEmpty()){
