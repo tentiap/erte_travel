@@ -256,7 +256,6 @@
                             type: "GET",
                             contentType: "application/json;charset=utf-8",
                             dataType: "json",
-
                             success: function (result) {
                                 $("#form_date-time").show()
                                 $('#id_date-time').empty()

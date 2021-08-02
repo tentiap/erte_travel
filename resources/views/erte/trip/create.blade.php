@@ -70,7 +70,7 @@
                                         {{ $errors->first('id_kota_tujuan')}}
                                     </div>
                                 @endif
-                    </div>
+                        </div>
 
                         <div class="form-group">
                             <label>Jadwal</label>
@@ -113,9 +113,7 @@
                                 <div class="text-danger">
                                     {{ $errors->first('id_users_sopir')}}
                                 </div>
-                            @endif
-
-                            
+                            @endif   
                         </div>
 
                         <!-- <div class="form-group">
