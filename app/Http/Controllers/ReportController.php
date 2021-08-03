@@ -55,11 +55,25 @@ class ReportController extends Controller
             $trip = Trip::where('jadwal', 'like', $filter)
                     ->orderBy('jadwal', 'asc')
                     ->get();
-            return view('erte.report.show', ['trip' => $trip]);
+
+            return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate]);
+
+                // if (!empty($trip)) {
+                //    return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate]); 
+                // }else{
+                //     session()->flash('flash_danger', 'Tidak ada data trip');
+                //     return redirect('/report'); 
+                // }
         }else{
             $trip = Trip::whereBetween('jadwal', [$startDate, $endDate])
                     ->orderBy('jadwal', 'asc')
                     ->get();
+
+                // if (empty($trip)) {
+                //     session()->flash('flash_danger', 'Tidak ada data trip');
+                //     return redirect('/report');
+                // }    
+                    
             return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate]);
             // $pdf = PDF::loadview('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate])->setPaper("A4", "portrait");
             // $pdf = PDF::loadview('erte.report.dashboard')->setPaper("A4", "portrait");

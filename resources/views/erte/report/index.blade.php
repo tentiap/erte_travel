@@ -59,7 +59,7 @@
                   </div>
                               
                       <div class="form-group">
-                          <input type="submit" class="btn btn-primary" value="Search">
+                          <input type="submit" class="btn btn-primary" value="Print">
                       </div>                     
                 </form>            
 

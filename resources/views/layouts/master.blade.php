@@ -298,7 +298,8 @@
   <script>
       $(function () {
           $('#date2').datetimepicker({
-              format: 'YYYY-MM-DD'
+              format: 'YYYY-MM-DD',
+              maxDate: new Date()
           });
       });
   </script>
@@ -358,29 +359,27 @@
 
   <script>
     $(document).ready(function() {
-        // $('#jumlahPenumpang').on('load', function(){
-        //   $('#jumlahPenumpang').html(function(){
-        //     // console.log("Tenti");
-        //     var idTrip = $('#tableTrip').val();
-        //     console.log(idTrip);
-        //     // $.get('/trip_kota_tujuan?id_kota_asal=' +selected_kota_asal, function(data){
-        //     //       $('#id_kota_tujuan').empty();
-        //     //       // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
-        //     //       $.each(data, function(index, value){
-        //     //         // return Rute::get()->load('kota_tujuan');
-        //     //         // console.log(id_kota_tujuanObj);
-        //     //         console.log(value.kota_tujuan.nama_kota);
-        //     //         $('#id_kota_tujuan').append('<option value='+value.id_kota_tujuan+'>'+value.kota_tujuan.nama_kota+'</option>');
-        //     //       });
-        //     // });  
-        // });
-
-        $('#tableTrip').rows().every(function() {
-          // var idTrip = $(this).find(".customerIDCell").html();
-          var idTrip = $(this).find("td").eq(0).html();  
-          console.log(idTrip);    
+        $('#jumlahPenumpang').on('load', function(){
+          $('#jumlahPenumpang').html(function(){
+            // console.log("Tenti");
+            // var idTrip = $('#tableTrip').val();
+            $('#tableTrip').each(function() {
+                var idTrip = $(this).find("td:first").html();    
+            });
+            console.log(idTrip);
+            // $.get('/trip_kota_tujuan?id_kota_asal=' +selected_kota_asal, function(data){
+            //       $('#id_kota_tujuan').empty();
+            //       // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
+            //       $.each(data, function(index, value){
+            //         // return Rute::get()->load('kota_tujuan');
+            //         // console.log(id_kota_tujuanObj);
+            //         console.log(value.kota_tujuan.nama_kota);
+            //         $('#id_kota_tujuan').append('<option value='+value.id_kota_tujuan+'>'+value.kota_tujuan.nama_kota+'</option>');
+            //       });
+            // });  
         });
     });
+        });
   </script>
 
   <!-- <script>

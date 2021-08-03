@@ -1,9 +1,10 @@
+
 @extends('layouts.master')
 
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Laporan 
+          Rekap Trip 
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,7 +20,7 @@
         <div class="box-header with-border">
             <i class="fa fa-map-pin"></i>
                 <h3 class="box-title">
-                  {{ date('d-M-Y', strtotime($startDate)) }} sampai {{ date('d-M-Y', strtotime($endDate)) }}    
+                  Trip pada tanggal {{ date('d-M-Y', strtotime($startDate)) }} sampai {{ date('d-M-Y', strtotime($endDate)) }} 
                 </h3>
         </div>
         <div class="box-body">
@@ -30,13 +31,14 @@
                 <table class="table table-bordered table-hover table-striped" id="tableTrip">
                   <thead>
                       <tr>
-                        <th class="hidden">Class Hidden</th>
+                        <!-- <th class="hidden">Class Hidden</th> -->
                         <th>No.</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
+                        <th>ID Trip</th>
                         <th>Asal</th>
                         <th>Tujuan</th>
-                        <th>Jumlah Penumpang</th>
+                        <th class="hidden">Jumlah Penumpang</th>
                         <th>Sopir</th>
                       </tr>
                 </thead>
@@ -50,10 +52,11 @@
                             @php
                               $i = $i + 1
                             @endphp
-                            <td class="hidden" id="idTrip" name="id_trip">{{$t->id_trip}}</td>
+                            <!-- <td class="hidden" id="idTrip" name="id_trip">{{$t->id_trip}}</td> -->
                             <td>{{ $i }}</td>
                             <td>{{ date('d-M-Y', strtotime($t->jadwal)) }} </td>
                             <td>{{ date('H:i', strtotime($t->jadwal)) }} </td>
+                            <td>{{ $t->id_trip }}</td>
                             <td>
                                   
                                       @if($t->id_kota_asal == "K1")
@@ -74,8 +77,9 @@
                                           Pekanbaru
                                       @endif
                             </td>
-                            <td id="jumlahPenumpang">
-                                    Ndak tau
+                            <td id="jumlahPenumpang" class="hidden">
+                                  
+
                             </td>
                             <td>
                                     @if(empty($t->id_users_sopir))
