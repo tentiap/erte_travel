@@ -807,6 +807,11 @@ class PesananController extends Controller
                         ->count();
         $seat_tersedia = 7 - $seat_b;
 
+        $jumlah_penumpang = Detail_Pesanan::where('id_trip', $id_trip)
+                        ->where('id_pesanan', '=', $id_pesanan)
+                        ->where('status', '!=', 5)
+                        ->count();
+
         // $detail = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
         //             ->join('feeder', 'feeder.id_users', 'detail_pesanan.id_users_feeder')
         //             ->where('pesanan.id_pesanan', $id_pesanan)
@@ -832,7 +837,7 @@ class PesananController extends Controller
         $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();
        // return response()->json($feeder);
         
-        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'feeder' => $feeder, 'seat_tersedia' => $seat_tersedia]);
+        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'feeder' => $feeder, 'seat_tersedia' => $seat_tersedia, 'jumlah' => $jumlah_penumpang]);
 
     }
 
@@ -841,10 +846,12 @@ class PesananController extends Controller
         $trip = Trip::find($id_trip);
         $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
         $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])
+                    ->where('status', '!=', 5)
                     ->orderBy('id_seat', 'asc')
                     ->get();
         $jumlah_penumpang = Detail_Pesanan::where('id_trip', $id_trip)
                         ->where('id_pesanan', '=', $id_pesanan)
+                        ->where('status', '!=', 5)
                         ->count();
                    
         $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();

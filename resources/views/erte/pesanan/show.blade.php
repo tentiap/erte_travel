@@ -194,7 +194,9 @@
 
                 <div class="row no-print">
                     <div class="col-xs-12">
-                      <a href="/pesanan/print/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                        @if($jumlah > 0)
+                            <a href="/pesanan/print/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</a>
+                        @endif
                     </div>
                 </div>              
             </div>
