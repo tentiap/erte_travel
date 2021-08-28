@@ -266,7 +266,8 @@
 
   <!-- <script src="{{asset('Adminlte/js/datetimepicker/jquery.min.js')}}"></script> -->
   <script src="{{asset('Adminlte/js/datetimepicker/moment-with-locales.min.js')}}"></script>
-  <!-- <script src="{{asset('Adminlte/js/datetimepicker/bootstrap.min.js')}}"></script> -->
+  <!-- <script src="{{asset('Adminlte/js/datetimepicker/
+    .js')}}"></script> -->
   <script src="{{asset('Adminlte/js/datetimepicker/bootstrap-datetimepicker.min.js')}}"></script>
 
   <script>

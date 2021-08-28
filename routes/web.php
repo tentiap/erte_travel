@@ -144,6 +144,7 @@ Route::get('/pesanan/update_detail/{id_pesanan}/{id_trip}/{id_users_pemesan}', '
 
 Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
+Route::get('/pesanan/print/{id_pesanan}/{id_trip}', 'PesananController@print');
 Route::get('/pesanan_trip', 'PesananController@getTrip');
 // Route::get('/pesanan/getFeeder', 'PesananController@getFeeder');
 // Route::get('/pesanan/update_feeder/{id_pesanan}/{id_trip}', 'PesananController@update_feeder');

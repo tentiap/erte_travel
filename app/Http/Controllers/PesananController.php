@@ -836,6 +836,25 @@ class PesananController extends Controller
 
     }
 
+    public function print($id_pesanan, $id_trip){
+
+        $trip = Trip::find($id_trip);
+        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
+        $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])
+                    ->orderBy('id_seat', 'asc')
+                    ->get();
+        $jumlah_penumpang = Detail_Pesanan::where('id_trip', $id_trip)
+                        ->where('id_pesanan', '=', $id_pesanan)
+                        ->count();
+                   
+        $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();
+        
+        return view('erte.pesanan.print', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'feeder' => $feeder, 'jumlah' => $jumlah_penumpang]);
+
+    }
+
+
+
     // public function getFeeder(){
     //     $id_kota_a = Input::get('id_kota_asal');
 

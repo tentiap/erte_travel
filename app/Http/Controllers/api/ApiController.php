@@ -237,9 +237,7 @@ class ApiController extends Controller
             ]);  
             }else if($seat_tersedia < $tambah){
                 return $this->error("Hanya " .$seat_tersedia. " seat yang tersedia");
-            }
-       
-        
+            }  
 
     }
 
@@ -537,8 +535,6 @@ class ApiController extends Controller
 
     }
 
-
-        
     public function error($pesan){
         return response()->json([
             'status' => false,
@@ -726,9 +722,6 @@ class ApiController extends Controller
         }
     }
 
-
-
-
     public function getBookedSeat(Request $request){
        
         $bookedSeat = Detail_Pesanan::join('trip', 'detail_pesanan.id_trip', '=', 'trip.id_trip')
@@ -884,8 +877,7 @@ class ApiController extends Controller
                 
 
                 // Detail_Pesanan::insert($pesanan);
-            
-
+ 
     }
 
     

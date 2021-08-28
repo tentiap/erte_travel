@@ -187,10 +187,16 @@
                                 @endif             
                             </td>
                         </tr>
-                    @endforeach            
+                    @endforeach      
                   
                 </tbody>
               </table>
+
+                <div class="row no-print">
+                    <div class="col-xs-12">
+                      <a href="/pesanan/print/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                    </div>
+                </div>              
             </div>
 
            <!--  <div class="modal fade" id="update_feeder" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
