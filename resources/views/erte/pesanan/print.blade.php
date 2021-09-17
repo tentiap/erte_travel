@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Invoice</title>
+  <title>Bukti Pesanan {{ $pesanan->id_pesanan }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -95,9 +95,10 @@
             <th>Detail Asal</th>
             <th>Detail Tujuan</th>
             <th>Seat</th>
-
+            <th>Harga</th>
           </tr>
           </thead>
+          
           <tbody>
               @foreach($detail as $d)
                 <tr>
@@ -113,6 +114,7 @@
                     <td>{{ $d->detail_asal }} </td>
                     <td>{{ $d->detail_tujuan }} </td>
                     <td>{{ $d->id_seat}}</td>
+                    <td> @currency($trip->rute->harga) </td>
                     
                 </tr>
             @endforeach                    
@@ -137,10 +139,10 @@
               <th>Jumlah Penumpang</th>
               <td>{{ $jumlah }} orang</td>
             </tr>
-            <tr>
+            <!-- <tr>
               <th>Harga:</th>
               <td>@currency($trip->rute->harga)/pax</td>
-            </tr>
+            </tr> -->
             <tr>
               <th>Total:</th>
               <td><strong>@currency($trip->rute->harga * $jumlah) </strong></td>

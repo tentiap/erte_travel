@@ -569,7 +569,7 @@ class ApiController extends Controller
         //                 ->get();
         $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
                         ->where('pesanan.id_users_pemesan',  $request->id_users_pemesan)
-                        ->orderBy('pesanan.tanggal_pesan', 'desc')
+                        ->orderBy('trip.jadwal', 'desc')
                         ->get();
 
         $pemesan = Pemesan::where('id_users', $request->id_users_pemesan)->first();                

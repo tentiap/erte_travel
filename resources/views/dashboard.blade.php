@@ -92,7 +92,7 @@
                     <th>Kota Asal</th>
                     <th>Kota Tujuan</th>
                     <th>Sopir</th>
-                    <th>Ketersediaan</th>
+                    <th>Opsi</th>
                   </tr>
                   </thead>
                   <tbody>
