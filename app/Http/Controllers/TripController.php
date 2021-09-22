@@ -18,84 +18,42 @@ class TripController extends Controller
 {
     public function index(){
         if (Auth::guard('operator')->user()->id_users == 'admin') {
-            // $trip = Trip::all();
             $trip = Trip::orderBy('jadwal', 'desc')->paginate(10);
-            // $trip = Trip::orderBy('jadwal')->get();
-            // $trip = Trip::all()->sortByDesc('jadwal');
-            // $results = Project::all()->sortByDesc("name");
-            // $results = Project::orderBy('name')->get();
             return view('erte.trip.index', ['trip' => $trip]);
-
         }else{
             $kota = Auth::guard('operator')->user()->id_kota;
             $trip = Trip::where('id_kota_asal', $kota)
                         ->orderBy('jadwal', 'desc')->paginate(10);
-
-            // $filter = '%'.'2020-08-06'.'%';
-            // $trip = Trip::join('pesanan', 'trip.id_trip', '=', 'pesanan.id_trip')
-            //         ->join('detail_pesanan', 'detail_pesanan.id_trip', '=', 'pesanan.id_trip')
-            //         ->where('trip.jadwal', 'like', $filter)
-            //         ->select('detail_pesanan.id_seat')
-            //         ->count();
-            // $seat = 7 - $trip;        
-            // dd($seat);        
             return view('erte.trip.index', ['trip' => $trip]);
         }   
         
     }
 
     public function create(){
-        $trip = Trip::all();
-        $operator = Operator::all();
-        $sopir = Sopir::all();
-        $rute = Rute::all();
-        $kota = Kota::all();
+       $trip = Trip::all();
+       $operator = Operator::all();
+       $sopir = Sopir::all();
+       $rute = Rute::all();
+       $kota = Kota::all();
         
-        return view('erte.trip.create', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
-    	
+       return view('erte.trip.create', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
     }
 
     public function getKotaTujuan(){
         $id_kota_a = Input::get('id_kota_asal');
-         // $id_kota_a = 'K1';
-        // $rute = Rute::with(['kota_tujuan' => function ($query) use ($id_kota_a){
-        //     $query->where('kota.id_kota', $id_kota_a);
-        // }])->get();
-        // $query->where('kota.id_kota', $id_kota_a);
 
         $rute = Rute::with("kota_tujuan")->whereHas("kota_asal",function($query) use($id_kota_a){
             $query->where("id_kota","=",$id_kota_a);
         })->get();
 
-        // $query->where('userid','=' ,$id_kota_asal);
-        // dd($id_kota_asal, response()->json($rute));
-        // dd($id_kota_a);
-        // dd( response()->json($rute));
-        return response()->json($rute);
-
-        //  $id_kota_tujuan = Rute::where('id_kota_asal', $id_kota_asal)->get();
-        // return response()->json($id_kota_tujuan);
-        // return Rute::get()->load('kota_tujuan');
-        
+        return response()->json($rute);        
     }
-
-    // public function getkotatujuan(){
-    //     $id_kota_asal = Input::get('id_kota_asal');
-    //     $rute = Rute::with(['kota_tujuan' => function ($query) use ($id_kota_asal){
-    //         $query->where('id', $id_kota_asal);
-    //     }])->get();
-    //     return response()->json($rute);
-    // }
 
     public function store(Request $request){
         $this->validate($request, [
-            // 'id_trip' => 'required',
-            // 'id_users_operator' => 'required',
-            // 'id_users_sopir' => 'required',
             'id_kota_asal' => 'required',
             'id_kota_tujuan' => 'required',
             'jadwal' => 'required'
-            
         ]);
 
         if (Auth::guard('operator')->user()->id_users == 'admin') {
@@ -105,7 +63,6 @@ class TripController extends Controller
                 if ($trip_count === 0) {
                     $trip->id_trip = 'T1';
                 }else{
-                    // $lastrow = $trip_select->last();
                     $lastrow=$trip_select->orderBy('created_at','desc')->first();
                     $lastrow_id = explode('T', $lastrow->id_trip);
                     $new_id = $lastrow_id[1]+1;
@@ -119,7 +76,6 @@ class TripController extends Controller
             $trip->save();
 
             session()->flash('flash_success', 'Berhasil menambahkan data trip'); 
-
             return redirect('/trip');
         }else{
             if (Auth::guard('operator')->user()->id_kota != $request->id_kota_asal) {
@@ -132,7 +88,6 @@ class TripController extends Controller
                         if ($trip_count === 0) {
                             $trip->id_trip = 'T1';
                         }else{
-                            // $lastrow = $trip_select->last();
                             $lastrow=$trip_select->orderBy('created_at','desc')->first();
                             $lastrow_id = explode('T', $lastrow->id_trip);
                             $new_id = $lastrow_id[1]+1;
@@ -145,24 +100,12 @@ class TripController extends Controller
                 $trip->jadwal = $request->jadwal;
                 $trip->save();
 
-                //  Trip::create([
-                //     // 'id_trip' => 10,
-                //     'id_users_operator' => $request->id_users_operator,
-                //     'id_users_sopir' => $request->id_users_sopir,
-                //     'id_kota_asal' => $request->id_kota_asal,
-                //     'id_kota_tujuan' => $request->id_kota_tujuan,
-                //     'jadwal' => $request->jadwal
-                // ]);
-
                 session()->flash('flash_success', 'Berhasil menambahkan data trip'); 
-
                 return redirect('/trip');
 
             }
 
-        }
-
-        
+        }  
         
     }
 

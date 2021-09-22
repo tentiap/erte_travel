@@ -122,16 +122,6 @@ class ApiController extends Controller
 
         $today = Carbon::now();
         $filter_jam = date('Y-m-d H:i:s', strtotime($today));
-        // $feeder = Feeder::where('email', $request->email)->first();
-        // $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
-        //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
-        //             ->where('jadwal', 'like', $filter)
-        //             ->get();
-        // $trip = Trip::join('sopir', 'trip.id_users_sopir', 'sopir.id_users')
-        //             ->where(['id_kota_asal' => $request->id_kota_asal, 
-        //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
-        //             ->where('jadwal', 'like', $filter)
-        //             ->get();
 
         $trip = Trip::where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
@@ -140,15 +130,7 @@ class ApiController extends Controller
                     ->orderBy('jadwal', 'asc')
                     ->get();
 
-        // $trip = Trip::join('kota', function($join){
-        //     $join->on('trip.id_kota_asal', '=', 'kota.id_kota')
-        //          ->orOn('trip.id_kota_tujuan', '=', 'kota.id_kota')})
-        //             ->where(['id_kota_asal' => $request->id_kota_asal, 
-        //                        'id_kota_tujuan' => $request->id_kota_tujuan,])
-        //             ->where('jadwal', 'like', $filter)
-        //             ->get();
-
-
+    
         $trip_booking = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
                     ->where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
@@ -157,12 +139,6 @@ class ApiController extends Controller
                     ->select('detail_pesanan.id_seat')
                     ->count();
         $seat_available = ($trip->count() * 7) - $trip_booking;
-
-        // return response()->json([
-        //     'success' => 1,
-        //     'message' => $seat_available,
-        //     'user' => $trip
-        // ]);
 
         if(!$trip->isEmpty() && $seat_available >= $request->jumlah_penumpang){
             return response()->json([
@@ -204,16 +180,6 @@ class ApiController extends Controller
                 return $this->error("Hanya " .$seat_tersedia. " seat yang tersedia");
             }
         }
-             
-        // dd($pemesan);
-        // return response()->json($pemesan);
-
-        // $tes = Trip::select('jadwal')
-        //         ->where(['id_kota_asal' => $id_kota_a, 'id_kota_tujuan' => $id_kota_t])
-        //         ->whereDate('jadwal', '>', Carbon::now())
-        //         ->get();
-        
-
     }
 
      public function check_update(Request $request){
@@ -400,27 +366,6 @@ class ApiController extends Controller
                              'trip.jadwal')
                     ->orderBy('jadwal', 'ASC')
                     ->get();
-
-                    // dd($detail);
-
-        // Versi Trip Feeder sesuai hari ini
-        // $today = Carbon::today();
-        // $filter = '%'.date('Y-m-d', strtotime($today)).'%';   
-
-        // $detail = Detail_Pesanan::join('feeder', 'detail_pesanan.id_users_feeder', '=', 'feeder.id_users')
-        //             ->join('trip', 'detail_pesanan.id_trip', '=', 'trip.id_trip')
-        //             ->where('detail_pesanan.id_users_feeder', $request->id_users_feeder)
-        //             ->where('trip.jadwal', 'like', $filter)
-        //             ->select('detail_pesanan.nama_penumpang',
-        //                      'detail_pesanan.jenis_kelamin',
-        //                      'detail_pesanan.id_seat',
-        //                      'detail_pesanan.detail_asal',
-        //                      'detail_pesanan.detail_tujuan',
-        //                      'detail_pesanan.no_hp',
-        //                      'detail_pesanan.status',
-        //                      'detail_pesanan.biaya_tambahan')
-        //             ->orderBy('id_seat', 'ASC')
-        //             ->get();
 
         if(!$detail->isEmpty()){
             return response()->json([
@@ -638,23 +583,22 @@ class ApiController extends Controller
     // }
     public function create_pesanan(Request $request){
         
-       
-                    $pesanan = new Pesanan();
-                    $pesanan_select = Pesanan::select('id_pesanan');
-                    $pesanan_count = $pesanan_select->count();
-                        if ($pesanan_count === 0) {
-                            $pesanan->id_pesanan = 'P1';
-                        }else{
-                            $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
-                            $lastrow_id = explode('P', $lastrow->id_pesanan);
-                            $new_id = $lastrow_id[1]+1;
-                            $pesanan->id_pesanan = 'P'.$new_id;
-                        }
-                $pesanan->id_trip = $request->id_trip;
-                $pesanan->id_users_pemesan = $request->id_users_pemesan;            
-                $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
-                $pesanan->id_users_operator = 'O4';
-                $pesanan->save();
+        $pesanan = new Pesanan();
+        $pesanan_select = Pesanan::select('id_pesanan');
+        $pesanan_count = $pesanan_select->count();
+            if ($pesanan_count === 0) {
+                $pesanan->id_pesanan = 'P1';
+            }else{
+                $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
+                $lastrow_id = explode('P', $lastrow->id_pesanan);
+                $new_id = $lastrow_id[1]+1;
+                $pesanan->id_pesanan = 'P'.$new_id;
+            }
+        $pesanan->id_trip = $request->id_trip;
+        $pesanan->id_users_pemesan = $request->id_users_pemesan;            
+        $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
+        $pesanan->id_users_operator = 'O4';
+        $pesanan->save();
 
         if($pesanan){
             return response()->json([

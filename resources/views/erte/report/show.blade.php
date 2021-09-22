@@ -20,7 +20,7 @@
         <div class="box-header with-border">
             <i class="fa fa-map-pin"></i>
                 <h3 class="box-title">
-                  Trip pada tanggal {{ date('d-M-Y', strtotime($startDate)) }} sampai {{ date('d-M-Y', strtotime($endDate)) }} 
+                  Trip pada tanggal {{ date('d-M-Y', strtotime($startDate)) }} sampai {{ date('d-M-Y', strtotime($end)) }} 
                 </h3>
         </div>
         <div class="box-body">
