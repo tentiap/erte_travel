@@ -32,7 +32,6 @@ Route::namespace('api')->group(function () {
 	Route::post('/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'ApiController@createDetail');
 	Route::get('/checkUpdate/{tambah}/{id_trip}/{id_users_pemesan}', 'ApiController@check_update');
 
-	
 
 	Route::get('/tripSopir/{id_users}', 'ApiController@tripSopir');
 	Route::get('/historySopir/{id_users}', 'ApiController@riwayatTripSopir');

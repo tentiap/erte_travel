@@ -101,6 +101,7 @@ class PesananController extends Controller
                             
               
             $seat = ($trip_a->count() * 7) - $seat_a;
+
                       
             if(!$trip_a->isEmpty() && $seat >= $jumlah_penumpang){
 
@@ -123,7 +124,7 @@ class PesananController extends Controller
                     ->get(); 
                     // ->where('date', '<=', '2014-07-10 23:59:59')
 
-
+                    // dd($trip_a);
 
                 // $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
                 //             ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
@@ -137,9 +138,12 @@ class PesananController extends Controller
                             ->where(['id_kota_asal' => $id_kota_asal, 
                                        'id_kota_tujuan' => $id_kota_tujuan,])
                             ->where('jadwal', 'like', $filter)
+                            ->where('jadwal', '>', $filter_today)
                             ->where('detail_pesanan.status', '!=', 5)
                             ->select('detail_pesanan.id_seat')
                             ->count();
+
+                            // dd($seat_a);
                             
                 // // $jumlah_seat = $seat_a->count();
                 //             dd($seat_a);
