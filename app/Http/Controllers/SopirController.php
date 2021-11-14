@@ -7,19 +7,6 @@ use App\Sopir;
 
 class SopirController extends Controller
 {   
-    // public $validation_rules = [
-    //        'id_users' => 'required',
-    //         'role' => 'required',
-    //         'username' => 'required',
-    //         'password' => 'required',
-    //         'email' => 'required',
-    //         'nama' => 'required',
-    //         'kontak' => 'required',
-    //         'jenis_kelamin' => 'required',
-    //         'plat_mobil' => 'required|unique:sopir,plat_mobil',
-    //         'merek_mobil' => 'required', 
-    // ];
-
     public function index(){
 
         $sopir = Sopir::orderBy('created_at', 'asc')->paginate(10);
@@ -53,11 +40,9 @@ class SopirController extends Controller
         $sopir = new Sopir();
             $sopir_select = Sopir::select('id_users');
             $sopir_count = $sopir_select->count();
-                // if ($operator_count === 1 && $operator->id_users === "admin" ) {
                 if ($sopir_count === 0) {
                     $sopir->id_users = 'S1';
                 }else{
-                    // $lastrow = $trip_select->last();
                     $lastrow=$sopir_select->orderBy('created_at','desc')->first();
                     $lastrow_id = explode('S', $lastrow->id_users);
                     $new_id = $lastrow_id[1]+1;
@@ -73,19 +58,6 @@ class SopirController extends Controller
         $sopir->kontak = $request->kontak;
         $sopir->jenis_kelamin = $request->jenis_kelamin;
         $sopir->save();
-
-    	// $sopir = Sopir::create([
-    	// 	'id_users' => $request->id_users,
-     //        'plat_mobil' => $request->plat_mobil,
-     //        'merek_mobil' => $request->merek_mobil,
-     //        'username' => $request->username,
-     //        'email' => $request->email,
-     //        'password' => bcrypt('password'),
-     //        'nama' => $request->nama,
-     //        'kontak' => $request->kontak,
-     //        'jenis_kelamin' => $request->jenis_kelamin
-
-    	// ]);
 
         session()->flash('flash_success', 'Berhasil menambahkan data sopir dengan nama '. $request->input('nama'));
 
@@ -123,7 +95,6 @@ class SopirController extends Controller
         ]);
 
         $sopir = Sopir::find($id_users);
-        // $sopir->id_users = $request->id_users;
         $sopir->plat_mobil = $request->plat_mobil;
         $sopir->merek_mobil = $request->merek_mobil;
         $sopir->username = $request->username;

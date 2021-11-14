@@ -17,9 +17,6 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-              <!--   <a href="../kota" class="btn btn-primary">Kembali</a>
-                    <br/>
-                    <br/> -->
                     
                 <form method="post" action="/kota/store">
 
@@ -50,7 +47,6 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <!-- <button class="btn btn-default btn-close"><a href="/kota">Cancel</a></button> -->
                             <a class="btn btn-default btn-close" href="/kota">Cancel</a>
                         </div>
                 </form>

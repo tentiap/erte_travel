@@ -11,7 +11,6 @@ class FeederController extends Controller
 {
     public function index(){
         if (Auth::guard('operator')->user()->id_users == 'admin') {
-            // $feeder = Feeder::all();
             $feeder = Feeder::orderBy('created_at', 'asc')->paginate(10);
 
             return view('erte.feeder.index', ['feeder' => $feeder]);
@@ -20,7 +19,6 @@ class FeederController extends Controller
             $kota = Auth::guard('operator')->user()->id_kota;
             $feeder = Feeder::where('id_kota', $kota)
                                     ->orderBy('created_at', 'asc')->paginate(10);
-                                    // ->get();
             return view('erte.feeder.index', ['feeder' => $feeder]);    
         }        
     }
@@ -48,11 +46,9 @@ class FeederController extends Controller
             $feeder = new Feeder();
             $feeder_select = Feeder::select('id_users');
             $feeder_count = $feeder_select->count();
-                // if ($operator_count === 1 && $operator->id_users === "admin" ) {
                 if ($feeder_count === 0) {
                     $feeder->id_users = 'F1';
                 }else{
-                    // $lastrow = $trip_select->last();
                     $lastrow=$feeder_select->orderBy('created_at','desc')->first();
                     $lastrow_id = explode('F', $lastrow->id_users);
                     $new_id = $lastrow_id[1]+1;
@@ -78,11 +74,10 @@ class FeederController extends Controller
                 $feeder = new Feeder();
                 $feeder_select = Feeder::select('id_users');
                 $feeder_count = $feeder_select->count();
-                    // if ($operator_count === 1 && $operator->id_users === "admin" ) {
+        
                     if ($feeder_count === 0) {
                         $feeder->id_users = 'F1';
                     }else{
-                        // $lastrow = $trip_select->last();
                         $lastrow=$feeder_select->orderBy('created_at','desc')->first();
                         $lastrow_id = explode('F', $lastrow->id_users);
                         $new_id = $lastrow_id[1]+1;
@@ -97,27 +92,12 @@ class FeederController extends Controller
                 $feeder->jenis_kelamin = $request->jenis_kelamin;
                 $feeder->save();
 
-                // $feeder = Feeder::create([
-                //  'id_users' => $request->id_users,
-             //        'id_kota' => $request->id_kota,
-             //        'username' => $request->username,
-             //        'email' => $request->email,
-             //        'password' => bcrypt('password'),
-             //        'nama' => $request->nama,
-             //        'kontak' => $request->kontak,
-             //        'jenis_kelamin' => $request->jenis_kelamin
-                // ]);
-
                 session()->flash('flash_success', 'Berhasil menambahkan data feeder dengan nama '. $request->input('nama'));
 
                 return redirect('/feeder');
         }
 
-        
-
         }
-
-        
     }
 
     public function edit($id_users){
@@ -174,8 +154,5 @@ class FeederController extends Controller
         return redirect('/feeder');
         
 	}
-
-
-
 }
 

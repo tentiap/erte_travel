@@ -47,17 +47,6 @@
                        
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" >
-
-                             @if($errors->has('password'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('password')}}
-                                    </div>
-                            @endif
-                        </div> -->
-
                         <div class="form-group">
                             <label>Email</label>
                             <input type="text" name="email" class="form-control" placeholder="Email" value="{{old('email', $pemesan->email)}}">

@@ -12,32 +12,7 @@ use Auth;
 class ReportController extends Controller
 {
     public function index(Request $request){
-
-        // $trip = Trip::whereBetween('jadwal', ['2021-07-13 00:00:55', '2021-08-01 10:15:5'])
-        //             ->orderBy('jadwal', 'asc')
-        //             ->get();
-
-                    // dd($trip);
-
-        // $trip = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
-        //             ->whereBetween('jadwal', ['2021-07-13 00:00:55', '2021-08-01 10:15:5'])
-        //             ->where('detail_pesanan.status', '!=', 5)
-        //             ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
-        //             ->count(); 
-        // return view('erte.report.index', ['trip' => $trip]);
-
-        // $seat = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
-        //             ->whereBetween('jadwal', ['2021-07-13 00:00:55', '2021-08-01 10:15:5'])
-        //             ->where('detail_pesanan.status', '!=', 5)
-        //             ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
-        //             ->count(); 
-
-        // dd($seat);
-
-        // $pdf = \PDF::loadView('erte.report.index', $trip);
         return view('erte.report.index');
-        // return $pdf->download('report.pdf');
-        
     }
 
     public function show(){

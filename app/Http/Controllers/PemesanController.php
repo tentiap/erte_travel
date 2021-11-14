@@ -8,7 +8,6 @@ use App\Pemesan;
 class PemesanController extends Controller
 {
     public function index(){
-    	// $pemesan = Pemesan::all();
         $pemesan = Pemesan::orderBy('created_at', 'desc')->paginate(10);
         return view('erte.pemesan.index', ['pemesan' => $pemesan]);
     }
@@ -34,7 +33,7 @@ class PemesanController extends Controller
          $pemesan = new Pemesan();
             $pemesan_select = Pemesan::select('id_users');
             $pemesan_count = $pemesan_select->count();
-                // if ($operator_count === 1 && $operator->id_users === "admin" ) {
+                
                 if ($pemesan_count === 0) {
                     $pemesan->id_users = 'U1';
                 }else{
@@ -53,18 +52,6 @@ class PemesanController extends Controller
         $pemesan->alamat = $request->alamat;
         $pemesan->save();
 
-    	// $pemesan = Pemesan::create([
-    	// 	'id_users' => $request->id_users,
-     //        // 'role' => $request->role,
-     //        'username' => $request->username,
-     //        'email' => $request->email,
-     //        'password' => bcrypt('password'),
-     //        'nama' => $request->nama,
-     //        'kontak' => $request->kontak,
-     //        'jenis_kelamin' => $request->jenis_kelamin,
-     //        'alamat' => $request->alamat
-    	// ]);
-
         session()->flash('flash_success', 'Berhasil menambahkan data pemesan dengan nama '. $request->input('nama'));
 
     	return redirect('/pemesan');
@@ -73,7 +60,6 @@ class PemesanController extends Controller
     public function store1(Request $request){
         $this->validate($request, 
             [
-            // 'id_users' => 'required',
             'username' => 'required',
             'email' => 'required|email',
             'password' => 'required',
@@ -86,7 +72,7 @@ class PemesanController extends Controller
          $pemesan = new Pemesan();
             $pemesan_select = Pemesan::select('id_users');
             $pemesan_count = $pemesan_select->count();
-                // if ($operator_count === 1 && $operator->id_users === "admin" ) {
+            
                 if ($pemesan_count === 0) {
                     $pemesan->id_users = 'U1';
                 }else{
@@ -120,17 +106,14 @@ class PemesanController extends Controller
     public function show($id_users){
 
         $pemesan = Pemesan::find($id_users);        
-        
         return view('erte.pemesan.show', ['pemesan' => $pemesan]);
     }
 
     public function update($id_users, Request $request, Pemesan $pemesan){
     	$this->validate($request, 
             [
-    		// 'id_users' => 'required',
             'username' => 'required',
             'email' => 'required|email',
-            // 'password' => 'required',
             'nama' => 'required',
             'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required',
@@ -138,10 +121,8 @@ class PemesanController extends Controller
         ]);
 
         $pemesan = Pemesan::find($id_users);
-        // $pemesan->id_users = $request->id_users;
         $pemesan->username = $request->username;
         $pemesan->email = $request->email;
-        // $pemesan->password = bcrypt('password');
         $pemesan->nama = $request->nama;
         $pemesan->kontak = $request->kontak;
         $pemesan->jenis_kelamin = $request->jenis_kelamin;

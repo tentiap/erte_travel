@@ -58,17 +58,6 @@
                             @endif
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" >
-
-                             @if($errors->has('password'))
-                                <div class="text-danger">
-                                    {{ $errors->first('password')}}
-                                </div>
-                            @endif
-                        </div> -->
-
                         <div class="form-group">
                             <label>Nama</label>
                             <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{old('nama', $feeder->nama)}}">
@@ -139,11 +128,7 @@
 
 
                         </div>
-                        
-
-                        
-
-                        
+       
                 </form>
             </div>
         </div>

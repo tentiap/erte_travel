@@ -13,19 +13,14 @@ class RuteController extends Controller
     public function index(){
     	$rute = Rute::all();
     	return view('erte.rute.index', ['rute' => $rute]);
-    	// return view('erte.rute.index', compact('rute'));
-
     }
 
     public function create(){
-    	// $kota = Rute::with('kota')->get();
-        // $kota = Kota::all();
         $rute = Rute::all();
         $kota_asal = Kota::all();
         $kota_tujuan = Kota::all();
 
         return view('erte.rute.create', ['rute' => $rute, 'kota_asal' => $kota_asal, 'kota_tujuan' => $kota_tujuan]);
-
     }
     
     public function store(Request $request){

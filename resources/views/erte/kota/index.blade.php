@@ -40,7 +40,6 @@
                                 <td>
                                     
                                     <a href="/kota/edit/{{ $k->id_kota }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <!-- <a href="/kota/delete/{{ $k->id_kota }}" class="btn btn-lg"><i class="fa fa-trash"></i></a> -->
                                     <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/kota/delete/{{ $k->id_kota }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -72,7 +71,6 @@
               </table>
             </div>
 
-          <!-- </div> -->
         </div>
         <div class="box-footer">
         </div>        

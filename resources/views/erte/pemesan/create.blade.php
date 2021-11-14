@@ -22,18 +22,6 @@
 
                         {{ csrf_field() }}
 
-                        <!-- <div class="form-group">
-                            <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
-
-                             @if($errors->has('id_users'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
-                                </div>
-                            @endif
-
-                        </div> -->
-
                         <div class="form-group">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username"  value="{{ old('username') }}">

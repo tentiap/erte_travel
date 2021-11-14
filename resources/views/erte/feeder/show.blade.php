@@ -24,9 +24,6 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <!-- <style>
-                    .outset {border-style: outset;}
-                </style> -->
                     <div style="position: absolute; right: 0;">
                         <a href="/feeder/edit/{{ $feeder->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
                         <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/feeder/delete/{{ $feeder->id_users }}"><i class="fa fa-trash"></i> Hapus Feeder</a>
@@ -56,11 +53,6 @@
                                 });
                             });
                     </script>
-
-
-
-
-                   
       
                         <div class="form-group">
                             <label>ID Users</label>
@@ -73,11 +65,7 @@
 
                         <input type="text" name="role" class="form-control"  placeholder="Role" value="Feeder" readonly>
                                                         
-                                        
-                                               
-                                    
-                          
-                             
+            
                         </div>
 
                         <div class="form-group">
@@ -122,9 +110,6 @@
 
                              
                         </div>
-
-                       
-
 
             </div>
         </div>

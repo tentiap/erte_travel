@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CompositeKeyTrait;
-// use Awobaz\Compoships\Compoships; 
 
 class Detail_Pesanan extends Model
 {
@@ -29,8 +28,6 @@ class Detail_Pesanan extends Model
 
     public function pesanan()
     {
-        // return $this->belongsTo(Pesanan::class, 'id_pesanan', 'id_trip');
-        // return $this->belongsTo(Pesanan::class, ['id_trip', 'id_seat'], ['id_pesanan', 'id_trip']);
         return $this->belongsTo(Pesanan::class, ['id_pesanan', 'id_trip'], ['id_pesanan', 'id_trip']);
     }
 

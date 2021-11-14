@@ -17,32 +17,9 @@ use Spatie\Permission\Models\Permission;
 
 Auth::routes();
 
-// Route::get('/operator/login', 'Auth\LoginController@showLoginForm')->name('operator.login');
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::post('/operator/login', 'Auth\LoginController@login')->name('operator.login.post');
 Route::post('/operator/logout', 'Auth\LoginController@logout')->name('operator.logout');
-
-/*
- _  teacher profile routes
- */
-// Route::group(['middleware'=>'operator'], function() {
-//     return view('dashboard');
-// });
-
-// Route::get('/', function () {
-//     return view('dashboard');
-// })->middleware('auth');
-
-// Route::get('/home',function(){
-// 	return view('dashboard');
-// })->name('home');
-
-// Route::get('/home',function(){
-// 	return view('home');
-
-// Route::get('/dashboard', function(){
-// 	return view('dashboard');
-// });
 Route::get('/dashboard', 'DashboardController@index');
 
 //------------------------------------------------------KOTA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -139,31 +116,16 @@ Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
 Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
 Route::get('/pesanan/update_create/{id_pesanan}/{id_trip}', 'PesananController@update_create');
 Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_store');
-// Route::get('/pesanan/update_search/{id_pesanan}/{id_trip}', 'PesananController@update_search');
 Route::get('/pesanan/update_detail/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_detail');
 
 Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
 Route::get('/pesanan/print/{id_pesanan}/{id_trip}', 'PesananController@print');
 Route::get('/pesanan_trip', 'PesananController@getTrip');
-// Route::get('/pesanan/getFeeder', 'PesananController@getFeeder');
-// Route::get('/pesanan/update_feeder/{id_pesanan}/{id_trip}', 'PesananController@update_feeder');
-// Route::get('/pesanan/update_biaya/{id_pesanan}/{id_seat}', 'PesananController@update_biaya');
 
 //----------------------------------------------------REPORT-------------------------------------------------
 Route::get('report', 'ReportController@index');
 Route::post('report/show', 'ReportController@show');
-
-
-//------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Route::get('detail_pesanan', 'DetailPesananController@index');
-// Route::get('/detail_pesanan/create', 'DetailPesananController@create');
-// Route::post('/detail_pesanan/store', 'DetailPesananController@store');
-// Route::get('/detail_pesanan/edit/{id_trip}/{id_seat}}', 'DetailPesananController@edit');
-// Route::put('/detail_pesanan/update/{id_trip}/{id_seat}', 'DetailPesananController@update');
-// Route::get('/detail_pesanan/delete/{id_trip}/{id_seat}', 'DetailPesananController@delete');
-// Route::get('/detail_pesanan/show/{id_trip}/{id_seat}', 'DetailPesananController@show');
-
 
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
 
@@ -185,18 +147,3 @@ Route::put('/permissions/update/{id}', 'PermissionController@update')->name('per
 Route::get('/permissions/delete/{id}', 'PermissionController@delete');
 Route::get('/permissions/show/{id}', 'PermissionController@show');
 
-// -----------Spatie---------------
-
-// Route::get('/roles', function(){
-// 	$role = Role::create(['name' => 'operator']);
-// 	$permission =  Permission::create(['name' => 'manage_users']);
-// 	Auth()->user()->assignRole('operator');
-// 	Auth()->user()->givePermissionTo('manage_users');
-
-
-// });
-
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
