@@ -23,7 +23,7 @@ class PesananController extends Controller
         if (Auth::guard('operator')->user()->id_users == 'admin') {
         
             $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                                    ->orderBy('pesanan.created_at', 'desc')->paginate(10);
+                                    ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
 
             $trip = Trip::all();
             $pemesan = Pemesan::all();
@@ -231,7 +231,7 @@ class PesananController extends Controller
                         if ($pesanan_count === 0) {
                             $pesanan->id_pesanan = 'P1';
                         }else{
-                            $lastrow=$pesanan_select->orderBy('created_at','desc')->first();
+                            $lastrow=$pesanan_select->orderBy('tanggal_pesan','desc')->first();
                             $lastrow_id = explode('P', $lastrow->id_pesanan);
                             $new_id = $lastrow_id[1]+1;
                             $pesanan->id_pesanan = 'P'.$new_id;
