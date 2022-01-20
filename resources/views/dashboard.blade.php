@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Dashboard<small>Welcome, {{ Auth::guard('operator')->user()->nama }} ({{ Auth::guard('operator')->user()->kota->nama_kota }})</small>
+          Dashboard<small>Welcome, {{ Auth::guard('pengurus')->user()->nama }} ({{ Auth::guard('pengurus')->user()->kota->nama_kota }})</small>
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>

@@ -3,11 +3,11 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Data Operator
+          Data Pengurus
       </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="../operator">Operator</a></li>
+            <li><a href="../pengurus">Pengurus</a></li>
             <li class="active">Index</li>
           </ol>
   </section>
@@ -20,7 +20,7 @@
           <!-- <div class="box"> -->
               @include('messages')
               <div class="box-header" align="right">                
-                <a href="/operator/create" class="btn btn-primary">Tambah Operator</a>
+                <a href="/pengurus/create" class="btn btn-primary">Tambah Pengurus</a>
               </div>
 
             <div class="box-body">
@@ -38,7 +38,7 @@
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($operator as $o)
+                  @foreach($pengurus as $o)
                       <tr>
                           <td>{{ $o->id_users }}</td>
                           <td>{{ $o->nama }}</td>          
@@ -54,8 +54,8 @@
                           </td>
                           <td>{{ $o->kota->nama_kota}}</td>
                           <td>    
-                              <a href="/operator/edit/{{ $o->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                              <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/operator/delete/{{ $o->id_users }}"><i class="fa fa-trash"></i></a>
+                              <a href="/pengurus/edit/{{ $o->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                              <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pengurus/delete/{{ $o->id_users }}"><i class="fa fa-trash"></i></a>
                           </td>
                       </tr>
 
@@ -64,7 +64,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    <b>Anda yakin ingin menghapus data operator ini ?</b><br><br>
+                                                    <b>Anda yakin ingin menghapus data pengurus ini ?</b><br><br>
                                                     <a class="btn btn-danger btn-ok"> Hapus</a>
                                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
                                                 </div>
@@ -87,7 +87,7 @@
               </table>
             </div>
 
-            {{ $operator->links()}}
+            {{ $pengurus->links()}}
 
         </div>
         <div class="box-footer">

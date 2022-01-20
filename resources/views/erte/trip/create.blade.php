@@ -116,22 +116,6 @@
                             @endif   
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label>Operator</label>
-                                <select class="form-control" name="id_users_operator">
-                                    <option disabled selected value> -- Operator -- </option>
-                                        @foreach($operator as $o)
-                                                <option name="id_users_operator" value="{{$o->id_users}}">{{$o->nama}}</option> 
-                                        @endforeach
-                                        
-                                </select>
-
-                            @if($errors->has('id_users_operator'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users_operator')}}
-                                </div>
-                            @endif
-                        </div> -->
                 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">

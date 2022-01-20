@@ -45,7 +45,7 @@
                             <select class="form-control" name="role">
                                     <option name="role" value="{{$users->role}}">
                                         @if($users->role == 1)
-                                           Operator
+                                           Pengurus
                                         @elseif($users->role == 2)
                                             Sopir
                                         @elseif($users->role == 3)
@@ -55,7 +55,7 @@
                                         @endif
                                     </option>
                                     
-                                    <option name="role" value="1">Operator</option> 
+                                    <option name="role" value="1">Pengurus</option> 
                                     <option name="role" value="2">Sopir</option> 
                                     <option name="role" value="3">Feeder</option> 
                                     <option name="role" value="4">Pemesan</option>       

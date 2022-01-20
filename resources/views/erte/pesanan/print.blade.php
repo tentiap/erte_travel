@@ -73,9 +73,9 @@
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
         <b>ID Pesanan: {{ $pesanan->id_pesanan }}</b><br>
-        <b>Operator:</b> {{ $pesanan->operator->nama}}<br>
-        <b>Kontak:</b> {{ $pesanan->operator->kontak}}<br>
-        <b>Email:</b> {{ $pesanan->operator->email}}
+        <b>Pengurus:</b> {{ $pesanan->pengurus->nama}}<br>
+        <b>Kontak:</b> {{ $pesanan->pengurus->kontak}}<br>
+        <b>Email:</b> {{ $pesanan->pengurus->email}}
       </div>
       <!-- /.col -->
     </div>

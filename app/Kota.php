@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Kota extends Model
-{
+class Kota extends Model {
     protected $table = 'kota';
     protected $primaryKey = 'id_kota';
     
@@ -14,21 +13,15 @@ class Kota extends Model
         'nama_kota' 
     ];
 
-    public $incrementing = false;
-
-    public function rute()
-    {
+    public function rute() {
         return $this->hasMany(Rute::class);
     }
 
-    public function operator()
-    {
-        return $this->hasMany(Operator::class);
+    public function pengurus() {
+        return $this->hasMany(Pengurus::class);
     }
 
-    public function feeder()
-    {
+    public function feeder() {
         return $this->hasMany(Feeder::class);
     }
-
 }

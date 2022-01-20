@@ -18,8 +18,8 @@ use Spatie\Permission\Models\Permission;
 Auth::routes();
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
-Route::post('/operator/login', 'Auth\LoginController@login')->name('operator.login.post');
-Route::post('/operator/logout', 'Auth\LoginController@logout')->name('operator.logout');
+Route::post('/pengurus/login', 'Auth\LoginController@login')->name('pengurus.login.post');
+Route::post('/pengurus/logout', 'Auth\LoginController@logout')->name('pengurus.logout');
 Route::get('/dashboard', 'DashboardController@index');
 
 //------------------------------------------------------KOTA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -84,15 +84,15 @@ Route::get('/pemesan/show/{id_users}', 'PemesanController@show');
 Route::put('/pemesan/update/{id_users}', 'PemesanController@update');
 Route::get('/pemesan/delete/{id_users}', 'PemesanController@delete');
 
-//------------------------------------------------------OPERATOR----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Route::get('/operator', 'OperatorController@index');
-Route::get('/operator/create', 'OperatorController@create');
-Route::get('/operator/register', 'OperatorController@register');
-Route::post('/operator/store', 'OperatorController@store');
-Route::get('/operator/edit/{id_users}', 'OperatorController@edit');
-Route::get('/operator/show/{id_users}', 'OperatorController@show');
-Route::put('/operator/update/{id_users}', 'OperatorController@update');
-Route::get('/operator/delete/{id_users}', 'OperatorController@delete');
+//------------------------------------------------------PENGURUS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/pengurus', 'PengurusController@index');
+Route::get('/pengurus/create', 'PengurusController@create');
+Route::get('/pengurus/register', 'PengurusController@register');
+Route::post('/pengurus/store', 'PengurusController@store');
+Route::get('/pengurus/edit/{id_users}', 'PengurusController@edit');
+Route::get('/pengurus/show/{id_users}', 'PengurusController@show');
+Route::put('/pengurus/update/{id_users}', 'PengurusController@update');
+Route::get('/pengurus/delete/{id_users}', 'PengurusController@delete');
 
 //------------------------------------------------------TRIP----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('trip', 'TripController@index');

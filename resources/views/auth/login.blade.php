@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('operator.login.post') }}">
+                    <form method="POST" action="{{ route('pengurus.login.post') }}">
                         @csrf
 
                         <div class="form-group row">

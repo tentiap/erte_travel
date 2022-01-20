@@ -19,7 +19,8 @@ class RedirectIfAuthenticated
     {
 
         switch ($guard) {
-             case 'operator' :
+            //  case 'operator' :
+              case 'pengurus' :
                 if (Auth::guard($guard)->check()) {
                     return redirect('/dashboard');
                 }

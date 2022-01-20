@@ -8,7 +8,7 @@ class Feeder extends Model
 {
     protected $table = "feeder";
     protected $fillable = [
-        'id_users', 
+        'id_feeder', 
         'id_kota',
         'username',
         'email',
@@ -17,27 +17,17 @@ class Feeder extends Model
         'kontak',
         'jenis_kelamin'
     ];
-    protected $primaryKey = "id_users";
-    public $incrementing = false;
+    protected $primaryKey = "id_feeder";
 
-    public function setPasswordAttribute($password)
-    {
+    public function setPasswordAttribute($password) {
         $this->attributes['password'] = \Hash::make($password);
     }
 
-    public function kota()
-    {
+    public function kota() {
         return $this->belongsTo(Kota::class, 'id_kota');
     }
 
-    public function pesanan()
-    {
-        return $this->hasMany(Pesanan::class);
-    }
-
-    public function detail_pesanan()
-    {
+    public function detail_pesanan() {
         return $this->hasMany(detail_pesanan::class);
     }
-
 }

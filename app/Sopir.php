@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sopir extends Model
-{
+class Sopir extends Model {
     protected $table = "sopir";
     protected $fillable = [
         'id_sopir',
@@ -26,5 +25,4 @@ class Sopir extends Model
     public function mobil(){
         return $this->hasMany(Mobil::class);
     }
-	
 }

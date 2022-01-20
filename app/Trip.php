@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 use App\Traits\CompositeKeyTrait;
 
-class Trip extends Model
-{
+class Trip extends Model {
     use CompositeKeyTrait;
     protected $table = "trip";
     protected $fillable = [ 
@@ -15,7 +13,7 @@ class Trip extends Model
         'plat_mobil', 
 	    'id_kota_asal',
         'id_kota_tujuan',
-        'seat'
+        'tarif_trip'
 	];
 
     protected $primaryKey = ['jadwal', 'plat_mobil'];
@@ -31,5 +29,4 @@ class Trip extends Model
     public function pesanan() {
         return $this->hasMany(Pesanan::class);
     }
-   
 }

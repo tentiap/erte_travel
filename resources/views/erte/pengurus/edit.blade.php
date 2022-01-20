@@ -3,12 +3,12 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Data Operator
+          Edit Data Pengurus
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="/operator">Operator</a></li>
-            <li class="active">Create</li>
+            <li><a href="/pengurus">Pengurus</a></li>
+            <li class="active">Edit</li>
           </ol>
   </section>
  @endsection
@@ -18,13 +18,26 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/operator/store">
+                <form method="post" action="/pengurus/update/{{$pengurus->id_users}}">
 
                         {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+
+                        <div class="form-group">
+                            <label>ID Users</label>
+                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $pengurus->id_users)}}" disabled>
+
+                             @if($errors->has('id_users'))
+                                <div class="text-danger">
+                                    {{ $errors->first('id_users')}}
+                                </div>
+                            @endif
+
+                        </div>
 
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
+                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{old('username', $pengurus->username)}}">
 
                              @if($errors->has('username'))
                                 <div class="text-danger">
@@ -35,9 +48,9 @@
                             
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" value="{{ old('password') }}">
+                            <input type="password" name="password" class="form-control" placeholder="Password" >
 
                              @if($errors->has('password'))
                                 <div class="text-danger">
@@ -45,11 +58,11 @@
                                 </div>
                             @endif
 
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+                            <input type="text" name="email" class="form-control" placeholder="Email" value="{{old('email', $pengurus->email)}}">
 
                              @if($errors->has('email'))
                                 <div class="text-danger">
@@ -62,7 +75,7 @@
 
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ old('nama') }}">
+                            <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{old('nama', $pengurus->nama)}}">
 
                             @if($errors->has('nama'))
                                 <div class="text-danger">
@@ -75,7 +88,7 @@
 
                         <div class="form-group">
                             <label>Kontak</label>
-                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{ old('kontak') }}">
+                            <input type="text" name="kontak" class="form-control" placeholder="Kontak" value="{{old('kontak', $pengurus->kontak)}}">
 
                             @if($errors->has('kontak'))
                                 <div class="text-danger">
@@ -86,36 +99,38 @@
                              
                         </div>
 
+                        
                         <div class = "form-group">
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="1" {{ $pengurus->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="2" {{ $pengurus->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
                                 </label>
 
-                            @if($errors->has('jenis_kelamin'))
-                                <div class="text-danger">
-                                    {{ $errors->first('jenis_kelamin')}}
-                                </div>
-                            @endif
+                                @if($errors->has('jenis_kelamin'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('jenis_kelamin')}}
+                                    </div>
+                                @endif
 
+                              
                         </div>
 
                         <div class="form-group">
                             <label>Wilayah</label>
 
-
                             <select class="form-control" name="id_kota">
-                                <option disabled selected value>--Wilayah--</option>
+                                <option disabled selected value>---Wilayah---</option>
                                     @foreach($kota as $k)
-                                        <option name="id_kota" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
+                                        <!-- <option name="id_kota" value="{{$operator->kota->nama_kota}}">{{$k->nama_kota}}</option>  -->
+                                        <option value="{{ $k->id_kota }}" {{$pengurus->id_kota == $k->id_kota  ? 'selected' : ''}}>{{ $k->nama_kota}}</option>
                                     @endforeach
                                     
                             </select>
-
+<!--  -->
                             @if($errors->has('id_kota'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_kota')}}
@@ -123,15 +138,22 @@
                             @endif
 
                             
-                        </div>                    
+                        </div>
+
+                        
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <!-- <button class="btn btn-default btn-close"><a href="/operator">Cancel</a></button> -->
-                            <a class="btn btn-default btn-close" href="/operator">Cancel</a>
+                            <!-- <button class="btn btn-default btn-close"><a href="/pengurus">Cancel</a></button> -->
+                            <a class="btn btn-default btn-close" href="/pengurus">Cancel</a>
                         </div>
 
+
                         </div>
+                        
+
+                        
+
                         
                 </form>
             </div>

@@ -30,14 +30,14 @@ class ReportController extends Controller
             return redirect('/report');
         }elseif ($startDate == $endDate) {
 
-            if (Auth::guard('operator')->user()->id_users == 'admin') {
+            if (Auth::guard('pengurus')->user()->id_users == 'admin') {
                 $trip = Trip::where('jadwal', 'like', $filter)
                         ->orderBy('jadwal', 'asc')
                         ->get();
 
                 return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate, 'end' => $end]);
             }else{
-                $kota = Auth::guard('operator')->user()->id_kota;
+                $kota = Auth::guard('pengurus')->user()->id_kota;
                 $trip = Trip::where('jadwal', 'like', $filter)
                         ->where('id_kota_asal', $kota)
                         ->orderBy('jadwal', 'asc')
@@ -49,14 +49,14 @@ class ReportController extends Controller
 
         }else{
 
-            if (Auth::guard('operator')->user()->id_users == 'admin') {
+            if (Auth::guard('pengurus')->user()->id_users == 'admin') {
                 $trip = Trip::whereBetween('jadwal', [$startDate, $endDate])
                     ->orderBy('jadwal', 'asc')
                     ->get();
                     
                 return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate, 'end' => $end]);
             }else{
-                $kota = Auth::guard('operator')->user()->id_kota;
+                $kota = Auth::guard('pengurus')->user()->id_kota;
                 $trip = Trip::whereBetween('jadwal', [$startDate, $endDate])
                     ->where('id_kota_asal', $kota)
                     ->orderBy('jadwal', 'asc')

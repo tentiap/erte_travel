@@ -38,7 +38,7 @@
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
                         <th>Tanggal Pesan</th>
-                        <th>Operator</th>
+                        <th>Pengurus</th>
                         <th>OPSI</th>
                       </tr>
                 </thead>
@@ -73,7 +73,7 @@
                                       @endif
                                 </td>
                                 <td>{{ date('d M Y H:i', strtotime($p->tanggal_pesan)) }} </td>
-                                <td>{{ $p->operator->nama }}</td>          
+                                <td>{{ $p->pengurus->nama }}</td>          
                                                                      
                                 
                                 <td>

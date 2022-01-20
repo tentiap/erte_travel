@@ -103,22 +103,6 @@
                             @endif
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label>Operator</label>
-                            <select class="form-control" name="id_users_operator">
-                                    @foreach($operator as $o)
-                                            <option  value="{{$o->id_users}}"{{$trip->id_users_operator == $o->id_users ? 'selected' : ''}}>{{$o->nama}}</option> 
-                                    @endforeach
-                                    
-                            </select>
-
-                            @if($errors->has('id_users_operator'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users_operator')}}
-                                </div>
-                            @endif
-                        </div> -->
-
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
                             <a class="btn btn-default btn-close" href="/trip">Cancel</a>

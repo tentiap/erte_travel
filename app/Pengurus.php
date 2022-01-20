@@ -5,14 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Operator extends Authenticatable
-{
+class Pengurus extends Authenticatable {
     use Notifiable;
 
-    protected $guard = 'operator';
-    protected $table = "operator";
+    protected $guard = 'pengurus';
+    protected $table = "pengurus";
     protected $fillable = [
-        'id_users', 
+        'id_pengurus', 
         'id_kota',
         'username',
         'email',
@@ -21,21 +20,18 @@ class Operator extends Authenticatable
         'kontak',
         'jenis_kelamin'
     ];
-    protected $primaryKey = "id_users";
-    public $incrementing = false;
 
-    public function setPasswordAttribute($password)
-    {
+    protected $primaryKey = "id_pengurus";
+
+    public function setPasswordAttribute($password) {
         $this->attributes['password'] = \Hash::make($password);
     }
 
-    public function trip()
-    {
-        return $this->hasMany(Trip::class);
+    public function pesanan() {
+        return $this->hasMany(Pesanan::class);
     }
 
-    public function kota()
-    {
+    public function kota() {
         return $this->belongsTo(Kota::class, 'id_kota');
     }
 }

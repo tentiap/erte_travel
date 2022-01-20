@@ -5,13 +5,13 @@
 @section('breadcrumb')
     <section class="content-header">
       <h1>
-          Detail Data Operator
+          Detail Data Pengurus
       </h1>
     
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="/users">Users</a></li>
-            <li><a href="/operator">Operator</a></li>
+            <li><a href="/pengurus">Pengurus</a></li>
             <li class="active">Detail</li>
           </ol>
 
@@ -28,10 +28,10 @@
                     .outset {border-style: outset;}
                 </style> -->
                     <div style="position: absolute; right: 0;">
-                        <a href="/operator/edit/{{ $operator->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
-                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/operator/delete/{{ $operator->id_users }}"><i class="fa fa-trash"></i> Hapus Operator</a>
-                        <a href="/operator/" class="btn btn-md" ><i class="fa fa-list"></i> List Operator</a>
-                        <a href="/operator/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Operator</a>                       
+                        <a href="/pengurus/edit/{{ $pengurus->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pengurus/delete/{{ $pengurus->id_users }}"><i class="fa fa-trash"></i> Hapus pengurus</a>
+                        <a href="/pengurus/" class="btn btn-md" ><i class="fa fa-list"></i> List Pengurus</a>
+                        <a href="/pengurus/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Pengurus</a>                       
                     </div>
                         </br>
 
@@ -39,7 +39,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <b>Anda yakin ingin menghapus data operator ini ?</b><br><br>
+                                    <b>Anda yakin ingin menghapus data pengurus ini ?</b><br><br>
                                     <a class="btn btn-danger btn-ok"> Hapus</a>
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
                                 </div>
@@ -71,13 +71,9 @@
                         <div class="form-group">
                             <label>Role</label>
 
-                        <input type="text" name="role" class="form-control"  placeholder="Role" value="Operator" readonly>
+                        <input type="text" name="role" class="form-control"  placeholder="Role" value="pengurus" readonly>
                                                         
-                                        
-                                               
-                                    
-                          
-                             
+         
                         </div>
 
                         <div class="form-group">
@@ -125,7 +121,7 @@
 
                         <div class="form-group">
                             <label>Wilayah</label>
-                            <input type="text" name="kota" class="form-control" placeholder="Wilayah" value="{{$users->operator->kota->nama_kota}}" readonly>
+                            <input type="text" name="kota" class="form-control" placeholder="Wilayah" value="{{$users->pengurus->kota->nama_kota}}" readonly>
 
                              
                         </div>

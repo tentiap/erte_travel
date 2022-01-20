@@ -5,39 +5,37 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CompositeKeyTrait;
 
-class Detail_Pesanan extends Model
-{
+class Detail_Pesanan extends Model {
     use CompositeKeyTrait;
 
     protected $table = "detail_pesanan";
     protected $fillable = [
-        'id_detail_pesanan',
-        'id_trip',  
+        'jadwal',
+        'plat_mobil',  
         'id_seat',
-        'id_users_feeder', 
+        'order_number',
+        'id_pemesan',
+        'id_feeder', 
         'nama_penumpang', 
         'jenis_kelamin', 
         'detail_asal', 
         'detail_tujuan',
         'no_hp',
         'status',
-        'biaya_tambahan',
-        'id_pesanan'
+        'biaya_tambahan'
     ];
-    protected $primaryKey = ['id_detail_pesanan'];
 
-    public function pesanan()
-    {
-        return $this->belongsTo(Pesanan::class, ['id_pesanan', 'id_trip'], ['id_pesanan', 'id_trip']);
+    protected $primaryKey = ['jadwal', 'plat_mobil', 'id_seat', 'order_number'];
+
+    public function pesanan() {
+        return $this->belongsTo(Pesanan::class, ['id_pemesan', 'jadwal', 'plat_mobil']);
     }
 
-    public function seat()
-    {
-    return $this->belongsTo(Seat::class, 'id_seat');
+    public function seat() {
+        return $this->belongsTo(Seat::class, 'id_seat', 'plat_mobil');
     }
 
-    public function feeder()
-    {
-        return $this->belongsTo(Feeder::class, 'id_users_feeder');
+    public function feeder() {
+        return $this->belongsTo(Feeder::class, 'id_feeder');
     }
 }

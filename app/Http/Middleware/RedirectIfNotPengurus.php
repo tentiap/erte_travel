@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class RedirectIfNotOperator
+// class RedirectIfNotOperator
+class RedirectIfNotPengurus
 {
     /**
      * Handle an incoming request.
@@ -13,10 +14,11 @@ class RedirectIfNotOperator
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard="operator")
+    // public function handle($request, Closure $next, $guard="operator")
+    public function handle($request, Closure $next, $guard="pengurus")
     {
         if(!auth()->guard($guard)->check()){
-            return redirect(route('operator.login'));
+            return redirect(route('pengurus.login'));
         }
         return $next($request);
     }

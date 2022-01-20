@@ -15,12 +15,12 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'operator',
+        'passwords' => 'pengurus',
     ],
 
-    'operator' => [
+    'pengurus' => [
         'driver' => 'eloquent',
-        'model' => App\Operator::class,
+        'model' => App\Pengurus::class,
     ],
 
     'pemesan' => [
@@ -67,14 +67,14 @@ return [
             'hash' => false,
         ],
 
-        'operator'  => [
+        'pengurus'  => [
           'driver'  => 'session',
-          'provider' => 'operator',
+          'provider' => 'pengurus',
         ],
 
-        'operator-api' => [
+        'pengurus-api' => [
             'driver' => 'token',
-            'provider' => 'operator',
+            'provider' => 'pengurus',
         ],
 
         'pemesan'  => [
@@ -133,9 +133,9 @@ return [
             'model' => App\User::class,
         ],
 
-        'operator' => [
+        'pengurus' => [
             'driver' => 'eloquent',
-            'model'  => App\Operator::class,
+            'model'  => App\Pengurus::class,
         ],
 
         'pemesan' => [
@@ -181,8 +181,8 @@ return [
             'expire' => 60,
         ],
 
-        'operator' => [
-            'provider' => 'operator',
+        'pengurus' => [
+            'provider' => 'pengurus',
             'table' => 'password_resets',
             'expire' => 15,
         ],

@@ -38,16 +38,17 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:operator')->except('logout');
+        $this->middleware('guest:pengurus')->except('logout');
         $this->username = $this->findUsername();
     }
 
     public function guard()
     {
-     return Auth::guard('operator');
+    //  return Auth::guard('operator');
+    return Auth::guard('pengurus');
     }
 
-    // login form for operator
+    // login form for operator/pengurus
     public function showLoginForm()
     {
         return view('auth.login');

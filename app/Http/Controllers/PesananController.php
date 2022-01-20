@@ -10,7 +10,7 @@ use App\Pesanan;
 use App\Trip;
 use App\Pemesan;
 use App\Feeder;
-use App\Operator;
+use App\Pengurus;
 use App\Detail_Pesanan;
 use App\Kota;
 use App\Seat;
@@ -20,28 +20,28 @@ use Carbon\Carbon;
 class PesananController extends Controller
 {
     public function index(){
-        if (Auth::guard('operator')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
         
             $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
                                     ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
 
             $trip = Trip::all();
             $pemesan = Pemesan::all();
-            $operator = Operator::all();
+            $pengurus = Pengurus::all();
 
 
-            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'pengurus' => $pengurus]);
         }else{
 
-            $kota = Auth::guard('operator')->user()->id_kota;
+            $kota = Auth::guard('pengurus')->user()->id_kota;
             $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
                         ->where('trip.id_kota_asal',  $kota)
                         ->orderBy('trip.jadwal', 'desc')->paginate(10);
             $trip = Trip::all();
             $pemesan = Pemesan::all();
-            $operator = Operator::all();
+            $pengurus = Pengurus::all();
 
-            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'operator' => $operator]);
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'pengurus' => $pengurus]);
         }    
     }
 
@@ -68,7 +68,7 @@ class PesananController extends Controller
             $today = Carbon::now();
             $filter_today = date('Y-m-d H:i:s', strtotime($today));
        
-        if (Auth::guard('operator')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
             $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                'id_kota_tujuan' => $id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
@@ -98,8 +98,8 @@ class PesananController extends Controller
             }
 
         }else{
-            if (Auth::guard('operator')->user()->id_kota != $id_kota_asal) {
-                session()->flash('flash_danger', 'Pesanan berada di luar wilayah operasional operator');
+            if (Auth::guard('pengurus')->user()->id_kota != $id_kota_asal) {
+                session()->flash('flash_danger', 'Pesanan berada di luar wilayah operasional pengurus');
                 return redirect('/pesanan/create');
             }else{
             
@@ -239,7 +239,7 @@ class PesananController extends Controller
                 $pesanan->id_trip = $id_trip;
                 $pesanan->id_users_pemesan = $id_users_pemesan;            
                 $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
-                $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
+                $pesanan->id_pengurus = Auth::guard('pengurus')->user()->id_pengurus;
                 $pesanan->save();
 
                 foreach($request->id_seat as $key => $value){
@@ -360,7 +360,7 @@ class PesananController extends Controller
 
             $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
             $pesanan->id_trip = $request->id_trip;          
-            $pesanan->id_users_operator = Auth::guard('operator')->user()->id_users;
+            $pesanan->id_pengurus = Auth::guard('pengurus')->user()->id_pengurus;
             $pesanan->save();
 
             $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();

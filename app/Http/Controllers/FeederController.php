@@ -10,13 +10,13 @@ use Auth;
 class FeederController extends Controller
 {
     public function index(){
-        if (Auth::guard('operator')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
             $feeder = Feeder::orderBy('created_at', 'asc')->paginate(10);
 
             return view('erte.feeder.index', ['feeder' => $feeder]);
 
         }else{
-            $kota = Auth::guard('operator')->user()->id_kota;
+            $kota = Auth::guard('pengurus')->user()->id_kota;
             $feeder = Feeder::where('id_kota', $kota)
                                     ->orderBy('created_at', 'asc')->paginate(10);
             return view('erte.feeder.index', ['feeder' => $feeder]);    
@@ -42,7 +42,7 @@ class FeederController extends Controller
             'jenis_kelamin' => 'required'           
         ]);
 
-        if (Auth::guard('operator')->user()->id_users == 'admin'){
+        if (Auth::guard('pengurus')->user()->id_users == 'admin'){
             $feeder = new Feeder();
             $feeder_select = Feeder::select('id_users');
             $feeder_count = $feeder_select->count();
@@ -67,8 +67,8 @@ class FeederController extends Controller
 
             return redirect('/feeder');
         }else{
-            if (Auth::guard('operator')->user()->id_kota != $request->id_kota) {
-                session()->flash('flash_danger', 'Feeder berada di luar wilayah operasional operator');
+            if (Auth::guard('pengurus')->user()->id_kota != $request->id_kota) {
+                session()->flash('flash_danger', 'Feeder berada di luar wilayah operasional pengurus');
                 return redirect('/feeder/create');
             }else{
                 $feeder = new Feeder();

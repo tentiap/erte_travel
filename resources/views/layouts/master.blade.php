@@ -98,7 +98,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/adminlte/img/admin.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ Auth::guard('operator')->user()->nama }}</span>
+              <span class="hidden-xs">{{ Auth::guard('pengurus')->user()->nama }}</span>
               
             </a>
             <ul class="dropdown-menu" role="menu">

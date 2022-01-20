@@ -14,8 +14,8 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
     public function index(){
-    	if (Auth::guard('operator')->user()->id_users == 'admin') {
-    		$kota = Auth::guard('operator')->user()->id_kota;
+    	if (Auth::guard('pengurus')->user()->id_users == 'admin') {
+    		$kota = Auth::guard('pengurus')->user()->id_kota;
 	    	$feeder = Feeder::all()->count();
 	    	$pemesan = Pemesan::all()->count();
 	    	$sopir = Sopir::all()->count();
@@ -30,7 +30,7 @@ class DashboardController extends Controller
 
 	        return view('dashboard', ['feeder' => $feeder, 'pemesan' => $pemesan, 'sopir' => $sopir, 'pesanan' => $pesanan, 'today' => $today, 'trip' => $trip]);              
         }else{
-        	$kota = Auth::guard('operator')->user()->id_kota;
+        	$kota = Auth::guard('pengurus')->user()->id_kota;
 	    	$feeder = Feeder::where('id_kota', $kota)->count();
 	    	$pemesan = Pemesan::all()->count();
 	    	$sopir = Sopir::all()->count();

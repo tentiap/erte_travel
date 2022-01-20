@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/operator/store">
+                    <form method="POST" action="/pengurus/store">
                         @csrf
 
                         <!-- ID Users -->

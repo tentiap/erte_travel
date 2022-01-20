@@ -103,8 +103,8 @@
                                           Payakumbuh
                                       @endif
                                 </dd>
-                                <dt>Operator</dt>
-                                <dd>{{ $trip->operator->nama }}</dd>
+                                <dt>Pengurus</dt>
+                                <dd>{{ $trip->pengurus->nama }}</dd>
                               </dl>
                             </div>
                         </div>

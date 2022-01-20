@@ -103,8 +103,6 @@
                                           Pekanbaru
                                       @endif
                                 </dd>
-                                <dt>Operator</dt>
-                                <dd>{{ $trip->operator->nama }}</dd>
                               </dl>
                             </div>
                         </div>

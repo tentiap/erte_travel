@@ -15,7 +15,7 @@ class UsersController extends Controller
 
 
     public function index(){
-        // if (Auth::user() != null && Auth::user()->hasRole('operator')) {
+        // if (Auth::user() != null && Auth::user()->hasRole('pengurus')) {
             $users = User::all();
             return view('erte.users.index', ['users' => $users]);
 
@@ -26,7 +26,7 @@ class UsersController extends Controller
     }
 
     public function create(){
-        // if (Auth::user()->hasRole('operator')) {
+        // if (Auth::user()->hasRole('pengurus')) {
             return view('erte.users.create');
         // }else{
         //     return redirect()->back();

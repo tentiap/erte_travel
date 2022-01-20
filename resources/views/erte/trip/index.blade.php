@@ -34,7 +34,7 @@
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
                         <th>Sopir</th>
-                        <th>Operator</th>
+                        <th>Pengurus</th>
                         <th>OPSI</th>
                       </tr>
                   </thead>
@@ -72,7 +72,7 @@
                                       {{ $t->sopir->nama }}
                                     @endif
                             </td>
-                            <td>{{ $t->operator->nama }}</td>                   
+                            <td>{{ $t->pengurus->nama }}</td>                   
                             <td>        
                                 <a href="/trip/show/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
 

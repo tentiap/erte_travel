@@ -3,19 +3,24 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CompositeKeyTrait;
 
-class Seat extends Model
-{
+class Seat extends Model {
+    use CompositeKeyTrait;
     protected $table = "seat";
-    protected $primaryKey = 'id_seat';
     protected $fillable = [
-    		'id_seat', 
-    		'keterangan'];
-    public $incrementing = false;
+        'id_seat', 
+        'plat_mobil',
+        'keterangan'
+    ];
 
-   public function detail_pesanan()
-    {
+    protected $primaryKey = ['id_seat', 'plat_mobil'];
+
+   public function detail_pesanan() {
         return $this->hasMany(Detail_Pesanan::class);
-    }
+   }
 
+   public function mobil() {
+        return $this->belongsTo(Mobil::class, 'plat_mobil');
+   }
 }

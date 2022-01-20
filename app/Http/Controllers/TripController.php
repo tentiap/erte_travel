@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Input;
 use App\Trip;
 use App\Rute;
 use App\Sopir;
-use App\Operator;
+use App\Pengurus;
 use App\Pesanan;
 use App\Kota;
 use App\Detail_Pesanan;
@@ -17,11 +17,11 @@ use Auth;
 class TripController extends Controller
 {
     public function index(){
-        if (Auth::guard('operator')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
             $trip = Trip::orderBy('jadwal', 'desc')->paginate(10);
             return view('erte.trip.index', ['trip' => $trip]);
         }else{
-            $kota = Auth::guard('operator')->user()->id_kota;
+            $kota = Auth::guard('pengurus')->user()->id_kota;
             $trip = Trip::where('id_kota_asal', $kota)
                         ->orderBy('jadwal', 'desc')->paginate(10);
             return view('erte.trip.index', ['trip' => $trip]);
@@ -31,12 +31,12 @@ class TripController extends Controller
 
     public function create(){
        $trip = Trip::all();
-       $operator = Operator::all();
+       $pengurus = Pengurus::all();
        $sopir = Sopir::all();
        $rute = Rute::all();
        $kota = Kota::all();
         
-       return view('erte.trip.create', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
+       return view('erte.trip.create', ['trip' => $trip, 'pengurus' => $pengurus, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
     }
 
     public function getKotaTujuan(){
@@ -56,7 +56,7 @@ class TripController extends Controller
             'jadwal' => 'required'
         ]);
 
-        if (Auth::guard('operator')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
             $trip = new Trip();
             $trip_select = Trip::select('id_trip');
             $trip_count = $trip_select->count();
@@ -68,7 +68,6 @@ class TripController extends Controller
                     $new_id = $lastrow_id[1]+1;
                     $trip->id_trip = 'T'.$new_id;
                 }
-            $trip->id_users_operator = Auth::guard('operator')->user()->id_users;
             $trip->id_users_sopir = $request->id_users_sopir;
             $trip->id_kota_asal = $request->id_kota_asal;
             $trip->id_kota_tujuan = $request->id_kota_tujuan;
@@ -78,8 +77,8 @@ class TripController extends Controller
             session()->flash('flash_success', 'Berhasil menambahkan data trip'); 
             return redirect('/trip');
         }else{
-            if (Auth::guard('operator')->user()->id_kota != $request->id_kota_asal) {
-                session()->flash('flash_danger', 'Trip berada di luar wilayah operasional operator');
+            if (Auth::guard('pengurus')->user()->id_kota != $request->id_kota_asal) {
+                session()->flash('flash_danger', 'Trip berada di luar wilayah operasional pengurus');
                 return redirect('/trip/create');
             }else{
                     $trip = new Trip();
@@ -93,7 +92,6 @@ class TripController extends Controller
                             $new_id = $lastrow_id[1]+1;
                             $trip->id_trip = 'T'.$new_id;
                         }
-                $trip->id_users_operator = Auth::guard('operator')->user()->id_users;
                 $trip->id_users_sopir = $request->id_users_sopir;
                 $trip->id_kota_asal = $request->id_kota_asal;
                 $trip->id_kota_tujuan = $request->id_kota_tujuan;
@@ -111,12 +109,11 @@ class TripController extends Controller
 
     public function edit($id_trip){
     	$trip = Trip::find($id_trip);
-        $operator = Operator::all();
         $sopir = Sopir::all();
         $rute = Rute::all();
         $kota = Kota::all();
         
-        return view('erte.trip.edit', ['trip' => $trip, 'operator' => $operator, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
+        return view('erte.trip.edit', ['trip' => $trip, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
     }
 
      public function show($id_trip){
@@ -172,15 +169,15 @@ class TripController extends Controller
     public function update($id_trip, Request $request){
     	 $this->validate($request, [
             // 'id_trip' => 'required',
-            // 'id_users_operator' => 'required',
-            // 'id_users_sopir' => 'required',
+            // 'id_pengurus' => 'required',
+            // 'id_sopir' => 'required',
             'id_kota_asal' => 'required',
             'id_kota_tujuan' => 'required',
             'jadwal' => 'required']);
 
             $trip = Trip::find($id_trip);
             // $trip->id_trip = $request->id_trip;
-            $trip->id_users_operator = Auth::guard('operator')->user()->id_users;
+            // $trip->id_pengurus = Auth::guard('pengurus')->user()->id_users;
             $trip->id_users_sopir = $request->id_users_sopir;
             $trip->id_kota_asal = $request->id_kota_asal;
             $trip->id_kota_tujuan = $request->id_kota_tujuan;
