@@ -4,40 +4,32 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Traits\CompositeKeyTrait;
 
 class Trip extends Model
 {
+    use CompositeKeyTrait;
     protected $table = "trip";
-    protected $fillable = [
-        'id_trip', 
-        'id_users_operator',
-	    'id_users_sopir', 
+    protected $fillable = [ 
+        'jadwal',
+        'plat_mobil', 
 	    'id_kota_asal',
         'id_kota_tujuan',
-	    'jadwal',
         'seat'
 	];
 
-    protected $primaryKey = "id_trip";
-    public $incrementing = false;
+    protected $primaryKey = ['jadwal', 'plat_mobil'];
     
-    public function sopir()
-    {
-        return $this->belongsTo(Sopir::class, 'id_users_sopir');
+    public function mobil() {
+        return $this->belongsTo(Mobil::class, 'plat_mobil');
     }
 
-    public function rute()
-    {
+    public function rute() {
         return $this->belongsTo(Rute::class, 'id_kota_asal', 'id_kota_tujuan');
     }
 
-    public function operator()
-    {
-        return $this->belongsTo(Operator::class, 'id_users_operator');
-    }
-
-    public function pesanan()
-    {
+    public function pesanan() {
         return $this->hasMany(Pesanan::class);
     }
+   
 }
