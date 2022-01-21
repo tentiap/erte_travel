@@ -476,7 +476,6 @@ class ApiController extends Controller
         $pesanan->id_trip = $request->id_trip;
         $pesanan->id_users_pemesan = $request->id_users_pemesan;            
         $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
-        $pesanan->id_users_operator = 'O4';
         $pesanan->save();
 
         if($pesanan){

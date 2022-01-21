@@ -75,7 +75,7 @@
                                       @elseif($trip->id_kota_asal == "K2")
                                           Padang
                                       @elseif($trip->id_kota_asal == "K3")
-                                          Payakumbuh
+                                          Pekanbaru
                                       @endif
                                 </dd>
                                 <dt>Sopir</dt>
@@ -100,7 +100,7 @@
                                       @elseif($trip->id_kota_tujuan == "K2")
                                           Padang
                                       @elseif($trip->id_kota_tujuan == "K3")
-                                          Payakumbuh
+                                          Pekanbaru
                                       @endif
                                 </dd>
                                 <dt>Pengurus</dt>

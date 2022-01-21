@@ -124,7 +124,7 @@
                                             </div> 
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                  <form method="post" action="/pemesan/store1">
+                                                  <form method="post" action="/pemesan/store">
 
                                                         {{ csrf_field() }}
 

@@ -23,6 +23,18 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
+                            <label>ID_Pemesan</label>
+                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan"  value="{{ old('id_pemesan') }}">
+
+                             @if($errors->has('id_pemesan'))
+                                <div class="text-danger">
+                                    {{ $errors->first('id_pemesan')}}
+                                </div>
+                            @endif
+
+                        </div>
+
+                        <div class="form-group">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username"  value="{{ old('username') }}">
 

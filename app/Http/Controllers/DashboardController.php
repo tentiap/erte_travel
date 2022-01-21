@@ -10,11 +10,12 @@ use App\Sopir;
 use App\Pesanan;
 use App\Trip;
 use Carbon\Carbon;
+use DB;
 
 class DashboardController extends Controller
 {
     public function index(){
-    	if (Auth::guard('pengurus')->user()->id_users == 'admin') {
+    	if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
     		$kota = Auth::guard('pengurus')->user()->id_kota;
 	    	$feeder = Feeder::all()->count();
 	    	$pemesan = Pemesan::all()->count();
@@ -34,9 +35,15 @@ class DashboardController extends Controller
 	    	$feeder = Feeder::where('id_kota', $kota)->count();
 	    	$pemesan = Pemesan::all()->count();
 	    	$sopir = Sopir::all()->count();
-	    	$pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-	                    ->where('trip.id_kota_asal',  $kota)
-	                    ->count();
+	    	// $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+	        //             ->where('trip.id_kota_asal',  $kota)
+	        //             ->count();
+			$pesanan = DB::table('pesanan')
+						->join('trip', function ($join) {
+							$join->on('pesanan.jadwal', '=', 'trip.jadwal')->On('pesanan.plat_mobil', '=', 'trip.plat_mobil');
+						})
+						->where('trip.id_kota_asal', $kota)
+						->count();
 	        $today = Carbon::now();
 	    	$filter_today = '%'.date('Y-m-d', strtotime($today)).'%';
 	    	$filter_jam = date('Y-m-d H:i:s', strtotime($today));

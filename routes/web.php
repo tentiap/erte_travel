@@ -78,11 +78,11 @@ Route::get('/feeder/delete/{id_users}', 'FeederController@delete');
 Route::get('/pemesan', 'PemesanController@index');
 Route::get('/pemesan/create', 'PemesanController@create');
 Route::post('/pemesan/store', 'PemesanController@store');
-Route::post('/pemesan/store1', 'PemesanController@store1');
-Route::get('/pemesan/edit/{id_users}', 'PemesanController@edit');
-Route::get('/pemesan/show/{id_users}', 'PemesanController@show');
-Route::put('/pemesan/update/{id_users}', 'PemesanController@update');
-Route::get('/pemesan/delete/{id_users}', 'PemesanController@delete');
+// Route::post('/pemesan/store1', 'PemesanController@store1');
+Route::get('/pemesan/edit/{id_pemesan}', 'PemesanController@edit');
+// Route::get('/pemesan/show/{id_pemesan}', 'PemesanController@show');
+Route::put('/pemesan/update/{id_pemesan}', 'PemesanController@update');
+Route::get('/pemesan/delete/{id_pemesan}', 'PemesanController@delete');
 
 //------------------------------------------------------PENGURUS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/pengurus', 'PengurusController@index');
@@ -98,11 +98,11 @@ Route::get('/pengurus/delete/{id_users}', 'PengurusController@delete');
 Route::get('trip', 'TripController@index');
 Route::get('/trip/create', 'TripController@create');
 Route::post('/trip/store', 'TripController@store');
-Route::get('/trip/edit/{id_trip}', 'TripController@edit');
-Route::put('/trip/update/{id_trip}', 'TripController@update');
-Route::get('/trip/delete/{id_trip}', 'TripController@delete');
-Route::get('/trip/show/{id_trip}', 'TripController@show');
-Route::get('/trip/show/{id_trip}/cancel', 'TripController@show_cancel');
+Route::get('/trip/edit/{jadwal}/{plat_mobil}', 'TripController@edit');
+Route::put('/trip/update/{jadwal}/{plat_mobil}', 'TripController@update');
+Route::get('/trip/delete/{jadwal}/{plat_mobil}', 'TripController@delete');
+Route::get('/trip/show/{jadwal}/{plat_mobil}', 'TripController@show');
+Route::get('/trip/show/{jadwal}/{plat_mobil}/cancel', 'TripController@show_cancel');
 Route::get('/trip_kota_tujuan', 'TripController@getKotaTujuan');
 
 //------------------------------------------------------PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

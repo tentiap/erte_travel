@@ -18,12 +18,12 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/pemesan/update/{{$pemesan->id_users}}">
+                <form method="post" action="/pemesan/update/{{$pemesan->id_pemesan}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>ID Users</label>
                             <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $pemesan->id_users)}}" disabled>
 
@@ -32,7 +32,7 @@
                                     {{ $errors->first('id_users')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Username</label>
@@ -43,8 +43,6 @@
                                     {{ $errors->first('username')}}
                                 </div>
                             @endif   
-
-                       
                         </div>
 
                         <div class="form-group">

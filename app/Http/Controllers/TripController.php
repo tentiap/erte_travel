@@ -108,7 +108,8 @@ class TripController extends Controller
     }
 
     public function edit($id_trip){
-    	$trip = Trip::find($id_trip);
+    	// $trip = Trip::find($id_trip);
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
         $sopir = Sopir::all();
         $rute = Rute::all();
         $kota = Kota::all();
@@ -116,17 +117,19 @@ class TripController extends Controller
         return view('erte.trip.edit', ['trip' => $trip, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
     }
 
-     public function show($id_trip){
+     public function show($jadwal, $plat_mobil){
 
-        $trip = Trip::find($id_trip);
+        // $trip = Trip::find($id_trip);
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+
         // $pesanan = Pesanan::all();
         // $pesanan = Pesanan::where('id_trip', $id_trip)->get();
         // $pesanan = Pesanan::join('detail_pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
         //             ->select('pesanan.id_trip as pesanan_trip',
         //                      'detail_pesanan.id_seat as detail_seat',
         //                      'detail_pesanan.nama_penumpang as detail_nama')->get();
-        $detail_pesanan = Detail_Pesanan::where('id_trip', $id_trip)
-                            ->where('status', '!=', 5)
+        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
+                            ->where('status', '!=', '5')
                             ->get();
                             // dd($detail_pesanan);
 

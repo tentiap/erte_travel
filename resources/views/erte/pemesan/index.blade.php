@@ -25,10 +25,10 @@
               </div>
 
             <div class="box-body">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="sortdata">
                   <thead>
                       <tr>
-                        <th>ID Users</th>
+                        <th>ID Pemesan</th>
                         <th>Nama</th>
                         <th>Username</th>
                         <th>Email</th>
@@ -43,7 +43,7 @@
                   @foreach($pemesan as $p)
                       
                             <tr>
-                                <td>{{ $p->id_users }}</td>
+                                <td>{{ $p->id_pemesan }}</td>
                                 <td>{{ $p->nama }}</td>          
                                 <td>{{ $p->username }}</td>
                                 <td>{{ $p->email }}</td>
@@ -54,8 +54,8 @@
                                 
                                 <td>
                                     
-                                    <a href="/pemesan/edit/{{ $p->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pemesan/delete/{{ $p->id_users }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/pemesan/edit/{{ $p->id_pemesan }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pemesan/delete/{{ $p->id_pemesan }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
