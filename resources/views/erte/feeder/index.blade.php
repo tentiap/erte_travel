@@ -26,7 +26,7 @@
               
 
             <div class="box-body">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="sortdata">
                   <thead>
                       <tr>
                         <th>ID Feeder</th>

@@ -18,6 +18,7 @@ class Pesanan extends Model {
     ];
     
     protected $primaryKey = ['id_pemesan', 'jadwal', 'plat_mobil'];
+    public $incrementing = false;
 
     public function detail_pesanan() {
         return $this->hasMany(Detail_Pesanan::class);      

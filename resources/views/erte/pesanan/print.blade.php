@@ -95,7 +95,7 @@
             <th>Detail Asal</th>
             <th>Detail Tujuan</th>
             <th>Seat</th>
-            <th>Harga</th>
+            <th>Tarif</th>
           </tr>
           </thead>
           
@@ -114,7 +114,7 @@
                     <td>{{ $d->detail_asal }} </td>
                     <td>{{ $d->detail_tujuan }} </td>
                     <td>{{ $d->id_seat}}</td>
-                    <td> @currency($trip->rute->harga) </td>
+                    <td> @currency($trip->rute->tarif) </td>
                     
                 </tr>
             @endforeach                    
@@ -140,12 +140,12 @@
               <td>{{ $jumlah }} orang</td>
             </tr>
             <!-- <tr>
-              <th>Harga:</th>
-              <td>@currency($trip->rute->harga)/pax</td>
+              <th>Tarif:</th>
+              <td>@currency($trip->rute->tarif)/pax</td>
             </tr> -->
             <tr>
               <th>Total:</th>
-              <td><strong>@currency($trip->rute->harga * $jumlah) </strong></td>
+              <td><strong>@currency($trip->rute->tarif * $jumlah) </strong></td>
             </tr>
           </table>
         </div>

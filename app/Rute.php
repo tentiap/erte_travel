@@ -14,6 +14,7 @@ class Rute extends Model {
         'id_kota_tujuan', 
         'tarif'
     ];
+    public $incrementing = false;
 
     public function trip() {
         return $this->hasMany(Trip::class);

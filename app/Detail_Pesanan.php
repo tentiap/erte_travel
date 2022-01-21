@@ -25,6 +25,8 @@ class Detail_Pesanan extends Model {
         'biaya_tambahan'
     ];
 
+    public $incrementing = false;
+
     protected $primaryKey = ['jadwal', 'plat_mobil', 'id_seat', 'order_number'];
 
     public function pesanan() {

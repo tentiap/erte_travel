@@ -14,6 +14,7 @@ use App\Pengurus;
 use App\Detail_Pesanan;
 use App\Kota;
 use App\Seat;
+use App\Mobil;
 use DateTime;
 use Carbon\Carbon;
 
@@ -22,26 +23,38 @@ class PesananController extends Controller
     public function index(){
         if (Auth::guard('pengurus')->user()->id_users == 'admin') {
         
-            $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                                    ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
-
+            // $pesanan = Pesanan::join('trip', 'pesanan.jadwal', '=', 'trip.id_trip')
+            //                         ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
+            $pesanan = DB::table('pesanan')
+                            ->join('trip', function ($join) {
+                                $join->on('pesanan.jadwal', '=', 'trip.jadwal')->On('pesanan.plat_mobil', '=', 'trip.plat_mobil');
+                            })
+                            ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
             $trip = Trip::all();
             $pemesan = Pemesan::all();
             $pengurus = Pengurus::all();
+            $mobil = Mobil::all();
 
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'pengurus' => $pengurus, 'mobil' => $mobil]);
 
-            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'pengurus' => $pengurus]);
         }else{
 
             $kota = Auth::guard('pengurus')->user()->id_kota;
-            $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                        ->where('trip.id_kota_asal',  $kota)
-                        ->orderBy('trip.jadwal', 'desc')->paginate(10);
+            // $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+            //             ->where('trip.id_kota_asal',  $kota)
+            //             ->orderBy('trip.jadwal', 'desc')->paginate(10);
+            $pesanan = DB::table('pesanan')
+                            ->join('trip', function ($join) {
+                                $join->on('pesanan.jadwal', '=', 'trip.jadwal')->On('pesanan.plat_mobil', '=', 'trip.plat_mobil');
+                            })
+                            ->where('trip.id_kota_asal', $kota)
+                            ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
             $trip = Trip::all();
             $pemesan = Pemesan::all();
             $pengurus = Pengurus::all();
+            $mobil = Mobil::all();
 
-            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'pengurus' => $pengurus]);
+            return view('erte.pesanan.index', ['pesanan' => $pesanan, 'trip' => $trip,  'pemesan' => $pemesan, 'pengurus' => $pengurus, 'mobil' => $mobil]);
         }    
     }
 
@@ -325,8 +338,7 @@ class PesananController extends Controller
 
          json_decode($seat_b, true);
                 $seat_booked = array();
-                
-
+    
                 for ($i=0; $i < $seat_b->count() ; $i++) { 
                     array_push($seat_booked, $seat_b[$i]['id_seat']);
                 }

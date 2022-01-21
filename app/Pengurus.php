@@ -22,6 +22,7 @@ class Pengurus extends Authenticatable {
     ];
 
     protected $primaryKey = "id_pengurus";
+    public $incrementing = false;
 
     public function setPasswordAttribute($password) {
         $this->attributes['password'] = \Hash::make($password);

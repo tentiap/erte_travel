@@ -17,6 +17,7 @@ class Sopir extends Model {
     ];
 
     protected $primaryKey = "id_sopir";
+    public $incrementing = false;
 
     public function setPasswordAttribute($password) {
         $this->attributes['password'] = \Hash::make($password);

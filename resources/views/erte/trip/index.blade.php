@@ -25,16 +25,15 @@
 
               
             <div class="box-body">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="sortdata">
                   <thead>
                       <tr>
-                        <th>ID Trip</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
+                        <th>Plat Mobil</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
-                        <th>Sopir</th>
-                        <th>Pengurus</th>
+                        <th>Tarif</th>
                         <th>OPSI</th>
                       </tr>
                   </thead>
@@ -42,9 +41,9 @@
                   <tbody>
                     @foreach($trip as $t)
                         <tr>
-                            <td>{{ $t->id_trip }}</td>
                             <td>{{ date('d-M-Y', strtotime($t->jadwal)) }} </td>
                             <td>{{ date('H:i', strtotime($t->jadwal)) }} </td>
+                            <td>{{ $t->plat_mobil }}</td>
                             <td>
                                   
                                       @if($t->id_kota_asal == "K1")
@@ -65,24 +64,22 @@
                                           Pekanbaru
                                       @endif
                             </td>
-                            <td>
+                            <!-- <td>
                                     @if(empty($t->id_users_sopir))
                                       <a href="/trip/edit/{{ $t->id_trip }}"><u>Tambah Sopir</u></a>
                                     @else
                                       {{ $t->sopir->nama }}
                                     @endif
-                            </td>
-                            <td>{{ $t->pengurus->nama }}</td>                   
+                            </td> -->
+                            <td>@currency($t->tarif_trip)</td>                   
                             <td>        
-                                <a href="/trip/show/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                <a href="/trip/show/{{ $t->jadwal }}/{{ $t->plat_mobil}}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
 
-                                <a href="/trip/edit/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                <!-- <a href="/trip/edit/{ $t->jadwal }}/{{ $t->plat_mobil}}" class="btn btn-lg"><i class="fa fa-edit"></i></a> -->
 
-                                <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $t->id_trip }}"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $t->jadwal }}/{{ $t->plat_mobil}}"><i class="fa fa-trash"></i></a>
                             </td>
                             </tr>
-
-
                                     <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

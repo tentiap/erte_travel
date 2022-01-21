@@ -151,6 +151,7 @@
         <li><a href="/trip"><i class="fa  fa-pencil-square-o"></i> <span>Trip</span></a></li>
         <li><a href="/rute"><i class="fa  fa-pencil-square-o"></i> <span>Rute</span></a></li>
         <li><a href="/kota"><i class="fa  fa-pencil-square-o"></i> <span>Kota</span></a></li>
+        <li><a href="/mobil"><i class="fa  fa-pencil-square-o"></i> <span>Mobil</span></a></li>
         <li><a href="/seat"><i class="fa  fa-pencil-square-o"></i> <span>Seat</span></a></li>
         <li><a href="/report"><i class="fa  fa-print"></i> <span>Report</span></a></li>
         <!-- <li><a href="/roles"><i class="fa  fa-pencil-square-o"></i> <span>Manage Roles</span></a></li>

@@ -18,6 +18,7 @@ class Pemesan extends Model {
     ];
 
     protected $primaryKey = "id_pemesan";
+    public $incrementing = false;
 
     public function setPasswordAttribute($password) {
         $this->attributes['password'] = \Hash::make($password);

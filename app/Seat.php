@@ -14,6 +14,8 @@ class Seat extends Model {
         'keterangan'
     ];
 
+    public $incrementing = false;
+
     protected $primaryKey = ['id_seat', 'plat_mobil'];
 
    public function detail_pesanan() {

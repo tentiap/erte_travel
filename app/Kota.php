@@ -13,6 +13,8 @@ class Kota extends Model {
         'nama_kota' 
     ];
 
+    public $incrementing = false;
+
     public function rute() {
         return $this->hasMany(Rute::class);
     }

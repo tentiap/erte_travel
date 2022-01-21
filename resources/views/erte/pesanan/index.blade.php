@@ -31,12 +31,13 @@
  -->  
                   <thead>
                       <tr>
-                        <th>ID</th>
+                        <!-- <th>ID</th> -->
                         <th>Pemesan</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
+                        <th>Mobil</th>
                         <th>Tanggal Pesan</th>
                         <th>Pengurus</th>
                         <th>OPSI</th>
@@ -46,12 +47,9 @@
                   @foreach($pesanan as $p)
                       
                             <tr>
-                                <td>{{ $p->id_pesanan }}</td>
                                 <td>{{ $p->pemesan->nama }}</td>
                                 <td>{{ date('d M Y', strtotime($p->trip->jadwal)) }} </td>
                                 <td>{{ date('H:i', strtotime($p->trip->jadwal)) }} </td>
-                                <!-- <td>{{ $p->trip->rute->kota_asal->nama_kota }}</td>
-                                <td>{{ $p->trip->rute->kota_tujuan->nama_kota }}</td> -->
                                 <td>
                                   
                                       @if($p->trip->id_kota_asal == "K1")
@@ -72,17 +70,16 @@
                                           Pekanbaru
                                       @endif
                                 </td>
+                                <td>{{ $p->plat_mobil }}</td>
                                 <td>{{ date('d M Y H:i', strtotime($p->tanggal_pesan)) }} </td>
                                 <td>{{ $p->pengurus->nama }}</td>          
                                                                      
                                 
                                 <td>
                                     
-                                    <a href="/pesanan/show/{{$p->id_pesanan}}/{{$p->id_trip}}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
-
-
-                                    <!-- <a href="/pesanan/edit/{{ $p->id_pesanan}}/{{ $p->id_trip}}" class="btn btn-lg"><i class="fa fa-edit"></i></a> -->
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $p->id_pesanan}}/{{ $p->id_trip}}"><i class="fa fa-trash"></i></a>
+                                    <!-- <a href="/pesanan/show/{{ $p->id_pemesan }}/{{ $p->jadwal }}/{{ $p->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                    <a href="/pesanan/edit/{{ $p->id_pemesan }}/{{ $p->jadwal }}/{{ $p->plat_mobil }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{$p->id_pemesan}}/{{$p->jadwal}}/{{$p->plat_mobil}}"><i class="fa fa-trash"></i></a> -->
                                 </td>
                             </tr>
 

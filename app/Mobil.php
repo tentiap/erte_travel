@@ -12,6 +12,8 @@ class Mobil extends Model {
         'merek_mobil'
     ];
 
+    public $incrementing = false;
+
     protected $primaryKey = "plat_mobil";
 
     public function trip() {

@@ -27,12 +27,12 @@ class RuteController extends Controller
     	$this->validate($request, [
     		'id_kota_asal' => 'required',
     		'id_kota_tujuan' => 'required',
-    		'harga' => 'required']);
+    		'tarif' => 'required']);
 
         $rute = Rute::create([
             'id_kota_asal' => $request->id_kota_asal,
             'id_kota_tujuan' => $request->id_kota_tujuan,
-            'harga' => $request->harga
+            'tarif' => $request->tarif
         ]);
 
         session()->flash('flash_success', 'Berhasil menambahkan data rute '.$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
@@ -55,12 +55,12 @@ class RuteController extends Controller
     	$this->validate($request, [
     		'id_kota_asal' => 'required',
     		'id_kota_tujuan' => 'required',
-    		'harga' => 'required']);
+    		'tarif' => 'required']);
 
     	$rute = Rute::where(['id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan])->first();
     	$rute->id_kota_asal = $request->id_kota_asal;
     	$rute->id_kota_tujuan = $request->id_kota_tujuan;
-        $rute->harga = $request->harga;
+        $rute->tarif = $request->tarif;
     	$rute->save();
 
         session()->flash('flash_success', 'Berhasil mengupdate data');
@@ -76,8 +76,8 @@ class RuteController extends Controller
         return redirect('/rute');
     }
 
-    public function export() 
-    {
-        return Excel::download(new RuteExport, 'rute.xlsx');
-    }
+    // public function export() 
+    // {
+    //     return Excel::download(new RuteExport, 'rute.xlsx');
+    // }
 }

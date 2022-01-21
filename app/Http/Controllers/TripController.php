@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Input;
 use App\Trip;
 use App\Rute;
 use App\Sopir;
-use App\Pengurus;
 use App\Pesanan;
 use App\Kota;
+use App\Mobil;
 use App\Detail_Pesanan;
 use Auth;
 
@@ -31,12 +31,12 @@ class TripController extends Controller
 
     public function create(){
        $trip = Trip::all();
-       $pengurus = Pengurus::all();
-       $sopir = Sopir::all();
+    //    $pengurus = Pengurus::all();
+       $mobil = Mobil::all();
        $rute = Rute::all();
        $kota = Kota::all();
         
-       return view('erte.trip.create', ['trip' => $trip, 'pengurus' => $pengurus, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
+       return view('erte.trip.create', ['trip' => $trip, 'mobil' => $mobil, 'rute' => $rute, 'kota' => $kota]);
     }
 
     public function getKotaTujuan(){
@@ -51,29 +51,29 @@ class TripController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
+            'jadwal' => 'required',
+            'plat_mobil' => 'required',
             'id_kota_asal' => 'required',
             'id_kota_tujuan' => 'required',
-            'jadwal' => 'required'
         ]);
 
-        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
-            $trip = new Trip();
-            $trip_select = Trip::select('id_trip');
-            $trip_count = $trip_select->count();
-                if ($trip_count === 0) {
-                    $trip->id_trip = 'T1';
-                }else{
-                    $lastrow=$trip_select->orderBy('created_at','desc')->first();
-                    $lastrow_id = explode('T', $lastrow->id_trip);
-                    $new_id = $lastrow_id[1]+1;
-                    $trip->id_trip = 'T'.$new_id;
-                }
-            $trip->id_users_sopir = $request->id_users_sopir;
-            $trip->id_kota_asal = $request->id_kota_asal;
-            $trip->id_kota_tujuan = $request->id_kota_tujuan;
-            $trip->jadwal = $request->jadwal;
-            $trip->save();
+        // $tarif_trip = Rute::select('tarif')
+        //                 ->where(['id_kota_asal' => $request->id_kota_asal, 'id_kota_tujuan' => $request->id_kota_tujuan])
+        //                 ->get();
 
+        $rute = Rute::where(['id_kota_asal' => $request->id_kota_asal, 
+                              'id_kota_tujuan' => $request->id_kota_tujuan])
+                        ->first();
+
+        if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
+            $trip = Trip::create([
+                'jadwal' => $request->jadwal,
+                'plat_mobil' => $request->plat_mobil,
+                'id_kota_asal' => $request->id_kota_asal,
+                'id_kota_tujuan' => $request->id_kota_tujuan,
+                'tarif_trip' => $rute->tarif
+            ]);
+        
             session()->flash('flash_success', 'Berhasil menambahkan data trip'); 
             return redirect('/trip');
         }else{
@@ -81,40 +81,28 @@ class TripController extends Controller
                 session()->flash('flash_danger', 'Trip berada di luar wilayah operasional pengurus');
                 return redirect('/trip/create');
             }else{
-                    $trip = new Trip();
-                    $trip_select = Trip::select('id_trip');
-                    $trip_count = $trip_select->count();
-                        if ($trip_count === 0) {
-                            $trip->id_trip = 'T1';
-                        }else{
-                            $lastrow=$trip_select->orderBy('created_at','desc')->first();
-                            $lastrow_id = explode('T', $lastrow->id_trip);
-                            $new_id = $lastrow_id[1]+1;
-                            $trip->id_trip = 'T'.$new_id;
-                        }
-                $trip->id_users_sopir = $request->id_users_sopir;
-                $trip->id_kota_asal = $request->id_kota_asal;
-                $trip->id_kota_tujuan = $request->id_kota_tujuan;
-                $trip->jadwal = $request->jadwal;
-                $trip->save();
-
+                $trip = Trip::create([
+                    'jadwal' => $request->jadwal,
+                    'plat_mobil' => $request->plat_mobil,
+                    'id_kota_asal' => $request->id_kota_asal,
+                    'id_kota_tujuan' => $request->id_kota_tujuan,
+                    'tarif_trip' => $rute->tarif
+                ]);
+            
                 session()->flash('flash_success', 'Berhasil menambahkan data trip'); 
                 return redirect('/trip');
-
             }
-
         }  
-        
     }
 
-    public function edit($id_trip){
-    	// $trip = Trip::find($id_trip);
+    public function edit($jadwal, $plat_mobil){
         $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
         $sopir = Sopir::all();
         $rute = Rute::all();
         $kota = Kota::all();
+        $mobil = Mobil::all();
         
-        return view('erte.trip.edit', ['trip' => $trip, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota]);
+        return view('erte.trip.edit', ['trip' => $trip, 'sopir' => $sopir, 'rute' => $rute, 'kota' => $kota, 'mobil' => $mobil]);
     }
 
      public function show($jadwal, $plat_mobil){
@@ -139,6 +127,28 @@ class TripController extends Controller
                     ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
                     ->count();
                     // dd($seat);
+
+                    $detail = DB::table('detail_pesanan')
+                    ->join('pesanan', function ($join) {
+                        $join->on('detail_pesanan.id_pesanan', '=', 'pesanan.id_pesanan')->On('detail_pesanan.id_trip', '=', 'pesanan.id_trip');
+                      })
+                    ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
+                    ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                    ->where('detail_pesanan.id_users_feeder', $request->id_users_feeder)
+                    ->where('status', '!=', 5)
+                    ->select('detail_pesanan.id_trip',
+                             'detail_pesanan.id_pesanan',
+                             'detail_pesanan.nama_penumpang',
+                             'detail_pesanan.jenis_kelamin',
+                             'detail_pesanan.id_seat',
+                             'detail_pesanan.detail_asal',
+                             'detail_pesanan.no_hp',
+                             'detail_pesanan.status',
+                             'detail_pesanan.biaya_tambahan',
+                             'pemesan.kontak',
+                             'trip.jadwal')
+                    ->orderBy('jadwal', 'ASC')
+                    ->get();
         
         // $pesanan = Pesanan::with(['detail_pesanan' => function ($query) use($trip) {
         //     $query->where('id_pesanan', '=', $trip);
@@ -152,14 +162,16 @@ class TripController extends Controller
 
     }
 
-     public function show_cancel($id_trip){
+     public function show_cancel($jadwal, $plat_mobil){
 
-        $trip = Trip::find($id_trip);
-        $detail_pesanan = Detail_Pesanan::where('id_trip', $id_trip)
+        // $trip = Trip::find($id_trip);
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                             ->where('status', 5)
                             ->get();
                             
-        $seat = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+        $seat = Trip::join('pesanan', )
+                    ->join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
                     ->where('trip.id_trip', $id_trip)
                     ->where('detail_pesanan.status', 5)
                     ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
@@ -169,35 +181,32 @@ class TripController extends Controller
 
     }
 
-    public function update($id_trip, Request $request){
-    	 $this->validate($request, [
-            // 'id_trip' => 'required',
-            // 'id_pengurus' => 'required',
-            // 'id_sopir' => 'required',
-            'id_kota_asal' => 'required',
-            'id_kota_tujuan' => 'required',
-            'jadwal' => 'required']);
+    // public function update($jadwal, $plat_mobil, Request $request){
+    // 	 $this->validate($request, [
+    //         'id_kota_asal' => 'required',
+    //         'id_kota_tujuan' => 'required',
+    //         'jadwal' => 'required']);
 
-            $trip = Trip::find($id_trip);
-            // $trip->id_trip = $request->id_trip;
-            // $trip->id_pengurus = Auth::guard('pengurus')->user()->id_users;
-            $trip->id_users_sopir = $request->id_users_sopir;
-            $trip->id_kota_asal = $request->id_kota_asal;
-            $trip->id_kota_tujuan = $request->id_kota_tujuan;
-            $trip->jadwal = $request->jadwal;
+    //         $trip = Trip::find($id_trip);
+    //         // $trip->id_trip = $request->id_trip;
+    //         // $trip->id_pengurus = Auth::guard('pengurus')->user()->id_users;
+    //         $trip->id_users_sopir = $request->id_users_sopir;
+    //         $trip->id_kota_asal = $request->id_kota_asal;
+    //         $trip->id_kota_tujuan = $request->id_kota_tujuan;
+    //         $trip->jadwal = $request->jadwal;
             
-            $trip->save();
+    //         $trip->save();
 
-            session()->flash('flash_success', 'Berhasil mengupdate data trip '.$trip->id_trip);
+    //         session()->flash('flash_success', 'Berhasil mengupdate data trip '.$trip->id_trip);
 
-         return redirect('/trip');
-    }
+    //      return redirect('/trip');
+    // }
 
- 	public function delete($id_trip){
-        $trip = Trip::find($id_trip);
+ 	public function delete($jadwal, $plat_mobil){
+    	$trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
         $trip->delete();
 
-        session()->flash('flash_success', "Berhasil menghapus trip ".$trip->id_trip);
+        session()->flash('flash_success', "Berhasil menghapus trip ".$trip->jadwal);
         return redirect('/trip');
     	
     }

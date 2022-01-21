@@ -17,6 +17,7 @@ class Trip extends Model {
 	];
 
     protected $primaryKey = ['jadwal', 'plat_mobil'];
+    public $incrementing = false;
     
     public function mobil() {
         return $this->belongsTo(Mobil::class, 'plat_mobil');

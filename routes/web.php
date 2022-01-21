@@ -74,6 +74,15 @@ Route::get('/feeder/edit/{id_feeder}', 'FeederController@edit');
 Route::put('/feeder/update/{id_feeder}', 'FeederController@update');
 Route::get('/feeder/delete/{id_feeder}', 'FeederController@delete');
 
+//------------------------------------------------------MOBIL----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/mobil', 'MobilController@index');
+Route::get('/mobil/create', 'MobilController@create');
+Route::post('/mobil/store', 'MobilController@store');
+Route::get('/mobil/edit/{plat_mobil}', 'MobilController@edit');
+// Route::get('/feeder/show/{id_feeder}', 'FeederController@show');
+Route::put('/mobil/update/{plat_mobil}', 'MobilController@update');
+Route::get('/mobil/delete/{plat_mobil}', 'MobilController@delete');
+
 //------------------------------------------------------PEMESAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/pemesan', 'PemesanController@index');
 Route::get('/pemesan/create', 'PemesanController@create');
@@ -109,18 +118,18 @@ Route::get('/trip_kota_tujuan', 'TripController@getKotaTujuan');
 Route::get('pesanan', 'PesananController@index');
 Route::get('/pesanan/create', 'PesananController@create');
 Route::post('/pesanan/create_search', 'PesananController@search');
-Route::get('/pesanan/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@detail');
-Route::post('/pesanan/store/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@store');
+Route::get('/pesanan/create_detail/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@detail');
+Route::post('/pesanan/store/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_users_pemesan}', 'PesananController@store');
 
-Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
-Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
-Route::get('/pesanan/update_create/{id_pesanan}/{id_trip}', 'PesananController@update_create');
-Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_store');
-Route::get('/pesanan/update_detail/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_detail');
+Route::get('/pesanan/edit/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@edit');
+Route::put('/pesanan/update/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update');
+Route::get('/pesanan/update_create/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_create');
+Route::post('/pesanan/update_store/{jumlah_penumpang}/{{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_store');
+Route::get('/pesanan/update_detail/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_detail');
 
-Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
-Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
-Route::get('/pesanan/print/{id_pesanan}/{id_trip}', 'PesananController@print');
+Route::get('/pesanan/delete/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@delete');
+Route::get('/pesanan/show/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@show');
+Route::get('/pesanan/print/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@print');
 Route::get('/pesanan_trip', 'PesananController@getTrip');
 
 //----------------------------------------------------REPORT-------------------------------------------------

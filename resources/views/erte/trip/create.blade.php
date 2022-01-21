@@ -34,6 +34,22 @@
                             @endif
                         </div> -->
 
+                        <div class="form-group">
+                            <label>Jadwal</label>
+                                <div class='input-group date' id='datetime'>
+                                    <input type='text' class="form-control" name="jadwal" value="{{  old('jadwal') }}" />
+                                      <span class="input-group-addon">
+                                          <span class="glyphicon glyphicon-calendar"></span>
+                                      </span>
+                                </div>
+
+                                @if($errors->has('jadwal'))
+                                        <div class="text-danger">
+                                            {{ $errors->first('jadwal')}}
+                                        </div>
+                                @endif
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-6">
                                     <label>Kota Asal</label>
@@ -73,19 +89,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Jadwal</label>
-                                <div class='input-group date' id='datetime'>
-                                    <input type='text' class="form-control" name="jadwal" value="{{  old('jadwal') }}" />
-                                      <span class="input-group-addon">
-                                          <span class="glyphicon glyphicon-calendar"></span>
-                                      </span>
-                                </div>
+                            <label>Plat Mobil</label>
+                                <select class="form-control" name="plat_mobil">
+                                    <option value=""> -- Mobil -- </option>
+                                        @foreach($mobil as $m)
+                                            <option name="plat_mobil" value="{{$m->plat_mobil}}">{{$m->plat_mobil}}</option> 
+                                        @endforeach                                        
+                                </select>
 
-                                @if($errors->has('jadwal'))
-                                        <div class="text-danger">
-                                            {{ $errors->first('jadwal')}}
-                                        </div>
-                                @endif
+                            @if($errors->has('plat_mobil'))
+                                <div class="text-danger">
+                                    {{ $errors->first('plat_mobil')}}
+                                </div>
+                            @endif   
                         </div>
 
                         <!-- <div class="form-group">
@@ -100,23 +116,6 @@
 
                         </div> -->
 
-                        <div class="form-group">
-                            <label>Sopir</label>
-                                <select class="form-control" name="id_users_sopir">
-                                    <option value=""> -- Sopir -- </option>
-                                        @foreach($sopir as $s)
-                                            <option name="id_users_sopir" value="{{$s->id_users}}">{{$s->nama}}</option> 
-                                        @endforeach                                        
-                                </select>
-
-                            @if($errors->has('id_users_sopir'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users_sopir')}}
-                                </div>
-                            @endif   
-                        </div>
-
-                
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
                             <!-- <button class="btn btn-default btn-close"><a href="/trip">Cancel</a></button> -->
