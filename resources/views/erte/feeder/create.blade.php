@@ -24,6 +24,18 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
+                            <label>ID Feeder</label>
+                            <input type="text" name="id_feeder" class="form-control" placeholder="ID Feeder" value="{{ old('id_feeder') }}">
+
+                             @if($errors->has('id_feeder'))
+                                <div class="text-danger">
+                                    {{ $errors->first('id_feeder')}}
+                                </div>
+                            @endif
+
+                        </div>
+
+                        <div class="form-group">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
 
@@ -33,7 +45,6 @@
                                 </div>
                             @endif
 
-                            
                         </div>
 
                         <div class="form-group">
@@ -112,9 +123,11 @@
 
                             <select class="form-control" name="id_kota">
                                 <option disabled selected value> -- Wilayah -- </option>
-                                    @foreach($kota as $k)
-                                        <option name="id_kota" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
-                                    @endforeach
+                                @foreach($kota as $k)
+                                                    <option value="{{ $k->id_kota }}">
+                                                    {{$k->nama_kota}}
+                                                    </option> 
+                                            @endforeach
                                     
                             </select>
 

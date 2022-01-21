@@ -10,7 +10,7 @@ use Auth;
 class FeederController extends Controller
 {
     public function index(){
-        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
             $feeder = Feeder::orderBy('created_at', 'asc')->paginate(10);
 
             return view('erte.feeder.index', ['feeder' => $feeder]);
@@ -32,7 +32,7 @@ class FeederController extends Controller
 	public function store(Request $request){
     	$this->validate($request, 
             [
-    		// 'id_users' => 'required',
+    		'id_feeder' => 'required',
     		'id_kota' => 'required',
     		'username' => 'required',
             'email' => 'required',
@@ -42,18 +42,19 @@ class FeederController extends Controller
             'jenis_kelamin' => 'required'           
         ]);
 
-        if (Auth::guard('pengurus')->user()->id_users == 'admin'){
+        if (Auth::guard('pengurus')->user()->id_pengurus == 'admin'){
             $feeder = new Feeder();
-            $feeder_select = Feeder::select('id_users');
-            $feeder_count = $feeder_select->count();
-                if ($feeder_count === 0) {
-                    $feeder->id_users = 'F1';
-                }else{
-                    $lastrow=$feeder_select->orderBy('created_at','desc')->first();
-                    $lastrow_id = explode('F', $lastrow->id_users);
-                    $new_id = $lastrow_id[1]+1;
-                    $feeder->id_users = 'F'.$new_id;
-                }
+            // $feeder_select = Feeder::select('id_feeder');
+            // $feeder_count = $feeder_select->count();
+            //     if ($feeder_count === 0) {
+            //         $feeder->id_users = 'F1';
+            //     }else{
+            //         $lastrow=$feeder_select->orderBy('created_at','desc')->first();
+            //         $lastrow_id = explode('F', $lastrow->id_users);
+            //         $new_id = $lastrow_id[1]+1;
+            //         $feeder->id_users = 'F'.$new_id;
+            //     }
+            $feeder->id_feeder = $request->id_feeder;
             $feeder->id_kota = $request->id_kota;
             $feeder->username = $request->username;
             $feeder->email = $request->email;
@@ -72,17 +73,18 @@ class FeederController extends Controller
                 return redirect('/feeder/create');
             }else{
                 $feeder = new Feeder();
-                $feeder_select = Feeder::select('id_users');
-                $feeder_count = $feeder_select->count();
+                // $feeder_select = Feeder::select('id_feeder');
+                // $feeder_count = $feeder_select->count();
         
-                    if ($feeder_count === 0) {
-                        $feeder->id_users = 'F1';
-                    }else{
-                        $lastrow=$feeder_select->orderBy('created_at','desc')->first();
-                        $lastrow_id = explode('F', $lastrow->id_users);
-                        $new_id = $lastrow_id[1]+1;
-                        $feeder->id_users = 'F'.$new_id;
-                    }
+                //     if ($feeder_count === 0) {
+                //         $feeder->id_users = 'F1';
+                //     }else{
+                //         $lastrow=$feeder_select->orderBy('created_at','desc')->first();
+                //         $lastrow_id = explode('F', $lastrow->id_users);
+                //         $new_id = $lastrow_id[1]+1;
+                //         $feeder->id_users = 'F'.$new_id;
+                //     }
+                $feeder->id_feeder = $request->id_feeder;
                 $feeder->id_kota = $request->id_kota;
                 $feeder->username = $request->username;
                 $feeder->email = $request->email;
@@ -100,24 +102,24 @@ class FeederController extends Controller
         }
     }
 
-    public function edit($id_users){
+    public function edit($id_feeder){
 
-    	$feeder = Feeder::find($id_users);
+    	$feeder = Feeder::find($id_feeder);
         $kota = Kota::all();
     			    	
     	return view('erte.feeder.edit', ['feeder' => $feeder, 'kota' => $kota]);
     }
 
-    public function show($id_users){
+    // public function show($id_feeder){
 
-        $feeder = Feeder::find($id_users);
-        $kota = Kota::find($id_users);          
+    //     $feeder = Feeder::find($id_feeder);
+    //     $kota = Kota::find($id_feeder);          
         
-        return view('erte.feeder.show', ['feeder' => $feeder, 'kota' => $kota]);
+    //     return view('erte.feeder.show', ['feeder' => $feeder, 'kota' => $kota]);
 
-    }
+    // }
 
-    public function update($id_users, Request $request, Feeder $feeder){
+    public function update($id_feeder, Request $request, Feeder $feeder){
     	$this->validate($request, 
             [
     		// 'id_users' => 'required',
@@ -130,7 +132,7 @@ class FeederController extends Controller
             'jenis_kelamin' => 'required',
         ]);
 
-        $feeder = Feeder::find($id_users);
+        $feeder = Feeder::find($id_feeder);
         // $feeder->id_users = $request->id_users;
         $feeder->id_kota = $request->id_kota;
         $feeder->username = $request->username;
@@ -146,8 +148,8 @@ class FeederController extends Controller
             
     }
 
-    public function delete($id_users){
-    	$feeder = Feeder::find($id_users);
+    public function delete($id_feeder){
+    	$feeder = Feeder::find($id_feeder);
     	$feeder->delete();
 
         session()->flash('flash_success', "Berhasil menghapus feeder ".$feeder->nama);

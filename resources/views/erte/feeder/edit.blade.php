@@ -18,18 +18,18 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/feeder/update/{{$feeder->id_users}}">
+                <form method="post" action="/feeder/update/{{$feeder->id_feeder}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $feeder->id_users)}}" disabled>
+                            <label>ID Feeder</label>
+                            <input type="text" name="id_feeder" class="form-control" placeholder="ID Feeder" value="{{old('id_feeder', $feeder->id_feeder)}}" disabled>
 
-                             @if($errors->has('id_users'))
+                             @if($errors->has('id_feeder'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_feeder')}}
                                 </div>
                             @endif
 

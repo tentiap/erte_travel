@@ -29,7 +29,7 @@
                 <table class="table table-bordered table-hover table-striped">
                   <thead>
                       <tr>
-                        <th>ID Users</th>
+                        <th>ID Feeder</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Nama</th>
@@ -42,7 +42,7 @@
                 <tbody>
                   @foreach($feeder as $f)
                             <tr>
-                                <td>{{ $f->id_users }}</td>
+                                <td>{{ $f->id_feeder }}</td>
                                 <td>{{ $f->username }}</td>
                                 <td>{{ $f->email }}</td>
                                 <td>{{ $f->nama }}</td>          
@@ -53,8 +53,8 @@
                               
                                 <td>
                                     
-                                    <a href="/feeder/edit/{{ $f->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/feeder/delete/{{ $f->id_users }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/feeder/edit/{{ $f->id_feeder }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/feeder/delete/{{ $f->id_feeder }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 

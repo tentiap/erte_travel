@@ -70,7 +70,7 @@ Route::get('/feeder', 'FeederController@index');
 Route::get('/feeder/create', 'FeederController@create');
 Route::post('/feeder/store', 'FeederController@store');
 Route::get('/feeder/edit/{id_feeder}', 'FeederController@edit');
-Route::get('/feeder/show/{id_feeder}', 'FeederController@show');
+// Route::get('/feeder/show/{id_feeder}', 'FeederController@show');
 Route::put('/feeder/update/{id_feeder}', 'FeederController@update');
 Route::get('/feeder/delete/{id_feeder}', 'FeederController@delete');
 
