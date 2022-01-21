@@ -60,19 +60,19 @@ Route::get('/users/delete/{id_users}', 'UsersController@delete');
 Route::get('/sopir', 'SopirController@index');
 Route::get('/sopir/create', 'SopirController@create');
 Route::post('/sopir/store', 'SopirController@store');
-Route::get('/sopir/edit/{id_users}', 'SopirController@edit');
-Route::get('/sopir/show/{id_users}', 'SopirController@show');
-Route::put('/sopir/update/{id_users}', 'SopirController@update');
-Route::get('/sopir/delete/{id_users}', 'SopirController@delete');
+Route::get('/sopir/edit/{id_sopir}', 'SopirController@edit');
+// Route::get('/sopir/show/{id_sopir}', 'SopirController@show');
+Route::put('/sopir/update/{id_sopir}', 'SopirController@update');
+Route::get('/sopir/delete/{id_sopir}', 'SopirController@delete');
 
 //------------------------------------------------------FEEDER----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/feeder', 'FeederController@index');
 Route::get('/feeder/create', 'FeederController@create');
 Route::post('/feeder/store', 'FeederController@store');
-Route::get('/feeder/edit/{id_users}', 'FeederController@edit');
-Route::get('/feeder/show/{id_users}', 'FeederController@show');
-Route::put('/feeder/update/{id_users}', 'FeederController@update');
-Route::get('/feeder/delete/{id_users}', 'FeederController@delete');
+Route::get('/feeder/edit/{id_feeder}', 'FeederController@edit');
+Route::get('/feeder/show/{id_feeder}', 'FeederController@show');
+Route::put('/feeder/update/{id_feeder}', 'FeederController@update');
+Route::get('/feeder/delete/{id_feeder}', 'FeederController@delete');
 
 //------------------------------------------------------PEMESAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/pemesan', 'PemesanController@index');
@@ -89,10 +89,10 @@ Route::get('/pengurus', 'PengurusController@index');
 Route::get('/pengurus/create', 'PengurusController@create');
 Route::get('/pengurus/register', 'PengurusController@register');
 Route::post('/pengurus/store', 'PengurusController@store');
-Route::get('/pengurus/edit/{id_users}', 'PengurusController@edit');
-Route::get('/pengurus/show/{id_users}', 'PengurusController@show');
-Route::put('/pengurus/update/{id_users}', 'PengurusController@update');
-Route::get('/pengurus/delete/{id_users}', 'PengurusController@delete');
+Route::get('/pengurus/edit/{id_pengurus}', 'PengurusController@edit');
+Route::get('/pengurus/show/{id_pengurus}', 'PengurusController@show');
+Route::put('/pengurus/update/{id_pengurus}', 'PengurusController@update');
+Route::get('/pengurus/delete/{id_pengurus}', 'PengurusController@delete');
 
 //------------------------------------------------------TRIP----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('trip', 'TripController@index');

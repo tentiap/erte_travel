@@ -23,16 +23,16 @@
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $pemesan->id_users)}}" disabled>
+                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan" value="{{old('id_pemesan', $pemesan->id_pemesan)}}" disabled>
 
-                            @if($errors->has('id_users'))
+                            @if($errors->has('id_pemesan'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_pemesan')}}
                                 </div>
                             @endif
-                        </div> -->
+                        </div>
 
                         <div class="form-group">
                             <label>Username</label>

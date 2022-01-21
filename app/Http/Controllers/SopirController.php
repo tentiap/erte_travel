@@ -25,9 +25,7 @@ class SopirController extends Controller
 	public function store(Request $request){
     	$this->validate($request, 
             [
-    		// 'id_users' => 'required',
-            'plat_mobil' => 'required|unique:sopir,plat_mobil',
-            'merek_mobil' => 'required',
+    		'id_sopir' => 'required',
     		'username' => 'required',
             'email' => 'required|email',
     		'password' => 'required',
@@ -38,19 +36,18 @@ class SopirController extends Controller
         ]);
 
         $sopir = new Sopir();
-            $sopir_select = Sopir::select('id_users');
-            $sopir_count = $sopir_select->count();
-                if ($sopir_count === 0) {
-                    $sopir->id_users = 'S1';
-                }else{
-                    $lastrow=$sopir_select->orderBy('created_at','desc')->first();
-                    $lastrow_id = explode('S', $lastrow->id_users);
-                    $new_id = $lastrow_id[1]+1;
-                    $sopir->id_users = 'S'.$new_id;
-                }
+            // $sopir_select = Sopir::select('id_users');
+            // $sopir_count = $sopir_select->count();
+            //     if ($sopir_count === 0) {
+            //         $sopir->id_users = 'S1';
+            //     }else{
+            //         $lastrow=$sopir_select->orderBy('created_at','desc')->first();
+            //         $lastrow_id = explode('S', $lastrow->id_users);
+            //         $new_id = $lastrow_id[1]+1;
+            //         $sopir->id_users = 'S'.$new_id;
+            //     }
 
-        $sopir->plat_mobil = $request->plat_mobil;
-        $sopir->merek_mobil = $request->merek_mobil;
+        $sopir->id_sopir = $request->id_sopir;
         $sopir->username = $request->username;
         $sopir->email = $request->email;
         $sopir->password = $request->password;
@@ -64,28 +61,26 @@ class SopirController extends Controller
     	return redirect('/sopir');
     }
 
-    public function edit($id_users){
+    public function edit($id_sopir){
 
-    	$sopir = Sopir::find($id_users);   			    	
+    	$sopir = Sopir::find($id_sopir);   			    	
     	
     	return view('erte.sopir.edit', ['sopir' => $sopir]);
 
     }
 
-    public function show($id_users){
+    // public function show($id_sopir){
 
-        $sopir = Sopir::find($id_users);
+    //     $sopir = Sopir::find($id_sopir);
                                 
-        return view('erte.sopir.show', ['sopir' => $sopir]);
+    //     return view('erte.sopir.show', ['sopir' => $sopir]);
 
-    }
+    // }
 
-    public function update($id_users, Request $request, Sopir $sopir){
+    public function update($id_sopir, Request $request, Sopir $sopir){
     	$this->validate($request, 
             [
-    		// 'id_users' => 'required',
-            'plat_mobil' => 'required',
-            'merek_mobil' => 'required',
+    		// 'id_sopir' => 'required',
             'username' => 'required',
             'email' => 'required|email',
             // 'password' => 'required',
@@ -94,9 +89,7 @@ class SopirController extends Controller
             'jenis_kelamin' => 'required'
         ]);
 
-        $sopir = Sopir::find($id_users);
-        $sopir->plat_mobil = $request->plat_mobil;
-        $sopir->merek_mobil = $request->merek_mobil;
+        $sopir = Sopir::find($id_sopir);
         $sopir->username = $request->username;
         $sopir->email = $request->email;
         $sopir->nama = $request->nama;
@@ -110,8 +103,8 @@ class SopirController extends Controller
      
     }
 
-    public function delete($id_users){
-    	$sopir = Sopir::find($id_users);
+    public function delete($id_sopir){
+    	$sopir = Sopir::find($id_sopir);
     	$sopir->delete();
 
         session()->flash('flash_success', "Berhasil menghapus sopir ".$sopir->nama);

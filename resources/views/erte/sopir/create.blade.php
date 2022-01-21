@@ -25,18 +25,18 @@
 
                         {{ csrf_field() }}
 
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
+                            <input type="text" name="id_sopir" class="form-control" placeholder="ID Sopir" value="{{ old('id_sopir') }}">
 
-                             @if($errors->has('id_users'))
+                             @if($errors->has('id_sopir'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_sopir')}}
                                 </div>
                             @endif
 
                         </div>
- -->
+
                         <div class="form-group">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
@@ -121,7 +121,7 @@
                         </div>
 
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Plat Mobil</label>
                             <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{ old('plat_mobil') }}">
 
@@ -145,7 +145,7 @@
                             @endif
 
                              
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">

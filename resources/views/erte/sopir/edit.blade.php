@@ -22,18 +22,18 @@
                     <br/> -->
               <!--    @include('messages') -->
                     
-                <form method="post" action="/sopir/update/{{$sopir->id_users}}">
+                <form method="post" action="/sopir/update/{{$sopir->id_sopir}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $sopir->id_users)}}" disabled>
+                            <input type="text" name="id_sopir" class="form-control" placeholder="ID Sopir" value="{{old('id_sopir', $sopir->id_sopir)}}" disabled>
 
                             @if($errors->has('id_users'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_sopir')}}
                                 </div>
                             @endif
                         </div>
@@ -131,7 +131,7 @@
                               
                         </div>                     
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Plat Mobil</label>
                             <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $sopir->plat_mobil)}}">
 
@@ -153,7 +153,7 @@
                             @endif
 
                            
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
