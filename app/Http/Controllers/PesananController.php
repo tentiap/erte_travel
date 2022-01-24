@@ -21,15 +21,28 @@ use Carbon\Carbon;
 class PesananController extends Controller
 {
     public function index(){
-        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
         
-            // $pesanan = Pesanan::join('trip', 'pesanan.jadwal', '=', 'trip.id_trip')
-            //                         ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
-            $pesanan = DB::table('pesanan')
-                            ->join('trip', function ($join) {
-                                $join->on('pesanan.jadwal', '=', 'trip.jadwal')->On('pesanan.plat_mobil', '=', 'trip.plat_mobil');
-                            })
-                            ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
+            $pesanan = Pesanan::join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
+                                    ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
+            
+                                    // dd($pesanan);
+            // $pesanan = DB::table('pesanan')
+            //                 ->join('trip', function ($join) {
+            //                     $join->on('pesanan.jadwal', '=', 'trip.jadwal');
+            //                     $join->on('pesanan.plat_mobil', '=', 'trip.plat_mobil');
+            //                 })
+            //                 // ->orderBy('pesanan.tanggal_pesan', 'asc')
+            //                 ->get();
+
+            // dd($pesanan);
+
+            // Post::joinRelationship('comments', function ($join) {
+            //     $join->on('posts.user_id', '=', 'comments.user_id');
+            // });
+
+            // $pesanan = Pesanan::all();
+
             $trip = Trip::all();
             $pemesan = Pemesan::all();
             $pengurus = Pengurus::all();
@@ -43,12 +56,27 @@ class PesananController extends Controller
             // $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
             //             ->where('trip.id_kota_asal',  $kota)
             //             ->orderBy('trip.jadwal', 'desc')->paginate(10);
-            $pesanan = DB::table('pesanan')
-                            ->join('trip', function ($join) {
-                                $join->on('pesanan.jadwal', '=', 'trip.jadwal')->On('pesanan.plat_mobil', '=', 'trip.plat_mobil');
-                            })
-                            ->where('trip.id_kota_asal', $kota)
-                            ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
+
+            $pesanan = Pesanan::join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
+                                ->where('trip.id_kota_asal', $kota)    
+                                ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
+            // $pesanan = DB::table('pesanan')
+            //                 ->join('trip', function ($join) {
+            //                     $join->on('pesanan.jadwal', '=', 'trip.jadwal')->On('pesanan.plat_mobil', '=', 'trip.plat_mobil');
+            //                 })
+            //                 ->where('trip.id_kota_asal', $kota)
+            //                 ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
+
+            // $pesanan = DB::table('pesanan')
+            // ->join('trip', function ($join) {
+            //     $join->on('pesanan.jadwal', '=', 'trip.jadwal');
+            //     $join->on('pesanan.plat_mobil', '=', 'trip.plat_mobil');
+            // })
+            // // ->orderBy('pesanan.tanggal_pesan', 'asc')
+            // ->get();
+            
+
+            // $pesanan = Pesanan::all();
             $trip = Trip::all();
             $pemesan = Pemesan::all();
             $pengurus = Pengurus::all();
@@ -76,21 +104,20 @@ class PesananController extends Controller
             $tanggal = Input::get('tanggal');
             $filter = '%'.$tanggal.'%';
             $jumlah_penumpang = Input::get('jumlah_penumpang');
-            $p = Input::get('id_users_pemesan');
-            $pemesan = Pemesan::where('id_users', $p)->get();
+            $p = Input::get('id_pemesan');
+            $pemesan = Pemesan::where('id_pemesan', $p)->get();
             $today = Carbon::now();
             $filter_today = date('Y-m-d H:i:s', strtotime($today));
        
-        if (Auth::guard('pengurus')->user()->id_users == 'admin') {
+        if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
             $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                'id_kota_tujuan' => $id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
                     ->where('jadwal', '>', $filter_today)
                     ->orderBy('trip.jadwal', 'asc')
                     ->get(); 
-                
 
-            $seat_a = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+            $seat_a = Trip::join('detail_pesanan', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => 'detail_pesanan.plat_mobil'])
                             ->where(['id_kota_asal' => $id_kota_asal, 
                                        'id_kota_tujuan' => $id_kota_tujuan,])
                             ->where('jadwal', 'like', $filter)
@@ -98,10 +125,8 @@ class PesananController extends Controller
                             ->select('detail_pesanan.id_seat')
                             ->count();
                             
-              
             $seat = ($trip_a->count() * 7) - $seat_a;
 
-                      
             if(!$trip_a->isEmpty() && $seat >= $jumlah_penumpang){
 
                     return view('erte.pesanan.search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_a' => $seat_a]);
@@ -122,7 +147,7 @@ class PesananController extends Controller
                     ->where('jadwal', '>', $filter_today)
                     ->get(); 
    
-                $seat_a = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+                $seat_a = Trip::join('detail_pesanan', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => 'detail_pesanan.plat_mobil'])
                             ->where(['id_kota_asal' => $id_kota_asal, 
                                        'id_kota_tujuan' => $id_kota_tujuan,])
                             ->where('jadwal', 'like', $filter)
@@ -156,9 +181,9 @@ class PesananController extends Controller
                 ->get();
     }
 
-    public function detail($jumlah_penumpang, $id_trip, $id_users_pemesan){
+    public function detail($jumlah_penumpang, $jadwal, $plat_mobil, $id_pemesan){
 
-        if (Pesanan::where(['id_trip' => $id_trip, 'id_users_pemesan' => $id_users_pemesan])->
+        if (Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_pemesan' => $id_pemesan])->
                     exists()){
             
             session()->flash('flash_danger', 'Data pemesan di trip ini sudah ada');
@@ -166,11 +191,11 @@ class PesananController extends Controller
 
         }else{
 
-            $trip = Trip::where(['id_trip' => $id_trip])->get();
+            $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
             $jumlah_penumpang = $jumlah_penumpang;
-            $pemesan = Pemesan::where('id_users', $id_users_pemesan)->get();
+            $pemesan = Pemesan::where('id_pemesan', $id_pemesan)->get();
             $seat = Seat::all();
-            $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
+            $seat_b = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                         ->where('status', '!=', 5)
                         ->orderBy('id_seat', 'ASC')
                         ->get();
@@ -182,7 +207,6 @@ class PesananController extends Controller
             }else if($seat_tersedia >= $jumlah_penumpang){
                 json_decode($seat_b, true);
                 $seat_booked = array();
-                
 
                 for ($i=0; $i < $seat_b->count() ; $i++) { 
                     array_push($seat_booked, $seat_b[$i]['id_seat']);
@@ -197,15 +221,15 @@ class PesananController extends Controller
              
     }
 
-    public function update_detail($id_pesanan, $id_trip, $id_users_pemesan){
+    public function update_detail($jumlah_penumpang, $jadwal, $plat_mobil, $id_pemesan){
 
             $jumlah_penumpang = Input::get('jumlah_penumpang');
-            $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
-            $trip = Trip::where(['id_trip' => $id_trip])->get();
+            $pesanan = Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+            $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
            
-            $pemesan = Pemesan::where('id_users', $id_users_pemesan)->get();
+            $pemesan = Pemesan::where('id_pemesan', $id_pemesan)->get();
             $seat = Seat::all();
-            $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
+            $seat_b = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                         ->where('status', '!=', 5)
                         ->orderBy('id_seat', 'ASC')
                         ->get();
@@ -214,7 +238,7 @@ class PesananController extends Controller
         return view('erte.pesanan.update_detail', ['trip' => $trip, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pemesan' => $pemesan, 'seat_b' => $seat_b, 'seat_tersedia' => $seat_tersedia, 'pesanan' => $pesanan]);
     }
 
-    public function store($jumlah_penumpang, $id_trip, $id_users_pemesan, Request $request){
+    public function store($jumlah_penumpang, $jadwal, $plat_mobil, $id_pemesan, Request $request){
         $this->validate($request, 
             [
             'nama_penumpang' => 'required',
@@ -226,9 +250,9 @@ class PesananController extends Controller
                 if (count($request->id_seat) > 0) {
                     $requestedSeat = array();
                     for ($i=0; $i < count($request->id_seat); $i++) { 
-                            if (Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->exists()) {
+                            if (Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->exists()) {
                                 session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
-                                echo redirect('/pesanan/create_detail/'.$jumlah_penumpang. '/' .$id_trip. '/' .$id_users_pemesan);
+                                echo redirect('/pesanan/create_detail/'.$jumlah_penumpang. '/' .$jadwal. '/' . '/' .$plat_mobil. '/' .$id_pemesan);
                             }elseif (in_array($request->id_seat[$i], $requestedSeat) == false){
                                 array_push($requestedSeat, $request->id_seat[$i]);
                             }elseif (in_array($request->id_seat[$i], $requestedSeat) == true){
@@ -239,27 +263,30 @@ class PesananController extends Controller
                 }
 
                 $pesanan = new Pesanan();
-                    $pesanan_select = Pesanan::select('id_pesanan');
-                    $pesanan_count = $pesanan_select->count();
-                        if ($pesanan_count === 0) {
-                            $pesanan->id_pesanan = 'P1';
-                        }else{
-                            $lastrow=$pesanan_select->orderBy('tanggal_pesan','desc')->first();
-                            $lastrow_id = explode('P', $lastrow->id_pesanan);
-                            $new_id = $lastrow_id[1]+1;
-                            $pesanan->id_pesanan = 'P'.$new_id;
-                        }
-                $pesanan->id_trip = $id_trip;
-                $pesanan->id_users_pemesan = $id_users_pemesan;            
+                    // $pesanan_select = Pesanan::select('id_pesanan');
+                    // $pesanan_count = $pesanan_select->count();
+                    //     if ($pesanan_count === 0) {
+                    //         $pesanan->id_pesanan = 'P1';
+                    //     }else{
+                    //         $lastrow=$pesanan_select->orderBy('tanggal_pesan','desc')->first();
+                    //         $lastrow_id = explode('P', $lastrow->id_pesanan);
+                    //         $new_id = $lastrow_id[1]+1;
+                    //         $pesanan->id_pesanan = 'P'.$new_id;
+                    //     }
+                $pesanan->id_pemesan = $id_pemesan;            
+                $pesanan->jadwal = $jadwal;
+                $pesanan->plat_mobil = $plat_mobil;
                 $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
                 $pesanan->id_pengurus = Auth::guard('pengurus')->user()->id_pengurus;
                 $pesanan->save();
 
                 foreach($request->id_seat as $key => $value){
                     Detail_Pesanan::create([
-                        'id_trip' => $pesanan->id_trip,
+                        'jadwal' => $pesanan->jadwal,
+                        'plat_mobil' => $pesanan->plat_mobil,
                         'id_seat' => $request->id_seat[$key],
-                        'id_pesanan' => $pesanan->id_pesanan,
+                        'order_number' => 1,
+                        'id_pemesan' => $pesanan->id_pemesan,
                         'nama_penumpang' => $request->nama_penumpang[$key],
                         'jenis_kelamin' => $request->jenis_kelamin[$key],
                         'detail_asal' => $request->detail_asal[$key],
@@ -270,12 +297,36 @@ class PesananController extends Controller
                     ]);
                 }
 
+                // foreach($request->id_seat as $key => $value){
+                //     $detail = new Detail_Pesanan();
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->plat_mobil = $pesanan->plat_mobil;
+                //     $detail->id_seat = $request->id_seat[$key];
+
+                //     $cancelled = Detail_Pesanan::where(['jadwal' => $pesanan->jadwal, 'plat_mobil' => $pesanan->plat_mobil, 'id_seat' => $request->id_seat[$key]])->where('status', '=', 5)->get();
+
+                //     if ($cancelled->exists()) {
+                //         $order_number_select =  
+                //     }
+                //     $detail->order_number = $pesanan->jadwal;
+
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->jadwal = $pesanan->jadwal;
+                //     $detail->save();
+                // }
+
                 session()->flash('flash_success', 'Berhasil menambahkan data pesanan ');
                 return redirect('/pesanan');    
 
     }
 
-    public function update_store($jumlah_penumpang, $id_pesanan, $id_trip, $id_users_pemesan, Request $request){
+    public function update_store($jumlah_penumpang, $id_pemesan, $jadwal, $plat_mobil, Request $request){
         $this->validate($request, 
             [
             // 'id_users' => 'required',
@@ -286,9 +337,9 @@ class PesananController extends Controller
             'detail_tujuan' => 'required'            
         ]);
 
-        $trip = Trip::where(['id_trip' => $id_trip])->get();
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
 
-        if(Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $request->id_seat])
+        if(Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat])
                 ->where('status', '!=', 5)
                 ->exists()) {
                         
@@ -297,9 +348,10 @@ class PesananController extends Controller
         }else{
             foreach($request->nama_penumpang as $key => $value){
                     Detail_Pesanan::create([
-                        'id_trip' => $id_trip,
+                        'jadwal' => $jadwal,
+                        'plat_mobil' => $plat_mobil,
                         'id_seat' => $request->id_seat[$key],
-                        'id_pesanan' => $id_pesanan,
+                        'id_pemesan' => $id_pemesan,
                         'nama_penumpang' => $request->nama_penumpang[$key],
                         'jenis_kelamin' => $request->jenis_kelamin[$key],
                         'detail_asal' => $request->detail_asal[$key],
@@ -311,26 +363,27 @@ class PesananController extends Controller
                 }
 
                 session()->flash('flash_success', 'Berhasil menambahkan data penumpang' );
-                return redirect('/pesanan/show/' .$id_pesanan. '/' .$id_trip);
+                return redirect('/pesanan/show/' .$id_pemesan. '/' .$jadwal. '/' .$plat_mobil );
 
         }             
 
                 
     }
 
-    public function edit($id_pesanan, $id_trip){
-    	$pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
-        $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->orderBy('id_seat', 'ASC')->get();
+    public function edit($id_pemesan, $jadwal, $plat_mobil){
+    	$pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+
+        $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->orderBy('id_seat', 'ASC')->get();
         $jumlah = $detail->count();
         $kota = Kota::all();
 
-    	$trip = Trip::find($id_trip);
+    	$trip = Trip::find($$jadwal, $plat_mobil);
 
     	$pemesan = Pemesan::all();
         $seat = Seat::all();
         $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();
 
-        $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
+        $seat_b = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                         ->where('status', '!=', 5)
                         // ->select('id_seat')
                         ->orderBy('id_seat', 'ASC')
@@ -342,7 +395,6 @@ class PesananController extends Controller
                 for ($i=0; $i < $seat_b->count() ; $i++) { 
                     array_push($seat_booked, $seat_b[$i]['id_seat']);
                 }
-
 
         return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'seat_b' => $seat_b, 'feeder' => $feeder, 'seat_booked' => $seat_booked]);
     }
@@ -368,26 +420,28 @@ class PesananController extends Controller
         return view('erte.pesanan.update_create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota]);
     }
 
-    public function update($id_pesanan, $id_trip, Request $request){
+    public function update($id_pemesan, $jadwal, $plat_mobil, Request $request){
 
-            $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
-            $pesanan->id_trip = $request->id_trip;          
+            $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+            $pesanan->jadwal = $request->jadwal;
+            $pesanan->plat_mobil = $request->plat_mobil;                    
             $pesanan->id_pengurus = Auth::guard('pengurus')->user()->id_pengurus;
             $pesanan->save();
 
-            $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->get();
+            $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
 
             if(count($request->id_seat) > 0){
                 for($i = 0; $i < count($request->id_seat); $i++){
-                    $detail[$i]->id_trip = $pesanan->id_trip;
+                    $detail[$i]->jadwal = $pesanan->jadwal;
+                    $detail[$i]->plat_mobil = $pesanan->plat_mobil;
                     $detail[$i]->id_seat = $request->id_seat[$i];
-                    $detail[$i]->id_pesanan = $pesanan->id_pesanan;
+                    $detail[$i]->id_pemesan = $pesanan->id_pemesan;
                     $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
                     $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
                     $detail[$i]->detail_asal = $request->detail_asal[$i];
                     $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
                     $detail[$i]->no_hp = $request->no_hp[$i];
-                    $detail[$i]->id_users_feeder = $request->id_users_feeder[$i];
+                    $detail[$i]->id_feeder = $request->id_feeder[$i];
                     $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
                     $detail[$i]->status = $request->status[$i];
                     $detail[$i]->save();
@@ -395,11 +449,11 @@ class PesananController extends Controller
             }
 
             session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
-            return redirect('/pesanan/show/'. $id_pesanan .'/' . $id_trip);
+            return redirect('/pesanan/show/'. $id_pemesan .'/' . $jadwal. '/' . $plat_mobil );
                        
     }
 
-    public function update_search($id_pesanan, $id_trip){
+    public function update_search($id_pemesan, $jadwal, $plat_mobil){
             
 
             $id_kota_asal = Input::get('id_kota_asal');
@@ -407,15 +461,15 @@ class PesananController extends Controller
             $tanggal = Input::get('tanggal');
             $filter = '%'.$tanggal.'%';
             $jumlah_penumpang = Input::get('jumlah_penumpang');
-            $pesanan = Pesanan::where('id_pesanan', $id_pesanan)->get();
+            $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
         
             $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                        'id_kota_tujuan' => $id_kota_tujuan,])
                             ->where('jadwal', 'like', $filter)
                             ->get();
 
-                $seat_a = Detail_Pesanan::join('pesanan', 'pesanan.id_pesanan', '=', 'detail_pesanan.id_pesanan')
-                            ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
+                $seat_a = Detail_Pesanan::join('pesanan', ['pesanan.id_pemesan' => $detail_pesanan.id_pemesan, 'pesanan.jadwal' => 'detail_pesanan.jadwal', 'pesanan.plat_mobil' => 'detail_pesanan.plat_mobil'])
+                            ->join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
                             ->where(['trip.id_kota_asal' => $id_kota_asal, 
                                        'trip.id_kota_tujuan' => $id_kota_tujuan,])
                             ->where('jadwal', 'like', $filter)
@@ -427,20 +481,28 @@ class PesananController extends Controller
                     return view('erte.pesanan.update_search', ['trip_a' => $trip_a, 'id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan, 'tanggal' => $tanggal, 'jumlah_penumpang' => $jumlah_penumpang, 'seat' => $seat, 'pesanan' => $pesanan]);
     }
 
-     public function show($id_pesanan, $id_trip){
+     public function show($id_pemesan, $jadwal, $plat_mobil){
 
-        $trip = Trip::find($id_trip);
-        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
-        $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])
+        // $trip = Trip::find([$jadwal, $plat_mobil]);
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+        $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();   
+        $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                     ->orderBy('id_seat', 'asc')
                     ->get();
-        $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
+
+        // dd($detail);
+
+        if($detail->isEmpty()) {
+            session()->flash('flash_danger', 'Belum ada detail pesanan');
+            return redirect('/pesanan');
+        }
+
+        $seat_b = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                         ->where('status', '!=', 5)
                         ->count();
         $seat_tersedia = 7 - $seat_b;
 
-        $jumlah_penumpang = Detail_Pesanan::where('id_trip', $id_trip)
-                        ->where('id_pesanan', '=', $id_pesanan)
+        $jumlah_penumpang = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                         ->where('status', '!=', 5)
                         ->count();
                    
@@ -450,16 +512,16 @@ class PesananController extends Controller
 
     }
 
-    public function print($id_pesanan, $id_trip){
+    public function print($id_pemesan, $jadwal, $plat_mobil){
 
-        $trip = Trip::find($id_trip);
-        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();   
-        $detail = Detail_Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])
+        $trip = Trip::find($jadwal, $plat_mobil);
+        $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();   
+        $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                     ->where('status', '!=', 5)
                     ->orderBy('id_seat', 'asc')
                     ->get();
-        $jumlah_penumpang = Detail_Pesanan::where('id_trip', $id_trip)
-                        ->where('id_pesanan', '=', $id_pesanan)
+                    
+        $jumlah_penumpang = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_pemesan' => $id_pemesan])
                         ->where('status', '!=', 5)
                         ->count();
                    
@@ -469,22 +531,22 @@ class PesananController extends Controller
 
     }
 
-    public function update_feeder($id_pesanan, $id_trip){
+    public function update_feeder($id_pemesan, $jadwal, $plat_mobil){
 
-        $trip = Trip::find($id_trip);
-        $feeder = Input::get('id_users_feeder');
+        $trip = Trip::find($jadwal, $plat_mobil);
+        $feeder = Input::get('id_feeder');
         $id_seat = Input::get('id_seat');
         // dd($feeder);
         Detail_Pesanan::where('id_seat', $id_seat)
-          ->update(['id_users_feeder' => $feeder]);  
+          ->update(['id_feeder' => $id_feeder]);  
 
         session()->flash('flash_success', 'Berhasil mengubah data feeder');
-        return redirect('/pesanan/show/'. $id_pesanan .'/' . $id_trip);
+        return redirect('/pesanan/show/' .$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
         
     }
 
- 	public function delete($id_pesanan, $id_trip){
-        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
+ 	public function delete($id_pemesan, $jadwal, $plat_mobil){
+        $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
         $pesanan->delete();
 
         session()->flash('flash_success', "Berhasil menghapus pesanan");

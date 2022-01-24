@@ -52,7 +52,7 @@
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
         <address>
-          <strong>ID Trip: {{ $trip->id_trip }}</strong><br>
+          <strong>ID Trip: {{ $trip->jadwal }}-{{ $trip->plat_mobil }}</strong><br>
           Rute:     @if($trip->id_kota_asal == "K1")
                         Bukittinggi
                     @elseif($trip->id_kota_asal == "K2")
@@ -72,7 +72,7 @@
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
-        <b>ID Pesanan: {{ $pesanan->id_pesanan }}</b><br>
+        <b>ID Pesanan: {{ $pesanan->id_pemesan }}-{{ $pesanan->jadwal }}-{{ $pesanan->plat_mobil }}</b><br>
         <b>Pengurus:</b> {{ $pesanan->pengurus->nama}}<br>
         <b>Kontak:</b> {{ $pesanan->pengurus->kontak}}<br>
         <b>Email:</b> {{ $pesanan->pengurus->email}}

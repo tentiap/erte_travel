@@ -70,9 +70,9 @@
                         <table class="table table-bordered table-hover table-striped">
                           <thead>
                               <tr>
-                                <th>ID</th>
+                                <!-- <th>ID</th> -->
                                 <th>Jam</th>
-                                <th>Sopir</th>
+                                <th>Mobil</th>
                                 <!-- <th>Keterangan</th> -->
                                 <th>#</th>
                               </tr>
@@ -80,17 +80,19 @@
                         <tbody>
                           @foreach($trip_a as $t)
                             <tr>
-                              <td>{{$t->id_trip}}</td>
+                              <!-- <td>{{$t->id_trip}}</td> -->
                               <td>{{ date('H:i', strtotime($t->jadwal)) }}</td>
-                              <td>
+                              <td>{{ $t->plat_mobil }}</td>
+
+                              <!-- <td>
                                       @if(empty($t->id_users_sopir))
                                           Belum Ada Sopir
                                       @else
                                           {{ $t->sopir->nama }}
                                       @endif
-                              </td>
+                              </td> -->
                               <td>
-                                <a href="/pesanan/create_detail/{{$jumlah_penumpang}}/{{$t->id_trip}}/{{$p->id_users}}"><button type="button" class="btn btn-info">Pesan</button></a>
+                                <a href="/pesanan/create_detail/{{$jumlah_penumpang}}/{{$t->jadwal}}/{{$t->plat_mobil}}/{{$p->id_pemesan}}"><button type="button" class="btn btn-info">Pesan</button></a>
                               </td>
                             </tr>
                           @endforeach

@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Penumpang di Pesanan {{$pesanan->id_pesanan}}<small>(Trip {{$pesanan->id_trip}} )</small> 
+          Tambah Penumpang di Pesanan {{$pesanan->id_pemesan}}-{{$pesanan->jadwal}}-{{$pesanan->plat_mobil}} 
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -72,7 +72,7 @@
                 </div>
 
             </div>
-                    <form method="post" action="/pesanan/update_store/{{$jumlah_penumpang}}/{{$pesanan->id_pesanan}}/{{$t->id_trip}}/{{$p->id_users}}">
+                    <form method="post" action="/pesanan/update_store/{{$jumlah_penumpang}}/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}

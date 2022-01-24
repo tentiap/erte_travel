@@ -119,13 +119,13 @@ Route::get('pesanan', 'PesananController@index');
 Route::get('/pesanan/create', 'PesananController@create');
 Route::post('/pesanan/create_search', 'PesananController@search');
 Route::get('/pesanan/create_detail/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@detail');
-Route::post('/pesanan/store/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_users_pemesan}', 'PesananController@store');
+Route::post('/pesanan/store/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@store');
 
 Route::get('/pesanan/edit/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@edit');
 Route::put('/pesanan/update/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update');
 Route::get('/pesanan/update_create/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_create');
-Route::post('/pesanan/update_store/{jumlah_penumpang}/{{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_store');
-Route::get('/pesanan/update_detail/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_detail');
+Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_store');
+Route::get('/pesanan/update_detail/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@update_detail');
 
 Route::get('/pesanan/delete/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@show');

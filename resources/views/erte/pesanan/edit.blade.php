@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Edit Data Pesanan {{$pesanan->id_pesanan}}
+          Edit Data Pesanan {{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -64,7 +64,7 @@
 
             </div>
 
-                    <form method="post" action="/pesanan/update/{{$pesanan->id_pesanan}}/{{$pesanan->trip->id_trip}}">
+                    <form method="post" action="/pesanan/update/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
 
                         @foreach($detail as $detail)
 
@@ -253,7 +253,7 @@
                         <div class="modal-body">
                             <!-- Awal Modal Body -->
                             <b>Ubah Pesanan</b><br><br>
-                                <form method="post" action="/pesanan/update1/{{$pesanan->id_pesanan}}/{{$pesanan->id_trip}}">
+                                <form method="post" action="/pesanan/update1/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
                                         {{ csrf_field() }}
                                         {{ method_field('PUT') }}
                                         <div class="form-group">

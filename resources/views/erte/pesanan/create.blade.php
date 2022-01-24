@@ -91,18 +91,18 @@
                                 @endif
 
                                 <label>Nama Pemesan</label>
-                                    <select class="form-control" name="id_users_pemesan">
+                                    <select class="form-control" name="id_pemesan">
                                         <option disabled selected value> -- Nama Pemesan -- </option>
                                             @foreach($pemesan as $p)
-                                                    <option value="{{ $p->id_users }}">
+                                                    <option value="{{ $p->id_pemesan }}">
                                                     {{$p->nama}}
                                                     </option> 
                                             @endforeach 
                                     </select>
                             
-                                @if($errors->has('id_users_pemesan'))
+                                @if($errors->has('id_pemesan'))
                                         <div class="text-danger">
-                                            {{ $errors->first('id_users_pemesan')}}
+                                            {{ $errors->first('id_pemesan')}}
                                         </div>
                                 @endif
 
