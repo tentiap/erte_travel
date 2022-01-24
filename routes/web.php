@@ -125,7 +125,7 @@ Route::get('/pesanan/edit/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananControlle
 Route::put('/pesanan/update/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update');
 Route::get('/pesanan/update_create/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_create');
 Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_store');
-Route::get('/pesanan/update_detail/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@update_detail');
+Route::get('/pesanan/update_detail/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@update_detail');
 
 Route::get('/pesanan/delete/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@delete');
 Route::get('/pesanan/show/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@show');

@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Penumpang di Pesanan {{$pesanan->id_pemesan}}-{{$pesanan->jadwal}}-{{$pesanan->plat_mobil}} 
+          Tambah Penumpang di Pesanan {{$id}} 
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -28,13 +28,13 @@
                                         <select class="form-control" name="id_kota_asal" id="id_kota_asal" disabled>
                                             <option disabled selected value> -- Kota Asal -- </option>
                                                 @foreach($kota as $k)
-                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
+                                                        <option value="{{ $k->id_kota }}" {{$pesanan->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
                                                         {{$k->nama_kota}}
                                                         </option>
                                                 @endforeach 
                                         </select>
 
-                                        <input type="hidden" name="id_kota_asal" value="{{$pesanan->trip->id_kota_asal}}">
+                                        <input type="hidden" name="id_kota_asal" value="{{$pesanan->id_kota_asal}}">
                                 </div>
 
                                 <div class="col-sm-6">
@@ -42,19 +42,19 @@
                                         <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan" disabled>
                                             <option disabled selected value> -- Kota Tujuan -- </option>
                                             @foreach($kota as $k)
-                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_tujuan == $k->id_kota ? 'selected' : ''}}>
+                                                        <option value="{{ $k->id_kota }}" {{$pesanan->id_kota_tujuan == $k->id_kota ? 'selected' : ''}}>
                                                         {{$k->nama_kota}}
                                                         </option>
                                             @endforeach                                                            
                                         </select>
-                                        <input type="hidden" name="id_kota_tujuan" value="{{$pesanan->trip->id_kota_tujuan}}">
+                                        <input type="hidden" name="id_kota_tujuan" value="{{$pesanan->id_kota_tujuan}}">
                                 </div>                                                
                             </div>
 
 
                                 <label>Jadwal</label>
                                     <div class='input-group date'>
-                                        <input type='text' class="form-control" name="tanggal" value="{{ date('d M Y (H:i)', strtotime($pesanan->trip->jadwal)) }}" disabled/>
+                                        <input type='text' class="form-control" name="tanggal" value="{{ date('d M Y (H:i)', strtotime($pesanan->jadwal)) }}" disabled/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -65,7 +65,7 @@
                                         @endif      
                                     </div>
 
-                                    <input type="hidden" name="tanggal" value="{{$pesanan->trip->jadwal}}">    
+                                    <input type="hidden" name="tanggal" value="{{$pesanan->jadwal}}">    
                             </div>
                                 
                             <!-- <div class="col-sm-6"> -->

@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Edit Data Pesanan {{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}
+          Edit Data Pesanan {{$id}}
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -32,28 +32,28 @@
                 </div>
                   <!-- /.box-header -->
                 <div class="box-body">
-                        @if($pesanan->trip->id_kota_asal == "K1")
+                        @if($trip->id_kota_asal == "K1")
                                 Bukittinggi
-                        @elseif($pesanan->trip->id_kota_asal == "K2")
-                                          Padang
-                        @elseif($pesanan->trip->id_kota_asal == "K3")
-                                          Pekanbaru
+                        @elseif($trip->id_kota_asal == "K2")
+                                Padang
+                        @elseif($trip->id_kota_asal == "K3")
+                                Pekanbaru
                         @endif
 
                         -  
 
-                        @if($pesanan->trip->id_kota_tujuan == "K1")
+                        @if($trip->id_kota_tujuan == "K1")
                                 Bukittinggi
-                        @elseif($pesanan->trip->id_kota_tujuan == "K2")
+                        @elseif($trip->id_kota_tujuan == "K2")
                                 Padang
-                        @elseif($pesanan->trip->id_kota_tujuan == "K3")
+                        @elseif($trip->id_kota_tujuan == "K3")
                                 Pekanbaru
                         @endif
 
                         
-                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('D, d M Y', strtotime($pesanan->trip->jadwal)) }}
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('D, d M Y', strtotime($pesanan->jadwal)) }}
 
-                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('H:i', strtotime($pesanan->trip->jadwal)) }}
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('H:i', strtotime($pesanan->jadwal)) }}
 
                         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{$jumlah}} penumpang
 
@@ -263,7 +263,7 @@
                                                         <select class="form-control" name="id_kota_asal" id="id_kota_asal">
                                                             <option disabled selected value> -- Kota Asal -- </option>
                                                                 @foreach($kota as $k)
-                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
+                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
                                                                         {{$k->nama_kota}}
                                                                         </option>
                                                                 @endforeach 
@@ -281,7 +281,7 @@
                                                         <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan">
                                                             <option disabled selected value> -- Kota Tujuan -- </option>
                                                             @foreach($kota as $k)
-                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_tujuan == $k->id_kota ? 'selected' : ''}}>
+                                                                        <option value="{{ $k->id_kota }}" {{$trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
                                                                         {{$k->nama_kota}}
                                                                         </option>
                                                             @endforeach                                                            
@@ -298,7 +298,7 @@
 
                                                 <label>Jadwal</label>
                                                     <div class='input-group date' id='date'>
-                                                        <input type='text' class="form-control" name="tanggal" value="{{ $pesanan->trip->jadwal }}" />
+                                                        <input type='text' class="form-control" name="tanggal" value="{{ $pesanan->jadwal }}" />
                                                               <span class="input-group-addon">
                                                                   <span class="glyphicon glyphicon-calendar"></span>
                                                               </span>

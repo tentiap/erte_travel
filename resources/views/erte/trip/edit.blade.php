@@ -18,14 +18,14 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/trip/update/{{$trip->id_trip}}">
+                <form method="post" action="/trip/update/{{$trip->jadwal}}/{{$trip->plat_mobil}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>ID Trip</label>
-                            <input type="text" name="id_trip" class="form-control" placeholder="ID Trip" value="{{old('id_trip', $trip->id_trip)}}" disabled>
+                            <label>Plat Mobil</label>
+                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $trip->plat_mobil)}}" disabled>
 
                              @if($errors->has('id_trip'))
                                 <div class="text-danger">

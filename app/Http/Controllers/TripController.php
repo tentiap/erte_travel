@@ -121,10 +121,10 @@ class TripController extends Controller
                             ->get();
                             // dd($detail_pesanan);
 
-        $seat = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
-                    ->where('trip.id_trip', $id_trip)
+        $seat = Trip::join('detail_pesanan', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => 'detail_pesanan.plat_mobil'])
+                    ->where(['trip.jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                     ->where('detail_pesanan.status', '!=', 5)
-                    ->select('detail_pesanan.id_pesanan','detail_pesanan.id_seat')
+                    ->select('detail_pesanan.id_pemesan','detail_pesanan.id_seat')
                     ->count();
                     // dd($seat);
 

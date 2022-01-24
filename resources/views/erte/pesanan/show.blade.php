@@ -55,8 +55,8 @@
                     </script>
 
                         <div class="box-header with-border">
-                          <i class="fa fa-map-pin"></i>
-                          <h3 class="box-title">Pesanan {{ $pesanan->id_pemesan}}-{{ $pesanan->jadwal}}-{{ $pesanan->plat_mobil}} di Trip<a href="/trip/show/{{ $trip->jadwal}}/{{ $trip->plat_mobil}}" class="btn btn-md"><h4>{{$trip->jadwal}}-<{{$trip->plat_mobil}}/h4></a></h3>
+                          <!-- <i class="fa fa-map-pin"></i> -->
+                          <h3 class="box-title">Pesanan {{ $id }} </h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

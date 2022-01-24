@@ -84,6 +84,7 @@ class PemesanController extends Controller
         ]);
 
         $pemesan = Pemesan::find($id_pemesan);
+        $pemesan->id_pemesan = $request->id_pemesan;
         $pemesan->username = $request->username;
         $pemesan->email = $request->email;
         $pemesan->nama = $request->nama;

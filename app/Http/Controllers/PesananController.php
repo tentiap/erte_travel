@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
 use DB;
 use Auth;
 use App\Pesanan;
@@ -17,6 +18,7 @@ use App\Seat;
 use App\Mobil;
 use DateTime;
 use Carbon\Carbon;
+
 
 class PesananController extends Controller
 {
@@ -112,15 +114,15 @@ class PesananController extends Controller
         if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
             $trip_a = Trip::where(['id_kota_asal' => $id_kota_asal, 
                                'id_kota_tujuan' => $id_kota_tujuan,])
-                    ->where('jadwal', 'like', $filter)
-                    ->where('jadwal', '>', $filter_today)
+                    ->where('trip.jadwal', 'like', $filter)
+                    ->where('trip.jadwal', '>', $filter_today)
                     ->orderBy('trip.jadwal', 'asc')
                     ->get(); 
 
             $seat_a = Trip::join('detail_pesanan', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => 'detail_pesanan.plat_mobil'])
                             ->where(['id_kota_asal' => $id_kota_asal, 
                                        'id_kota_tujuan' => $id_kota_tujuan,])
-                            ->where('jadwal', 'like', $filter)
+                            ->where('trip.jadwal', 'like', $filter)
                             ->where('detail_pesanan.status', '!=', 5)
                             ->select('detail_pesanan.id_seat')
                             ->count();
@@ -221,7 +223,7 @@ class PesananController extends Controller
              
     }
 
-    public function update_detail($jumlah_penumpang, $jadwal, $plat_mobil, $id_pemesan){
+    public function update_detail($jadwal, $plat_mobil, $id_pemesan){
 
             $jumlah_penumpang = Input::get('jumlah_penumpang');
             $pesanan = Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
@@ -377,7 +379,14 @@ class PesananController extends Controller
         $jumlah = $detail->count();
         $kota = Kota::all();
 
-    	$trip = Trip::find($$jadwal, $plat_mobil);
+    	// $trip = Trip::find($jadwal, $plat_mobil);
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+
+        $string_jadwal = preg_replace('/[^0-9]/', '', date('Y m d', strtotime($trip->jadwal)));
+        $id = $id_pemesan.$string_jadwal.$plat_mobil;
+        // $id_trip = $string_jadwal.$plat_mobil;
+
+        // dd($trip);
 
     	$pemesan = Pemesan::all();
         $seat = Seat::all();
@@ -396,14 +405,24 @@ class PesananController extends Controller
                     array_push($seat_booked, $seat_b[$i]['id_seat']);
                 }
 
-        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'seat_b' => $seat_b, 'feeder' => $feeder, 'seat_booked' => $seat_booked]);
+        return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'seat_b' => $seat_b, 'feeder' => $feeder, 'seat_booked' => $seat_booked, 'id' => $id]);
     }
 
-    public function update_create($id_pesanan, $id_trip){
-        $pesanan = Pesanan::where(['id_pesanan' => $id_pesanan, 'id_trip' => $id_trip])->first();
-        $detail = Detail_Pesanan::where('id_pesanan', $id_pesanan)
-                    ->where('status', '!=', 5)
+    public function update_create($id_pemesan, $jadwal, $plat_mobil){
+        // $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+
+        $pesanan = Pesanan::join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])->where('pesanan.id_pemesan', $id_pemesan)->first();
+
+        // dd($pesanan);
+
+        $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
+                    ->where('detail_pesanan.status', '!=', 5)
                     ->get();
+        
+        $string_jadwal = preg_replace('/[^0-9]/', '', date('Y m d', strtotime($jadwal)));
+        $id = $id_pemesan.$string_jadwal.$plat_mobil;
+
+        
 
         $jumlah = $detail->count();
         $kota = Kota::all();
@@ -412,12 +431,12 @@ class PesananController extends Controller
         $pemesan = Pemesan::all();
         // $seat = Seat::all();
 
-        $seat_b = Detail_Pesanan::where('id_trip', $id_trip)
-                        ->where('status', '!=', 5)
+        $seat_b = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
+                        ->where('detail_pesanan.status', '!=', 5)
                         ->count();
         $seat = 7 - $seat_b;
 
-        return view('erte.pesanan.update_create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota]);
+        return view('erte.pesanan.update_create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'id' => $id]);
     }
 
     public function update($id_pemesan, $jadwal, $plat_mobil, Request $request){
@@ -490,8 +509,12 @@ class PesananController extends Controller
                     ->orderBy('id_seat', 'asc')
                     ->get();
 
-        // dd($detail);
+        $string_jadwal = preg_replace('/[^0-9]/', '', date('Y m d', strtotime($trip->jadwal)));
+                // dd($string_jadwal);
 
+        $id = $id_pemesan.$string_jadwal.$plat_mobil;
+        $id_trip = $string_jadwal.$plat_mobil;
+        
         if($detail->isEmpty()) {
             session()->flash('flash_danger', 'Belum ada detail pesanan');
             return redirect('/pesanan');
@@ -508,13 +531,15 @@ class PesananController extends Controller
                    
         $feeder = Feeder::where('id_kota', $trip->id_kota_asal)->get();
         
-        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'feeder' => $feeder, 'seat_tersedia' => $seat_tersedia, 'jumlah' => $jumlah_penumpang]);
+        return view('erte.pesanan.show', ['trip' => $trip, 'pesanan' => $pesanan, 'detail' => $detail, 'feeder' => $feeder, 'seat_tersedia' => $seat_tersedia, 'jumlah' => $jumlah_penumpang, 'id' => $id, 'id_trip' => $id_trip ]);
 
     }
 
     public function print($id_pemesan, $jadwal, $plat_mobil){
 
-        $trip = Trip::find($jadwal, $plat_mobil);
+        // $trip = Trip::find($jadwal, $plat_mobil);
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+
         $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();   
         $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
                     ->where('status', '!=', 5)
@@ -533,7 +558,8 @@ class PesananController extends Controller
 
     public function update_feeder($id_pemesan, $jadwal, $plat_mobil){
 
-        $trip = Trip::find($jadwal, $plat_mobil);
+        // $trip = Trip::find($jadwal, $plat_mobil);
+        $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
         $feeder = Input::get('id_feeder');
         $id_seat = Input::get('id_seat');
         // dd($feeder);

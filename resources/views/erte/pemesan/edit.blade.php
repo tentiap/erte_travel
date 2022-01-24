@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan" value="{{old('id_pemesan', $pemesan->id_pemesan)}}" disabled>
+                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan" value="{{old('id_pemesan', $pemesan->id_pemesan)}}" >
 
                             @if($errors->has('id_pemesan'))
                                 <div class="text-danger">

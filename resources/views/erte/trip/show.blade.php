@@ -25,8 +25,8 @@
                     .outset {border-style: outset;}
                 </style> -->
                     <div style="position: absolute; right: 0;">
-                        <a href="/trip/edit/{{ $trip->id_trip }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
-                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $trip->id_trip }}"><i class="fa fa-trash"></i> Hapus Trip</a>
+                        <a href="/trip/edit/{{ $trip->jadwal }}/{{ $trip->plat_mobil }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $trip->jadwal }}/{{ $trip->plat_mobil }}"><i class="fa fa-trash"></i> Hapus Trip</a>
                         <a href="/trip/" class="btn btn-md" ><i class="fa fa-list"></i> List Trip</a>
                         <a href="/trip/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Trip</a>                       
                     </div>
@@ -126,7 +126,7 @@
                         <td>{{ $d->nama_penumpang}}</a></td>
                         <td>{{ $d->detail_asal}}</td>
                         <td>{{ $d->detail_tujuan}}</td>
-                        <td><a href="/pesanan/show/{{ $d->id_pesanan }}/{{ $d->id_trip}}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>
+                        <td><a href="/pesanan/show/{{ $d->id_pemesan }}/{{ $d->jadwal}}/{{ $d->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>
                         
                       </tr>
                     @endforeach

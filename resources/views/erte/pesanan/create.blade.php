@@ -77,11 +77,11 @@
                                 <label>Jumlah penumpang</label>
                                     <select class="form-control" name="jumlah_penumpang">
                                         <option disabled selected value> -- Jumlah Penumpang -- </option>
-                                            @foreach($seat as $s)
-                                                    <option value="{{ $s->id_seat }}">
-                                                    {{$s->id_seat}}
-                                                    </option> 
-                                            @endforeach 
+                                            @for($i=0; $i < 7; $i++)
+                                                <option value="{{ $i+1 }}">
+                                                {{ $i+1 }}
+                                                </option> 
+                                            @endfor
                                     </select>
                             <!-- </div> -->
                                 @if($errors->has('jumlah_penumpang'))
@@ -129,6 +129,18 @@
                                                         {{ csrf_field() }}
 
                                                         
+                                                        <div class="form-group">
+                                                            <label>ID_Pemesan</label>
+                                                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan"  value="{{ old('id_pemesan') }}">
+
+                                                            @if($errors->has('id_pemesan'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('id_pemesan')}}
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+
                                                         <div class="form-group">
                                                             <label>Username</label>
                                                             <input type="text" name="username" class="form-control" placeholder="Username"  value="{{ old('username') }}">

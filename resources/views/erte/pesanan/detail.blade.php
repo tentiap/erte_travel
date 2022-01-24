@@ -75,7 +75,7 @@
 
                     
                     
-                    <form method="post" action="/pesanan/store/{{$jumlah_penumpang}}/{{$t->jadwal}}/{{$t->plat_mobil}}{{$p->id_pemesan}}">
+                    <form method="post" action="/pesanan/store/{{$jumlah_penumpang}}/{{$t->jadwal}}/{{$t->plat_mobil}}/{{$p->id_pemesan}}">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}
