@@ -52,7 +52,7 @@
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
         <address>
-          <strong>ID Trip: {{ $trip->jadwal }}-{{ $trip->plat_mobil }}</strong><br>
+          <strong>ID Trip: {{ $id_trip }}</strong><br>
           Rute:     @if($trip->id_kota_asal == "K1")
                         Bukittinggi
                     @elseif($trip->id_kota_asal == "K2")
@@ -72,7 +72,7 @@
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
-        <b>ID Pesanan: {{ $pesanan->id_pemesan }}-{{ $pesanan->jadwal }}-{{ $pesanan->plat_mobil }}</b><br>
+        <b>ID Pesanan: {{ $id }}</b><br>
         <b>Pengurus:</b> {{ $pesanan->pengurus->nama}}<br>
         <b>Kontak:</b> {{ $pesanan->pengurus->kontak}}<br>
         <b>Email:</b> {{ $pesanan->pengurus->email}}
@@ -114,7 +114,7 @@
                     <td>{{ $d->detail_asal }} </td>
                     <td>{{ $d->detail_tujuan }} </td>
                     <td>{{ $d->id_seat}}</td>
-                    <td> @currency($trip->rute->tarif) </td>
+                    <td> @currency($trip->tarif_trip) </td>
                     
                 </tr>
             @endforeach                    
@@ -145,7 +145,7 @@
             </tr> -->
             <tr>
               <th>Total:</th>
-              <td><strong>@currency($trip->rute->tarif * $jumlah) </strong></td>
+              <td><strong>@currency($trip->tarif_trip * $jumlah) </strong></td>
             </tr>
           </table>
         </div>

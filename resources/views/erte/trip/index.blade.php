@@ -75,7 +75,7 @@
                             <td>        
                                 <a href="/trip/show/{{ $t->jadwal }}/{{ $t->plat_mobil}}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
 
-                                <a href="/trip/edit/{ $t->jadwal }}/{{ $t->plat_mobil}}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                <a href="/trip/edit/{{ $t->jadwal }}/{{ $t->plat_mobil}}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
 
                                 <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $t->jadwal }}/{{ $t->plat_mobil}}"><i class="fa fa-trash"></i></a>
                             </td>
