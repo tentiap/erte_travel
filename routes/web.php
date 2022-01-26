@@ -79,7 +79,7 @@ Route::get('/mobil', 'MobilController@index');
 Route::get('/mobil/create', 'MobilController@create');
 Route::post('/mobil/store', 'MobilController@store');
 Route::get('/mobil/edit/{plat_mobil}', 'MobilController@edit');
-// Route::get('/feeder/show/{id_feeder}', 'FeederController@show');
+Route::get('/mobil/show/{plat_mobil}', 'MobilController@show');
 Route::put('/mobil/update/{plat_mobil}', 'MobilController@update');
 Route::get('/mobil/delete/{plat_mobil}', 'MobilController@delete');
 

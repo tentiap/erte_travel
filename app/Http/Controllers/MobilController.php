@@ -16,6 +16,8 @@ class MobilController extends Controller {
     public function create() {
         $mobil = Mobil::all();
     	$sopir = Sopir::all();
+
+        
     	return view('erte.mobil.create', ['mobil' => $mobil, 'sopir' => $sopir]);
     }
 
@@ -33,6 +35,17 @@ class MobilController extends Controller {
         $mobil->merek_mobil = $request->merek_mobil;
         $mobil->save();
 
+        $id_seat = ["1", "2", "3", "4", "5", "6", "7"];
+        $keterangan = ["Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh"];
+
+        for($i=0; $i < count($id_seat); $i++) {
+            $seat = new Seat();
+            $seat->id_seat = $id_seat[$i];
+            $seat->plat_mobil = $mobil->plat_mobil;
+            $seat->keterangan = $keterangan[$i];
+            $seat->save();
+        }
+
         session()->flash('flash_success', 'Berhasil menambahkan data mobil dengan plat '. $request->input('plat_mobil'));
 
         return redirect('/mobil');
@@ -43,6 +56,18 @@ class MobilController extends Controller {
         $sopir = Sopir::all();
     			    	
     	return view('erte.mobil.edit', ['mobil' => $mobil, 'sopir' => $sopir]);
+    }
+
+    public function show($plat_mobil) {
+        $seat = Seat::find($plat_mobil);
+        $seat = Seat::where('plat_mobil', $plat_mobil)
+        ->orderBy('id_seat', 'asc')->paginate(10);  
+        // $mobil = Mobil::find($plat_mobil);
+        $mobil = Mobil::where('plat_mobil', $plat_mobil)
+        ->orderBy('id_seat', 'asc')->paginate(10);  
+
+        return view('erte.mobil.show', ['mobil' => $mobil, 'seat' => $seat, "plat_mobil" => $plat_mobil]);
+      
     }
 
     public function update($plat_mobil, Request $request, Mobil $mobil) {

@@ -109,11 +109,14 @@
                                                 <label>Seat</label>
                                                 <select class="form-control" name="id_seat[]">
                                                     <option disabled value="">  Seat  </option>
-                                                        @foreach($seat as $s)                                                               
-                                                                <option value="{{$s->id_seat}}" {{$detail->id_seat == $s->id_seat ? 'selected' : ''}}>
-                                                                    {{$s->id_seat}}
-                                                                </option>
-                                                        @endforeach 
+                                                        <option selected value> {{$detail->id_seat}} </option>
+                                                        @for($a = 1; $a <= 7; $a++)
+                                                            @if(in_array($a, $seat_booked) == false)
+                                                                <option value="{{ $a }}" {{$detail->id_seat == $a ? 'selected' : ''}}>
+                                                                    {{$a}}
+                                                                </option> 
+                                                            @endif                            
+                                                        @endfor
                                                 </select>
                                             </div>
 

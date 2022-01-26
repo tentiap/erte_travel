@@ -58,7 +58,7 @@
                     <div class="box box-solid">
                         <div class="box-header with-border">
                           <i class="fa fa-map-pin"></i>
-                          <h3 class="box-title">Trip {{ $trip->id_trip }}    
+                          <h3 class="box-title">Trip {{ $id_trip }}    
                             <small class="badge bg-green">{{7 - $seat}} seat tersedia</small></h3>
                         </div>
                         <!-- /.box-header -->
@@ -78,14 +78,8 @@
                                           Pekanbaru
                                       @endif
                                 </dd>
-                                <dt>Sopir</dt>
-                                <dd>
-                                    @if(empty($trip->id_users_sopir))
-                                      <a href="/trip/edit/{{ $trip->id_trip }}"><u>Tambah Sopir</u></a>
-                                    @else
-                                      {{ $trip->sopir->nama }}
-                                    @endif
-                                </dd>
+                                <dt>Mobil</dt>
+                                <dd> {{ $trip->plat_mobil }}</dd>
                               </dl>
                             </div>
 
@@ -103,6 +97,8 @@
                                           Pekanbaru
                                       @endif
                                 </dd>
+                                <dt>Sopir</dt>
+                                <dd>{{ $sopir }}</dd>
                               </dl>
                             </div>
                         </div>

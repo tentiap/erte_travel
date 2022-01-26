@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Penumpang di Pesanan {{$pesanan->id_pemesan}}-{{$pesanan->jadwal}}-{{$pesanan->plat_mobil}} 
+          Tambah Penumpang di Pesanan {{$id}} 
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -36,9 +36,9 @@
                         @if($t->id_kota_asal == "K1")
                                 Bukittinggi
                         @elseif($t->id_kota_asal == "K2")
-                                          Padang
+                                Padang
                         @elseif($t->id_kota_asal == "K3")
-                                          Pekanbaru
+                                Pekanbaru
                         @endif
 
                         -  
@@ -117,11 +117,15 @@
                                                 <label>Seat</label>
                                                 <select class="form-control" name="id_seat[]" id="id_kota_asal">
                                                     <option disabled selected value>  Seat  </option>
-                                                        @foreach($seat as $s)
-                                                                <option value="{{ $s->id_seat }}">
-                                                                {{$s->id_seat}}
-                                                                </option> 
-                                                        @endforeach 
+                                                    @for($a = 1; $a <= 7; $a++)
+
+                                                        @if(in_array($a, $seat_booked) == false)
+                                                            <option value="{{ $a }}">
+                                                                {{$a}}
+                                                            </option> 
+                                                        @endif    
+                                                                                
+                                                    @endfor
                                                 </select>
 
                                                  @if($errors->has('id_seat'))

@@ -138,6 +138,7 @@
                         <th>Detail Asal</th>
                         <th>Detail Tujuan</th>
                         <th>Seat</th>
+                        <th>Order Number</th>
                         <th>Biaya Tambahan</th>
                         <th>Feeder</th>
                         <th>Status</th>
@@ -159,6 +160,7 @@
                             <td>{{ $d->detail_asal }} </td>
                             <td>{{ $d->detail_tujuan }} </td>
                             <td>{{ $d->id_seat}}</td>
+                            <td>{{ $d->order_number}}</td>
                             <td>
                                   @if(empty($d->biaya_tambahan))
                                              -

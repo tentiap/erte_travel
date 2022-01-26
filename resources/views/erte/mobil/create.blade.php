@@ -43,7 +43,7 @@
                                 <option disabled selected value> -- Sopir -- </option>
                                 @foreach($sopir as $s)
                                     <option value="{{ $s->id_sopir }}">
-                                    {{$s->id_sopir}}
+                                    {{$s->nama}}
                                     </option> 
                                 @endforeach
                                     

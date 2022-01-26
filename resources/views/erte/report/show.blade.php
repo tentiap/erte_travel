@@ -82,7 +82,7 @@
 
                             </td>
                             <td>
-                                    @if(empty($t->id_users_sopir))
+                                    @if(empty($t->id_sopir))
                                       Belum ada sopir
                                     @else
                                       {{ $t->sopir->nama }}

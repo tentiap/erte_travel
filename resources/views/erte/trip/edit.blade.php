@@ -24,12 +24,28 @@
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>Plat Mobil</label>
-                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $trip->plat_mobil)}}" disabled>
+                            <label>Jadwal</label>
+                                <div class='input-group date' id='datetime_edit'>
+                                    <input type='text' class="form-control" name="jadwal" value="{{ $trip->jadwal }}" />
+                                      <span class="input-group-addon">
+                                          <span class="glyphicon glyphicon-calendar"></span>
+                                      </span>
+                                </div>
 
-                             @if($errors->has('id_trip'))
+                                @if($errors->has('jadwal'))
+                                        <div class="text-danger">
+                                            {{ $errors->first('jadwal')}}
+                                        </div>
+                                @endif
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <label>Plat Mobil</label>
+                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $trip->plat_mobil)}}">
+
+                             @if($errors->has('plat_mobil'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_trip')}}
+                                    {{ $errors->first('plat_mobil')}}
                                 </div>
                             @endif
 
@@ -69,25 +85,9 @@
                                         {{ $errors->first('id_kota_tujuan')}}
                                     </div>
                                 @endif
-                        </div>
+                        </div> -->
 
-                        <div class="form-group">
-                            <label>Jadwal</label>
-                                <div class='input-group date' id='datetime_edit'>
-                                    <input type='text' class="form-control" name="jadwal" value="{{ $trip->jadwal }}" />
-                                      <span class="input-group-addon">
-                                          <span class="glyphicon glyphicon-calendar"></span>
-                                      </span>
-                                </div>
-
-                                @if($errors->has('jadwal'))
-                                        <div class="text-danger">
-                                            {{ $errors->first('jadwal')}}
-                                        </div>
-                                @endif
-                        </div>
-
-                       <div class="form-group">
+                       <!-- <div class="form-group">
                             <label>Sopir</label>
                             <select class="form-control" name="id_users_sopir">
                                 <option value=""> -- Sopir -- </option>
@@ -101,7 +101,7 @@
                                     {{ $errors->first('id_users_sopir')}}
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">

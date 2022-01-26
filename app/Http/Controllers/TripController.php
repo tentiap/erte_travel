@@ -122,33 +122,46 @@ class TripController extends Controller
                             // dd($detail_pesanan);
 
         $seat = Trip::join('detail_pesanan', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => 'detail_pesanan.plat_mobil'])
-                    ->where(['trip.jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
+                    ->where(['detail_pesanan.jadwal' => $jadwal, 'detail_pesanan.plat_mobil' => $plat_mobil])
                     ->where('detail_pesanan.status', '!=', 5)
                     ->select('detail_pesanan.id_pemesan','detail_pesanan.id_seat')
                     ->count();
                     // dd($seat);
+        
+        $string_jadwal = preg_replace('/[^0-9]/', '', date('Y m d', strtotime($jadwal)));
+        $id_trip = $string_jadwal.$plat_mobil;
 
-                    $detail = DB::table('detail_pesanan')
-                    ->join('pesanan', function ($join) {
-                        $join->on('detail_pesanan.id_pesanan', '=', 'pesanan.id_pesanan')->On('detail_pesanan.id_trip', '=', 'pesanan.id_trip');
-                      })
-                    ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
-                    ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                    ->where('detail_pesanan.id_users_feeder', $request->id_users_feeder)
-                    ->where('status', '!=', 5)
-                    ->select('detail_pesanan.id_trip',
-                             'detail_pesanan.id_pesanan',
-                             'detail_pesanan.nama_penumpang',
-                             'detail_pesanan.jenis_kelamin',
-                             'detail_pesanan.id_seat',
-                             'detail_pesanan.detail_asal',
-                             'detail_pesanan.no_hp',
-                             'detail_pesanan.status',
-                             'detail_pesanan.biaya_tambahan',
-                             'pemesan.kontak',
-                             'trip.jadwal')
-                    ->orderBy('jadwal', 'ASC')
-                    ->get();
+        $sopir_select = Sopir::join('mobil', 'mobil.id_sopir', '=', 'sopir.id_sopir')
+                        ->where('mobil.plat_mobil', $plat_mobil)
+                        ->select('sopir.nama')
+                        ->get();
+        json_decode($sopir_select, true);
+        $sopir = ($sopir_select[0]['nama']);
+
+        // dd($sopir);
+
+        // $detail = DB::table('detail_pesanan')
+        // ->join('pesanan', function ($join) {
+        //     $join->on('detail_pesanan.jadwal', '=', 'pesanan.jadwal')->On('detail_pesanan.plat_mobil', '=', 'pesanan.plat_mobil')->On('detail_pesanan.id_pemesan', '=', 'pesanan.id_pemesan.');
+        //     })
+        // ->join('pemesan', 'pesanan.id_pemesan', '=', 'pemesan.id_pemesan')
+        // ->join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
+        // ->where('detail_pesanan.id_feeder', $request->id_feeder)
+        // ->where('status', '!=', 5)
+        // ->select('detail_pesanan.jadwal',
+        //         'detail_pesanan.plat_mobil',
+        //         'detail_pesanan.id_pemesan',
+        //         'detail_pesanan.nama_penumpang',
+        //         'detail_pesanan.jenis_kelamin',
+        //         'detail_pesanan.id_seat',
+        //         'detail_pesanan.detail_asal',
+        //         'detail_pesanan.no_hp',
+        //         'detail_pesanan.status',
+        //         'detail_pesanan.biaya_tambahan',
+        //         'pemesan.kontak',
+        //         'trip.jadwal')
+        // ->orderBy('detail_pesanan.jadwal', 'ASC')
+        // ->get();
         
         // $pesanan = Pesanan::with(['detail_pesanan' => function ($query) use($trip) {
         //     $query->where('id_pesanan', '=', $trip);
@@ -158,7 +171,7 @@ class TripController extends Controller
         //     $query->where('id_trip',$trip);
         // }))->get();
         
-        return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat]);
+        return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat, 'id_trip' => $id_trip, 'sopir' => $sopir]);
 
     }
 
@@ -181,26 +194,25 @@ class TripController extends Controller
 
     }
 
-    // public function update($jadwal, $plat_mobil, Request $request){
-    // 	 $this->validate($request, [
-    //         'id_kota_asal' => 'required',
-    //         'id_kota_tujuan' => 'required',
-    //         'jadwal' => 'required']);
+    public function update($jadwal, $plat_mobil, Request $request){
+    	 $this->validate($request, [
+            'id_kota_asal' => 'required',
+            'id_kota_tujuan' => 'required',
+            'jadwal' => 'required']);
 
-    //         $trip = Trip::find($id_trip);
-    //         // $trip->id_trip = $request->id_trip;
-    //         // $trip->id_pengurus = Auth::guard('pengurus')->user()->id_users;
-    //         $trip->id_users_sopir = $request->id_users_sopir;
-    //         $trip->id_kota_asal = $request->id_kota_asal;
-    //         $trip->id_kota_tujuan = $request->id_kota_tujuan;
-    //         $trip->jadwal = $request->jadwal;
-            
-    //         $trip->save();
+            $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+            // $trip->id_trip = $request->id_trip;
+            // $trip->id_pengurus = Auth::guard('pengurus')->user()->id_users;
+            $trip->jadwal = $request->jadwal;
+            $trip->plat_mobil = $request->plat_mobil;
+            $trip->id_kota_asal = $request->id_kota_asal;
+            $trip->id_kota_tujuan = $request->id_kota_tujuan;
+            $trip->save();
 
-    //         session()->flash('flash_success', 'Berhasil mengupdate data trip '.$trip->id_trip);
+            session()->flash('flash_success', 'Berhasil mengupdate data trip ');
 
-    //      return redirect('/trip');
-    // }
+         return redirect('/trip');
+    }
 
  	public function delete($jadwal, $plat_mobil){
     	$trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
