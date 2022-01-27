@@ -25,35 +25,33 @@ Route::namespace('api')->group(function () {
 	Route::post('/createPesanan', 'ApiController@create_pesanan');
 	Route::post('/createDetailPesanan', 'ApiController@create_detail_pesanan');
 
-
-
 	Route::get('/search/{id_kota_asal}/{id_kota_tujuan}/{tanggal}/{jumlah_penumpang}', 'ApiController@pesananSearch');
-	Route::get('/check/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'ApiController@check');
-	Route::post('/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'ApiController@createDetail');
-	Route::get('/checkUpdate/{tambah}/{id_trip}/{id_users_pemesan}', 'ApiController@check_update');
+	Route::get('/check/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@check');
+	Route::post('/create_detail/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@createDetail');
+	Route::get('/checkUpdate/{tambah}/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@check_update');
 
 
-	Route::get('/tripSopir/{id_users}', 'ApiController@tripSopir');
-	Route::get('/historySopir/{id_users}', 'ApiController@riwayatTripSopir');
-	Route::get('/detailTripSopir/{id_trip}', 'ApiController@detailTripSopir');
+	Route::get('/tripSopir/{id_sopir}', 'ApiController@tripSopir');
+	Route::get('/historySopir/{id_sopir}', 'ApiController@riwayatTripSopir');
+	Route::get('/detailTripSopir/{id_sopir}', 'ApiController@detailTripSopir');
 
-	Route::get('/getBookedSeat/{id_trip}', 'ApiController@getBookedSeat');
-	Route::get('/getIdPesanan/{id_trip}/{id_users_pemesan}', 'ApiController@getIdPesanan');
-	Route::get('/getDetailPesanan/{id_pesanan}/{id_trip}', 'ApiController@getDetailPesanan');
-	Route::get('/checkAvailableSeat/{id_trip}', 'ApiController@checkAvailableSeat');
+	Route::get('/getBookedSeat/{jadwal}/{plat_mobil}', 'ApiController@getBookedSeat');
+	Route::get('/getIdPesanan/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@getIdPesanan');
+	Route::get('/getDetailPesanan/{id_pemesan}/{jadwal}/{plat_mobil}', 'ApiController@getDetailPesanan');
+	Route::get('/checkAvailableSeat/{jadwal}/{plat_mobil}', 'ApiController@checkAvailableSeat');
 
 
-	Route::get('/tripFeeder/{id_users_feeder}', 'ApiController@Feeder');
+	Route::get('/tripFeeder/{id_feeder}', 'ApiController@Feeder');
 	Route::post('/changeStatus/', 'ApiController@changeStatus');
 	Route::post('/updateDataPemesan/', 'ApiController@updateDataPemesan');
 	Route::post('/updateDetailPesanan/', 'ApiController@updateDetailPesanan');
 
 	
-	Route::get('/history/{id_users_pemesan}', 'ApiController@riwayatTripPemesan');
-	Route::get('/detail/{id_pesanan}', 'ApiController@detailRiwayatTripPemesan');
+	Route::get('/history/{id_pemesan}', 'ApiController@riwayatTripPemesan');
+	Route::get('/detail/{id_pemesan}/{jadwal}/{plat_mobil}', 'ApiController@detailRiwayatTripPemesan');
 	Route::get('/trip/', 'ApiController@lihatTrip');
 	Route::post('/create_pesanan/', 'ApiController@create_pesanan');
-	Route::get('/seat/{id_trip}', 'ApiController@seat');
+	Route::get('/seat/{jadwal}/{plat_mobil}', 'ApiController@seat');
 
 
 });

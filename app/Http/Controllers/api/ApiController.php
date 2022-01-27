@@ -69,6 +69,7 @@ class ApiController extends Controller
 
     public function register(Request $request){
         $validasi = Validator::make($request->all(), [
+            'id_pemesan' => 'required',
             'username' => 'required',
             'email' => 'required|email|unique:pemesan',
             'password' => 'required|min:6',
@@ -84,18 +85,20 @@ class ApiController extends Controller
         }
 
         $pemesan = new Pemesan();
-            $pemesan_select = Pemesan::select('id_users');
-            $pemesan_count = $pemesan_select->count();
-                // if ($operator_count === 1 && $operator->id_users === "admin" ) {
-                if ($pemesan_count === 0) {
-                    $pemesan->id_users = 'U1';
-                }else{
-                    // $lastrow = $trip_select->last();
-                    $lastrow=$pemesan_select->orderBy('created_at','desc')->first();
-                    $lastrow_id = explode('U', $lastrow->id_users);
-                    $new_id = $lastrow_id[1]+1;
-                    $pemesan->id_users = 'U'.$new_id;
-                }
+            // $pemesan_select = Pemesan::select('id_users');
+            // $pemesan_count = $pemesan_select->count();
+            //     // if ($operator_count === 1 && $operator->id_users === "admin" ) {
+            //     if ($pemesan_count === 0) {
+            //         $pemesan->id_users = 'U1';
+            //     }else{
+            //         // $lastrow = $trip_select->last();
+            //         $lastrow=$pemesan_select->orderBy('created_at','desc')->first();
+            //         $lastrow_id = explode('U', $lastrow->id_users);
+            //         $new_id = $lastrow_id[1]+1;
+            //         $pemesan->id_users = 'U'.$new_id;
+            //     }
+
+        $pemesan->id_pemesan = $request->id_pemesan;
         $pemesan->username = $request->username;
         $pemesan->email = $request->email;
         $pemesan->password = $request->password;
@@ -131,7 +134,7 @@ class ApiController extends Controller
                     ->get();
 
     
-        $trip_booking = Trip::join('detail_pesanan', 'trip.id_trip', '=', 'detail_pesanan.id_trip')
+        $trip_booking = Trip::join('detail_pesanan', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => 'detail_pesanan.plat_mobil'])
                     ->where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
                     ->where('jadwal', 'like', $filter)
@@ -151,7 +154,7 @@ class ApiController extends Controller
         return $this->error("Tidak ada trip");
 
     }
-
+    //sampai sini
     public function check(Request $request){
 
         if(Pesanan::where(['id_trip' => $request->id_trip, 'id_users_pemesan' => $request->id_users_pemesan])->exists()){
