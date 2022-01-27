@@ -302,7 +302,7 @@ class ApiController extends Controller
                       })
                     ->join('pemesan', 'pesanan.id_users_pemesan', '=', 'pemesan.id_users')
                     ->join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-                    ->where('detail_pesanan.id_users_feeder', $request->id_users_feeder)
+                    ->where('detail_pesanan.id_feeder', $request->id_feeder)
                     ->where('detail_pesanan.status', '!=', 5)
                     ->whereBetween('trip.jadwal', [Carbon::now(), $carbonTrip])
                     ->select('detail_pesanan.id_trip',
@@ -322,7 +322,7 @@ class ApiController extends Controller
         if(!$detail->isEmpty()){
             return response()->json([
                 'status' => true,
-                'message' => "Feeder ".$request->id_users_feeder,
+                'message' => "Feeder ".$request->id_feeder,
                 'data' => $detail
             ]);
         }                         

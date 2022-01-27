@@ -105,22 +105,7 @@
                                                     @endif
                                             </div>
 
-                                            <div class="col-sm-3">
-                                                <label>Seat</label>
-                                                <select class="form-control" name="id_seat[]">
-                                                    <option disabled value="">  Seat  </option>
-                                                        <option selected value> {{$detail->id_seat}} </option>
-                                                        @for($a = 1; $a <= 7; $a++)
-                                                            @if(in_array($a, $seat_booked) == false)
-                                                                <option value="{{ $a }}" {{$detail->id_seat == $a ? 'selected' : ''}}>
-                                                                    {{$a}}
-                                                                </option> 
-                                                            @endif                            
-                                                        @endfor
-                                                </select>
-                                            </div>
-
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-6">
                                                 <label>Jenis Kelamin</label>
                                                 <select class="form-control" name="jenis_kelamin[]">
                                                     <option value=""> Jenis Kelamin  </option>
@@ -141,6 +126,32 @@
                                                 @endif
                                             </div>
 
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Seat</label>
+                                                <select class="form-control" name="id_seat[]">
+                                                    <option value="{{ $detail->id_seat}}">
+                                                    {{$detail->id_seat}}
+                                                    </option> 
+                                                </select>
+
+                                                @if($errors->has('id_seat'))
+                                                    <div class="text-danger">
+                                                        {{ $errors->first('id_seat')}}
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label>Order Number</label>
+                                                <select class="form-control" name="order_number[]">
+                                                    <option value="{{ $detail->order_number}}">
+                                                    {{$detail->order_number}}
+                                                    </option> 
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div class="row">
@@ -181,10 +192,10 @@
 
                                             <div class="col-sm-3">
                                                 <label>Feeder</label>
-                                                <select class="form-control" name="id_users_feeder[]">
+                                                <select class="form-control" name="id_feeder[]">
                                                     <option value="">  Belum ada feeder  </option>
                                                         @foreach($feeder as $f)                                                               
-                                                                <option value="{{$f->id_users}}" {{$detail->id_users_feeder == $f->id_users ? 'selected' : ''}}>
+                                                                <option value="{{$f->id_feeder}}" {{$detail->id_feeder == $f->id_feeder ? 'selected' : ''}}>
                                                                     {{$f->nama}}
                                                                 </option>
                                                         @endforeach 

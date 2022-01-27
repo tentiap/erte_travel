@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 namespace App\Http\Controllers\api;
 
@@ -807,4 +807,4 @@ class ApiController extends Controller
     //     return "Berhasil";
     // }
 
-}
+} -->

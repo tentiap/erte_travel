@@ -25,7 +25,7 @@
                     .outset {border-style: outset;}
                 </style> -->
                     <div style="position: absolute; right: 0;">
-                        <a href="/mobil/edit/{{ $plat_mobil }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <!-- <a href="/mobil/edit/{{ $plat_mobil }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a> -->
                         <!-- <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/mobil/delete/{{ $plat_mobil }}"><i class="fa fa-trash"></i> Hapus Mobil</a> -->
                         <a href="/mobil/" class="btn btn-md" ><i class="fa fa-list"></i> List Mobil</a>
                         <a href="/mobil/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Mobil</a>                       
@@ -59,25 +59,26 @@
                         <div class="box-header with-border">
                           <i class="fa fa-map-pin"></i>
                           <h3 class="box-title">Mobil {{ $plat_mobil }}    
-                            <!-- <small class="badge bg-green">{{7 - $seat}} seat tersedia</small> -->
                         </h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                           <div class="row">
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-4"> -->
                               <dl class="dl-horizontal">
                                 <dt>Sopir</dt>
-                                <dd>{{ $mobil->sopir->nama }} </dd>
-                              </dl>
-                            </div>
-
-                            <div class="col-sm-6">
-                              <dl class="dl-horizontal">
+                                <dd>{{ $sopir }} </dd>
                                 <dt>Merek Mobil</dt>
                                 <dd>{{ $mobil->merek_mobil }}</dd>
                               </dl>
-                            </div>
+                            <!-- </div> -->
+
+                            <!-- <div class="col-sm-4"> -->
+                              <dl class="dl-horizontal">
+                                <!-- <dt>Merek Mobil</dt>
+                                <dd>{{ $mobil->merek_mobil }}</dd> -->
+                              </dl>
+                            <!-- </div> -->
                         </div>
 
                 <div class="box-body">

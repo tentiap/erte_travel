@@ -59,14 +59,20 @@ class MobilController extends Controller {
     }
 
     public function show($plat_mobil) {
-        $seat = Seat::find($plat_mobil);
+        // $seat = Seat::find($plat_mobil);
         $seat = Seat::where('plat_mobil', $plat_mobil)
         ->orderBy('id_seat', 'asc')->paginate(10);  
         // $mobil = Mobil::find($plat_mobil);
         $mobil = Mobil::where('plat_mobil', $plat_mobil)
-        ->orderBy('id_seat', 'asc')->paginate(10);  
+        ->first();
 
-        return view('erte.mobil.show', ['mobil' => $mobil, 'seat' => $seat, "plat_mobil" => $plat_mobil]);
+        $sopir_select = Sopir::where('id_sopir', $mobil->id_sopir)->get();
+        json_decode($sopir_select, true);
+        $sopir = ($sopir_select[0]['nama']);
+        // dd($sopir);
+
+    
+        return view('erte.mobil.show', ['mobil' => $mobil, 'seat' => $seat, "plat_mobil" => $plat_mobil, 'sopir' => $sopir]);
       
     }
 

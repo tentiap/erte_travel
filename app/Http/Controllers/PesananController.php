@@ -540,12 +540,12 @@ class PesananController extends Controller
                         ->orderBy('id_seat', 'ASC')
                         ->get();
 
-         json_decode($seat_b, true);
-                $seat_booked = array();
+        json_decode($seat_b, true);             
+        $seat_booked = array();
     
-                for ($i=0; $i < $seat_b->count() ; $i++) { 
-                    array_push($seat_booked, $seat_b[$i]['id_seat']);
-                }
+        for ($i=0; $i < $seat_b->count() ; $i++) { 
+            array_push($seat_booked, $seat_b[$i]['id_seat']);
+        }
 
         return view('erte.pesanan.edit', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'seat_b' => $seat_b, 'feeder' => $feeder, 'seat_booked' => $seat_booked, 'id' => $id]);
     }
@@ -586,27 +586,44 @@ class PesananController extends Controller
             $pesanan = Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
             $pesanan->jadwal = $request->jadwal;
             $pesanan->plat_mobil = $request->plat_mobil;                    
-            $pesanan->id_pengurus = Auth::guard('pengurus')->user()->id_pengurus;
+            // $pesanan->id_pengurus = Auth::guard('pengurus')->user()->id_pengurus;
             $pesanan->save();
 
-            $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
+            // dd(count($request->id_seat));
+            // dd(array($request->id_seat));
 
-            // if(count($request->id_seat) > 0){
-            //     $requestedSeat = array();
-            //     for($i = 0; $i < count($request->id_seat); $i++){
-            //         if(Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->exists()) {
-            //             session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
-            //             return redirect('/pesanan/edit/'.$jumlah_penumpang. '/' .$jadwal. '/' .$plat_mobil. '/' .$id_pemesan);
-            //             return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
-            //         }elseif (in_array($request->id_seat[$i], $requestedSeat) == false){
-            //             array_push($requestedSeat, $request->id_seat[$i]);
-            //         }elseif (in_array($request->id_seat[$i], $requestedSeat) == true){
-            //             session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' tidak bisa diisi lebih dari 1 orang');
-            //             return redirect('/pesanan/edit/' .$jadwal. '/' .$plat_mobil. '/' .$id_pemesan);
-            //         }
-            //     }
-            // }
 
+            if(count($request->id_seat) > 0){
+                // $requestedSeat = array();
+    
+                for($i = 0; $i < count($request->id_seat); $i++){
+                    $booked = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->get();
+                    json_decode($booked, true);
+                    // dd($booked[0]['status']);
+                    // dd(count($booked));
+                    // dd($request->order_number[$i]);
+
+                    // if(Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->exists()) {
+                    if(count($booked) > 0 ) {
+                        if(($request->status[$i] != 5) && ($request->order_number[$i] != $booked[0]['order_number'])) {
+                            session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
+                            // return redirect('/pesanan/update_detail/'.$jumlah_penumpang. '/' .$jadwal. '/' .$plat_mobil. '/' .$id_pemesan);
+                            return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
+                        } 
+                        // session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
+                        // return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
+                    }
+                    
+                    // if (in_array($request->id_seat[$i], $requestedSeat) == false){
+                    //     array_push($requestedSeat, $request->id_seat[$i]);
+                    // }
+                    // elseif (in_array($request->id_seat[$i], $requestedSeat) == true){
+                    //     session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' tidak bisa diisi lebih dari 1 orang');
+                    //     return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
+                    // }
+                }
+            }
+            // dd($requestedSeat);
             // foreach($request->nama_penumpang as $key => $value){
                 // $detail[$key]->jadwal = $pesanan->jadwal;
                 // $detail[$key]->plat_mobil = $pesanan->plat_mobil;
@@ -622,15 +639,18 @@ class PesananController extends Controller
             //     $detail[$key]->status = $request->status[$key];
             //     $detail[$key]->save();
             // }   
+            // dd(count(array($request->id_seat)));
 
-            for($i = 0; $i < count($request->id_seat); $i++){
+                // dd($detail[2]->id_seat);
+
+            $detail = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
+
+            // dd(count(array($request->id_seat)));
+            for($i = 0; $i < count($request->nama_penumpang); $i++){
                 $detail[$i]->jadwal = $pesanan->jadwal;
                 $detail[$i]->plat_mobil = $pesanan->plat_mobil;
-                $detail[$i]->id_seat = $request->id_seat[$i];
-                $detail[$i]->id_pemesan = $request->id_pemesan[$i];
-                // $detail[$i]->id_trip = $pesanan->id_trip;
-                // $detail[$i]->id_seat = $request->id_seat[$i];
-                // $detail[$i]->id_pesanan = $pesanan->id_pesanan;
+                $detail[$i]->id_seat = $detail[$i]->id_seat;
+                $detail[$i]->id_pemesan = $pesanan->id_pemesan;
                 $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
                 $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
                 $detail[$i]->detail_asal = $request->detail_asal[$i];
@@ -640,6 +660,21 @@ class PesananController extends Controller
                 $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
                 $detail[$i]->status = $request->status[$i];
                 $detail[$i]->save();
+                // $detail[$i]->jadwal = $pesanan->jadwal;
+                // $detail[$i]->plat_mobil = $pesanan->plat_mobil;
+                // $detail[$i]->id_seat = $detail[$i]->id_seat;
+                // $detail[$i]->order_number = $detail[$i]->order_number;
+                // $detail[$i]->id_pemesan = $request->id_pemesan[$i];
+                // $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
+                // $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
+                // $detail[$i]->detail_asal = $request->detail_asal[$i];
+                // $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
+                // $detail[$i]->no_hp = $request->no_hp[$i];
+                // $detail[$i]->id_feeder = $request->id_feeder[$i];
+                // $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
+                // $detail[$i]->status = $request->status[$i];
+                // $detail[$i]->save();
+
             }
 
             session()->flash('flash_success', 'Berhasil mengupdate data pesanan');

@@ -52,7 +52,7 @@ class DetailPesananController extends Controller
     	Detail_Pesanan::create([
     		'id_trip' => $request->id_trip,
             'id_seat' => $request->id_seat,
-            'id_users_feeder' => $request->id_users_feeder,
+            // 'id_users_feeder' => $request->id_users_feeder,
             'nama_penumpang' => $request->nama_penumpang,
             'jenis_kelamin' => $request->jenis_kelamin,
             'detail_asal' => $request->detail_asal,
@@ -93,7 +93,7 @@ class DetailPesananController extends Controller
             $detail_pesanan = Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $id_seat])->first();
             $detail_pesanan->id_trip = $request->id_trip;
             $detail_pesanan->id_seat = $request->id_seat;
-            $detail_pesanan->id_users_feeder = $request->id_users_feeder;
+            // $detail_pesanan->id_users_feeder = $request->id_users_feeder;
             $detail_pesanan->nama_penumpang = $request->nama_penumpang;
             $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
             $detail_pesanan->detail_asal = $request->detail_asal;

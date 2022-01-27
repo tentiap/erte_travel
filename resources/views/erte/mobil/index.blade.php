@@ -42,8 +42,8 @@
                         <td>{{ $m->sopir->nama }}</td>
                         <td>{{ $m->merek_mobil }}</td>
                         <td>
-                            <a href="/mobil/edit/{{ $m->plat_mobil }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                            <a href="/mobil/show/{{ $m->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                           <a href="/mobil/show/{{ $m->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                            <!-- <a href="/mobil/edit/{{ $m->plat_mobil }}" class="btn btn-lg"><i class="fa fa-edit"></i></a> -->
                             <!-- <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/mobil/delete/{{ $m->plat_mobil }}"><i class="fa fa-trash"></i></a> -->
                         </td>
                     </tr>
