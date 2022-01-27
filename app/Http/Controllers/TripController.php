@@ -66,6 +66,28 @@ class TripController extends Controller
                         ->first();
 
         if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
+            // $filter_tanggal = '%'.date('Y-m-d', strtotime($request->jadwal)).'%';
+	    	// $filter_jam = date('H:i', strtotime($request->jadwal));
+            // // dd($filter_jam);
+
+            // $lastTripMobil = Trip::where('jadwal', 'like', $filter_tanggal)
+            //                     ->where('plat_mobil', '=', $request->plat_mobil)
+            //                     ->get();
+            // // dd(count($lastTripMobil));
+            
+            // if(count($lastTripMobil) > 0) {
+            //     $jam_last_trip = date('H:i', strtotime($lastTripMobil[0]['jadwal']));;                 
+            //     // dd($jam_last_trip);
+            //     if($jam_last_trip > $filter_jam) {
+            //         dd($jam_last_trip - $filter_jam);
+            //         // if(($jam_last_trip - $filter_jam) < 7 ) {
+            //         //     session()->flash('flash_danger', 'Kecil dari tujuh');
+            //         //     return redirect('/trip/create');
+
+            //         // }
+            //     }
+            // }
+            
             $trip = Trip::create([
                 'jadwal' => $request->jadwal,
                 'plat_mobil' => $request->plat_mobil,
@@ -196,22 +218,21 @@ class TripController extends Controller
 
     public function update($jadwal, $plat_mobil, Request $request){
     	 $this->validate($request, [
-            'id_kota_asal' => 'required',
-            'id_kota_tujuan' => 'required',
+            // 'id_kota_asal' => 'required',
+            // 'id_kota_tujuan' => 'required',
             'jadwal' => 'required']);
 
             $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
             // $trip->id_trip = $request->id_trip;
             // $trip->id_pengurus = Auth::guard('pengurus')->user()->id_users;
             $trip->jadwal = $request->jadwal;
-            $trip->plat_mobil = $request->plat_mobil;
-            $trip->id_kota_asal = $request->id_kota_asal;
-            $trip->id_kota_tujuan = $request->id_kota_tujuan;
+            // $trip->plat_mobil = $request->plat_mobil;
+            // $trip->id_kota_asal = $request->id_kota_asal;
+            // $trip->id_kota_tujuan = $request->id_kota_tujuan;
             $trip->save();
 
             session()->flash('flash_success', 'Berhasil mengupdate data trip ');
-
-         return redirect('/trip');
+            return redirect('/trip');
     }
 
  	public function delete($jadwal, $plat_mobil){
