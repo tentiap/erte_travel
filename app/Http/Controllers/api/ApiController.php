@@ -501,11 +501,24 @@ class ApiController extends Controller
     //sampai sini
 
     public function create_detail_pesanan(Request $request){
+
+        if (count($detail_pesanan) > 0 ){
+            $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
+                                ->orderBy('order_number','desc')
+                                ->first();
+            
+            $newOrderNumber = $lastOrderNumber->order_number + 1;
+            
+        }elseif(count($detail_pesanan) == 0 ) {
+            $newOrderNumber = 1;
+        }
         
         $detail_pesanan = new Detail_Pesanan();
         $detail_pesanan->jadwal =  $request->jadwal;
         $detail_pesanan->plat_mobil = $request->plat_mobil;
-        $detail_pesanan->id_pesanan = $request->id_pesanan;
+        $detail_pesanan->id_seat = $request->id_seat;
+        $detail_pesanan->order_number = $newOrderNumber;
+        $detail_pesanan->id_pemesan = $request->id_pemesan;
         $detail_pesanan->nama_penumpang = $request->nama_penumpang;
         $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
         $detail_pesanan->detail_asal = $request->detail_asal;
@@ -525,12 +538,16 @@ class ApiController extends Controller
      
     }
 
+    //sampai sini
     public function getIdPesanan(Request $request){
         
-        $pesanan = Pesanan::where('id_trip', $request->id_trip)
-                        ->where('id_pemesan', $request->id_pemesan)
-                        ->select('id_pesanan')
+        $pesanan = Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 
+                        'id_pemesan' => $request->id_pemesan])
                         ->get();
+
+        // $pesanan = Pesanan::all();
+
+        dd($pesanan);
 
 
         if($pesanan){

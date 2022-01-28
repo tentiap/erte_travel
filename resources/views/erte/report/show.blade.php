@@ -35,11 +35,11 @@
                         <th>No.</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
-                        <th>ID Trip</th>
+                        <th>Plat Mobil</th>
                         <th>Asal</th>
                         <th>Tujuan</th>
-                        <th class="hidden">Jumlah Penumpang</th>
                         <th>Sopir</th>
+                        <th class="hidden">Jumlah Penumpang</th>
                       </tr>
                 </thead>
                 <tbody>
@@ -56,7 +56,7 @@
                             <td>{{ $i }}</td>
                             <td>{{ date('d-M-Y', strtotime($t->jadwal)) }} </td>
                             <td>{{ date('H:i', strtotime($t->jadwal)) }} </td>
-                            <td>{{ $t->id_trip }}</td>
+                            <td>{{ $t->plat_mobil }}</td>
                             <td>
                                   
                                       @if($t->id_kota_asal == "K1")
@@ -82,10 +82,10 @@
 
                             </td>
                             <td>
-                                    @if(empty($t->id_sopir))
+                                    @if(empty($t->mobil->sopir->nama))
                                       Belum ada sopir
                                     @else
-                                      {{ $t->sopir->nama }}
+                                      {{ $t->mobil->sopir->nama }}
                                     @endif
                             </td>
 
