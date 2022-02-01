@@ -19,54 +19,7 @@ use Carbon\Carbon;
 
 class ApiController extends Controller
 {   
-    public function loginPemesan(Request $request){
-        $pemesan = Pemesan::where('email', $request->email)->first();
-
-        if($pemesan){
-            if(password_verify($request->password, $pemesan->password)){
-                return response()->json([
-                    'status' => true,
-                    'message' => "Welcome ".$pemesan->nama,
-                    'data' => $pemesan
-                ]);
-            }
-            return $this->error('Password salah');
-        }
-        return $this->error('Email tidak terdaftar');
-    }
-
-    public function loginSopir(Request $request){
-        $sopir = Sopir::where('email', $request->email)->first();
-
-        if($sopir){
-            if(password_verify($request->password, $sopir->password)){
-                return response()->json([
-                    'status' => true,
-                    'message' => "Welcome ".$sopir->nama,
-                    'data' => $sopir
-                ]);
-            }
-            return $this->error('Password salah');
-        }
-        return $this->error('Email tidak terdaftar');
-    }
-
-    public function loginFeeder(Request $request){
-        $feeder = Feeder::where('email', $request->email)->first();
-
-        if($feeder){
-            if(password_verify($request->password, $feeder->password)){
-                return response()->json([
-                    'status' => true,
-                    'message' => "Welcome ".$feeder->nama,
-                    'data' => $feeder
-                ]);
-            }
-            return $this->error('Password salah');
-        }
-        return $this->error('Email tidak terdaftar');
-    }
-
+     //Done
     public function register(Request $request){
         $validasi = Validator::make($request->all(), [
             'id_pemesan' => 'required',
@@ -118,7 +71,23 @@ class ApiController extends Controller
 
         return $this->error("Registrasi gagal");     
     }
+    //Done
+    public function loginPemesan(Request $request){
+        $pemesan = Pemesan::where('email', $request->email)->first();
 
+        if($pemesan){
+            if(password_verify($request->password, $pemesan->password)){
+                return response()->json([
+                    'status' => true,
+                    'message' => "Welcome ".$pemesan->nama,
+                    'data' => $pemesan
+                ]);
+            }
+            return $this->error('Password salah');
+        }
+        return $this->error('Email tidak terdaftar');
+    }
+     //Done
     public function pesananSearch(Request $request){
         $tanggal = $request->tanggal;
         $filter = '%'.$tanggal.'%';
@@ -132,12 +101,11 @@ class ApiController extends Controller
                     ->where('jadwal', '>', $filter_jam)
                     ->orderBy('jadwal', 'asc')
                     ->get();
-
     
         $trip_booking = Trip::join('detail_pesanan', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => 'detail_pesanan.plat_mobil'])
                     ->where(['id_kota_asal' => $request->id_kota_asal, 
                                'id_kota_tujuan' => $request->id_kota_tujuan,])
-                    ->where('jadwal', 'like', $filter)
+                    ->where('trip.jadwal', 'like', $filter)
                     ->where('detail_pesanan.status', '!=', 5)
                     ->select('detail_pesanan.id_seat')
                     ->count();
@@ -154,7 +122,7 @@ class ApiController extends Controller
         return $this->error("Tidak ada trip");
 
     }
-    
+     //Done
     public function check(Request $request){
 
         if(Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_pemesan' => $request->id_pemesan])->exists()){ 
@@ -182,7 +150,7 @@ class ApiController extends Controller
             }
         }
     }
-
+     //Done
      public function check_update(Request $request){
 
             $trip = Trip::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])->get();
@@ -208,6 +176,7 @@ class ApiController extends Controller
 
     }
 
+    //Done
     public function seat(Request $request){
         $seat = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])
                     ->where('status', '!=', 5)
@@ -220,6 +189,299 @@ class ApiController extends Controller
                 'data' => $seat
         ]);  
 
+    }
+
+    //Done
+    public function updateDataPemesan(Request $request){
+        $pemesan = Pemesan::where('id_pemesan', $request->id_pemesan)->first();
+                
+        $pemesan->username = $request->username;
+        $pemesan->email = $request->email;
+        $pemesan->nama = $request->nama;
+        $pemesan->kontak = $request->kontak;
+        $pemesan->jenis_kelamin = $request->jenis_kelamin;
+        $pemesan->alamat = $request->alamat;
+        $pemesan->save();
+
+        if($pemesan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Data berhasil diupdate",
+                    'data' => $pemesan
+            ]);
+        }
+
+        return $this->error("Data gagal diupdate");
+    }
+
+    //Done
+    public function checkAvailableSeat(Request $request){
+        
+        $bookedSeat = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])
+                        ->where('status', '!=', 5)
+                        ->count();
+
+        $seat_available = 7 - $bookedSeat;
+
+        if ($seat_available == 0) {
+            return response()->json([
+                'status' => false,
+                'message' => "Sorry, this trip is fully booked"
+            ]);
+        }else{
+            return response()->json([
+                'status' => true,
+                'message' => $seat_available. " seat(s) available"
+            ]);
+        }
+    }
+
+    public function error($pesan){
+        return response()->json([
+            'status' => false,
+            'message' => $pesan
+        ]);
+    }    
+            
+    //Done
+    public function riwayatTripPemesan(Request $request){
+
+        $pesanan = Pesanan::join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
+                        ->where('pesanan.id_pemesan',  $request->id_pemesan)
+                        ->orderBy('trip.jadwal', 'desc')
+                        ->get();
+
+        $pemesan = Pemesan::where('id_pemesan', $request->id_pemesan)->first();                
+        if(!$pesanan->isEmpty()){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Riwayat Trip Pemesan  " .$pemesan->id_pemesan,
+                    'data' => $pesanan
+            ]);
+        }
+
+        return $this->error("Belum ada pesanan");
+    }
+
+    //Done
+    public function detailRiwayatTripPemesan(Request $request){
+        
+        $detail = Detail_Pesanan::join('trip', ['detail_pesanan.plat_mobil' =>'trip.plat_mobil', 'detail_pesanan.jadwal' => 'trip.jadwal'])
+                        ->where('detail_pesanan.jadwal', $request->jadwal)
+                        ->where('detail_pesanan.plat_mobil', $request->plat_mobil)
+                        ->where('detail_pesanan.id_pemesan', $request->id_pemesan)
+                        ->orderBy('detail_pesanan.status', 'asc')
+                        ->get();
+        
+                        // dd($detail);
+
+        if(!$detail->isEmpty()){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Detail order  ",
+                    'data' => $detail
+            ]);
+        }
+
+        return $this->error("Belum ada detail");
+    }
+
+    public function create_pesanan(Request $request){
+        
+        $pesanan = new Pesanan();
+        // $pesanan_select = Pesanan::select('id_pesanan');
+        // $pesanan_count = $pesanan_select->count();
+        //     if ($pesanan_count === 0) {
+        //         $pesanan->id_pesanan = 'P1';
+        //     }else{
+        //         $lastrow=$pesanan_select->orderBy('tanggal_pesan','desc')->first();
+        //         $lastrow_id = explode('P', $lastrow->id_pesanan);
+        //         $new_id = $lastrow_id[1]+1;
+        //         $pesanan->id_pesanan = 'P'.$new_id;
+        //     }
+        $pesanan->id_pemesan = $request->id_pemesan;   
+        $pesanan->jadwal = $request->jadwal;
+        $pesanan->plat_mobil = $request->plat_mobil;         
+        $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
+        $pesanan->save();
+
+        if($pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Create Pesanan berhasil",
+                    'data' => $pesanan
+            ]);
+        }
+     
+    }
+
+    public function create_detail_pesanan(Request $request){
+
+        if (count($detail_pesanan) > 0 ){
+            $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
+                                ->orderBy('order_number','desc')
+                                ->first();
+            
+            $newOrderNumber = $lastOrderNumber->order_number + 1;
+            
+        }elseif(count($detail_pesanan) == 0 ) {
+            $newOrderNumber = 1;
+        }
+        
+        $detail_pesanan = new Detail_Pesanan();
+        $detail_pesanan->jadwal =  $request->jadwal;
+        $detail_pesanan->plat_mobil = $request->plat_mobil;
+        $detail_pesanan->id_seat = $request->id_seat;
+        $detail_pesanan->order_number = $newOrderNumber;
+        $detail_pesanan->id_pemesan = $request->id_pemesan;
+        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
+        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
+        $detail_pesanan->detail_asal = $request->detail_asal;
+        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
+        $detail_pesanan->no_hp = $request->no_hp;
+        $detail_pesanan->biaya_tambahan = 0;
+        $detail_pesanan->status = 1;
+        $detail_pesanan->save();
+
+        if($detail_pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Create Detail Pesanan berhasil",
+                    'data' => $detail_pesanan
+            ]);
+        }
+     
+    }
+
+    public function changeStatus(Request $request){
+        $detail = Detail_Pesanan::where(['id_pemesan' => $request->id_pemesan, 'jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->first();
+        $status = $request->status;
+        $detail->status = $status;
+        $detail->save();
+
+        if($detail){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Data berhasil diupdate",
+                    'data' => $detail
+            ]);
+        }
+
+        return $this->error("Data gagal diupdate");
+    }
+
+    public function updateDetailPesanan(Request $request){
+
+        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number])->first();
+        $detail_pesanan->id_seat = $request->id_seat;
+        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
+        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
+        $detail_pesanan->detail_asal = $request->detail_asal;
+        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
+        $detail_pesanan->no_hp = $request->no_hp;
+        $detail_pesanan->status = $request->status;
+        $detail_pesanan->save();
+
+        if($detail_pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Update Detail Pesanan berhasil",
+                    'data' => $detail_pesanan
+            ]);
+        }
+
+        return $this->error("Data gagal diupdate");
+
+    }
+
+    //Done
+    public function getIdPesanan(Request $request){
+        
+        $pesanan = Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 
+                        'id_pemesan' => $request->id_pemesan])
+                        ->get();
+
+        // $pesanan = Pesanan::all();
+        // $id_pesanan = $pesanan->jadwal."".$pesanan->plat_mobil."".$pesanan->id_pemesan;
+
+        // dd($id_pesanan);
+
+
+        if($pesanan){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Berhasil mengambil Data Pesanan",
+                    'data' => $pesanan
+            ]);
+        }
+    }
+
+    //Done
+    public function getDetailPesanan(Request $request){
+        
+        $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 
+        'id_pemesan' => $request->id_pemesan])->orderBy('id_seat', 'ASC')->get();
+
+
+        if($detail){
+            return response()->json([
+                    'status' => true,
+                    'message' => "Berhasil mengambil Data Detail Pesanan",
+                    'data' => $detail
+            ]);
+        }
+    }
+
+    //Done
+    public function getBookedSeat(Request $request){
+       
+        $bookedSeat = Detail_Pesanan::join('trip', ['trip.jadwal' => "detail_pesanan.jadwal", 'trip.plat_mobil' => "detail_pesanan.plat_mobil"])
+                    ->where(['trip.jadwal' => $request->jadwal, 'trip.plat_mobil' => $request->plat_mobil])
+                    ->where('detail_pesanan.status', '!=', 5)
+                    ->select('detail_pesanan.id_seat')
+                    ->orderBy('id_seat', 'ASC')         
+                    ->get();
+
+        return response()->json([
+                'status' => true,
+                'message' => "Seat yang sudah dibooking",
+                'data' => $bookedSeat
+        ]);              
+
+    }
+
+    //belum
+    public function loginSopir(Request $request){
+        $sopir = Sopir::where('email', $request->email)->first();
+
+        if($sopir){
+            if(password_verify($request->password, $sopir->password)){
+                return response()->json([
+                    'status' => true,
+                    'message' => "Welcome ".$sopir->nama,
+                    'data' => $sopir
+                ]);
+            }
+            return $this->error('Password salah');
+        }
+        return $this->error('Email tidak terdaftar');
+    }
+
+//belum
+    public function loginFeeder(Request $request){
+        $feeder = Feeder::where('email', $request->email)->first();
+
+        if($feeder){
+            if(password_verify($request->password, $feeder->password)){
+                return response()->json([
+                    'status' => true,
+                    'message' => "Welcome ".$feeder->nama,
+                    'data' => $feeder
+                ]);
+            }
+            return $this->error('Password salah');
+        }
+        return $this->error('Email tidak terdaftar');
     }
 
     public function tripSopir(Request $request){
@@ -338,256 +600,5 @@ class ApiController extends Controller
     }
 
 
-    public function changeStatus(Request $request){
-        $detail = Detail_Pesanan::where(['id_pemesan' => $request->id_pemesan, 'jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->first();
-        $status = $request->status;
-        $detail->status = $status;
-        $detail->save();
-
-        if($detail){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Data berhasil diupdate",
-                    'data' => $detail
-            ]);
-        }
-
-        return $this->error("Data gagal diupdate");
-    }
-
-    public function updateDataPemesan(Request $request){
-        $pemesan = Pemesan::where('id_pemesan', $request->id_pemesan)->first();
-                
-        $pemesan->username = $request->username;
-        $pemesan->email = $request->email;
-        $pemesan->nama = $request->nama;
-        $pemesan->kontak = $request->kontak;
-        $pemesan->jenis_kelamin = $request->jenis_kelamin;
-        $pemesan->alamat = $request->alamat;
-        $pemesan->save();
-
-        if($pemesan){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Data berhasil diupdate",
-                    'data' => $pemesan
-            ]);
-        }
-
-        return $this->error("Data gagal diupdate");
-    }
-
-    public function updateDetailPesanan(Request $request){
-
-        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number])->first();
-        $detail_pesanan->id_seat = $request->id_seat;
-        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
-        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
-        $detail_pesanan->detail_asal = $request->detail_asal;
-        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
-        $detail_pesanan->no_hp = $request->no_hp;
-        $detail_pesanan->status = $request->status;
-        $detail_pesanan->save();
-
-        if($detail_pesanan){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Update Detail Pesanan berhasil",
-                    'data' => $detail_pesanan
-            ]);
-        }
-
-        return $this->error("Data gagal diupdate");
-
-    }
-
-    public function checkAvailableSeat(Request $request){
-        
-        $bookedSeat = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])
-                        ->where('status', '!=', 5)
-                        ->count();
-
-        $seat_available = 7 - $bookedSeat;
-
-        if ($seat_available == 0) {
-            return response()->json([
-                'status' => false,
-                'message' => "Sorry, this trip is fully booked"
-            ]);
-        }else{
-            return response()->json([
-                'status' => true,
-                'message' => $seat_available. " seat(s) available"
-            ]);
-        }
-    }
-
-    public function error($pesan){
-        return response()->json([
-            'status' => false,
-            'message' => $pesan
-        ]);
-    }    
-            
-    //Pemesan
-    public function riwayatTripPemesan(Request $request){
-
-        $pesanan = Pesanan::join('trip', ['pesanan.jadwal' => 'detail_pesanan.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
-                        ->where('pesanan.id_pemesan',  $request->id_pemesan)
-                        ->orderBy('trip.jadwal', 'desc')
-                        ->get();
-
-        $pemesan = Pemesan::where('pemesan', $request->id_pemesan)->first();                
-        if(!$pesanan->isEmpty()){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Riwayat Trip Pemesan  " .$pemesan->id_pemesan,
-                    'data' => $pesanan
-            ]);
-        }
-
-        return $this->error("Belum ada pesanan");
-    }
-
-    public function detailRiwayatTripPemesan(Request $request){
-        
-        $detail = Detail_Pesanan::join('trip', ['detail_pesanan.plat_mobil' =>'trip.plat_mobil', 'detail_pesanan.jadwal' => 'trip.jadwal'])
-                        ->where('detail_pesanan.jadwal', '=',  $request->jadwal)
-                        ->where('detail_pesanan.plat_mobil', '=',  $request->plat_mobil)
-                        ->where('detail_pesanan.id_pemesan', '=',  $request->id_pemesan)
-                        ->orderBy('detail_pesanan.status', 'asc')
-                        ->get();
-
-        if(!$detail->isEmpty()){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Detail order  ",
-                    'data' => $detail
-            ]);
-        }
-
-        return $this->error("Belum ada detail");
-    }
-
-    public function create_pesanan(Request $request){
-        
-        $pesanan = new Pesanan();
-        // $pesanan_select = Pesanan::select('id_pesanan');
-        // $pesanan_count = $pesanan_select->count();
-        //     if ($pesanan_count === 0) {
-        //         $pesanan->id_pesanan = 'P1';
-        //     }else{
-        //         $lastrow=$pesanan_select->orderBy('tanggal_pesan','desc')->first();
-        //         $lastrow_id = explode('P', $lastrow->id_pesanan);
-        //         $new_id = $lastrow_id[1]+1;
-        //         $pesanan->id_pesanan = 'P'.$new_id;
-        //     }
-        $pesanan->id_pemesan = $request->id_pemesan;   
-        $pesanan->jadwal = $request->jadwal;
-        $pesanan->plat_mobil = $request->plat_mobil;         
-        $pesanan->tanggal_pesan = date('Y-m-d H:i:s');
-        $pesanan->save();
-
-        if($pesanan){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Create Pesanan berhasil",
-                    'data' => $pesanan
-            ]);
-        }
-     
-    }
-
-    //sampai sini
-
-    public function create_detail_pesanan(Request $request){
-
-        if (count($detail_pesanan) > 0 ){
-            $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
-                                ->orderBy('order_number','desc')
-                                ->first();
-            
-            $newOrderNumber = $lastOrderNumber->order_number + 1;
-            
-        }elseif(count($detail_pesanan) == 0 ) {
-            $newOrderNumber = 1;
-        }
-        
-        $detail_pesanan = new Detail_Pesanan();
-        $detail_pesanan->jadwal =  $request->jadwal;
-        $detail_pesanan->plat_mobil = $request->plat_mobil;
-        $detail_pesanan->id_seat = $request->id_seat;
-        $detail_pesanan->order_number = $newOrderNumber;
-        $detail_pesanan->id_pemesan = $request->id_pemesan;
-        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
-        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
-        $detail_pesanan->detail_asal = $request->detail_asal;
-        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
-        $detail_pesanan->no_hp = $request->no_hp;
-        $detail_pesanan->biaya_tambahan = 0;
-        $detail_pesanan->status = 1;
-        $detail_pesanan->save();
-
-        if($detail_pesanan){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Create Detail Pesanan berhasil",
-                    'data' => $detail_pesanan
-            ]);
-        }
-     
-    }
-
-    //sampai sini
-    public function getIdPesanan(Request $request){
-        
-        $pesanan = Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 
-                        'id_pemesan' => $request->id_pemesan])
-                        ->get();
-
-        // $pesanan = Pesanan::all();
-
-        dd($pesanan);
-
-
-        if($pesanan){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Berhasil mengambil Id Pesanan",
-                    'data' => $pesanan
-            ]);
-        }
-    }
-
-    public function getDetailPesanan(Request $request){
-        
-        $detail = Detail_Pesanan::where(['id_pesanan' => $request->id_pesanan, 'id_trip' => $request->id_trip])->orderBy('id_seat', 'ASC')->get();
-
-
-        if($detail){
-            return response()->json([
-                    'status' => true,
-                    'message' => "Berhasil mengambil Data Detail Pesanan",
-                    'data' => $detail
-            ]);
-        }
-    }
-
-    public function getBookedSeat(Request $request){
-       
-        $bookedSeat = Detail_Pesanan::join('trip', 'detail_pesanan.id_trip', '=', 'trip.id_trip')
-                    ->where('trip.id_trip', $request->id_trip)
-                    ->where('detail_pesanan.status', '!=', 5)
-                    ->select('detail_pesanan.id_seat')
-                    ->orderBy('id_seat', 'ASC')         
-                    ->get();
-
-        return response()->json([
-                'status' => true,
-                'message' => "Seat yang sudah dibooking di trip  ".$request->id_trip,
-                'data' => $bookedSeat
-        ]);              
-
-    }
 
 }
