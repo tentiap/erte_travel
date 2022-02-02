@@ -286,6 +286,7 @@ class ApiController extends Controller
         return $this->error("Belum ada detail");
     }
 
+    //Done
     public function create_pesanan(Request $request){
         
         $pesanan = new Pesanan();
@@ -316,6 +317,7 @@ class ApiController extends Controller
     }
 
     public function create_detail_pesanan(Request $request){
+        $detail_pesanan =  Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->get();
 
         if (count($detail_pesanan) > 0 ){
             $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
@@ -373,6 +375,7 @@ class ApiController extends Controller
     public function updateDetailPesanan(Request $request){
 
         $detail_pesanan = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number])->first();
+
         $detail_pesanan->id_seat = $request->id_seat;
         $detail_pesanan->nama_penumpang = $request->nama_penumpang;
         $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;

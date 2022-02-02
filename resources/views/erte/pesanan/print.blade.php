@@ -52,30 +52,36 @@
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
         <address>
-          <strong>ID Trip: {{ $id_trip }}</strong><br>
-          Rute:     @if($trip->id_kota_asal == "K1")
-                        Bukittinggi
-                    @elseif($trip->id_kota_asal == "K2")
-                        Padang
-                    @elseif($trip->id_kota_asal == "K3")
-                        Pekanbaru
-                    @endif - @if($trip->id_kota_tujuan == "K1")
-                                          Bukittinggi
-                                      @elseif($trip->id_kota_tujuan == "K2")
-                                          Padang
-                                      @elseif($trip->id_kota_tujuan == "K3")
-                                          Pekanbaru
-                                      @endif<br>
-          Tanggal: {{ date('d M Y', strtotime($trip->jadwal)) }}<br>
-          Jam: {{ date('H:i', strtotime($trip->jadwal)) }}<br>
-        </address>
+          <!-- <strong>ID Trip: {{ $id_trip }}</strong><br> -->
+        <strong>
+            Rute:     @if($trip->id_kota_asal == "K1")
+                            Bukittinggi
+                        @elseif($trip->id_kota_asal == "K2")
+                            Padang
+                        @elseif($trip->id_kota_asal == "K3")
+                            Pekanbaru
+                        @endif - @if($trip->id_kota_tujuan == "K1")
+                                    Bukittinggi
+                                @elseif($trip->id_kota_tujuan == "K2")
+                                    Padang
+                                @elseif($trip->id_kota_tujuan == "K3")
+                                    Pekanbaru
+                                @endif<br>
+        </strong>  
+              Tanggal: {{ date('d M Y', strtotime($trip->jadwal)) }}<br>
+              Jam: {{ date('H:i', strtotime($trip->jadwal)) }}<br>
+            </address>
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
-        <b>ID Pesanan: {{ $id }}</b><br>
-        <b>Pengurus:</b> {{ $pesanan->pengurus->nama}}<br>
-        <b>Kontak:</b> {{ $pesanan->pengurus->kontak}}<br>
-        <b>Email:</b> {{ $pesanan->pengurus->email}}
+        <!-- <b>ID Pesanan: {{ $id }}</b><br> -->
+        @if(empty($pesanan->id_pengurus))
+              <b>Ordered via Mobile App<b>
+        @else
+            <b>Pengurus:</b> {{ $pesanan->pengurus->nama}}<br>
+            <b>Kontak:</b> {{ $pesanan->pengurus->kontak}}<br>
+            <b>Email:</b> {{ $pesanan->pengurus->email}}
+        @endif
       </div>
       <!-- /.col -->
     </div>

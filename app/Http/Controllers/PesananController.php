@@ -345,10 +345,6 @@ class PesananController extends Controller
                     //     ]);
                     // }
 
-
-
-                    
-
                     foreach($request->id_seat as $key => $value){
                         $detail_pesanan =  Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$key]])->get();
 
