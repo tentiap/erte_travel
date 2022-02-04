@@ -56,7 +56,7 @@
 
                         <div class="box-header with-border">
                           <!-- <i class="fa fa-map-pin"></i> -->
-                          <h3 class="box-title">Pesanan {{ $id }} </h3>
+                          <!-- <h3 class="box-title">Pesanan {{ $id }} </h3> -->
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

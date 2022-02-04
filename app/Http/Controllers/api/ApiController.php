@@ -356,7 +356,7 @@ class ApiController extends Controller
     }
 
     public function changeStatus(Request $request){
-        $detail = Detail_Pesanan::where(['id_pemesan' => $request->id_pemesan, 'jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->first();
+        $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number, ])->first();
         $status = $request->status;
         $detail->status = $status;
         $detail->save();
@@ -453,7 +453,7 @@ class ApiController extends Controller
 
     }
 
-    //belum
+    //Done
     public function loginSopir(Request $request){
         $sopir = Sopir::where('email', $request->email)->first();
 
@@ -470,7 +470,7 @@ class ApiController extends Controller
         return $this->error('Email tidak terdaftar');
     }
 
-//belum
+    //Done
     public function loginFeeder(Request $request){
         $feeder = Feeder::where('email', $request->email)->first();
 
@@ -491,14 +491,21 @@ class ApiController extends Controller
 
         $today = Carbon::today();
 
-        $trip = Trip::where('id_sopir', $request->id_sopir)
-                    ->where('jadwal', '>=', $today)
-                    ->orderBy('jadwal', 'ASC')
+        // $trip = Trip::where('id_sopir', $request->id_sopir)
+        //             ->where('jadwal', '>=', $today)
+        //             ->orderBy('jadwal', 'ASC')
+        //             ->get();
+
+        $trip = Trip::join('mobil', 'trip.plat_mobil', '=', 'mobil.plat_mobil')
+                    ->join('sopir', 'mobil.id_sopir', '=', "sopir.id_sopir")
+                    ->where(['mobil.id_sopir' => $request->id_sopir])
+                    ->where('trip.jadwal', '>=', $today)
+                    ->orderBy('trip.jadwal', 'ASC')
                     ->get();
                   
         return response()->json([
                 'status' => true,
-                'message' => "Trip Sopir ".$request->id_sopir,
+                'message' => "Trip Sopir ",
                 'data' => $trip
         ]);  
 
@@ -527,10 +534,11 @@ class ApiController extends Controller
                     ->join('pesanan', function ($join) {
                         $join->on('detail_pesanan.jadwal', '=', 'pesanan.jadwal');
                         $join->on('detail_pesanan.plat_mobil', '=', 'pesanan.plat_mobil');
-                        $join->on('detail_pesanan.pemesan', '=', 'pesanan.id_pemesan');
+                        $join->on('detail_pesanan.id_pemesan', '=', 'pesanan.id_pemesan');
                       })
-                     ->join('pemesan', 'pesanan.id_pemesan', '=', 'pemesan.id_pemesan')
-                    ->where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])
+                    ->join('pemesan', 'pesanan.id_pemesan', '=', 'pemesan.id_pemesan')
+                    ->join('trip', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => "detail_pesanan.plat_mobil"])
+                    ->where(['trip.jadwal' => $request->jadwal, 'trip.plat_mobil' => $request->plat_mobil])
                     ->where('status', '!=', 5)
                     ->select('detail_pesanan.jadwal', 
                              'detail_pesanan.plat_mobil',
@@ -542,6 +550,7 @@ class ApiController extends Controller
                              'detail_pesanan.detail_tujuan',
                              'detail_pesanan.no_hp',
                              'detail_pesanan.status',
+                             'detail_pesanan.order_number',
                              'detail_pesanan.biaya_tambahan',
                              'pemesan.kontak as kontak_pemesan')
                     ->orderBy('id_seat', 'ASC')
@@ -561,6 +570,7 @@ class ApiController extends Controller
 
     }
 
+    //Done
     public function Feeder(Request $request){
         //Trip 2 jam yang akan datang (dari jam sekarang)
         $carbonTrip = Carbon::now()->addHours(2)->toDateTimeString();
@@ -569,10 +579,10 @@ class ApiController extends Controller
                     ->join('pesanan', function ($join) {
                         $join->on('detail_pesanan.jadwal', '=', 'pesanan.jadwal');
                         $join->on('detail_pesanan.plat_mobil', '=', 'pesanan.plat_mobil');
-                        $join->on('detail_pesanan.pemesan', '=', 'pesanan.id_pemesan');
+                        $join->on('detail_pesanan.id_pemesan', '=', 'pesanan.id_pemesan');
                       })
                     ->join('pemesan', 'pesanan.id_pemesan', '=', 'pemesan.id_pemesan')
-                    ->join('trip', ['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])
+                    ->join('trip', ['trip.jadwal' => 'detail_pesanan.jadwal', 'trip.plat_mobil' => "detail_pesanan.plat_mobil"])
                     ->where('detail_pesanan.id_feeder', $request->id_feeder)
                     ->where('detail_pesanan.status', '!=', 5)
                     ->whereBetween('trip.jadwal', [Carbon::now(), $carbonTrip])
@@ -586,9 +596,10 @@ class ApiController extends Controller
                              'detail_pesanan.no_hp',
                              'detail_pesanan.status',
                              'detail_pesanan.biaya_tambahan',
+                             'detail_pesanan.order_number',
                              'pemesan.kontak',
                              'trip.jadwal')
-                    ->orderBy('jadwal', 'ASC')
+                    ->orderBy('trip.jadwal', 'ASC')
                     ->get();
 
         if(!$detail->isEmpty()){

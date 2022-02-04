@@ -33,7 +33,7 @@ Route::namespace('api')->group(function () {
 
 	Route::get('/tripSopir/{id_sopir}', 'ApiController@tripSopir');
 	Route::get('/historySopir/{id_sopir}', 'ApiController@riwayatTripSopir');
-	Route::get('/detailTripSopir/{id_sopir}', 'ApiController@detailTripSopir');
+	Route::get('/detailTripSopir/{jadwal}/{plat_mobil}', 'ApiController@detailTripSopir');
 
 	Route::get('/getBookedSeat/{jadwal}/{plat_mobil}', 'ApiController@getBookedSeat');
 	Route::get('/getIdPesanan/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@getIdPesanan');
