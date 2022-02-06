@@ -356,7 +356,19 @@ class ApiController extends Controller
     }
 
     public function changeStatus(Request $request){
-        $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number, ])->first();
+        $booked = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
+                            ->where('status', '!=', 5)
+                            ->get();
+
+        json_decode($booked, true);
+        if(count($booked) > 0) {
+            if(($request->status != 5) && ($request->order_number != $booked[0]['order_number'])) {
+                return $this->error("Seat ".$request->id_seat." sudah dibooking");
+            } 
+        }
+
+        $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number])->first();
+
         $status = $request->status;
         $detail->status = $status;
         $detail->save();
@@ -487,6 +499,7 @@ class ApiController extends Controller
         return $this->error('Email tidak terdaftar');
     }
 
+    //Done
     public function tripSopir(Request $request){
 
         $today = Carbon::today();
@@ -515,9 +528,14 @@ class ApiController extends Controller
 
         $today = Carbon::today();
 
-        $trip = Trip::where('id_sopir', $request->id_sopir)
-                    ->where('jadwal', '<=', $today)
-                    ->orderBy('jadwal', 'DESC')
+        // $trip = Trip::where('id_sopir', $request->id_sopir)
+        //             ->where('jadwal', '<=', $today)
+        //             ->orderBy('jadwal', 'DESC')
+        //             ->get();
+
+        $trip = Trip::join('mobil', 'trip.plat_mobil', '=', 'mobil.plat_mobil')
+                    ->where('mobil.id_sopir', $request->id_sopir)
+                    ->orderBy('trip.jadwal', 'DESC')
                     ->get();
 
         return response()->json([
