@@ -11,6 +11,7 @@ use App\Pesanan;
 use App\Kota;
 use App\Mobil;
 use App\Detail_Pesanan;
+use Carbon\Carbon;
 use Auth;
 
 
@@ -64,6 +65,39 @@ class TripController extends Controller
         $rute = Rute::where(['id_kota_asal' => $request->id_kota_asal, 
                               'id_kota_tujuan' => $request->id_kota_tujuan])
                         ->first();
+        
+        $filter_tanggal = '%'.date('Y-m-d', strtotime($request->jadwal)).'%';
+
+        $tripCreated = Trip::where('jadwal', 'like', $filter_tanggal)
+                            ->where('plat_mobil', $request->plat_mobil)
+                            ->get();
+        $jam = date('H:i', strtotime($request->jadwal));
+        // dd(count($tripCreated));
+
+        if (count($tripCreated) > 0 ){
+            json_decode($tripCreated, true);
+            for ($i=0; $i < count($tripCreated); $i++) {
+                $tempJadwal = $tripCreated[$i]['jadwal'];
+                // ->format('Y-m-d H:i:s')
+                // $tempJam = date('H:i', strtotime($tempJadwal));
+                // // $selisih = $jam->diff($tempJam)->format('%H:%I:%S');
+                $selisih = $request->jadwal->diff($tempJadwal);
+                // dd($selisih);
+                
+                dd(gettype($tempJadwal));
+            }    
+        }elseif(count($tripCreated) == 0 ) {
+            $newOrderNumber = 1;
+        }
+
+        // dd($tripCreated);
+
+        // json_decode($seat_b, true);             
+        // $seat_booked = array();
+    
+        // for ($i=0; $i < $seat_b->count() ; $i++) { 
+        //     array_push($seat_booked, $seat_b[$i]['id_seat']);
+        // }
 
         if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
             // $filter_tanggal = '%'.date('Y-m-d', strtotime($request->jadwal)).'%';
