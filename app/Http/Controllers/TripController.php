@@ -81,14 +81,35 @@ class TripController extends Controller
                 // ->format('Y-m-d H:i:s')
                 // $tempJam = date('H:i', strtotime($tempJadwal));
                 // // $selisih = $jam->diff($tempJam)->format('%H:%I:%S');
-                $selisih = $request->jadwal->diff($tempJadwal);
-                // dd($selisih);
+                // dd(gettype($request->jadwal));
+                // dd(gettype($tempJadwal));
+                // $difference = $date->diff(Carbon::parse($fromData));
+                // $t = Carbon::parse($tempJadwal);
+                // dd(gettype($t));
+
+                $selisih_temp = Carbon::parse($request->jadwal)->diff(Carbon::parse($tempJadwal));
+                $selisih = $selisih_temp->format('%h');
+                // echo (int)$selisih;
+
+                if($selisih < 5) {
+                    // print("Selisih kecil dari 5, ".$selisih);
+                    session()->flash('flash_danger', 'Ada kemungkinan mobil masih di jalan');
+                    return redirect('/trip/create');
+                    // echo $selisih->format('%h jam bedanya')."\n";
+                    // dd(gettype($selisih->format('%h')));
+
+                } 
+                // else {
+                //   print("Selisih besar dari 5, ".$selisih);  
+                // }
                 
-                dd(gettype($tempJadwal));
             }    
-        }elseif(count($tripCreated) == 0 ) {
-            $newOrderNumber = 1;
         }
+        // elseif(count($tripCreated) == 0 ) {
+        //     $newOrderNumber = 1;
+        // }
+
+        // dd("Selesai");
 
         // dd($tripCreated);
 
