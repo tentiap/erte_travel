@@ -16,6 +16,7 @@
  @section('content')     
     <section class="content">
         <div class="box">
+        @include('messages')
             <div class="box-body">
                     
                 <form method="post" action="/trip/update/{{$trip->jadwal}}/{{$trip->plat_mobil}}">
@@ -39,9 +40,15 @@
                                 @endif
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label>Plat Mobil</label>
-                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $trip->plat_mobil)}}">
+                            <!-- <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $trip->plat_mobil)}}"> -->
+                            <select class="form-control" name="plat_mobil">
+                                <option value=""> -- Plat Mobil -- </option>
+                                    @foreach($mobil as $m)
+                                            <option  value="{{$m->plat_mobil}}"{{$trip->plat_mobil == $m->plat_mobil ? 'selected' : ''}}>{{$m->plat_mobil}}</option>  
+                                    @endforeach
+                            </select>
 
                              @if($errors->has('plat_mobil'))
                                 <div class="text-danger">
@@ -51,7 +58,7 @@
 
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-sm-6">
                                     <label>Kota Asal</label>
                                     <select class="form-control" name="id_kota_asal" id="id_kota_asal"> 
@@ -85,7 +92,7 @@
                                         {{ $errors->first('id_kota_tujuan')}}
                                     </div>
                                 @endif
-                        </div> -->
+                        </div> --> 
 
                        <!-- <div class="form-group">
                             <label>Sopir</label>

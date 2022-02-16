@@ -77,6 +77,8 @@
                                 <dd>{{ date('d M Y', strtotime($trip->jadwal)) }} </dd>
                                 <dt>Pemesan</dt>
                                 <dd>{{ $pesanan->pemesan->nama }}</dd>
+                                <dt>Kontak</dt>
+                                <dd>{{ $pesanan->pemesan->kontak }}</dd>
                               </dl>
                             </div>
 
@@ -94,6 +96,8 @@
                                 </dd>
                                 <dt>Jam</dt>
                                 <dd>{{ date('H:i', strtotime($trip->jadwal)) }}</dd>
+                                <dt>Plat Mobil</dt>
+                                <dd>{{ $trip->plat_mobil }}</dd>
                                 <!-- <dt>Feeder</dt> -->
                                 <dd>
                                         

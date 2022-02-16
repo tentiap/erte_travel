@@ -274,14 +274,38 @@ class TripController extends Controller
     public function update($jadwal, $plat_mobil, Request $request){
     	 $this->validate($request, [
             // 'id_kota_asal' => 'required',
-            // 'id_kota_tujuan' => 'required',
+            'plat_mobil' => 'required',
             'jadwal' => 'required']);
+
+            $filter_tanggal = '%'.date('Y-m-d', strtotime($jadwal)).'%';
+
+            $tripCreated = Trip::where('jadwal', 'like', $filter_tanggal)
+                                ->where('plat_mobil', $plat_mobil)
+                                ->get();
+            $jam = date('H:i', strtotime($jadwal));
+
+            if (count($tripCreated) > 0 ){
+                json_decode($tripCreated, true);
+                for ($i=0; $i < count($tripCreated); $i++) {
+                    $tempJadwal = $tripCreated[$i]['jadwal'];
+                    if($jadwal != $tempJadwal ) {
+                        $selisih_temp = Carbon::parse($request->jadwal)->diff(Carbon::parse($tempJadwal));
+                        $selisih = $selisih_temp->format('%h');
+        
+                        if($selisih < 5) {
+                            session()->flash('flash_danger', 'Ada kemungkinan mobil masih di jalan');
+                            return redirect('/trip/edit/'.$jadwal.'/'.$plat_mobil);
+                        } 
+                    }
+
+                }    
+            }
 
             $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
             // $trip->id_trip = $request->id_trip;
             // $trip->id_pengurus = Auth::guard('pengurus')->user()->id_users;
             $trip->jadwal = $request->jadwal;
-            // $trip->plat_mobil = $request->plat_mobil;
+            $trip->plat_mobil = $request->plat_mobil;
             // $trip->id_kota_asal = $request->id_kota_asal;
             // $trip->id_kota_tujuan = $request->id_kota_tujuan;
             $trip->save();
