@@ -111,6 +111,8 @@
                         <th>Penumpang</th>
                         <th>Detail Asal</th>
                         <th>Detail Tujuan</th>
+                        <th>Feeder</>
+                        <th>Status</>
                         <th>OPSI</th>
                       </tr>
                   </thead>
@@ -122,6 +124,26 @@
                         <td>{{ $d->nama_penumpang}}</a></td>
                         <td>{{ $d->detail_asal}}</td>
                         <td>{{ $d->detail_tujuan}}</td>
+                        <td>
+                                @if(empty($d->feeder->nama))
+                                      Belum ada Feeder
+                                @else
+                                      {{ $d->feeder->nama}}
+                                @endif
+                        </td>
+                        <td>
+                                @if($d->status == 1)
+                                    <span class="badge bg-grey">Booking</span>
+                                @elseif($d->status == 2)
+                                    <span class="badge bg-lime">Picked Up</span>
+                                @elseif($d->status == 3)
+                                    <span class="badge bg-light-blue">On Going</span>
+                                @elseif($d->status == 4)
+                                    <span class="badge bg-green">Arrived</span>
+                                @elseif($d->status == 5)
+                                   <span class="badge bg-red">Cancelled</span>
+                                @endif
+                        </td>
                         <td><a href="/pesanan/show/{{ $d->id_pemesan }}/{{ $d->jadwal}}/{{ $d->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>
                         
                       </tr>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mobil;
 use App\Sopir;
 use App\Seat;
+use App\Trip;
 
 class MobilController extends Controller {
     public function index() {
@@ -88,7 +89,7 @@ class MobilController extends Controller {
         $mobil->plat_mobil = $request->plat_mobil;
         $mobil->id_sopir = $request->id_sopir;
         $mobil->merek_mobil = $request->merek_mobil;
-        $feeder->save();
+        $mobil->save();
 
         session()->flash('flash_success', 'Berhasil mengupdate data mobil '.$mobil->plat_mobil);
         
@@ -96,10 +97,16 @@ class MobilController extends Controller {
     }
 
     public function delete($plat_mobil) {
-        $mobil = Mobil::find($plat_mobil);
-        $mobil->delete();
+        $trip = Trip::where('plat_mobil', $plat_mobil)->get();
+        if(!$trip->isEmpty()) {
+            session()->flash('flash_danger', "Mobil tidak dapat dihapus, sudah ada trip ");
+            return redirect('/mobil');
+        } else {
+            $mobil = Mobil::find($plat_mobil);
+            $mobil->delete();
 
-        session()->flash('flash_success', "Berhasil menghapus Mobil ".$mobil->plat_mobil);
-        return redirect('/feeder');
+            session()->flash('flash_success', "Berhasil menghapus Mobil ".$mobil->plat_mobil);
+            return redirect('/mobil');
+        }
     }
 }
