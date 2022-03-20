@@ -8,7 +8,6 @@ class Mobil extends Model {
     protected $table = "mobil";
     protected $fillable = [
         'plat_mobil',
-        'id_sopir',
         'merek_mobil'
     ];
 
@@ -25,6 +24,8 @@ class Mobil extends Model {
     }
 
     public function sopir() {
-        return $this->belongsTo(Sopir::class, 'id_sopir');
+        // return $this->hasOne(Sopir::class);
+        return $this->belongsTo(Sopir::class);
+
     }
 }

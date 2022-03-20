@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sopir extends Model {
     protected $table = "sopir";
     protected $fillable = [
+        'plat_mobil',
         'id_sopir',
         'username',
         'email',
@@ -16,7 +17,7 @@ class Sopir extends Model {
         'jenis_kelamin'
     ];
 
-    protected $primaryKey = "id_sopir";
+    protected $primaryKey = "plat_mobil";
     public $incrementing = false;
 
     public function setPasswordAttribute($password) {
@@ -24,6 +25,8 @@ class Sopir extends Model {
     }
 
     public function mobil(){
+        // return $this->belongsTo(Mobil::class);
         return $this->hasMany(Mobil::class);
+
     }
 }
