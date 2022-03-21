@@ -35,8 +35,8 @@
                         <th>Email</th>
                         <th>Kontak</th>
                         <th>Jenis Kelamin</th>
-                        <!-- <th>Plat Mobil</th>
-                        <th>Merek Mobil</th> -->
+                        <th>Plat Mobil</th>
+                        <!-- <th>Merek Mobil</th> -->
                         <th>OPSI</th>
                       </tr>
                 </thead>
@@ -50,13 +50,13 @@
                                 <td>{{ $s->email }}</td>
                                 <td>{{ $s->kontak }}</td>
                                 <td>{{ $s->jenis_kelamin }}</td>                         
-                                <!-- <td>{{ $s->plat_mobil}}</td>
-                                <td>{{ $s->merek_mobil}}</td> -->
+                                <td>{{ $s->plat_mobil}}</td>
+                                <!-- <td>{{ $s->merek_mobil}}</td> -->
                                 
                                 <td>
                                     
-                                    <a href="/sopir/edit/{{ $s->id_sopir }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $s->id_sopir }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/sopir/edit/{{ $s->plat_mobil }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $s->plat_mobil }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 

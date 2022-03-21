@@ -208,12 +208,12 @@ class TripController extends Controller
         $string_jadwal = preg_replace('/[^0-9]/', '', date('Y m d', strtotime($jadwal)));
         $id_trip = $string_jadwal.$plat_mobil;
 
-        $sopir_select = Sopir::join('mobil', 'mobil.id_sopir', '=', 'sopir.id_sopir')
-                        ->where('mobil.plat_mobil', $plat_mobil)
-                        ->select('sopir.nama')
-                        ->get();
-        json_decode($sopir_select, true);
-        $sopir = ($sopir_select[0]['nama']);
+        // $sopir_select = Sopir::join('mobil', 'mobil.id_sopir', '=', 'sopir.id_sopir')
+        //                 ->where('mobil.plat_mobil', $plat_mobil)
+        //                 ->select('sopir.nama')
+        //                 ->get();
+        // json_decode($sopir_select, true);
+        // $sopir = ($sopir_select[0]['nama']);
 
         // dd($sopir);
 
@@ -248,7 +248,8 @@ class TripController extends Controller
         //     $query->where('id_trip',$trip);
         // }))->get();
         
-        return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat, 'id_trip' => $id_trip, 'sopir' => $sopir]);
+        // return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat, 'id_trip' => $id_trip, 'sopir' => $sopir]);
+        return view('erte.trip.show', ['trip' => $trip, 'detail_pesanan' => $detail_pesanan, 'seat' => $seat, 'id_trip' => $id_trip]);
 
     }
 

@@ -98,7 +98,7 @@
                                       @endif
                                 </dd>
                                 <dt>Sopir</dt>
-                                <dd>{{ $sopir }}</dd>
+                                <dd>{{ $trip->mobil->sopir->nama }}</dd>
                               </dl>
                             </div>
                         </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sopir;
+use App\Mobil;
+
 
 class SopirController extends Controller
 {   
@@ -19,7 +21,8 @@ class SopirController extends Controller
     public function create(){
 
     	$sopir = Sopir::all();
-    	 return view('erte.sopir.create', ['sopir' => $sopir]);
+        $mobil = Mobil::all();
+    	return view('erte.sopir.create', ['sopir' => $sopir, 'mobil' => $mobil]);
 	}
 
 	public function store(Request $request){
@@ -32,10 +35,15 @@ class SopirController extends Controller
             'nama' => 'required',
             'kontak' => 'required|numeric',
             'jenis_kelamin' => 'required',
+            'plat_mobil' => 'required'
             
         ]);
 
-        $sopir = new Sopir();
+        if (Sopir::where('plat_mobil', $request->plat_mobil)->exists()){
+            session()->flash('danger', 'Data Mobil sudah ada');
+            return redirect('/sopir/create');
+        } else {
+            $sopir = new Sopir();
             // $sopir_select = Sopir::select('id_users');
             // $sopir_count = $sopir_select->count();
             //     if ($sopir_count === 0) {
@@ -46,26 +54,29 @@ class SopirController extends Controller
             //         $new_id = $lastrow_id[1]+1;
             //         $sopir->id_users = 'S'.$new_id;
             //     }
+            $sopir->plat_mobil = $request->plat_mobil;
+            $sopir->id_sopir = $request->id_sopir;
+            $sopir->username = $request->username;
+            $sopir->email = $request->email;
+            $sopir->password = $request->password;
+            $sopir->nama = $request->nama;
+            $sopir->kontak = $request->kontak;
+            $sopir->jenis_kelamin = $request->jenis_kelamin;
+            $sopir->save();
 
-        $sopir->id_sopir = $request->id_sopir;
-        $sopir->username = $request->username;
-        $sopir->email = $request->email;
-        $sopir->password = $request->password;
-        $sopir->nama = $request->nama;
-        $sopir->kontak = $request->kontak;
-        $sopir->jenis_kelamin = $request->jenis_kelamin;
-        $sopir->save();
+            session()->flash('flash_success', 'Berhasil menambahkan data sopir dengan nama '. $request->input('nama'));
 
-        session()->flash('flash_success', 'Berhasil menambahkan data sopir dengan nama '. $request->input('nama'));
-
-    	return redirect('/sopir');
+            return redirect('/sopir');
+        }
+       
     }
 
-    public function edit($id_sopir){
+    public function edit($plat_mobil){
 
-    	$sopir = Sopir::find($id_sopir);   			    	
+    	$sopir = Sopir::find($plat_mobil); 
+        $mobil = Mobil::all();  			    	
     	
-    	return view('erte.sopir.edit', ['sopir' => $sopir]);
+    	return view('erte.sopir.edit', ['sopir' => $sopir, 'mobil' => $mobil]);
 
     }
 
@@ -77,10 +88,10 @@ class SopirController extends Controller
 
     // }
 
-    public function update($id_sopir, Request $request, Sopir $sopir){
+    public function update($plat_mobil, Request $request, Sopir $sopir){
     	$this->validate($request, 
             [
-    		// 'id_sopir' => 'required',
+    		'id_sopir' => 'required',
             'username' => 'required',
             'email' => 'required|email',
             // 'password' => 'required',
@@ -89,7 +100,9 @@ class SopirController extends Controller
             'jenis_kelamin' => 'required'
         ]);
 
-        $sopir = Sopir::find($id_sopir);
+        $sopir = Sopir::find($plat_mobil);
+        $sopir->plat_mobil = $request->plat_mobil;
+        $sopir->id_sopir = $request->id_sopir;
         $sopir->username = $request->username;
         $sopir->email = $request->email;
         $sopir->nama = $request->nama;
@@ -103,8 +116,8 @@ class SopirController extends Controller
      
     }
 
-    public function delete($id_sopir){
-    	$sopir = Sopir::find($id_sopir);
+    public function delete($plat_mobil){
+    	$sopir = Sopir::find($plat_mobil);
     	$sopir->delete();
 
         session()->flash('flash_success', "Berhasil menghapus sopir ".$sopir->nama);

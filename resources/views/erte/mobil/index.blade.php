@@ -36,10 +36,16 @@
                       </tr>
                 </thead>
                 <tbody>
-                  @foreach($mobilSopir as $m)
+                  @foreach($mobil as $m)
                     <tr>
                         <td>{{ $m->plat_mobil }}</td>
-                        <td>{{ $m->nama }}</td>
+                        <td>
+                            @if(empty($m->sopir->nama))
+                                Belum ada Sopir
+                            @else
+                                {{ $m->sopir->nama }}
+                            @endif
+                        </td>
                         <td>{{ $m->merek_mobil }}</td>
                         <td>
                            <!-- <a href="/mobil/show/{{ $m->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a> -->

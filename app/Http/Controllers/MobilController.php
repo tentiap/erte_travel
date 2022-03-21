@@ -33,7 +33,7 @@ class MobilController extends Controller {
         $this->validate($request, 
             [
     		'plat_mobil' => 'required',
-    		'merek_mobil' => 'required',           
+    		'merek_mobil' => 'required'
         ]);
 
         $mobil = new Mobil();

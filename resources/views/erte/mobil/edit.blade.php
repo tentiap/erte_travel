@@ -35,7 +35,7 @@
 
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Sopir</label>
                             <select class="form-control" name="id_sopir">
                                 <option disabled selected value>---Sopir---</option>
@@ -44,7 +44,7 @@
                               @endforeach
                                     
                             </select>
-<!--  -->
+
                             @if($errors->has('id_sopir'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_sopir')}}
@@ -52,7 +52,7 @@
                             @endif
 
                             
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Merek Mobil</label>

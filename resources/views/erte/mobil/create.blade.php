@@ -35,7 +35,7 @@
 
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Sopir</label>
 
 
@@ -55,7 +55,7 @@
                                 </div>
                             @endif
 
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Merek Mobil</label>

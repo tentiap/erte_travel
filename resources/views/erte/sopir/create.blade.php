@@ -17,6 +17,8 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
+            @include('messages')
+
                <!--  <a href="../sopir" class="btn btn-primary">Kembali</a>
                     <br/>
                     <br/> -->
@@ -24,6 +26,24 @@
                 <form method="post" action="/sopir/store">
 
                         {{ csrf_field() }}
+
+                        <div class="form-group">
+                            <label>Plat Mobil</label>
+                            <select class="form-control" name="plat_mobil">
+                                <option disabled selected value> -- Plat Mobil -- </option>
+                                    @foreach($mobil as $m)
+                                        <option name="plat_mobil" value="{{$m->plat_mobil}}">{{$m->plat_mobil}}</option> 
+                                    @endforeach
+                            </select>
+
+                            @if($errors->has('plat_mobil'))
+                                <div class="text-danger">
+                                    {{ $errors->first('plat_mobil')}}
+                                </div>
+                            @endif
+
+                             
+                        </div>
 
                         <div class="form-group">
                             <label>ID Users</label>
@@ -120,21 +140,7 @@
 
                         </div>
 
-
                         <!-- <div class="form-group">
-                            <label>Plat Mobil</label>
-                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{ old('plat_mobil') }}">
-
-                            @if($errors->has('plat_mobil'))
-                                <div class="text-danger">
-                                    {{ $errors->first('plat_mobil')}}
-                                </div>
-                            @endif
-
-                             
-                        </div>
-
-                        <div class="form-group">
                             <label>Merek Mobil</label>
                             <input type="text" name="merek_mobil" class="form-control" placeholder="Merek Mobil" value="{{ old('merek_mobil') }}">
 

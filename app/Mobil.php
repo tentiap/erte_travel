@@ -24,8 +24,8 @@ class Mobil extends Model {
     }
 
     public function sopir() {
-        // return $this->hasOne(Sopir::class);
-        return $this->belongsTo(Sopir::class);
+        return $this->hasOne(Sopir::class, 'plat_mobil');
+        // return $this->belongsTo(Sopir::class);
 
     }
 }
