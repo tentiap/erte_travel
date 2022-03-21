@@ -361,6 +361,7 @@ class PesananController extends Controller
                         }
 
                         $detail = new Detail_Pesanan();
+                        $detail->id_pemesan = $pesanan->id_pemesan;
                         $detail->jadwal = $pesanan->jadwal;
                         $detail->plat_mobil = $pesanan->plat_mobil;
                         $detail->id_seat = $request->id_seat[$key];
@@ -369,8 +370,7 @@ class PesananController extends Controller
                         // if ($cancelled->exists()) {
                         //     $order_number_select =  
                         // }
-                        $detail->order_number = $newOrderNumber;
-                        $detail->id_pemesan = $pesanan->id_pemesan;
+                        // $detail->order_number = $newOrderNumber;
                         $detail->nama_penumpang = $request->nama_penumpang[$key];
                         $detail->jenis_kelamin = $request->jenis_kelamin[$key];
                         $detail->detail_asal = $request->detail_asal[$key];
@@ -456,7 +456,7 @@ class PesananController extends Controller
                     $detail->jadwal = $jadwal;
                     $detail->plat_mobil = $plat_mobil;
                     $detail->id_seat = $request->id_seat[$key];
-                    $detail->order_number = $newOrderNumber;
+                    // $detail->order_number = $newOrderNumber;
                     $detail->id_pemesan = $id_pemesan;
                     $detail->nama_penumpang = $request->nama_penumpang[$key];
                     $detail->jenis_kelamin = $request->jenis_kelamin[$key];
@@ -595,28 +595,28 @@ class PesananController extends Controller
                 for($i = 0; $i < count($request->id_seat); $i++){
                     $booked = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->get();
                     json_decode($booked, true);
-                    // dd($booked[0]['status']);
-                    // dd(count($booked));
-                    // dd($request->order_number[$i]);
+                    // // dd($booked[0]['status']);
+                    // // dd(count($booked));
+                    // // dd($request->order_number[$i]);
 
-                    // if(Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->exists()) {
-                    if(count($booked) > 0 ) {
-                        if(($request->status[$i] != 5) && ($request->order_number[$i] != $booked[0]['order_number'])) {
-                            session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
-                            // return redirect('/pesanan/update_detail/'.$jumlah_penumpang. '/' .$jadwal. '/' .$plat_mobil. '/' .$id_pemesan);
-                            return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
-                        } 
-                        // session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
-                        // return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
-                    }
+                    // // if(Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil, 'id_seat' => $request->id_seat[$i]])->where('status', '!=', 5)->exists()) {
+                    // if(count($booked) > 0 ) {
+                    //     if(($request->status[$i] != 5) && ($request->order_number[$i] != $booked[0]['order_number'])) {
+                    //         session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
+                    //         // return redirect('/pesanan/update_detail/'.$jumlah_penumpang. '/' .$jadwal. '/' .$plat_mobil. '/' .$id_pemesan);
+                    //         return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
+                    //     } 
+                    //     // session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' sudah dibooking');
+                    //     // return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
+                    // }
                     
-                    // if (in_array($request->id_seat[$i], $requestedSeat) == false){
-                    //     array_push($requestedSeat, $request->id_seat[$i]);
-                    // }
-                    // elseif (in_array($request->id_seat[$i], $requestedSeat) == true){
-                    //     session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' tidak bisa diisi lebih dari 1 orang');
-                    //     return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
-                    // }
+                    // // if (in_array($request->id_seat[$i], $requestedSeat) == false){
+                    // //     array_push($requestedSeat, $request->id_seat[$i]);
+                    // // }
+                    // // elseif (in_array($request->id_seat[$i], $requestedSeat) == true){
+                    // //     session()->flash('flash_danger', 'Seat ' .$request->id_seat[$i]. ' tidak bisa diisi lebih dari 1 orang');
+                    // //     return redirect('/pesanan/edit/'.$id_pemesan. '/' .$jadwal. '/' .$plat_mobil);
+                    // // }
                 }
             }
             // dd($requestedSeat);
@@ -643,39 +643,47 @@ class PesananController extends Controller
 
             // dd(count(array($request->id_seat)));
             for($i = 0; $i < count($request->nama_penumpang); $i++){
-                $detail[$i]->jadwal = $pesanan->jadwal;
-                $detail[$i]->plat_mobil = $pesanan->plat_mobil;
-                $detail[$i]->id_seat = $detail[$i]->id_seat;
-                $detail[$i]->id_pemesan = $pesanan->id_pemesan;
-                $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
-                $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
-                $detail[$i]->detail_asal = $request->detail_asal[$i];
-                $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
-                $detail[$i]->no_hp = $request->no_hp[$i];
-                $detail[$i]->id_feeder = $request->id_feeder[$i];
-                $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
-                $detail[$i]->status = $request->status[$i];
-                $detail[$i]->save();
-                // $detail[$i]->jadwal = $pesanan->jadwal;
-                // $detail[$i]->plat_mobil = $pesanan->plat_mobil;
-                // $detail[$i]->id_seat = $detail[$i]->id_seat;
-                // $detail[$i]->order_number = $detail[$i]->order_number;
-                // $detail[$i]->id_pemesan = $request->id_pemesan[$i];
-                // $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
-                // $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
-                // $detail[$i]->detail_asal = $request->detail_asal[$i];
-                // $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
-                // $detail[$i]->no_hp = $request->no_hp[$i];
-                // $detail[$i]->id_feeder = $request->id_feeder[$i];
-                // $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
-                // $detail[$i]->status = $request->status[$i];
-                // $detail[$i]->save();
+                // dd($request->status[$i]);
 
-            }
-
+                if($request->status[$i] == '5') {
+                    $detailPesanan = Detail_Pesanan::where(['id_pemesan' => $pesanan->id_pemesan, 'jadwal' => $pesanan->jadwal, 'plat_mobil' => $pesanan->plat_mobil, 'id_seat' => $detail[$i]->id_seat])->first();
+                    // dd($detailPesanan);
+                    $detailPesanan->delete();
+                    session()->flash('flash_success', "Berhasil menghapus detail pesanan");
+                    return redirect('/pesanan');
+                } else {
+                    $detail[$i]->jadwal = $pesanan->jadwal;
+                    $detail[$i]->plat_mobil = $pesanan->plat_mobil;
+                    $detail[$i]->id_seat = $detail[$i]->id_seat;
+                    $detail[$i]->id_pemesan = $pesanan->id_pemesan;
+                    $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
+                    $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
+                    $detail[$i]->detail_asal = $request->detail_asal[$i];
+                    $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
+                    $detail[$i]->no_hp = $request->no_hp[$i];
+                    $detail[$i]->id_feeder = $request->id_feeder[$i];
+                    $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
+                    $detail[$i]->status = $request->status[$i];
+                    $detail[$i]->save();
+                    // $detail[$i]->jadwal = $pesanan->jadwal;
+                    // $detail[$i]->plat_mobil = $pesanan->plat_mobil;
+                    // $detail[$i]->id_seat = $detail[$i]->id_seat;
+                    // $detail[$i]->order_number = $detail[$i]->order_number;
+                    // $detail[$i]->id_pemesan = $request->id_pemesan[$i];
+                    // $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
+                    // $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];
+                    // $detail[$i]->detail_asal = $request->detail_asal[$i];
+                    // $detail[$i]->detail_tujuan = $request->detail_tujuan[$i];
+                    // $detail[$i]->no_hp = $request->no_hp[$i];
+                    // $detail[$i]->id_feeder = $request->id_feeder[$i];
+                    // $detail[$i]->biaya_tambahan = $request->biaya_tambahan[$i];
+                    // $detail[$i]->status = $request->status[$i];
+                    // $detail[$i]->save();
+    
+                }
+            } 
             session()->flash('flash_success', 'Berhasil mengupdate data pesanan');
-            return redirect('/pesanan/show/'. $id_pemesan .'/' . $jadwal. '/' . $plat_mobil );
-                       
+            return redirect('/pesanan/show/'. $id_pemesan .'/' . $jadwal. '/' . $plat_mobil );           
     }
 
     public function update_search($id_pemesan, $jadwal, $plat_mobil){

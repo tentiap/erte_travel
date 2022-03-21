@@ -146,13 +146,25 @@
                                             </div>
 
                                             <div class="col-sm-6">
+                                                <label>Feeder</label>
+                                                <select class="form-control" name="id_feeder[]">
+                                                    <option value="">  Belum ada feeder  </option>
+                                                        @foreach($feeder as $f)                                                               
+                                                                <option value="{{$f->id_feeder}}" {{$detail->id_feeder == $f->id_feeder ? 'selected' : ''}}>
+                                                                    {{$f->nama}}
+                                                                </option>
+                                                        @endforeach 
+                                                </select>
+                                            </div>
+
+                                            <!-- <div class="col-sm-6">
                                                 <label>Order Number</label>
                                                 <select class="form-control" name="order_number[]">
                                                     <option value="{{ $detail->order_number}}">
                                                     {{$detail->order_number}}
                                                     </option> 
                                                 </select>
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <div class="row">
@@ -191,7 +203,7 @@
                                                     @endif
                                             </div>
 
-                                            <div class="col-sm-3">
+                                            <!-- <div class="col-sm-3">
                                                 <label>Feeder</label>
                                                 <select class="form-control" name="id_feeder[]">
                                                     <option value="">  Belum ada feeder  </option>
@@ -201,7 +213,7 @@
                                                                 </option>
                                                         @endforeach 
                                                 </select>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-sm-3">
                                                 <label>Biaya Tambahan</label>
@@ -214,7 +226,7 @@
                                                     @endif
                                             </div>
 
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-6">
                                                 <label>Status</label>
                                                 <select class="form-control" name="status[]" id="status">
                                                     <option disabled selected value>  -----Status-----  </option>

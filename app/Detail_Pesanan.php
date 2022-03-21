@@ -10,11 +10,11 @@ class Detail_Pesanan extends Model {
 
     protected $table = "detail_pesanan";
     protected $fillable = [
+        'id_pemesan',
         'jadwal',
         'plat_mobil',  
         'id_seat',
-        'order_number',
-        'id_pemesan',
+        // 'order_number',
         'id_feeder', 
         'nama_penumpang', 
         'jenis_kelamin', 
@@ -27,14 +27,14 @@ class Detail_Pesanan extends Model {
 
     public $incrementing = false;
 
-    protected $primaryKey = ['jadwal', 'plat_mobil', 'id_seat', 'order_number'];
+    protected $primaryKey = ['id_pemesan', 'jadwal', 'plat_mobil', 'id_seat'];
 
     public function pesanan() {
         return $this->belongsTo(Pesanan::class, ['id_pemesan', 'jadwal', 'plat_mobil']);
     }
 
     public function seat() {
-        return $this->belongsTo(Seat::class, 'id_seat', 'plat_mobil');
+        return $this->belongsTo(Seat::class, 'id_seat');
     }
 
     public function feeder() {

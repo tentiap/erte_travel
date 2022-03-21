@@ -13,6 +13,8 @@ use App\Sopir;
 use App\Feeder;
 use App\Detail_Pesanan;
 use App\Seat;
+use App\Mobil;
+
 
 use DB;
 use Carbon\Carbon;
@@ -356,22 +358,26 @@ class ApiController extends Controller
     }
 
     public function changeStatus(Request $request){
-        $booked = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
+        $booked = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'id_pemesan' => $request->id_pemesan])
                             ->where('status', '!=', 5)
                             ->get();
 
-        json_decode($booked, true);
-        if(count($booked) > 0) {
-            if(($request->status != 5) && ($request->order_number != $booked[0]['order_number'])) {
-                return $this->error("Seat ".$request->id_seat." sudah dibooking");
-            } 
-        }
+        // json_decode($booked, true);
+        // if(count($booked) > 0) {
+        //     if(($request->status != 5) && ($request->order_number != $booked[0]['order_number'])) {
+        //         return $this->error("Seat ".$request->id_seat." sudah dibooking");
+        //     } 
+        // }
 
-        $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number])->first();
+        $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'id_pemesan' => $request->id_pemesan])->first();
 
         $status = $request->status;
         $detail->status = $status;
-        $detail->save();
+        if($status == '5') {
+            $detail->delete();
+        } else {
+            $detail->save();
+        }
 
         if($detail){
             return response()->json([
@@ -467,7 +473,7 @@ class ApiController extends Controller
 
     //Done
     public function loginSopir(Request $request){
-        $sopir = Sopir::where('email', $request->email)->first();
+        $sopir = Sopir::join('mobil', 'sopir.plat_mobil', '=', 'mobil.plat_mobil')->where('email', $request->email)->first();
 
         if($sopir){
             if(password_verify($request->password, $sopir->password)){
@@ -510,8 +516,8 @@ class ApiController extends Controller
         //             ->get();
 
         $trip = Trip::join('mobil', 'trip.plat_mobil', '=', 'mobil.plat_mobil')
-                    ->join('sopir', 'mobil.id_sopir', '=', "sopir.id_sopir")
-                    ->where(['mobil.id_sopir' => $request->id_sopir])
+                    ->join('sopir', 'mobil.plat_mobil', '=', "sopir.plat_mobil")
+                    ->where(['sopir.id_sopir' => $request->id_sopir])
                     ->where('trip.jadwal', '>=', $today)
                     ->orderBy('trip.jadwal', 'ASC')
                     ->get();
@@ -534,7 +540,9 @@ class ApiController extends Controller
         //             ->get();
 
         $trip = Trip::join('mobil', 'trip.plat_mobil', '=', 'mobil.plat_mobil')
-                    ->where('mobil.id_sopir', $request->id_sopir)
+                    ->join('sopir', 'mobil.plat_mobil', '=', "sopir.plat_mobil")
+                    ->where(['sopir.id_sopir' => $request->id_sopir])
+                    ->where('sopir.id_sopir', $request->id_sopir)
                     ->orderBy('trip.jadwal', 'DESC')
                     ->get();
 
@@ -568,7 +576,7 @@ class ApiController extends Controller
                              'detail_pesanan.detail_tujuan',
                              'detail_pesanan.no_hp',
                              'detail_pesanan.status',
-                             'detail_pesanan.order_number',
+                            //  'detail_pesanan.order_number',
                              'detail_pesanan.biaya_tambahan',
                              'pemesan.kontak as kontak_pemesan')
                     ->orderBy('id_seat', 'ASC')
