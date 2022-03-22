@@ -560,8 +560,6 @@ class PesananController extends Controller
         $string_jadwal = preg_replace('/[^0-9]/', '', date('Y m d', strtotime($jadwal)));
         $id = $id_pemesan.$string_jadwal.$plat_mobil;
 
-        
-
         $jumlah = $detail->count();
         $kota = Kota::all();
 
@@ -569,10 +567,17 @@ class PesananController extends Controller
         $pemesan = Pemesan::all();
         // $seat = Seat::all();
 
-        $seat_b = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
-                        ->where('detail_pesanan.status', '!=', 5)
-                        ->count();
+        // $seat_b = Detail_Pesanan::where(['id_pemesan' => $id_pemesan, 'jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
+        //                 ->where('detail_pesanan.status', '!=', 5)
+        //                 ->count();
+        
+        $seat_b = Detail_Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])
+        ->where('status', '!=', 5)
+        ->count();
+
         $seat = 7 - $seat_b;
+
+        // dd($seat);
 
         return view('erte.pesanan.update_create', ['pesanan' => $pesanan, 'trip' => $trip, 'pemesan' => $pemesan, 'seat' => $seat, 'detail' => $detail, 'jumlah' => $jumlah, 'kota' => $kota, 'id' => $id]);
     }

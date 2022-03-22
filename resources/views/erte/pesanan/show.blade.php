@@ -98,6 +98,8 @@
                                 <dd>{{ date('H:i', strtotime($trip->jadwal)) }}</dd>
                                 <dt>Plat Mobil</dt>
                                 <dd>{{ $trip->plat_mobil }}</dd>
+                                <dt>Sopir</dt>
+                                <dd>{{ $trip->mobil->sopir->nama }}</dd>
                                 <!-- <dt>Feeder</dt> -->
                                 <dd>
                                         
@@ -142,7 +144,7 @@
                         <th>Detail Asal</th>
                         <th>Detail Tujuan</th>
                         <th>Seat</th>
-                        <th>Order Number</th>
+                        <!-- <th>Order Number</th> -->
                         <th>Biaya Tambahan</th>
                         <th>Feeder</th>
                         <th>Status</th>
@@ -164,7 +166,7 @@
                             <td>{{ $d->detail_asal }} </td>
                             <td>{{ $d->detail_tujuan }} </td>
                             <td>{{ $d->id_seat}}</td>
-                            <td>{{ $d->order_number}}</td>
+                            <!-- <td>{{ $d->order_number}}</td> -->
                             <td>
                                   @if(empty($d->biaya_tambahan))
                                              -
@@ -214,7 +216,7 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                       <form method="get" action="/pesanan/update_create/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
-                                        <label>Trip {{$trip->jadwal}}-{{$trip->plat_mobil}}</label>
+                                        <label>Tambah Penumpang</label>
                                             
                                                 @if($seat_tersedia == 0)
                                                     <p>Trip sudah penuh !</p>

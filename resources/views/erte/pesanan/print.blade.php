@@ -70,6 +70,8 @@
         </strong>  
               Tanggal: {{ date('d M Y', strtotime($trip->jadwal)) }}<br>
               Jam: {{ date('H:i', strtotime($trip->jadwal)) }}<br>
+              Plat Mobil: {{ $trip->plat_mobil }}<br>
+
             </address>
       </div>
       <!-- /.col -->

@@ -252,6 +252,7 @@ class ApiController extends Controller
                         ->where('pesanan.id_pemesan',  $request->id_pemesan)
                         ->orderBy('trip.jadwal', 'desc')
                         ->get();
+        dd($pesanan->count());
 
         $pemesan = Pemesan::where('id_pemesan', $request->id_pemesan)->first();                
         if(!$pesanan->isEmpty()){
@@ -321,22 +322,22 @@ class ApiController extends Controller
     public function create_detail_pesanan(Request $request){
         $detail_pesanan =  Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->get();
 
-        if (count($detail_pesanan) > 0 ){
-            $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
-                                ->orderBy('order_number','desc')
-                                ->first();
+        // if (count($detail_pesanan) > 0 ){
+        //     $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
+        //                         ->orderBy('order_number','desc')
+        //                         ->first();
             
-            $newOrderNumber = $lastOrderNumber->order_number + 1;
+        //     $newOrderNumber = $lastOrderNumber->order_number + 1;
             
-        }elseif(count($detail_pesanan) == 0 ) {
-            $newOrderNumber = 1;
-        }
+        // }elseif(count($detail_pesanan) == 0 ) {
+        //     $newOrderNumber = 1;
+        // }
         
         $detail_pesanan = new Detail_Pesanan();
         $detail_pesanan->jadwal =  $request->jadwal;
         $detail_pesanan->plat_mobil = $request->plat_mobil;
         $detail_pesanan->id_seat = $request->id_seat;
-        $detail_pesanan->order_number = $newOrderNumber;
+        // $detail_pesanan->order_number = $newOrderNumber;
         $detail_pesanan->id_pemesan = $request->id_pemesan;
         $detail_pesanan->nama_penumpang = $request->nama_penumpang;
         $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
@@ -392,16 +393,20 @@ class ApiController extends Controller
 
     public function updateDetailPesanan(Request $request){
 
-        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'order_number' => $request->order_number])->first();
+        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'id_pemesan' => $request->id_pemesan])->first();
 
-        $detail_pesanan->id_seat = $request->id_seat;
-        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
-        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
-        $detail_pesanan->detail_asal = $request->detail_asal;
-        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
-        $detail_pesanan->no_hp = $request->no_hp;
-        $detail_pesanan->status = $request->status;
-        $detail_pesanan->save();
+        if($request->status == '5') {
+            $detail_pesanan->delete();
+        } else {
+            $detail_pesanan->id_seat = $request->id_seat;
+            $detail_pesanan->nama_penumpang = $request->nama_penumpang;
+            $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
+            $detail_pesanan->detail_asal = $request->detail_asal;
+            $detail_pesanan->detail_tujuan = $request->detail_tujuan;
+            $detail_pesanan->no_hp = $request->no_hp;
+            $detail_pesanan->status = $request->status;
+            $detail_pesanan->save();
+        }
 
         if($detail_pesanan){
             return response()->json([
