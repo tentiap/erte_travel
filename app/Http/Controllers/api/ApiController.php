@@ -252,7 +252,18 @@ class ApiController extends Controller
                         ->where('pesanan.id_pemesan',  $request->id_pemesan)
                         ->orderBy('trip.jadwal', 'desc')
                         ->get();
-        dd($pesanan->count());
+        // dd($pesanan->count());
+        // $jumlah_pesanan = $pesanan->count();
+
+        if(!empty($pesanan)){
+            for($i=0; $i < $pesanan->count(); $i++) {
+                $detail = Detail_Pesanan::where(['jadwal' => $pesanan[$i]->jadwal, 'plat_mobil' => $pesanan[$i]->plat_mobil, 'id_pemesan' => $pesanan[$i]->id_pemesan])->get();
+
+                if($detail->isEmpty()) {
+                    $pesanan[$i]->delete();
+                } 
+            }
+        }
 
         $pemesan = Pemesan::where('id_pemesan', $request->id_pemesan)->first();                
         if(!$pesanan->isEmpty()){
@@ -320,7 +331,7 @@ class ApiController extends Controller
     }
 
     public function create_detail_pesanan(Request $request){
-        $detail_pesanan =  Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->get();
+        // $detail_pesanan =  Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->get();
 
         // if (count($detail_pesanan) > 0 ){
         //     $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])

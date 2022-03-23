@@ -27,6 +27,16 @@ class PesananController extends Controller
         
             $pesanan = Pesanan::join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
                                     ->orderBy('pesanan.tanggal_pesan', 'desc')->paginate(10);
+
+            if(!empty($pesanan)){
+                for($i=0; $i < $pesanan->count(); $i++) {
+                    $detail = Detail_Pesanan::where(['jadwal' => $pesanan[$i]->jadwal, 'plat_mobil' => $pesanan[$i]->plat_mobil, 'id_pemesan' => $pesanan[$i]->id_pemesan])->get();
+    
+                    if($detail->isEmpty()) {
+                        $pesanan[$i]->delete();
+                    } 
+                }
+            }
             
                                     // dd($pesanan);
             
