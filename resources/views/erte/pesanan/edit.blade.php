@@ -133,9 +133,15 @@
                                             <div class="col-sm-6">
                                                 <label>Seat</label>
                                                 <select class="form-control" name="id_seat[]">
-                                                    <option value="{{ $detail->id_seat}}">
+                                                    <!-- <option value="{{ $detail->id_seat}}">
                                                     {{$detail->id_seat}}
-                                                    </option> 
+                                                    </option>  -->
+                                                    <option disabled value="">  Seat  </option>
+                                                        @foreach($seat as $s)                                                               
+                                                                <option value="{{$s->id_seat}}" {{$detail->id_seat == $s->id_seat ? 'selected' : ''}}>
+                                                                    {{$s->id_seat}}
+                                                                </option>
+                                                        @endforeach
                                                 </select>
 
                                                 @if($errors->has('id_seat'))

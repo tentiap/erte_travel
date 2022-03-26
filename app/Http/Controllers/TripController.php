@@ -316,10 +316,18 @@ class TripController extends Controller
     }
 
  	public function delete($jadwal, $plat_mobil){
-    	$trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
-        $trip->delete();
+        $pesanan = Pesanan::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->get();
 
-        session()->flash('flash_success', "Berhasil menghapus trip ".$trip->jadwal);
+        if(!$pesanan->isEmpty()){
+            session()->flash('flash_danger', "Trip tidak dapat dihapus, sudah ada pesanan ");
+            // return redirect('/trip');
+        } else {
+            $trip = Trip::where(['jadwal' => $jadwal, 'plat_mobil' => $plat_mobil])->first();
+            $trip->delete();
+
+            session()->flash('flash_success', "Berhasil menghapus trip ".$trip->jadwal);
+        }
+
         return redirect('/trip');
     	
     }
