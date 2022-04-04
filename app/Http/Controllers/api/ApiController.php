@@ -638,7 +638,7 @@ class ApiController extends Controller
                              'detail_pesanan.no_hp',
                              'detail_pesanan.status',
                              'detail_pesanan.biaya_tambahan',
-                             'detail_pesanan.order_number',
+                            //  'detail_pesanan.order_number',
                              'pemesan.kontak',
                              'trip.jadwal')
                     ->orderBy('trip.jadwal', 'ASC')
