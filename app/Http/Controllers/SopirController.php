@@ -40,7 +40,8 @@ class SopirController extends Controller
         ]);
 
         if (Sopir::where('plat_mobil', $request->plat_mobil)->exists()){
-            session()->flash('danger', 'Data Mobil sudah ada');
+            // dd("Woi manga ko");
+            session()->flash('flash_danger', 'Data Mobil sudah ada');        
             return redirect('/sopir/create');
         } else {
             $sopir = new Sopir();

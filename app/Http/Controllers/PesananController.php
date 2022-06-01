@@ -669,7 +669,7 @@ class PesananController extends Controller
                 } else {
                     $detail[$i]->jadwal = $pesanan->jadwal;
                     $detail[$i]->plat_mobil = $pesanan->plat_mobil;
-                    $detail[$i]->id_seat = $detail[$i]->id_seat;
+                    $detail[$i]->id_seat = $request->id_seat[$i];
                     $detail[$i]->id_pemesan = $pesanan->id_pemesan;
                     $detail[$i]->nama_penumpang = $request->nama_penumpang[$i];
                     $detail[$i]->jenis_kelamin = $request->jenis_kelamin[$i];

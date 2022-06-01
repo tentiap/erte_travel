@@ -404,12 +404,17 @@ class ApiController extends Controller
 
     public function updateDetailPesanan(Request $request){
 
-        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'id_pemesan' => $request->id_pemesan])->first();
+        $detail_pesanan = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 
+                                                 'id_seat' => $request->current_seat, 'id_pemesan' => $request->id_pemesan])->first();
 
         if($request->status == '5') {
             $detail_pesanan->delete();
         } else {
+
             $detail_pesanan->id_seat = $request->id_seat;
+
+            // dd($request->nama_penumpang);
+
             $detail_pesanan->nama_penumpang = $request->nama_penumpang;
             $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
             $detail_pesanan->detail_asal = $request->detail_asal;

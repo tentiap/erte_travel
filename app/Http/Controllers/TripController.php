@@ -289,15 +289,23 @@ class TripController extends Controller
                 json_decode($tripCreated, true);
                 for ($i=0; $i < count($tripCreated); $i++) {
                     $tempJadwal = $tripCreated[$i]['jadwal'];
+                    // dd($jadwal);
                     if($jadwal != $tempJadwal ) {
                         $selisih_temp = Carbon::parse($request->jadwal)->diff(Carbon::parse($tempJadwal));
                         $selisih = $selisih_temp->format('%h');
         
-                        if($selisih < 5) {
+                        if($selisih < 5.0) {
                             session()->flash('flash_danger', 'Ada kemungkinan mobil masih di jalan');
                             return redirect('/trip/edit/'.$jadwal.'/'.$plat_mobil);
                         } 
-                    }
+                    } 
+                    // else if($jadwal == $tempJadwal) {
+                    //     if($plat_mobil == $tripCreated[$i]['plat_mobil'] ) {
+                    //         session()->flash('flash_danger', 'Trip sudah ada');
+                    //         return redirect('/trip/edit/'.$jadwal.'/'.$plat_mobil);
+                    //     }
+                    // } 
+                    
 
                 }    
             }

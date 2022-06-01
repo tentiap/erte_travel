@@ -17,7 +17,7 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-            @include('messages')
+                @include('messages')
 
                <!--  <a href="../sopir" class="btn btn-primary">Kembali</a>
                     <br/>
