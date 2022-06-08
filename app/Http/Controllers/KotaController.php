@@ -28,9 +28,7 @@ class KotaController extends Controller
     	]);
 
         session()->flash('flash_success', 'Berhasil menambahkan data kota dengan nama '. $request->input('nama_kota'));
-
     	return redirect('/kota');
-
     }
 
     public function edit($id_kota){

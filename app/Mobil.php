@@ -19,13 +19,7 @@ class Mobil extends Model {
         return $this->hasMany(Trip::class);
     }
 
-    // public function seat() {
-    //     return $this->hasMany(Seat::class);
-    // }
-
     public function sopir() {
         return $this->hasOne(Sopir::class, 'plat_mobil');
-        // return $this->belongsTo(Sopir::class);
-
     }
 }

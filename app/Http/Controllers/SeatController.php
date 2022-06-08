@@ -15,15 +15,14 @@ class SeatController extends Controller
 
     public function create(){
         $seat = new Seat();
-            $seat_select = Seat::select('id_seat');
-            $seat_count = $seat_select->count();
-                if ($seat_count < 7) {
-                    return view('erte.seat.create');
-                }else{
-                    session()->flash('flash_warning', "Tidak bisa menambahkan seat lagi");
-                    return redirect('/seat');
-                }
-    	
+        $seat_select = Seat::select('id_seat');
+        $seat_count = $seat_select->count();
+            if ($seat_count < 7) {
+                return view('erte.seat.create');
+            }else{
+                session()->flash('flash_warning', "Tidak bisa menambahkan seat lagi");
+                return redirect('/seat');
+            }
     }
     
     public function store(Request $request){
@@ -37,9 +36,7 @@ class SeatController extends Controller
     	]);
 
         session()->flash('flash_success', 'Berhasil menambahkan data seat dengan id '. $request->input('id_seat'));
-
     	return redirect('/seat');
-
     }
 
     public function edit($id_seat){
@@ -58,7 +55,6 @@ class SeatController extends Controller
     	$seat->save();
 
         session()->flash('flash_success', 'Berhasil mengupdate data seat '.$seat->id_seat);
-
         return redirect('/seat');
     }
 
@@ -69,5 +65,4 @@ class SeatController extends Controller
     
         return redirect('/seat');
     }
-
 }

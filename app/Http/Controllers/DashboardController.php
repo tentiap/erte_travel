@@ -24,7 +24,6 @@ class DashboardController extends Controller
 	    	$today = Carbon::now();
 	    	$filter_today = '%'.date('Y-m-d', strtotime($today)).'%';
 	    	$filter_jam = date('Y-m-d H:i:s', strtotime($today));
-	    	// $trip = Trip::where('jadwal', '>', $filter)->get();
 	    	$trip = Trip::where('jadwal', 'like', $filter_today)
 	    						->where('jadwal', '>', $filter_jam)
 	    						->orderBy('jadwal', 'asc')->paginate(10);
@@ -35,15 +34,14 @@ class DashboardController extends Controller
 	    	$feeder = Feeder::where('id_kota', $kota)->count();
 	    	$pemesan = Pemesan::all()->count();
 	    	$sopir = Sopir::all()->count();
-	    	// $pesanan = Pesanan::join('trip', 'pesanan.id_trip', '=', 'trip.id_trip')
-	        //             ->where('trip.id_kota_asal',  $kota)
-	        //             ->count();
+	
 			$pesanan = DB::table('pesanan')
 						->join('trip', function ($join) {
 							$join->on('pesanan.jadwal', '=', 'trip.jadwal')->On('pesanan.plat_mobil', '=', 'trip.plat_mobil');
 						})
 						->where('trip.id_kota_asal', $kota)
 						->count();
+						
 	        $today = Carbon::now();
 	    	$filter_today = '%'.date('Y-m-d', strtotime($today)).'%';
 	    	$filter_jam = date('Y-m-d H:i:s', strtotime($today));

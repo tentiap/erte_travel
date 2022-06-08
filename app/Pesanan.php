@@ -28,10 +28,6 @@ class Pesanan extends Model {
         return $this->belongsTo(Pemesan::class, 'id_pemesan');
     }
 
-    // public function trip() {
-    //     return $this->compositeBelongsTo(Trip::class, ['jadwal', 'plat_mobil'], ['jadwal', 'plat_mobil']);
-    // }
-
     public function trip() {
         return $this->belongsTo(Trip::class, 'jadwal', 'plat_mobil');
     }
