@@ -28,16 +28,26 @@ class RuteController extends Controller
     		'id_kota_asal' => 'required',
     		'id_kota_tujuan' => 'required',
     		'tarif' => 'required']);
+        
+        if($request->id_kota_asal == $request->id_kota_tujuan) {
+            session()->flash('flash_danger', "Kota asal dan kota tujuan harus berbeda");
+            return redirect('/rute/create');
 
-        $rute = Rute::create([
-            'id_kota_asal' => $request->id_kota_asal,
-            'id_kota_tujuan' => $request->id_kota_tujuan,
-            'tarif' => $request->tarif
-        ]);
+        } else if(Rute::where(['id_kota_asal' => $request->id_kota_asal, 'id_kota_tujuan' => $request->id_kota_tujuan])->exists()) {
+            session()->flash('flash_danger', "Data rute sudah ada");
+            return redirect('/rute/create');
 
-        session()->flash('flash_success', 'Berhasil menambahkan data rute '.$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
-
-    	return redirect('/rute');
+        } else {
+            $rute = Rute::create([
+                'id_kota_asal' => $request->id_kota_asal,
+                'id_kota_tujuan' => $request->id_kota_tujuan,
+                'tarif' => $request->tarif
+            ]);
+    
+            session()->flash('flash_success', 'Berhasil menambahkan data rute '.$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
+    
+            return redirect('/rute');
+        }
     }
 
     public function edit($id_kota_asal, $id_kota_tujuan){

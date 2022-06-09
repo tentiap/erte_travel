@@ -16,6 +16,7 @@
  @section('content')     
     <section class="content">
         <div class="box">
+        @include('messages')
             <div class="box-body">
                                    
                 <form method="post" action="/rute/store">
