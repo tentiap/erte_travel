@@ -15,7 +15,7 @@ class SeatController extends Controller
 
     public function create(){
         $seat = new Seat();
-            $seat_select = Seat::select('id_seat');
+        $seat_select = Seat::select('id_seat');
             $seat_count = $seat_select->count();
                 if ($seat_count < 7) {
                     return view('erte.seat.create');
