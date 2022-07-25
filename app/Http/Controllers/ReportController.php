@@ -16,7 +16,6 @@ class ReportController extends Controller
     }
 
     public function show(){
-
         $startDate = Input::get('startDate');
         $end = Input::get('endDate');
         $endDate = date('Y-m-d', strtotime($end. ' + 1 days'));
@@ -31,18 +30,11 @@ class ReportController extends Controller
         }elseif ($startDate == $endDate) {
 
             if (Auth::guard('pengurus')->user()->id_pengurus == 'admin') {
-                // $trip = Trip::where('jadwal', 'like', $filter)
-                //         ->orderBy('jadwal', 'asc')
-                //         ->get();
-                
                 $trip = Trip::join('mobil','trip.plat_mobil', '=', 'mobil.plat_mobil')
                 ->join('sopir', 'mobil.id_sopir', '=', 'sopir.id_sopir')
                 ->where('jadwal', 'like', $filter)
                 ->orderBy('jadwal', 'asc')
                 ->get();
-
-
-
 
                 return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate, 'end' => $end]);
             }else{
@@ -53,7 +45,6 @@ class ReportController extends Controller
                         ->get();
 
                 return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate, 'end' => $end]);
-                
             }
 
         }else{
@@ -63,15 +54,6 @@ class ReportController extends Controller
                     ->orderBy('jadwal', 'asc')
                     ->get();
 
-                // $trip = Trip::join('mobil','trip.plat_mobil', '=', 'mobil.plat_mobil')
-                //     ->join('sopir', 'mobil.id_sopir', '=', 'sopir.id_sopir')
-                //     ->where('jadwal', 'like', $filter)
-                //     ->orderBy('jadwal', 'asc')
-                //     ->get();
-
-                // dd($trip);
-
-                    
                 return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate, 'end' => $end]);
             }else{
                 $kota = Auth::guard('pengurus')->user()->id_kota;
@@ -80,10 +62,8 @@ class ReportController extends Controller
                     ->orderBy('jadwal', 'asc')
                     ->get();
                     
-                return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate, 'end' => $end]);
-                
+                return view('erte.report.show', ['trip' => $trip, 'startDate' => $startDate, 'endDate' => $endDate, 'end' => $end]);    
             }
         }
-        
     }
 }

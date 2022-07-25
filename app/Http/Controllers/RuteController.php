@@ -28,6 +28,7 @@ class RuteController extends Controller
     		'id_kota_asal' => 'required',
     		'id_kota_tujuan' => 'required',
     		'tarif' => 'required']);
+// afterSemhas
         
         if($request->id_kota_asal == $request->id_kota_tujuan) {
             session()->flash('flash_danger', "Kota asal dan kota tujuan harus berbeda");
@@ -48,17 +49,25 @@ class RuteController extends Controller
     
             return redirect('/rute');
         }
+// =======
+
+//        $rute = Rute::create([
+//           'id_kota_asal' => $request->id_kota_asal,
+//            'id_kota_tujuan' => $request->id_kota_tujuan,
+//            'tarif' => $request->tarif
+//        ]);
+
+//        session()->flash('flash_success', 'Berhasil menambahkan data rute '.$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
+//    	return redirect('/rute');
+// clean(2)
     }
 
     public function edit($id_kota_asal, $id_kota_tujuan){
-
         $rute = Rute::where(['id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan])->first();
-
 		$kota_asal = Kota::all();
         $kota_tujuan = Kota::all();    	
     	
     	return view('erte.rute.edit', ['rute' => $rute, 'kota_asal' => $kota_asal, 'kota_tujuan' => $kota_tujuan]);
-
     }
 
     public function update($id_kota_asal, $id_kota_tujuan, Request $request){
@@ -74,20 +83,14 @@ class RuteController extends Controller
     	$rute->save();
 
         session()->flash('flash_success', 'Berhasil mengupdate data');
-    	
         return redirect('/rute');
     }
 
     public function delete($id_kota_asal, $id_kota_tujuan){
     	$rute = Rute::where(['id_kota_asal' => $id_kota_asal, 'id_kota_tujuan' => $id_kota_tujuan])->first();
     	$rute->delete();
+
         session()->flash('flash_success', "Berhasil menghapus rute ".$rute->id_kota_asal .' - '.$rute->id_kota_tujuan);
-    	// return redirect()->route('kota.index');
         return redirect('/rute');
     }
-
-    // public function export() 
-    // {
-    //     return Excel::download(new RuteExport, 'rute.xlsx');
-    // }
 }

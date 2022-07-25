@@ -31,18 +31,6 @@ class PemesanController extends Controller
         ]);
 
         $pemesan = new Pemesan();
-            // $pemesan_select = Pemesan::select('id_users');
-            // $pemesan_count = $pemesan_select->count();
-                
-            //     if ($pemesan_count === 0) {
-            //         $pemesan->id_users = 'U1';
-            //     }else{
-            //         // $lastrow = $trip_select->last();
-            //         $lastrow=$pemesan_select->orderBy('created_at','desc')->first();
-            //         $lastrow_id = explode('U', $lastrow->id_users);
-            //         $new_id = $lastrow_id[1]+1;
-            //         $pemesan->id_users = 'U'.$new_id;
-            //     }
         $pemesan->id_pemesan = $request->id_pemesan;
         $pemesan->username = $request->username;
         $pemesan->email = $request->email;
@@ -51,23 +39,18 @@ class PemesanController extends Controller
         $pemesan->kontak = $request->kontak;
         $pemesan->jenis_kelamin = $request->jenis_kelamin;
         $pemesan->alamat = $request->alamat;
-        // $pemesan->created_at = Carbon::now()->toDateTimeString();
         $pemesan->save();
 
         session()->flash('flash_success', 'Berhasil menambahkan data pemesan dengan nama '. $request->input('nama'));
-
     	return redirect('/pemesan');
     }
 
     public function edit($id_pemesan){
-
     	$pemesan = Pemesan::find($id_pemesan);
-    	
        	return view('erte.pemesan.edit', ['pemesan' => $pemesan]);
     }
 
     public function show($id_pemesan){
-
         $pemesan = Pemesan::find($id_pemesan);        
         return view('erte.pemesan.show', ['pemesan' => $pemesan]);
     }
@@ -94,7 +77,6 @@ class PemesanController extends Controller
         $pemesan->save();
 
         session()->flash('flash_success', 'Berhasil mengupdate data pemesan '.$pemesan->nama);
-        
         return redirect('/pemesan');
     }
 
@@ -102,7 +84,6 @@ class PemesanController extends Controller
     	$pemesan = Pemesan::find($id_pemesan);
     	$pemesan->delete();
         session()->flash('flash_success', "Berhasil menghapus pemesan ".$pemesan->nama);
-        return redirect('/pemesan');
-        
+        return redirect('/pemesan');   
 	}
 }

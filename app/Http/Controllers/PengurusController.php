@@ -10,9 +10,7 @@ use App\Kota;
 class PengurusController extends Controller
 {
     public function index(){
-    	// $operator = Operator::all();
         $pengurus = Pengurus::orderBy('created_at', 'asc')->paginate(10);
-
         return view('erte.pengurus.index', ['pengurus' => $pengurus]);
     }
 
@@ -25,7 +23,6 @@ class PengurusController extends Controller
 	public function store(Request $request){
     	$this->validate($request, 
             [
-    		// 'id_users' => 'required',
             'id_kota' => 'required',
     		'username' => 'required',
             'email' => 'required|email',
@@ -61,22 +58,16 @@ class PengurusController extends Controller
     }
 
     public function edit($id_users){
-
     	$pengurus = Pengurus::find($id_users);
         $kota = Kota::all();
     			    	
     	return view('erte.pengurus.edit', ['pengurus' => $pengurus, 'kota' => $kota]);
-
     }
 
     public function show($id_users){
-
         $pengurus = Pengurus::find($id_users);
         $kota = Kota::find($id_users);
-                        
-        
         return view('erte.pengurus.show', ['pengurus' => $pengurus, 'kota' => $kota]);
-
     }
 
     public function update($id_users, Request $request, Pengurus $pengurus){
@@ -97,13 +88,10 @@ class PengurusController extends Controller
         $pengurus->nama = $request->nama;
         $pengurus->kontak = $request->kontak;
         $pengurus->jenis_kelamin = $request->jenis_kelamin;
-        
         $pengurus->save();
 
         session()->flash('flash_success', 'Berhasil mengupdate data pengurus '.$pengurus->nama);
-        
         return redirect('/pengurus');
-            
     }
 
     public function delete($id_users){

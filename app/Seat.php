@@ -10,7 +10,6 @@ class Seat extends Model {
     protected $table = "seat";
     protected $fillable = [
         'id_seat', 
-     //    'plat_mobil',
         'keterangan'
     ];
 
@@ -21,8 +20,4 @@ class Seat extends Model {
    public function detail_pesanan() {
         return $this->hasMany(Detail_Pesanan::class);
    }
-
-//    public function mobil() {
-//         return $this->belongsTo(Mobil::class, 'plat_mobil');
-//    }
 }

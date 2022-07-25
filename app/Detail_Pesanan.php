@@ -14,7 +14,6 @@ class Detail_Pesanan extends Model {
         'jadwal',
         'plat_mobil',  
         'id_seat',
-        // 'order_number',
         'id_feeder', 
         'nama_penumpang', 
         'jenis_kelamin', 

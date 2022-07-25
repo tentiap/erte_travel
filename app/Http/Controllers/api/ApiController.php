@@ -40,19 +40,6 @@ class ApiController extends Controller
         }
 
         $pemesan = new Pemesan();
-            // $pemesan_select = Pemesan::select('id_users');
-            // $pemesan_count = $pemesan_select->count();
-            //     // if ($operator_count === 1 && $operator->id_users === "admin" ) {
-            //     if ($pemesan_count === 0) {
-            //         $pemesan->id_users = 'U1';
-            //     }else{
-            //         // $lastrow = $trip_select->last();
-            //         $lastrow=$pemesan_select->orderBy('created_at','desc')->first();
-            //         $lastrow_id = explode('U', $lastrow->id_users);
-            //         $new_id = $lastrow_id[1]+1;
-            //         $pemesan->id_users = 'U'.$new_id;
-            //     }
-
         $pemesan->id_pemesan = $request->id_pemesan;
         $pemesan->username = $request->username;
         $pemesan->email = $request->email;
@@ -73,7 +60,7 @@ class ApiController extends Controller
 
         return $this->error("Registrasi gagal");     
     }
-    //Done
+  
     public function loginPemesan(Request $request){
         $pemesan = Pemesan::where('email', $request->email)->first();
 
@@ -89,7 +76,7 @@ class ApiController extends Controller
         }
         return $this->error('Email tidak terdaftar');
     }
-     //Done
+  
     public function pesananSearch(Request $request){
         $tanggal = $request->tanggal;
         $filter = '%'.$tanggal.'%';
@@ -124,7 +111,7 @@ class ApiController extends Controller
         return $this->error("Tidak ada trip");
 
     }
-     //Done
+  
     public function check(Request $request){
 
         if(Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_pemesan' => $request->id_pemesan])->exists()){ 
@@ -152,7 +139,7 @@ class ApiController extends Controller
             }
         }
     }
-     //Done
+    
      public function check_update(Request $request){
 
             $trip = Trip::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])->get();
@@ -178,7 +165,7 @@ class ApiController extends Controller
 
     }
 
-    //Done
+    
     public function seat(Request $request){
         $seat = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])
                     ->where('status', '!=', 5)
@@ -193,7 +180,7 @@ class ApiController extends Controller
 
     }
 
-    //Done
+
     public function updateDataPemesan(Request $request){
         $pemesan = Pemesan::where('id_pemesan', $request->id_pemesan)->first();
                 
@@ -216,7 +203,6 @@ class ApiController extends Controller
         return $this->error("Data gagal diupdate");
     }
 
-    //Done
     public function checkAvailableSeat(Request $request){
         
         $bookedSeat = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil])
@@ -245,16 +231,13 @@ class ApiController extends Controller
         ]);
     }    
             
-    //Done
     public function riwayatTripPemesan(Request $request){
 
         $pesanan = Pesanan::join('trip', ['pesanan.jadwal' => 'trip.jadwal', 'pesanan.plat_mobil' => 'trip.plat_mobil'])
                         ->where('pesanan.id_pemesan',  $request->id_pemesan)
                         ->orderBy('trip.jadwal', 'desc')
                         ->get();
-        // dd($pesanan->count());
-        // $jumlah_pesanan = $pesanan->count();
-
+    
         if(!empty($pesanan)){
             for($i=0; $i < $pesanan->count(); $i++) {
                 $detail = Detail_Pesanan::where(['jadwal' => $pesanan[$i]->jadwal, 'plat_mobil' => $pesanan[$i]->plat_mobil, 'id_pemesan' => $pesanan[$i]->id_pemesan])->get();
@@ -277,7 +260,6 @@ class ApiController extends Controller
         return $this->error("Belum ada pesanan");
     }
 
-    //Done
     public function detailRiwayatTripPemesan(Request $request){
         
         $detail = Detail_Pesanan::join('trip', ['detail_pesanan.plat_mobil' =>'trip.plat_mobil', 'detail_pesanan.jadwal' => 'trip.jadwal'])
@@ -300,20 +282,9 @@ class ApiController extends Controller
         return $this->error("Belum ada detail");
     }
 
-    //Done
     public function create_pesanan(Request $request){
         
         $pesanan = new Pesanan();
-        // $pesanan_select = Pesanan::select('id_pesanan');
-        // $pesanan_count = $pesanan_select->count();
-        //     if ($pesanan_count === 0) {
-        //         $pesanan->id_pesanan = 'P1';
-        //     }else{
-        //         $lastrow=$pesanan_select->orderBy('tanggal_pesan','desc')->first();
-        //         $lastrow_id = explode('P', $lastrow->id_pesanan);
-        //         $new_id = $lastrow_id[1]+1;
-        //         $pesanan->id_pesanan = 'P'.$new_id;
-        //     }
         $pesanan->id_pemesan = $request->id_pemesan;   
         $pesanan->jadwal = $request->jadwal;
         $pesanan->plat_mobil = $request->plat_mobil;         
@@ -327,28 +298,13 @@ class ApiController extends Controller
                     'data' => $pesanan
             ]);
         }
-     
     }
 
     public function create_detail_pesanan(Request $request){
-        // $detail_pesanan =  Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])->get();
-
-        // if (count($detail_pesanan) > 0 ){
-        //     $lastOrderNumber = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat])
-        //                         ->orderBy('order_number','desc')
-        //                         ->first();
-            
-        //     $newOrderNumber = $lastOrderNumber->order_number + 1;
-            
-        // }elseif(count($detail_pesanan) == 0 ) {
-        //     $newOrderNumber = 1;
-        // }
-        
         $detail_pesanan = new Detail_Pesanan();
         $detail_pesanan->jadwal =  $request->jadwal;
         $detail_pesanan->plat_mobil = $request->plat_mobil;
         $detail_pesanan->id_seat = $request->id_seat;
-        // $detail_pesanan->order_number = $newOrderNumber;
         $detail_pesanan->id_pemesan = $request->id_pemesan;
         $detail_pesanan->nama_penumpang = $request->nama_penumpang;
         $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
@@ -366,20 +322,12 @@ class ApiController extends Controller
                     'data' => $detail_pesanan
             ]);
         }
-     
     }
 
     public function changeStatus(Request $request){
         $booked = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'id_pemesan' => $request->id_pemesan])
                             ->where('status', '!=', 5)
                             ->get();
-
-        // json_decode($booked, true);
-        // if(count($booked) > 0) {
-        //     if(($request->status != 5) && ($request->order_number != $booked[0]['order_number'])) {
-        //         return $this->error("Seat ".$request->id_seat." sudah dibooking");
-        //     } 
-        // }
 
         $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 'id_seat' => $request->id_seat, 'id_pemesan' => $request->id_pemesan])->first();
 
@@ -410,11 +358,7 @@ class ApiController extends Controller
         if($request->status == '5') {
             $detail_pesanan->delete();
         } else {
-
             $detail_pesanan->id_seat = $request->id_seat;
-
-            // dd($request->nama_penumpang);
-
             $detail_pesanan->nama_penumpang = $request->nama_penumpang;
             $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
             $detail_pesanan->detail_asal = $request->detail_asal;
@@ -436,18 +380,11 @@ class ApiController extends Controller
 
     }
 
-    //Done
     public function getIdPesanan(Request $request){
         
         $pesanan = Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 
                         'id_pemesan' => $request->id_pemesan])
                         ->get();
-
-        // $pesanan = Pesanan::all();
-        // $id_pesanan = $pesanan->jadwal."".$pesanan->plat_mobil."".$pesanan->id_pemesan;
-
-        // dd($id_pesanan);
-
 
         if($pesanan){
             return response()->json([
@@ -458,7 +395,6 @@ class ApiController extends Controller
         }
     }
 
-    //Done
     public function getDetailPesanan(Request $request){
         
         $detail = Detail_Pesanan::where(['jadwal' => $request->jadwal, 'plat_mobil' => $request->plat_mobil, 
@@ -492,7 +428,6 @@ class ApiController extends Controller
 
     }
 
-    //Done
     public function loginSopir(Request $request){
         $sopir = Sopir::join('mobil', 'sopir.plat_mobil', '=', 'mobil.plat_mobil')->where('email', $request->email)->first();
 
@@ -509,7 +444,6 @@ class ApiController extends Controller
         return $this->error('Email tidak terdaftar');
     }
 
-    //Done
     public function loginFeeder(Request $request){
         $feeder = Feeder::where('email', $request->email)->first();
 
@@ -526,15 +460,9 @@ class ApiController extends Controller
         return $this->error('Email tidak terdaftar');
     }
 
-    //Done
     public function tripSopir(Request $request){
 
         $today = Carbon::today();
-
-        // $trip = Trip::where('id_sopir', $request->id_sopir)
-        //             ->where('jadwal', '>=', $today)
-        //             ->orderBy('jadwal', 'ASC')
-        //             ->get();
 
         $trip = Trip::join('mobil', 'trip.plat_mobil', '=', 'mobil.plat_mobil')
                     ->join('sopir', 'mobil.plat_mobil', '=', "sopir.plat_mobil")
@@ -555,11 +483,6 @@ class ApiController extends Controller
 
         $today = Carbon::today();
 
-        // $trip = Trip::where('id_sopir', $request->id_sopir)
-        //             ->where('jadwal', '<=', $today)
-        //             ->orderBy('jadwal', 'DESC')
-        //             ->get();
-
         $trip = Trip::join('mobil', 'trip.plat_mobil', '=', 'mobil.plat_mobil')
                     ->join('sopir', 'mobil.plat_mobil', '=', "sopir.plat_mobil")
                     ->where(['sopir.id_sopir' => $request->id_sopir])
@@ -572,7 +495,6 @@ class ApiController extends Controller
                 'message' => "Trip Sopir ".$request->id_sopir,
                 'data' => $trip
         ]);  
-
     }
 
     public function detailTripSopir(Request $request){
@@ -597,7 +519,6 @@ class ApiController extends Controller
                              'detail_pesanan.detail_tujuan',
                              'detail_pesanan.no_hp',
                              'detail_pesanan.status',
-                            //  'detail_pesanan.order_number',
                              'detail_pesanan.biaya_tambahan',
                              'pemesan.kontak as kontak_pemesan')
                     ->orderBy('id_seat', 'ASC')
@@ -617,7 +538,6 @@ class ApiController extends Controller
 
     }
 
-    //Done
     public function Feeder(Request $request){
         //Trip 2 jam yang akan datang (dari jam sekarang)
         $carbonTrip = Carbon::now()->addHours(2)->toDateTimeString();
@@ -643,7 +563,6 @@ class ApiController extends Controller
                              'detail_pesanan.no_hp',
                              'detail_pesanan.status',
                              'detail_pesanan.biaya_tambahan',
-                            //  'detail_pesanan.order_number',
                              'pemesan.kontak',
                              'trip.jadwal')
                     ->orderBy('trip.jadwal', 'ASC')
