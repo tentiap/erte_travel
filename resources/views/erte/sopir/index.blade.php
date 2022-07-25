@@ -26,17 +26,17 @@
               
 
             <div class="box-body">
-                <table id="sortdata" class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="sortdata">
                   <thead>
                       <tr>
-                        <th>ID Users</th>
+                        <th>ID Sopir</th>
                         <th>Nama</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Kontak</th>
                         <th>Jenis Kelamin</th>
                         <th>Plat Mobil</th>
-                        <th>Merek Mobil</th>
+                        <!-- <th>Merek Mobil</th> -->
                         <th>OPSI</th>
                       </tr>
                 </thead>
@@ -44,27 +44,19 @@
                   @foreach($sopir as $s)
                       
                             <tr>
-                                <td>{{ $s->id_users }}</td>
+                                <td>{{ $s->id_sopir }}</td>
                                 <td>{{ $s->nama }}</td>          
                                 <td>{{ $s->username }}</td>
                                 <td>{{ $s->email }}</td>
                                 <td>{{ $s->kontak }}</td>
-                                <td>
-                                        @if($s->jenis_kelamin == 1)
-                                           Laki-laki
-                                        @else
-                                            Perempuan
-                                        @endif
-
-                                </td>
-                               
+                                <td>{{ $s->jenis_kelamin }}</td>                         
                                 <td>{{ $s->plat_mobil}}</td>
-                                <td>{{ $s->merek_mobil}}</td>
+                                <!-- <td>{{ $s->merek_mobil}}</td> -->
                                 
                                 <td>
                                     
-                                    <a href="/sopir/edit/{{ $s->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $s->id_users }}"><i class="fa fa-trash"></i></a>
+                                    <a href="/sopir/edit/{{ $s->plat_mobil }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/sopir/delete/{{ $s->plat_mobil }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
@@ -95,6 +87,8 @@
                 </tbody>
               </table>
             </div>
+
+            {{ $sopir->links() }}
 
         </div>
         <div class="box-footer">

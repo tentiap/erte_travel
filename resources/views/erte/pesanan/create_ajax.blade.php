@@ -100,19 +100,7 @@
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Cari">
                         </div
-
-                        
-
-                        
-
-                        
-                            
-
-                            
-
-                        
-
-                        
+       
                 </form>
             </div>
         </div>

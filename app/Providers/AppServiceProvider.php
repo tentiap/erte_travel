@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
          Builder::defaultStringLength(191); // Update defaultStringLength
-         Blade::directive('currency', function ( $expression ) { return "Rp. <?php echo number_format($expression,0,',','.'); ?>"; });
+         Blade::directive('currency', function ( $expression ) { return "Rp<?php echo number_format($expression,0,',','.'); ?>"; });
     }
 }

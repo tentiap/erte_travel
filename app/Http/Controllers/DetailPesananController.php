@@ -38,21 +38,18 @@ class DetailPesananController extends Controller
             [
     		'id_trip' => 'required',
             'id_seat' => 'required',
-            // 'id_users_feeder' => 'required',
     		'nama_penumpang' => 'required',
     		'jenis_kelamin' => 'required',
     		'detail_asal' => 'required',
     		'detail_tujan' => 'required',
             'no_hp' => 'required',
             'status' => 'required',
-            // 'biaya_tambahan' => 'required',
             'id_pesanan' => 'required'
         ]);
 
     	Detail_Pesanan::create([
     		'id_trip' => $request->id_trip,
             'id_seat' => $request->id_seat,
-            'id_users_feeder' => $request->id_users_feeder,
             'nama_penumpang' => $request->nama_penumpang,
             'jenis_kelamin' => $request->jenis_kelamin,
             'detail_asal' => $request->detail_asal,
@@ -90,24 +87,22 @@ class DetailPesananController extends Controller
             'id_pesanan' => 'required'         
         ]);
 
-            $detail_pesanan = Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $id_seat])->first();
-            $detail_pesanan->id_trip = $request->id_trip;
-            $detail_pesanan->id_seat = $request->id_seat;
-            $detail_pesanan->id_users_feeder = $request->id_users_feeder;
-            $detail_pesanan->nama_penumpang = $request->nama_penumpang;
-            $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
-            $detail_pesanan->detail_asal = $request->detail_asal;
-            $detail_pesanan->detail_tujuan = $request->detail_tujuan;
-            $detail_pesanan->biaya_tambahan = $request->biaya_tambahan;
-            $detail_pesanan->no_hp = $request->no_hp;
-            $detail_pesanan->status = $request->status;
-            $detail_pesanan->id_pesanan = $request->id_pesanan;
+        $detail_pesanan = Detail_Pesanan::where(['id_trip' => $id_trip, 'id_seat' => $id_seat])->first();
+        $detail_pesanan->id_trip = $request->id_trip;
+        $detail_pesanan->id_seat = $request->id_seat;
+        $detail_pesanan->nama_penumpang = $request->nama_penumpang;
+        $detail_pesanan->jenis_kelamin = $request->jenis_kelamin;
+        $detail_pesanan->detail_asal = $request->detail_asal;
+        $detail_pesanan->detail_tujuan = $request->detail_tujuan;
+        $detail_pesanan->biaya_tambahan = $request->biaya_tambahan;
+        $detail_pesanan->no_hp = $request->no_hp;
+        $detail_pesanan->status = $request->status;
+        $detail_pesanan->id_pesanan = $request->id_pesanan;
+        $detail_pesanan->save();
 
-            $detail_pesanan->save();
+        session()->flash('flash_success', 'Berhasil mengupdate detail pesanan');
 
-            session()->flash('flash_success', 'Berhasil mengupdate detail pesanan');
-
-         return redirect('/detail_pesanan');
+        return redirect('/detail_pesanan');
     }
 
  	public function delete($id_trip, $id_seat){
@@ -115,7 +110,6 @@ class DetailPesananController extends Controller
         $detail_pesanan->delete();
 
         session()->flash('flash_success', "Berhasil menghapus detail pesanan");
-        return redirect('/detail_pesanan');
-    	
+        return redirect('/detail_pesanan');	
     }
 }

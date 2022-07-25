@@ -1,4 +1,4 @@
-@extends('layouts.master')
+<!-- @extends('layouts.master')
 
 
 
@@ -113,14 +113,7 @@
                         
                         <div class = "form-group">
                             <label>Jenis Kelamin</label>
-                            <input type="text" name="jenis_kelamin" class="form-control" placeholder="Jenis Kelamin" value="<?php
-                                        if($users->jenis_kelamin == 1){
-                                        echo "Laki-laki";
-                                        }else{
-                                        echo "Perempuan";
-                                        } 
-                                    ?> 
-                            "readonly>                                               
+                            <input type="text" name="jenis_kelamin" class="form-control" placeholder="Jenis Kelamin" value="{{$users->jenis_kelamin}}"readonly>                                               
                       </div>
 
                         <div class="form-group">
@@ -142,4 +135,4 @@
     </section>
 
     
-@endsection
+@endsection -->

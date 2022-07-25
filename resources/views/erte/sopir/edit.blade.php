@@ -22,18 +22,35 @@
                     <br/> -->
               <!--    @include('messages') -->
                     
-                <form method="post" action="/sopir/update/{{$sopir->id_users}}">
+                <form method="post" action="/sopir/update/{{$sopir->plat_mobil}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
+                            <label>Plat Mobil</label>
+                            <select class="form-control" name="plat_mobil">
+                                <option disabled selected value> -- Plat Mobil -- </option>
+                                    @foreach($mobil as $m)
+                                        <option value="{{ $m->plat_mobil }}" {{($sopir->plat_mobil == $m->plat_mobil)  ? 'selected' : ''}}>{{ $m->plat_mobil}}</option>
+                                    @endforeach
+                            </select>
+
+                            @if($errors->has('plat_mobil'))
+                                <div class="text-danger">
+                                    {{ $errors->first('plat_mobil')}}
+                                </div>
+                            @endif
+                        </div>             
+
+                        <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $sopir->id_users)}}" disabled>
+                            <!-- <input type="text" name="id_sopir" class="form-control" placeholder="ID Sopir" value="{{old('id_sopir', $sopir->id_sopir)}}" disabled> -->
+                            <input type="text" name="id_sopir" class="form-control" placeholder="ID Sopir" value="{{old('id_sopir', $sopir->id_sopir)}}" >
 
                             @if($errors->has('id_users'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_sopir')}}
                                 </div>
                             @endif
                         </div>
@@ -116,10 +133,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1" {{ $sopir->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="Laki-laki" {{ $sopir->jenis_kelamin == "Laki-laki" ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2" {{ $sopir->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="Perempuan" {{ $sopir->jenis_kelamin == "Perempuan" ? 'checked' : '' }}> Perempuan 
                                 </label>
 
                                 @if($errors->has('jenis_kelamin'))
@@ -130,19 +147,8 @@
 
                               
                         </div>                     
-
-                        <div class="form-group">
-                            <label>Plat Mobil</label>
-                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $sopir->plat_mobil)}}">
-
-                            @if($errors->has('plat_mobil'))
-                                <div class="text-danger">
-                                    {{ $errors->first('plat_mobil')}}
-                                </div>
-                            @endif
-
                            
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Merek Mobil</label>
                             <input type="text" name="merek_mobil" class="form-control" placeholder="Merek Mobil" value="{{old('merek_mobil', $sopir->merek_mobil)}}">
 
@@ -153,7 +159,7 @@
                             @endif
 
                            
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">

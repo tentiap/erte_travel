@@ -34,7 +34,8 @@
                       <tr>
                         <th>Kota Asal</th>
                         <th>Kota Tujuan</th>
-                        <th>Harga</th>
+                        <th>Tarif</th>
+                        <th>Last Updated</th>
                         <th>Opsi</th>
                       </tr>
                 </thead>
@@ -43,7 +44,8 @@
                             <tr>
                                 <td>{{ $r->kota_asal->nama_kota }}</td>
                                 <td>{{ $r->kota_tujuan->nama_kota }}</td>
-                                <td>@currency($r->harga)</td>
+                                <td>@currency($r->tarif)</td>
+                                <td>{{ $r->updated_at }}</td>
                                 <td>
                                     
                                     <a href="/rute/edit/{{ $r->id_kota_asal }}/{{ $r->id_kota_tujuan }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>

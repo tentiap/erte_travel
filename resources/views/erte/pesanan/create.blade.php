@@ -77,11 +77,11 @@
                                 <label>Jumlah penumpang</label>
                                     <select class="form-control" name="jumlah_penumpang">
                                         <option disabled selected value> -- Jumlah Penumpang -- </option>
-                                            @foreach($seat as $s)
-                                                    <option value="{{ $s->id_seat }}">
-                                                    {{$s->id_seat}}
-                                                    </option> 
-                                            @endforeach 
+                                            @for($i=0; $i < 7; $i++)
+                                                <option value="{{ $i+1 }}">
+                                                {{ $i+1 }}
+                                                </option> 
+                                            @endfor
                                     </select>
                             <!-- </div> -->
                                 @if($errors->has('jumlah_penumpang'))
@@ -91,18 +91,18 @@
                                 @endif
 
                                 <label>Nama Pemesan</label>
-                                    <select class="form-control" name="id_users_pemesan">
+                                    <select class="form-control" name="id_pemesan">
                                         <option disabled selected value> -- Nama Pemesan -- </option>
                                             @foreach($pemesan as $p)
-                                                    <option value="{{ $p->id_users }}">
+                                                    <option value="{{ $p->id_pemesan }}">
                                                     {{$p->nama}}
                                                     </option> 
                                             @endforeach 
                                     </select>
                             
-                                @if($errors->has('id_users_pemesan'))
+                                @if($errors->has('id_pemesan'))
                                         <div class="text-danger">
-                                            {{ $errors->first('id_users_pemesan')}}
+                                            {{ $errors->first('id_pemesan')}}
                                         </div>
                                 @endif
 
@@ -124,11 +124,23 @@
                                             </div> 
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                  <form method="post" action="/pemesan/store1">
+                                                  <form method="post" action="/pemesan/store">
 
                                                         {{ csrf_field() }}
 
                                                         
+                                                        <div class="form-group">
+                                                            <label>ID_Pemesan</label>
+                                                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan"  value="{{ old('id_pemesan') }}">
+
+                                                            @if($errors->has('id_pemesan'))
+                                                                <div class="text-danger">
+                                                                    {{ $errors->first('id_pemesan')}}
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+
                                                         <div class="form-group">
                                                             <label>Username</label>
                                                             <input type="text" name="username" class="form-control" placeholder="Username"  value="{{ old('username') }}">
@@ -197,10 +209,10 @@
                                                             <label>Jenis Kelamin</label>
                                                             <br>
                                                                 <label class = "radio-inline">
-                                                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                                                    <input type="radio" name="jenis_kelamin" value="Laki-laki"> Laki-laki
                                                                 </label>
                                                                 <label class = "radio-inline"> 
-                                                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                                                    <input type="radio" name="jenis_kelamin" value="Perempuan"> Perempuan 
                                                                 </label>
 
                                                             @if($errors->has('jenis_kelamin'))
@@ -256,7 +268,6 @@
                             type: "GET",
                             contentType: "application/json;charset=utf-8",
                             dataType: "json",
-
                             success: function (result) {
                                 $("#form_date-time").show()
                                 $('#id_date-time').empty()

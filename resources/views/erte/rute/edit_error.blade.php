@@ -71,8 +71,8 @@
 
 
                         <div class="form-group">
-                            <label>Harga</label>
-                            <textarea name="posisi" class="form-control" placeholder="posisi"> {{ $rute->harga }} </textarea>
+                            <label>Tarif</label>
+                            <textarea name="posisi" class="form-control" placeholder="posisi"> {{ $rute->tarif }} </textarea>
 
                              <!-- @if($errors->has('rute'))
                                 <div class="text-danger">

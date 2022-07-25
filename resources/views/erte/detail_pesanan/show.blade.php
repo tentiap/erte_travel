@@ -104,17 +104,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Operator</label>
-                            <input type="text" name="operator" class="form-control"  value="{{$trip->operator->users->nama}}" readonly>
+                            <label>Pengurus</label>
+                            <input type="text" name="pengurus" class="form-control"  value="{{$trip->pengurus->users->nama}}" readonly>
 
                              
                         </div>
-
-                        
-
-                       
-
-
             </div>
         </div>
     </section>

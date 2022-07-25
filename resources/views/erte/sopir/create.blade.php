@@ -17,6 +17,8 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
+                @include('messages')
+
                <!--  <a href="../sopir" class="btn btn-primary">Kembali</a>
                     <br/>
                     <br/> -->
@@ -25,18 +27,36 @@
 
                         {{ csrf_field() }}
 
-                        <!-- <div class="form-group">
-                            <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
+                        <div class="form-group">
+                            <label>Plat Mobil</label>
+                            <select class="form-control" name="plat_mobil">
+                                <option disabled selected value> -- Plat Mobil -- </option>
+                                    @foreach($mobil as $m)
+                                        <option name="plat_mobil" value="{{$m->plat_mobil}}">{{$m->plat_mobil}}</option> 
+                                    @endforeach
+                            </select>
 
-                             @if($errors->has('id_users'))
+                            @if($errors->has('plat_mobil'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('plat_mobil')}}
+                                </div>
+                            @endif
+
+                             
+                        </div>
+
+                        <div class="form-group">
+                            <label>ID Users</label>
+                            <input type="text" name="id_sopir" class="form-control" placeholder="ID Sopir" value="{{ old('id_sopir') }}">
+
+                             @if($errors->has('id_sopir'))
+                                <div class="text-danger">
+                                    {{ $errors->first('id_sopir')}}
                                 </div>
                             @endif
 
                         </div>
- -->
+
                         <div class="form-group">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
@@ -106,10 +126,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="Laki-laki"> Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="Perempuan"> Perempuan 
                                 </label>
 
                             @if($errors->has('jenis_kelamin'))
@@ -120,21 +140,7 @@
 
                         </div>
 
-
-                        <div class="form-group">
-                            <label>Plat Mobil</label>
-                            <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{ old('plat_mobil') }}">
-
-                            @if($errors->has('plat_mobil'))
-                                <div class="text-danger">
-                                    {{ $errors->first('plat_mobil')}}
-                                </div>
-                            @endif
-
-                             
-                        </div>
-
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Merek Mobil</label>
                             <input type="text" name="merek_mobil" class="form-control" placeholder="Merek Mobil" value="{{ old('merek_mobil') }}">
 
@@ -145,7 +151,7 @@
                             @endif
 
                              
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">

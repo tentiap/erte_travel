@@ -3,7 +3,8 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Edit Data Pesanan {{$pesanan->id_pesanan}}
+          <!-- Edit Data Pesanan {{$id}} -->
+          Edit Data Pesanan 
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -32,28 +33,28 @@
                 </div>
                   <!-- /.box-header -->
                 <div class="box-body">
-                        @if($pesanan->trip->id_kota_asal == "K1")
+                        @if($trip->id_kota_asal == "K1")
                                 Bukittinggi
-                        @elseif($pesanan->trip->id_kota_asal == "K2")
-                                          Padang
-                        @elseif($pesanan->trip->id_kota_asal == "K3")
-                                          Pekanbaru
+                        @elseif($trip->id_kota_asal == "K2")
+                                Padang
+                        @elseif($trip->id_kota_asal == "K3")
+                                Pekanbaru
                         @endif
 
                         -  
 
-                        @if($pesanan->trip->id_kota_tujuan == "K1")
+                        @if($trip->id_kota_tujuan == "K1")
                                 Bukittinggi
-                        @elseif($pesanan->trip->id_kota_tujuan == "K2")
+                        @elseif($trip->id_kota_tujuan == "K2")
                                 Padang
-                        @elseif($pesanan->trip->id_kota_tujuan == "K3")
+                        @elseif($trip->id_kota_tujuan == "K3")
                                 Pekanbaru
                         @endif
 
                         
-                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('D, d M Y', strtotime($pesanan->trip->jadwal)) }}
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('D, d M Y', strtotime($pesanan->jadwal)) }}
 
-                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('H:i', strtotime($pesanan->trip->jadwal)) }}
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ date('H:i', strtotime($pesanan->jadwal)) }}
 
                         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{$jumlah}} penumpang
 
@@ -64,7 +65,7 @@
 
             </div>
 
-                    <form method="post" action="/pesanan/update/{{$pesanan->id_pesanan}}/{{$pesanan->trip->id_trip}}">
+                    <form method="post" action="/pesanan/update/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
 
                         @foreach($detail as $detail)
 
@@ -105,27 +106,15 @@
                                                     @endif
                                             </div>
 
-                                            <div class="col-sm-3">
-                                                <label>Seat</label>
-                                                <select class="form-control" name="id_seat[]">
-                                                    <option disabled value="">  Seat  </option>
-                                                        @foreach($seat as $s)                                                               
-                                                                <option value="{{$s->id_seat}}" {{$detail->id_seat == $s->id_seat ? 'selected' : ''}}>
-                                                                    {{$s->id_seat}}
-                                                                </option>
-                                                        @endforeach 
-                                                </select>
-                                            </div>
-
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-6">
                                                 <label>Jenis Kelamin</label>
                                                 <select class="form-control" name="jenis_kelamin[]">
                                                     <option value=""> Jenis Kelamin  </option>
-                                                        <option value="1" {{$detail->jenis_kelamin == 1 ? 'selected' : ''}}>
+                                                        <option value="Laki-laki" {{$detail->jenis_kelamin == "Laki-laki" ? 'selected' : ''}}>
                                                             Laki-laki
                                                         </option>
 
-                                                        <option value="2" {{$detail->jenis_kelamin == 2 ? 'selected' : ''}}>
+                                                        <option value="Perempuan" {{$detail->jenis_kelamin == "Perempuan" ? 'selected' : ''}}>
                                                             Perempuan
                                                         </option>  
                                                        
@@ -138,6 +127,50 @@
                                                 @endif
                                             </div>
 
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Seat</label>
+                                                <select class="form-control" name="id_seat[]">
+                                                    <!-- <option value="{{ $detail->id_seat}}">
+                                                    {{$detail->id_seat}}
+                                                    </option>  -->
+                                                    <option disabled value="">  Seat  </option>
+                                                        @foreach($seat as $s)                                                               
+                                                                <option value="{{$s->id_seat}}" {{$detail->id_seat == $s->id_seat ? 'selected' : ''}}>
+                                                                    {{$s->id_seat}}
+                                                                </option>
+                                                        @endforeach
+                                                </select>
+
+                                                @if($errors->has('id_seat'))
+                                                    <div class="text-danger">
+                                                        {{ $errors->first('id_seat')}}
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label>Feeder</label>
+                                                <select class="form-control" name="id_feeder[]">
+                                                    <option value="">  Belum ada feeder  </option>
+                                                        @foreach($feeder as $f)                                                               
+                                                                <option value="{{$f->id_feeder}}" {{$detail->id_feeder == $f->id_feeder ? 'selected' : ''}}>
+                                                                    {{$f->nama}}
+                                                                </option>
+                                                        @endforeach 
+                                                </select>
+                                            </div>
+
+                                            <!-- <div class="col-sm-6">
+                                                <label>Order Number</label>
+                                                <select class="form-control" name="order_number[]">
+                                                    <option value="{{ $detail->order_number}}">
+                                                    {{$detail->order_number}}
+                                                    </option> 
+                                                </select>
+                                            </div> -->
                                         </div>
 
                                         <div class="row">
@@ -176,17 +209,17 @@
                                                     @endif
                                             </div>
 
-                                            <div class="col-sm-3">
+                                            <!-- <div class="col-sm-3">
                                                 <label>Feeder</label>
-                                                <select class="form-control" name="id_users_feeder[]">
+                                                <select class="form-control" name="id_feeder[]">
                                                     <option value="">  Belum ada feeder  </option>
                                                         @foreach($feeder as $f)                                                               
-                                                                <option value="{{$f->id_users}}" {{$detail->id_users_feeder == $f->id_users ? 'selected' : ''}}>
+                                                                <option value="{{$f->id_feeder}}" {{$detail->id_feeder == $f->id_feeder ? 'selected' : ''}}>
                                                                     {{$f->nama}}
                                                                 </option>
                                                         @endforeach 
                                                 </select>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-sm-3">
                                                 <label>Biaya Tambahan</label>
@@ -199,7 +232,7 @@
                                                     @endif
                                             </div>
 
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-6">
                                                 <label>Status</label>
                                                 <select class="form-control" name="status[]" id="status">
                                                     <option disabled selected value>  -----Status-----  </option>
@@ -253,7 +286,7 @@
                         <div class="modal-body">
                             <!-- Awal Modal Body -->
                             <b>Ubah Pesanan</b><br><br>
-                                <form method="post" action="/pesanan/update1/{{$pesanan->id_pesanan}}/{{$pesanan->id_trip}}">
+                                <form method="post" action="/pesanan/update1/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
                                         {{ csrf_field() }}
                                         {{ method_field('PUT') }}
                                         <div class="form-group">
@@ -263,7 +296,7 @@
                                                         <select class="form-control" name="id_kota_asal" id="id_kota_asal">
                                                             <option disabled selected value> -- Kota Asal -- </option>
                                                                 @foreach($kota as $k)
-                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
+                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
                                                                         {{$k->nama_kota}}
                                                                         </option>
                                                                 @endforeach 
@@ -281,7 +314,7 @@
                                                         <select class="form-control" name="id_kota_tujuan" id="id_kota_tujuan">
                                                             <option disabled selected value> -- Kota Tujuan -- </option>
                                                             @foreach($kota as $k)
-                                                                        <option value="{{ $k->id_kota }}" {{$pesanan->trip->id_kota_tujuan == $k->id_kota ? 'selected' : ''}}>
+                                                                        <option value="{{ $k->id_kota }}" {{$trip->id_kota_asal == $k->id_kota ? 'selected' : ''}}>
                                                                         {{$k->nama_kota}}
                                                                         </option>
                                                             @endforeach                                                            
@@ -298,7 +331,7 @@
 
                                                 <label>Jadwal</label>
                                                     <div class='input-group date' id='date'>
-                                                        <input type='text' class="form-control" name="tanggal" value="{{ $pesanan->trip->jadwal }}" />
+                                                        <input type='text' class="form-control" name="tanggal" value="{{ $pesanan->jadwal }}" />
                                                               <span class="input-group-addon">
                                                                   <span class="glyphicon glyphicon-calendar"></span>
                                                               </span>

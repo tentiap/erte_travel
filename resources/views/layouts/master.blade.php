@@ -39,7 +39,6 @@
   <link rel="stylesheet" href="/adminlte/css/datetimepicker/bootstrap-datetimepicker.min.css">
 
   
-
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -99,7 +98,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/adminlte/img/admin.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ Auth::guard('operator')->user()->nama }}</span>
+              <span class="hidden-xs">{{ Auth::guard('pengurus')->user()->nama }}</span>
               
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -141,8 +140,8 @@
           </a>
           <ul class="treeview-menu">
             <!-- <li><a href="/users"><i class="fa fa-circle"></i> All-Users </a></li> -->
-            <li><a href="/operator"><i class="fa fa-circle"></i> Operator </a></li>
-            <li><a href="/sopir"><i class="fa fa-circle"></i> Sopir </a></li>
+<!--             <li><a href="/operator"><i class="fa fa-circle"></i> Operator </a></li>
+ -->            <li><a href="/sopir"><i class="fa fa-circle"></i> Sopir </a></li>
             <li><a href="/feeder"><i class="fa fa-circle"></i> Feeders</a></li>
             <li><a href="/pemesan"><i class="fa fa-circle"></i> Pemesan</a></li>
           </ul>
@@ -152,7 +151,9 @@
         <li><a href="/trip"><i class="fa  fa-pencil-square-o"></i> <span>Trip</span></a></li>
         <li><a href="/rute"><i class="fa  fa-pencil-square-o"></i> <span>Rute</span></a></li>
         <li><a href="/kota"><i class="fa  fa-pencil-square-o"></i> <span>Kota</span></a></li>
+        <li><a href="/mobil"><i class="fa  fa-pencil-square-o"></i> <span>Mobil</span></a></li>
         <li><a href="/seat"><i class="fa  fa-pencil-square-o"></i> <span>Seat</span></a></li>
+        <li><a href="/report"><i class="fa  fa-print"></i> <span>Report</span></a></li>
         <!-- <li><a href="/roles"><i class="fa  fa-pencil-square-o"></i> <span>Manage Roles</span></a></li>
         <li><a href="/permissions"><i class="fa  fa-pencil-square-o"></i> <span>Manage Permissions</span></a></li> -->
         
@@ -266,7 +267,8 @@
 
   <!-- <script src="{{asset('Adminlte/js/datetimepicker/jquery.min.js')}}"></script> -->
   <script src="{{asset('Adminlte/js/datetimepicker/moment-with-locales.min.js')}}"></script>
-  <!-- <script src="{{asset('Adminlte/js/datetimepicker/bootstrap.min.js')}}"></script> -->
+  <!-- <script src="{{asset('Adminlte/js/datetimepicker/
+    .js')}}"></script> -->
   <script src="{{asset('Adminlte/js/datetimepicker/bootstrap-datetimepicker.min.js')}}"></script>
 
   <script>
@@ -294,6 +296,31 @@
           });
       });
   </script>
+
+  <script>
+      $(function () {
+          $('#date2').datetimepicker({
+              format: 'YYYY-MM-DD',
+              maxDate: new Date()
+          });
+      });
+  </script>
+
+  <script>
+      $(function () {
+          $('#date3').datetimepicker({
+              format: 'YYYY-MM-DD',
+              maxDate: new Date()
+          });
+      });
+  </script>
+
+
+  <!-- <script>
+    $('.input-daterange input').each(function() {
+      $(this).datepicker('clearDates');
+    });
+</script> -->
 
  
 
@@ -330,6 +357,31 @@
             });  
         });
     });
+  </script>
+
+  <script>
+    $(document).ready(function() {
+        $('#jumlahPenumpang').on('load', function(){
+          $('#jumlahPenumpang').html(function(){
+            // console.log("Tenti");
+            // var idTrip = $('#tableTrip').val();
+            $('#tableTrip').each(function() {
+                var idTrip = $(this).find("td:first").html();    
+            });
+            console.log(idTrip);
+            // $.get('/trip_kota_tujuan?id_kota_asal=' +selected_kota_asal, function(data){
+            //       $('#id_kota_tujuan').empty();
+            //       // $('#id_kota_tujuan').append('<option disabled selected value> -- Kota Tujuan -- </option>');
+            //       $.each(data, function(index, value){
+            //         // return Rute::get()->load('kota_tujuan');
+            //         // console.log(id_kota_tujuanObj);
+            //         console.log(value.kota_tujuan.nama_kota);
+            //         $('#id_kota_tujuan').append('<option value='+value.id_kota_tujuan+'>'+value.kota_tujuan.nama_kota+'</option>');
+            //       });
+            // });  
+        });
+    });
+        });
   </script>
 
   <!-- <script>

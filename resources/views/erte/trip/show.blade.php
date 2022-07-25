@@ -25,8 +25,8 @@
                     .outset {border-style: outset;}
                 </style> -->
                     <div style="position: absolute; right: 0;">
-                        <a href="/trip/edit/{{ $trip->id_trip }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
-                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $trip->id_trip }}"><i class="fa fa-trash"></i> Hapus Trip</a>
+                        <a href="/trip/edit/{{ $trip->jadwal }}/{{ $trip->plat_mobil }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/trip/delete/{{ $trip->jadwal }}/{{ $trip->plat_mobil }}"><i class="fa fa-trash"></i> Hapus Trip</a>
                         <a href="/trip/" class="btn btn-md" ><i class="fa fa-list"></i> List Trip</a>
                         <a href="/trip/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Trip</a>                       
                     </div>
@@ -58,7 +58,7 @@
                     <div class="box box-solid">
                         <div class="box-header with-border">
                           <i class="fa fa-map-pin"></i>
-                          <h3 class="box-title">Trip {{ $trip->id_trip }}    
+                          <!-- <h3 class="box-title">Trip {{ $id_trip }}     -->
                             <small class="badge bg-green">{{7 - $seat}} seat tersedia</small></h3>
                         </div>
                         <!-- /.box-header -->
@@ -78,14 +78,8 @@
                                           Pekanbaru
                                       @endif
                                 </dd>
-                                <dt>Sopir</dt>
-                                <dd>
-                                    @if(empty($trip->id_users_sopir))
-                                      <a href="/trip/edit/{{ $trip->id_trip }}"><u>Tambah Sopir</u></a>
-                                    @else
-                                      {{ $trip->sopir->nama }}
-                                    @endif
-                                </dd>
+                                <dt>Mobil</dt>
+                                <dd> {{ $trip->plat_mobil }}</dd>
                               </dl>
                             </div>
 
@@ -103,8 +97,8 @@
                                           Pekanbaru
                                       @endif
                                 </dd>
-                                <dt>Operator</dt>
-                                <dd>{{ $trip->operator->nama }}</dd>
+                                <dt>Sopir</dt>
+                                <dd>{{ $trip->mobil->sopir->nama }}</dd>
                               </dl>
                             </div>
                         </div>
@@ -117,6 +111,8 @@
                         <th>Penumpang</th>
                         <th>Detail Asal</th>
                         <th>Detail Tujuan</th>
+                        <th>Feeder</>
+                        <th>Status</>
                         <th>OPSI</th>
                       </tr>
                   </thead>
@@ -128,7 +124,27 @@
                         <td>{{ $d->nama_penumpang}}</a></td>
                         <td>{{ $d->detail_asal}}</td>
                         <td>{{ $d->detail_tujuan}}</td>
-                        <td><a href="/pesanan/show/{{ $d->id_pesanan }}/{{ $d->id_trip}}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>
+                        <td>
+                                @if(empty($d->feeder->nama))
+                                      Belum ada Feeder
+                                @else
+                                      {{ $d->feeder->nama}}
+                                @endif
+                        </td>
+                        <td>
+                                @if($d->status == 1)
+                                    <span class="badge bg-grey">Booking</span>
+                                @elseif($d->status == 2)
+                                    <span class="badge bg-lime">Picked Up</span>
+                                @elseif($d->status == 3)
+                                    <span class="badge bg-light-blue">On Going</span>
+                                @elseif($d->status == 4)
+                                    <span class="badge bg-green">Arrived</span>
+                                @elseif($d->status == 5)
+                                   <span class="badge bg-red">Cancelled</span>
+                                @endif
+                        </td>
+                        <td><a href="/pesanan/show/{{ $d->id_pemesan }}/{{ $d->jadwal}}/{{ $d->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>
                         
                       </tr>
                     @endforeach

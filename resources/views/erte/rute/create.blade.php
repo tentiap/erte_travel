@@ -16,6 +16,7 @@
  @section('content')     
     <section class="content">
         <div class="box">
+        @include('messages')
             <div class="box-body">
                                    
                 <form method="post" action="/rute/store">
@@ -57,12 +58,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Harga</label>
-                            <input type="text" name="harga" class="form-control" placeholder="Harga" value="{{ old('harga') }}">
+                            <label>Tarif</label>
+                            <input type="text" name="tarif" class="form-control" placeholder="Tarif" value="{{ old('tarif') }}">
 
-                            @if($errors->has('harga'))
+                            @if($errors->has('tarif'))
                                 <div class="text-danger">
-                                    {{ $errors->first('harga')}}
+                                    {{ $errors->first('tarif')}}
                                 </div>
                             @endif
 

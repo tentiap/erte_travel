@@ -18,18 +18,18 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/pemesan/update/{{$pemesan->id_users}}">
+                <form method="post" action="/pemesan/update/{{$pemesan->id_pemesan}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $pemesan->id_users)}}" disabled>
+                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan" value="{{old('id_pemesan', $pemesan->id_pemesan)}}" >
 
-                            @if($errors->has('id_users'))
+                            @if($errors->has('id_pemesan'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_pemesan')}}
                                 </div>
                             @endif
                         </div>
@@ -43,20 +43,7 @@
                                     {{ $errors->first('username')}}
                                 </div>
                             @endif   
-
-                       
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" >
-
-                             @if($errors->has('password'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('password')}}
-                                    </div>
-                            @endif
-                        </div> -->
 
                         <div class="form-group">
                             <label>Email</label>
@@ -95,10 +82,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1" {{ $pemesan->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="Laki-laki" {{ $pemesan->jenis_kelamin == "Laki-laki" ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2" {{ $pemesan->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="Perempuan" {{ $pemesan->jenis_kelamin == "Perempuan" ? 'checked' : '' }}> Perempuan 
                                 </label>
 
                                 @if($errors->has('jenis_kelamin'))

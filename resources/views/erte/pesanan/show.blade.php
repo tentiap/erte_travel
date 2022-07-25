@@ -23,8 +23,8 @@
           @include('messages')
 
                     <div style="position: absolute; right: 0;">
-                        <a href="/pesanan/edit/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
-                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}"><i class="fa fa-trash"></i> Hapus Pesanan</a>
+                        <a href="/pesanan/edit/{{ $pesanan->id_pemesan}}/{{ $pesanan->jadwal}}/{{ $pesanan->plat_mobil}}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pesanan/delete/{{ $pesanan->id_pemesan}}/{{ $pesanan->jadwal}}/{{ $pesanan->plat_mobil}}"><i class="fa fa-trash"></i> Hapus Pesanan</a>
                         <a href="/pesanan/" class="btn btn-md" ><i class="fa fa-list"></i> List Pesanan</a>
                         <a href="/pesanan/create/" class="btn btn-md" ><i class="fa  fa-plus-circle"></i> Tambah Pesanan Baru</a>
                         <a class="btn btn-md" data-toggle='modal' data-target='#update_penumpang' data-href=""><i class="fa  fa-plus-circle"></i>Tambah Penumpang</a>
@@ -55,8 +55,8 @@
                     </script>
 
                         <div class="box-header with-border">
-                          <i class="fa fa-map-pin"></i>
-                          <h3 class="box-title">Pesanan {{ $pesanan->id_pesanan }} di Trip<a href="/trip/show/{{ $trip->id_trip}}" class="btn btn-md"><h4>{{$trip->id_trip}}</h4></a></h3>
+                          <!-- <i class="fa fa-map-pin"></i> -->
+                          <!-- <h3 class="box-title">Pesanan {{ $id }} </h3> -->
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -77,6 +77,8 @@
                                 <dd>{{ date('d M Y', strtotime($trip->jadwal)) }} </dd>
                                 <dt>Pemesan</dt>
                                 <dd>{{ $pesanan->pemesan->nama }}</dd>
+                                <dt>Kontak</dt>
+                                <dd>{{ $pesanan->pemesan->kontak }}</dd>
                               </dl>
                             </div>
 
@@ -94,6 +96,10 @@
                                 </dd>
                                 <dt>Jam</dt>
                                 <dd>{{ date('H:i', strtotime($trip->jadwal)) }}</dd>
+                                <dt>Plat Mobil</dt>
+                                <dd>{{ $trip->plat_mobil }}</dd>
+                                <dt>Sopir</dt>
+                                <dd>{{ $trip->mobil->sopir->nama }}</dd>
                                 <!-- <dt>Feeder</dt> -->
                                 <dd>
                                         
@@ -129,7 +135,7 @@
 
 
                 <div class="box-body">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="sortdata">
                   <thead>
                       <tr>
                         <th>Nama Penumpang</th>
@@ -138,6 +144,7 @@
                         <th>Detail Asal</th>
                         <th>Detail Tujuan</th>
                         <th>Seat</th>
+                        <!-- <th>Order Number</th> -->
                         <th>Biaya Tambahan</th>
                         <th>Feeder</th>
                         <th>Status</th>
@@ -148,13 +155,7 @@
                     @foreach($detail as $d)
                         <tr>
                             <td>{{ $d->nama_penumpang }} </td>
-                            <td>
-                                @if($d->jenis_kelamin == 1)
-                                   Laki-laki
-                                @elseif($d->jenis_kelamin == 2)
-                                    Perempuan
-                                @endif 
-                            </td>
+                            <td>{{ $d->jenis_kelamin }} </td>
                             <td>
                                   @if(empty($d->no_hp))
                                             -
@@ -165,6 +166,7 @@
                             <td>{{ $d->detail_asal }} </td>
                             <td>{{ $d->detail_tujuan }} </td>
                             <td>{{ $d->id_seat}}</td>
+                            <!-- <td>{{ $d->order_number}}</td> -->
                             <td>
                                   @if(empty($d->biaya_tambahan))
                                              -
@@ -193,52 +195,28 @@
                                 @endif             
                             </td>
                         </tr>
-                    @endforeach            
+                    @endforeach      
                   
                 </tbody>
               </table>
+
+                <div class="row no-print">
+                    <div class="col-xs-12">
+                        @if($jumlah > 0)
+                            <a href="/pesanan/print/{{ $pesanan->id_pemesan}}/{{ $pesanan->jadwal}}/{{ $pesanan->plat_mobil}}" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</a>
+                        @endif
+                    </div>
+                </div>              
             </div>
 
-           <!--  <div class="modal fade" id="update_feeder" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                      <form method="get" action="/pesanan/update_feeder/{{ $pesanan->id_pesanan}}/{{ $pesanan->id_trip}}">
-                                        <input type="hidden" id="id_kota_asal" name="id_kota_asal" value="{{$trip->id_kota_asal}}">
-                                        <label>Feeder</label>
-                                        <select class="form-control" name="id_users_feeder" id="id_users_feeder">
-                                            <option value=""> Belum Ada Feeder </option>
-                                                @foreach($feeder as $f)
-                                                        <option  value="{{$f->id_users}}"{{$d->id_users_feeder == $f->id_users ? 'selected' : ''}}>{{$f->nama}}</option>                                         
-                                                @endforeach
-                                        </select>
-
-                                        @if($errors->has('id_users_feeder'))
-                                            <div class="text-danger">
-                                                {{ $errors->first('id_users_feeder')}}
-                                            </div>
-                                        @endif
-    
-                                        <input type="submit" class="btn btn-primary" value="Simpan">                                    
-                                         <a class="btn btn-primary btn-ok">Simpan</a> -->
-                                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal"> Batal</button>
-                                      
-                                        
-                                     </form>
-                                  </div>    
-                                </div>
-                            </div>
-                        </div>
-                        </div>  -->
 
                          <div class="modal fade" id="update_penumpang" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                      <form method="get" action="/pesanan/update_create/{{$pesanan->id_pesanan}}/{{$trip->id_trip}}">
-                                        <label>Trip {{$trip->id_trip}}</label>
+                                      <form method="get" action="/pesanan/update_create/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
+                                        <label>Tambah Penumpang</label>
                                             
                                                 @if($seat_tersedia == 0)
                                                     <p>Trip sudah penuh !</p>

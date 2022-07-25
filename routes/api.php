@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Trip;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +16,44 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/pesanan/date-time/{id_rute}', function($id){
-	return response()->json(Trip::where('id_rute',$id)->get());
+Route::namespace('api')->group(function () {
+	Route::post('/register', 'ApiController@register');
+	Route::post('/loginPemesan', 'ApiController@loginPemesan');
+	Route::post('/loginSopir', 'ApiController@loginSopir');
+	Route::post('/loginFeeder', 'ApiController@loginFeeder');
+
+	Route::post('/createPesanan', 'ApiController@create_pesanan');
+	Route::post('/createDetailPesanan', 'ApiController@create_detail_pesanan');
+
+	Route::get('/search/{id_kota_asal}/{id_kota_tujuan}/{tanggal}/{jumlah_penumpang}', 'ApiController@pesananSearch');
+	Route::get('/check/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@check');
+	Route::post('/create_detail/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@createDetail');
+	Route::get('/checkUpdate/{tambah}/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@check_update');
+
+
+	Route::get('/tripSopir/{id_sopir}', 'ApiController@tripSopir');
+	Route::get('/historySopir/{id_sopir}', 'ApiController@riwayatTripSopir');
+	Route::get('/detailTripSopir/{jadwal}/{plat_mobil}', 'ApiController@detailTripSopir');
+
+	Route::get('/getBookedSeat/{jadwal}/{plat_mobil}', 'ApiController@getBookedSeat');
+	Route::get('/getIdPesanan/{jadwal}/{plat_mobil}/{id_pemesan}', 'ApiController@getIdPesanan');
+	Route::get('/getDetailPesanan/{id_pemesan}/{jadwal}/{plat_mobil}', 'ApiController@getDetailPesanan');
+	Route::get('/checkAvailableSeat/{jadwal}/{plat_mobil}', 'ApiController@checkAvailableSeat');
+
+
+	Route::get('/tripFeeder/{id_feeder}', 'ApiController@Feeder');
+	Route::post('/changeStatus/', 'ApiController@changeStatus');
+	Route::post('/updateDataPemesan/', 'ApiController@updateDataPemesan');
+	Route::post('/updateDetailPesanan/', 'ApiController@updateDetailPesanan');
+
+	
+	Route::get('/history/{id_pemesan}', 'ApiController@riwayatTripPemesan');
+	Route::get('/detail/{id_pemesan}/{jadwal}/{plat_mobil}', 'ApiController@detailRiwayatTripPemesan');
+	Route::get('/trip/', 'ApiController@lihatTrip');
+	Route::post('/create_pesanan/', 'ApiController@create_pesanan');
+	Route::get('/seat/{jadwal}/{plat_mobil}', 'ApiController@seat');
+
+
 });
+
+

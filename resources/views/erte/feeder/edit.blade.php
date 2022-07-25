@@ -18,18 +18,18 @@
         <div class="box">
             <div class="box-body">
                     
-                <form method="post" action="/feeder/update/{{$feeder->id_users}}">
+                <form method="post" action="/feeder/update/{{$feeder->id_feeder}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{old('id_users', $feeder->id_users)}}" disabled>
+                            <label>ID Feeder</label>
+                            <input type="text" name="id_feeder" class="form-control" placeholder="ID Feeder" value="{{old('id_feeder', $feeder->id_feeder)}}" disabled>
 
-                             @if($errors->has('id_users'))
+                             @if($errors->has('id_feeder'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_feeder')}}
                                 </div>
                             @endif
 
@@ -58,17 +58,6 @@
                             @endif
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" >
-
-                             @if($errors->has('password'))
-                                <div class="text-danger">
-                                    {{ $errors->first('password')}}
-                                </div>
-                            @endif
-                        </div> -->
-
                         <div class="form-group">
                             <label>Nama</label>
                             <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{old('nama', $feeder->nama)}}">
@@ -96,10 +85,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1" {{ $feeder->jenis_kelamin == 1 ? 'checked' : '' }} > Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="Laki-laki" {{ $feeder->jenis_kelamin == "Laki-laki" ? 'checked' : '' }} > Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2" {{ $feeder->jenis_kelamin == 2 ? 'checked' : '' }}> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="Perempuan" {{ $feeder->jenis_kelamin == "Perempuan" ? 'checked' : '' }}> Perempuan 
                                 </label>
 
                                 @if($errors->has('jenis_kelamin'))
@@ -139,11 +128,7 @@
 
 
                         </div>
-                        
-
-                        
-
-                        
+       
                 </form>
             </div>
         </div>

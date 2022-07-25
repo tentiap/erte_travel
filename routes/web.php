@@ -17,32 +17,9 @@ use Spatie\Permission\Models\Permission;
 
 Auth::routes();
 
-// Route::get('/operator/login', 'Auth\LoginController@showLoginForm')->name('operator.login');
 Route::get('/', 'Auth\LoginController@showLoginForm');
-Route::post('/operator/login', 'Auth\LoginController@login')->name('operator.login.post');
-Route::post('/operator/logout', 'Auth\LoginController@logout')->name('operator.logout');
-
-/*
- _  teacher profile routes
- */
-// Route::group(['middleware'=>'operator'], function() {
-//     return view('dashboard');
-// });
-
-// Route::get('/', function () {
-//     return view('dashboard');
-// })->middleware('auth');
-
-// Route::get('/home',function(){
-// 	return view('dashboard');
-// })->name('home');
-
-// Route::get('/home',function(){
-// 	return view('home');
-
-// Route::get('/dashboard', function(){
-// 	return view('dashboard');
-// });
+Route::post('/pengurus/login', 'Auth\LoginController@login')->name('pengurus.login.post');
+Route::post('/pengurus/logout', 'Auth\LoginController@logout')->name('pengurus.logout');
 Route::get('/dashboard', 'DashboardController@index');
 
 //------------------------------------------------------KOTA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -83,82 +60,81 @@ Route::get('/users/delete/{id_users}', 'UsersController@delete');
 Route::get('/sopir', 'SopirController@index');
 Route::get('/sopir/create', 'SopirController@create');
 Route::post('/sopir/store', 'SopirController@store');
-Route::get('/sopir/edit/{id_users}', 'SopirController@edit');
-Route::get('/sopir/show/{id_users}', 'SopirController@show');
-Route::put('/sopir/update/{id_users}', 'SopirController@update');
-Route::get('/sopir/delete/{id_users}', 'SopirController@delete');
+Route::get('/sopir/edit/{id_sopir}', 'SopirController@edit');
+// Route::get('/sopir/show/{id_sopir}', 'SopirController@show');
+Route::put('/sopir/update/{id_sopir}', 'SopirController@update');
+Route::get('/sopir/delete/{id_sopir}', 'SopirController@delete');
 
 //------------------------------------------------------FEEDER----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/feeder', 'FeederController@index');
 Route::get('/feeder/create', 'FeederController@create');
 Route::post('/feeder/store', 'FeederController@store');
-Route::get('/feeder/edit/{id_users}', 'FeederController@edit');
-Route::get('/feeder/show/{id_users}', 'FeederController@show');
-Route::put('/feeder/update/{id_users}', 'FeederController@update');
-Route::get('/feeder/delete/{id_users}', 'FeederController@delete');
+Route::get('/feeder/edit/{id_feeder}', 'FeederController@edit');
+// Route::get('/feeder/show/{id_feeder}', 'FeederController@show');
+Route::put('/feeder/update/{id_feeder}', 'FeederController@update');
+Route::get('/feeder/delete/{id_feeder}', 'FeederController@delete');
+
+//------------------------------------------------------MOBIL----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/mobil', 'MobilController@index');
+Route::get('/mobil/create', 'MobilController@create');
+Route::post('/mobil/store', 'MobilController@store');
+Route::get('/mobil/edit/{plat_mobil}', 'MobilController@edit');
+Route::get('/mobil/show/{plat_mobil}', 'MobilController@show');
+Route::put('/mobil/update/{plat_mobil}', 'MobilController@update');
+Route::get('/mobil/delete/{plat_mobil}', 'MobilController@delete');
 
 //------------------------------------------------------PEMESAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/pemesan', 'PemesanController@index');
 Route::get('/pemesan/create', 'PemesanController@create');
 Route::post('/pemesan/store', 'PemesanController@store');
-Route::post('/pemesan/store1', 'PemesanController@store1');
-Route::get('/pemesan/edit/{id_users}', 'PemesanController@edit');
-Route::get('/pemesan/show/{id_users}', 'PemesanController@show');
-Route::put('/pemesan/update/{id_users}', 'PemesanController@update');
-Route::get('/pemesan/delete/{id_users}', 'PemesanController@delete');
+// Route::post('/pemesan/store1', 'PemesanController@store1');
+Route::get('/pemesan/edit/{id_pemesan}', 'PemesanController@edit');
+// Route::get('/pemesan/show/{id_pemesan}', 'PemesanController@show');
+Route::put('/pemesan/update/{id_pemesan}', 'PemesanController@update');
+Route::get('/pemesan/delete/{id_pemesan}', 'PemesanController@delete');
 
-//------------------------------------------------------OPERATOR----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Route::get('/operator', 'OperatorController@index');
-Route::get('/operator/create', 'OperatorController@create');
-Route::get('/operator/register', 'OperatorController@register');
-Route::post('/operator/store', 'OperatorController@store');
-Route::get('/operator/edit/{id_users}', 'OperatorController@edit');
-Route::get('/operator/show/{id_users}', 'OperatorController@show');
-Route::put('/operator/update/{id_users}', 'OperatorController@update');
-Route::get('/operator/delete/{id_users}', 'OperatorController@delete');
+//------------------------------------------------------PENGURUS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/pengurus', 'PengurusController@index');
+Route::get('/pengurus/create', 'PengurusController@create');
+Route::get('/pengurus/register', 'PengurusController@register');
+Route::post('/pengurus/store', 'PengurusController@store');
+Route::get('/pengurus/edit/{id_pengurus}', 'PengurusController@edit');
+Route::get('/pengurus/show/{id_pengurus}', 'PengurusController@show');
+Route::put('/pengurus/update/{id_pengurus}', 'PengurusController@update');
+Route::get('/pengurus/delete/{id_pengurus}', 'PengurusController@delete');
 
 //------------------------------------------------------TRIP----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('trip', 'TripController@index');
 Route::get('/trip/create', 'TripController@create');
 Route::post('/trip/store', 'TripController@store');
-Route::get('/trip/edit/{id_trip}', 'TripController@edit');
-Route::put('/trip/update/{id_trip}', 'TripController@update');
-Route::get('/trip/delete/{id_trip}', 'TripController@delete');
-Route::get('/trip/show/{id_trip}', 'TripController@show');
-Route::get('/trip/show/{id_trip}/cancel', 'TripController@show_cancel');
+Route::get('/trip/edit/{jadwal}/{plat_mobil}', 'TripController@edit');
+Route::put('/trip/update/{jadwal}/{plat_mobil}', 'TripController@update');
+Route::get('/trip/delete/{jadwal}/{plat_mobil}', 'TripController@delete');
+Route::get('/trip/show/{jadwal}/{plat_mobil}', 'TripController@show');
+Route::get('/trip/show/{jadwal}/{plat_mobil}/cancel', 'TripController@show_cancel');
 Route::get('/trip_kota_tujuan', 'TripController@getKotaTujuan');
 
 //------------------------------------------------------PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('pesanan', 'PesananController@index');
 Route::get('/pesanan/create', 'PesananController@create');
 Route::post('/pesanan/create_search', 'PesananController@search');
-Route::get('/pesanan/create_detail/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@detail');
-Route::post('/pesanan/store/{jumlah_penumpang}/{id_trip}/{id_users_pemesan}', 'PesananController@store');
+Route::get('/pesanan/create_detail/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@detail');
+Route::post('/pesanan/store/{jumlah_penumpang}/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@store');
 
-Route::get('/pesanan/edit/{id_pesanan}/{id_trip}', 'PesananController@edit');
-Route::put('/pesanan/update/{id_pesanan}/{id_trip}', 'PesananController@update');
-Route::get('/pesanan/update_create/{id_pesanan}/{id_trip}', 'PesananController@update_create');
-Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_store');
-// Route::get('/pesanan/update_search/{id_pesanan}/{id_trip}', 'PesananController@update_search');
-Route::get('/pesanan/update_detail/{id_pesanan}/{id_trip}/{id_users_pemesan}', 'PesananController@update_detail');
+Route::get('/pesanan/edit/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@edit');
+Route::put('/pesanan/update/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update');
+Route::get('/pesanan/update_create/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_create');
+Route::post('/pesanan/update_store/{jumlah_penumpang}/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@update_store');
+Route::get('/pesanan/update_detail/{jadwal}/{plat_mobil}/{id_pemesan}', 'PesananController@update_detail');
 
-Route::get('/pesanan/delete/{id_pesanan}/{id_trip}', 'PesananController@delete');
-Route::get('/pesanan/show/{id_pesanan}/{id_trip}', 'PesananController@show');
+Route::get('/pesanan/delete/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@delete');
+Route::get('/pesanan/show/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@show');
+Route::get('/pesanan/print/{id_pemesan}/{jadwal}/{plat_mobil}', 'PesananController@print');
 Route::get('/pesanan_trip', 'PesananController@getTrip');
-// Route::get('/pesanan/getFeeder', 'PesananController@getFeeder');
-// Route::get('/pesanan/update_feeder/{id_pesanan}/{id_trip}', 'PesananController@update_feeder');
-// Route::get('/pesanan/update_biaya/{id_pesanan}/{id_seat}', 'PesananController@update_biaya');
 
-
-//------------------------------------------------------DETAIL PESANAN----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Route::get('detail_pesanan', 'DetailPesananController@index');
-// Route::get('/detail_pesanan/create', 'DetailPesananController@create');
-// Route::post('/detail_pesanan/store', 'DetailPesananController@store');
-// Route::get('/detail_pesanan/edit/{id_trip}/{id_seat}}', 'DetailPesananController@edit');
-// Route::put('/detail_pesanan/update/{id_trip}/{id_seat}', 'DetailPesananController@update');
-// Route::get('/detail_pesanan/delete/{id_trip}/{id_seat}', 'DetailPesananController@delete');
-// Route::get('/detail_pesanan/show/{id_trip}/{id_seat}', 'DetailPesananController@show');
-
+//----------------------------------------------------REPORT-------------------------------------------------
+Route::get('report', 'ReportController@index');
+Route::post('report/show', 'ReportController@show');
 
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
 
@@ -180,18 +156,3 @@ Route::put('/permissions/update/{id}', 'PermissionController@update')->name('per
 Route::get('/permissions/delete/{id}', 'PermissionController@delete');
 Route::get('/permissions/show/{id}', 'PermissionController@show');
 
-// -----------Spatie---------------
-
-// Route::get('/roles', function(){
-// 	$role = Role::create(['name' => 'operator']);
-// 	$permission =  Permission::create(['name' => 'manage_users']);
-// 	Auth()->user()->assignRole('operator');
-// 	Auth()->user()->givePermissionTo('manage_users');
-
-
-// });
-
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');

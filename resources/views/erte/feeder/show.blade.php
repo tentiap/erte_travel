@@ -1,4 +1,4 @@
-@extends('layouts.master')
+<!-- @extends('layouts.master')
 
 
 
@@ -24,9 +24,6 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <!-- <style>
-                    .outset {border-style: outset;}
-                </style> -->
                     <div style="position: absolute; right: 0;">
                         <a href="/feeder/edit/{{ $feeder->id_users }}" class="btn btn-md" ><i class="fa fa-edit"></i> Edit</a>
                         <a class="btn btn-md" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/feeder/delete/{{ $feeder->id_users }}"><i class="fa fa-trash"></i> Hapus Feeder</a>
@@ -56,11 +53,6 @@
                                 });
                             });
                     </script>
-
-
-
-
-                   
       
                         <div class="form-group">
                             <label>ID Users</label>
@@ -73,11 +65,7 @@
 
                         <input type="text" name="role" class="form-control"  placeholder="Role" value="Feeder" readonly>
                                                         
-                                        
-                                               
-                                    
-                          
-                             
+            
                         </div>
 
                         <div class="form-group">
@@ -113,14 +101,7 @@
                         
                         <div class = "form-group">
                             <label>Jenis Kelamin</label>
-                            <input type="text" name="jenis_kelamin" class="form-control" placeholder="Jenis Kelamin" value="<?php
-                                        if($users->jenis_kelamin == 1){
-                                        echo "Laki-laki";
-                                        }else{
-                                        echo "Perempuan";
-                                        } 
-                                    ?> 
-                            "readonly>                                               
+                            <input type="text" name="jenis_kelamin" class="form-control" placeholder="Jenis Kelamin" value="{{$users->kontak}}"readonly>                                               
                       </div>
 
                         <div class="form-group">
@@ -130,12 +111,9 @@
                              
                         </div>
 
-                       
-
-
             </div>
         </div>
     </section>
 
     
-@endsection
+@endsection -->

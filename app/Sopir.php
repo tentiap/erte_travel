@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sopir extends Model
-{
+class Sopir extends Model {
     protected $table = "sopir";
     protected $fillable = [
-        'id_users',
-        'plat_mobil', 
-        'merek_mobil',
+        'plat_mobil',
+        'id_sopir',
         'username',
         'email',
         'password',
@@ -19,16 +17,14 @@ class Sopir extends Model
         'jenis_kelamin'
     ];
 
-    protected $primaryKey = "id_users";
+    protected $primaryKey = "plat_mobil";
     public $incrementing = false;
 
-    public function setPasswordAttribute($password)
-    {
+    public function setPasswordAttribute($password) {
         $this->attributes['password'] = \Hash::make($password);
     }
 
-    public function trip(){
-        return $this->hasMany(Trip::class);
+    public function mobil(){
+        return $this->belongsTo(Mobil::class, 'plat_mobil');
     }
-	
 }

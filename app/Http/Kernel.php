@@ -62,7 +62,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isAdmin' => \App\Http\Middleware\AdminMiddleware::class,
         'clearance' => \App\Http\Middleware\ClearanceMiddleware::class,
-        'operator' => \App\Http\Middleware\RedirectIfNotOperator::class,
+        // 'operator' => \App\Http\Middleware\RedirectIfNotOperator::class,
+        'pengurus' => \App\Http\Middleware\RedirectIfNotPengurus::class,
+
     ];
 
     /**

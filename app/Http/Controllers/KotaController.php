@@ -27,13 +27,8 @@ class KotaController extends Controller
     		'nama_kota' => $request->nama_kota
     	]);
 
-        // Flash::success('Mahasiswa saved successfully.');
-
-
         session()->flash('flash_success', 'Berhasil menambahkan data kota dengan nama '. $request->input('nama_kota'));
-
     	return redirect('/kota');
-
     }
 
     public function edit($id_kota){
@@ -51,9 +46,7 @@ class KotaController extends Controller
     	$kota->nama_kota = $request->nama_kota;
     	$kota->save();
 
-        // Flash::success('Kota berhasil ditambahkan');
         session()->flash('flash_success', 'Berhasil mengupdate data kota '.$kota->nama_kota);
-    	// return redirect()->route('kota.index', [$kota->id_kota] );
         return redirect('/kota');
     }
 
@@ -61,8 +54,7 @@ class KotaController extends Controller
     	$kota = Kota::find($id_kota);
     	$kota->delete();
         session()->flash('flash_success', "Berhasil menghapus kota ".$kota->nama_kota);
-    	// return redirect()->route('kota.index');
         return redirect('/kota');
     }
-
+	
 }

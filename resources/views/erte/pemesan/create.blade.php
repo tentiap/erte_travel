@@ -22,17 +22,17 @@
 
                         {{ csrf_field() }}
 
-                        <!-- <div class="form-group">
-                            <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
+                        <div class="form-group">
+                            <label>ID_Pemesan</label>
+                            <input type="text" name="id_pemesan" class="form-control" placeholder="ID Pemesan"  value="{{ old('id_pemesan') }}">
 
-                             @if($errors->has('id_users'))
+                             @if($errors->has('id_pemesan'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_pemesan')}}
                                 </div>
                             @endif
 
-                        </div> -->
+                        </div>
 
                         <div class="form-group">
                             <label>Username</label>
@@ -102,10 +102,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="Laki-laki"> Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="Perempuan"> Perempuan 
                                 </label>
 
                             @if($errors->has('jenis_kelamin'))

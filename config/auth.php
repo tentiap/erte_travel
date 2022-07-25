@@ -15,12 +15,27 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'operator',
+        'passwords' => 'pengurus',
     ],
 
-    'operator' => [
+    'pengurus' => [
         'driver' => 'eloquent',
-        'model' => App\Operator::class,
+        'model' => App\Pengurus::class,
+    ],
+
+    'pemesan' => [
+        'driver' => 'eloquent',
+        'model' => App\Pemesan::class,
+    ],
+
+    'sopir' => [
+        'driver' => 'eloquent',
+        'model' => App\Sopir::class,
+    ],
+
+    'feeder' => [
+        'driver' => 'eloquent',
+        'model' => App\Feeder::class,
     ],
 
     /*
@@ -52,14 +67,44 @@ return [
             'hash' => false,
         ],
 
-        'operator'  => [
+        'pengurus'  => [
           'driver'  => 'session',
-          'provider' => 'operator',
+          'provider' => 'pengurus',
         ],
 
-        'operator-api' => [
+        'pengurus-api' => [
             'driver' => 'token',
-            'provider' => 'operator',
+            'provider' => 'pengurus',
+        ],
+
+        'pemesan'  => [
+          'driver'  => 'session',
+          'provider' => 'pemesan',
+        ],
+
+        'pemesan-api' => [
+            'driver' => 'token',
+            'provider' => 'pemesan',
+        ],
+
+        'sopir'  => [
+          'driver'  => 'session',
+          'provider' => 'sopir',
+        ],
+
+        'sopir-api' => [
+            'driver' => 'token',
+            'provider' => 'sopir',
+        ],
+
+        'feeder'  => [
+          'driver'  => 'session',
+          'provider' => 'feeder',
+        ],
+
+        'feeder-api' => [
+            'driver' => 'token',
+            'provider' => 'feeder',
         ],
 
 
@@ -88,9 +133,24 @@ return [
             'model' => App\User::class,
         ],
 
-        'operator' => [
+        'pengurus' => [
             'driver' => 'eloquent',
-            'model'  => App\Operator::class,
+            'model'  => App\Pengurus::class,
+        ],
+
+        'pemesan' => [
+            'driver' => 'eloquent',
+            'model'  => App\Pemesan::class,
+        ],
+
+        'sopir' => [
+            'driver' => 'eloquent',
+            'model'  => App\Sopir::class,
+        ],
+
+        'feeder' => [
+            'driver' => 'eloquent',
+            'model'  => App\Feeder::class,
         ],
 
         // 'users' => [
@@ -121,8 +181,26 @@ return [
             'expire' => 60,
         ],
 
-        'operator' => [
-            'provider' => 'operator',
+        'pengurus' => [
+            'provider' => 'pengurus',
+            'table' => 'password_resets',
+            'expire' => 15,
+        ],
+
+        'pemesan' => [
+            'provider' => 'pemesan',
+            'table' => 'password_resets',
+            'expire' => 15,
+        ],
+
+        'sopir' => [
+            'provider' => 'sopir',
+            'table' => 'password_resets',
+            'expire' => 15,
+        ],
+
+        'feeder' => [
+            'provider' => 'feeder',
             'table' => 'password_resets',
             'expire' => 15,
         ],

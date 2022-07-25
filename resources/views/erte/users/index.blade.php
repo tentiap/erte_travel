@@ -30,7 +30,7 @@
                          <!--  <span class="caret"></span> -->
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a href="/operator/create">Operator</a></li>
+                          <li><a href="/pengurus/create">Pengurus</a></li>
                           <li><a href="/sopir/create">Sopir</a></li>
                           <li><a href="/feeder/create">Feeder</a></li>
                           <li><a href="/pemesan/create">Pemesan</a></li>
@@ -61,7 +61,7 @@
                                 <td>{{ $u->nama }}</td>
                                 <td>
                                   @if($u->role == 1)
-                                           Operator
+                                           Pengurus
                                   @elseif($u->role == 2)
                                             Sopir
                                   @elseif($u->role == 3)
@@ -86,11 +86,11 @@
                                     
                                           
                                     @if($u->role == 1)
-                                        <a href="/operator/show/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
+                                        <a href="/pengurus/show/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>
 
-                                        <a href="/operator/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
+                                        <a href="/pengurus/edit/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-edit"></i></a>
 
-                                        <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/operator/delete/{{ $u->id_users }}"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-lg" data-toggle='modal' data-target='#konfirmasi_hapus' data-href="/pengurus/delete/{{ $u->id_users }}"><i class="fa fa-trash"></i></a>
                                           
                                     @elseif($u->role == 2)
                                         <a href="/sopir/show/{{ $u->id_users }}" class="btn btn-lg"><i class="fa fa-eye"></i></a>

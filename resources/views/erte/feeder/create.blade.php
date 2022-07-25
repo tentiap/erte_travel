@@ -16,23 +16,24 @@
  @section('content')     
     <section class="content">
         <div class="box">
+            @include('messages')
             <div class="box-body">
                     
                 <form method="post" action="/feeder/store">
 
                         {{ csrf_field() }}
 
-                        <!-- <div class="form-group">
-                            <label>ID Users</label>
-                            <input type="text" name="id_users" class="form-control" placeholder="ID users" value="{{ old('id_users') }}">
+                        <div class="form-group">
+                            <label>ID Feeder</label>
+                            <input type="text" name="id_feeder" class="form-control" placeholder="ID Feeder" value="{{ old('id_feeder') }}">
 
-                             @if($errors->has('id_users'))
+                             @if($errors->has('id_feeder'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_users')}}
+                                    {{ $errors->first('id_feeder')}}
                                 </div>
                             @endif
 
-                        </div> -->
+                        </div>
 
                         <div class="form-group">
                             <label>Username</label>
@@ -44,7 +45,6 @@
                                 </div>
                             @endif
 
-                            
                         </div>
 
                         <div class="form-group">
@@ -102,10 +102,10 @@
                             <label>Jenis Kelamin</label>
                             <br>
                                 <label class = "radio-inline">
-                                    <input type="radio" name="jenis_kelamin" value="1"> Laki-laki
+                                    <input type="radio" name="jenis_kelamin" value="Laki-laki"> Laki-laki
                                 </label>
                                 <label class = "radio-inline"> 
-                                    <input type="radio" name="jenis_kelamin" value="2"> Perempuan 
+                                    <input type="radio" name="jenis_kelamin" value="Perempuan"> Perempuan 
                                 </label>
 
                             @if($errors->has('jenis_kelamin'))
@@ -123,9 +123,11 @@
 
                             <select class="form-control" name="id_kota">
                                 <option disabled selected value> -- Wilayah -- </option>
-                                    @foreach($kota as $k)
-                                        <option name="id_kota" value="{{$k->id_kota}}">{{$k->nama_kota}}</option> 
-                                    @endforeach
+                                @foreach($kota as $k)
+                                                    <option value="{{ $k->id_kota }}">
+                                                    {{$k->nama_kota}}
+                                                    </option> 
+                                            @endforeach
                                     
                             </select>
 
@@ -140,17 +142,12 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Simpan">
-                            <!-- <button class="btn btn-default btn-close"><a href="/feeder">Cancel</a></button> -->
                             <a class="btn btn-default btn-close" href="/feeder">Cancel</a>
                         </div>
 
 
                         </div>
-                        
-
-                        
-
-                        
+                           
                 </form>
             </div>
         </div>

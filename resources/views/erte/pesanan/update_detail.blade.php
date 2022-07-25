@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Tambah Penumpang di Pesanan {{$pesanan->id_pesanan}}<small>(Trip {{$pesanan->id_trip}} )</small> 
+          Tambah Penumpang 
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -36,9 +36,9 @@
                         @if($t->id_kota_asal == "K1")
                                 Bukittinggi
                         @elseif($t->id_kota_asal == "K2")
-                                          Padang
+                                Padang
                         @elseif($t->id_kota_asal == "K3")
-                                          Pekanbaru
+                                Pekanbaru
                         @endif
 
                         -  
@@ -72,7 +72,7 @@
                 </div>
 
             </div>
-                    <form method="post" action="/pesanan/update_store/{{$jumlah_penumpang}}/{{$pesanan->id_pesanan}}/{{$t->id_trip}}/{{$p->id_users}}">
+                    <form method="post" action="/pesanan/update_store/{{$jumlah_penumpang}}/{{$pesanan->id_pemesan}}/{{$pesanan->jadwal}}/{{$pesanan->plat_mobil}}">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}
@@ -117,11 +117,15 @@
                                                 <label>Seat</label>
                                                 <select class="form-control" name="id_seat[]" id="id_kota_asal">
                                                     <option disabled selected value>  Seat  </option>
-                                                        @foreach($seat as $s)
-                                                                <option value="{{ $s->id_seat }}">
-                                                                {{$s->id_seat}}
-                                                                </option> 
-                                                        @endforeach 
+                                                    @for($a = 1; $a <= 7; $a++)
+
+                                                        @if(in_array($a, $seat_booked) == false)
+                                                            <option value="{{ $a }}">
+                                                                {{$a}}
+                                                            </option> 
+                                                        @endif    
+                                                                                
+                                                    @endfor
                                                 </select>
 
                                                  @if($errors->has('id_seat'))
@@ -135,11 +139,11 @@
                                                 <label>Jenis Kelamin</label>
                                                 <select class="form-control" name="jenis_kelamin[]">
                                                     <option disabled selected value> Jenis Kelamin </option>
-                                                        <option value="1">
+                                                        <option value="Laki-laki">
                                                             Laki-laki
                                                         </option>
 
-                                                        <option value="2">
+                                                        <option value="Perempuan">
                                                             Perempuan
                                                         </option>  
                                                        

@@ -75,7 +75,7 @@
 
                     
                     
-                    <form method="post" action="/pesanan/store/{{$jumlah_penumpang}}/{{$t->id_trip}}/{{$p->id_users}}">
+                    <form method="post" action="/pesanan/store/{{$jumlah_penumpang}}/{{$t->jadwal}}/{{$t->plat_mobil}}/{{$p->id_pemesan}}">
                         @for ($i = 0; $i < $jumlah_penumpang; $i++)
 
                                 {{ csrf_field() }}
@@ -120,11 +120,16 @@
                                                 <label>Seat</label>
                                                 <select class="form-control" name="id_seat[]" id="id_kota_asal">
                                                     <option disabled selected value>  Seat  </option>
-                                                        @foreach($seat as $s)
-                                                                <option value="{{ $s->id_seat }}">
-                                                                {{$s->id_seat}}
+                                                        @for($a = 1; $a <= 7; $a++)
+
+                                                            @if(in_array($a, $seat_booked) == false)
+                                                                <option value="{{ $a }}">
+                                                                    {{$a}}
                                                                 </option> 
-                                                        @endforeach 
+                                                            @endif    
+                                                                                          
+                                                        @endfor
+                                                        
                                                 </select>
 
                                                  @if($errors->has('id_seat'))
@@ -138,11 +143,11 @@
                                                 <label>Jenis Kelamin</label>
                                                 <select class="form-control" name="jenis_kelamin[]">
                                                     <option disabled selected value> Jenis Kelamin </option>
-                                                        <option value="1">
+                                                        <option value="Laki-laki">
                                                             Laki-laki
                                                         </option>
 
-                                                        <option value="2">
+                                                        <option value="Perempuan">
                                                             Perempuan
                                                         </option>  
                                                        

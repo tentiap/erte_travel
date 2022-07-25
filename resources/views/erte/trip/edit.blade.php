@@ -16,26 +16,49 @@
  @section('content')     
     <section class="content">
         <div class="box">
+        @include('messages')
             <div class="box-body">
                     
-                <form method="post" action="/trip/update/{{$trip->id_trip}}">
+                <form method="post" action="/trip/update/{{$trip->jadwal}}/{{$trip->plat_mobil}}">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>ID Trip</label>
-                            <input type="text" name="id_trip" class="form-control" placeholder="ID Trip" value="{{old('id_trip', $trip->id_trip)}}" disabled>
+                            <label>Jadwal</label>
+                                <div class='input-group date' id='datetime_edit'>
+                                    <input type='text' class="form-control" name="jadwal" value="{{ $trip->jadwal }}" />
+                                      <span class="input-group-addon">
+                                          <span class="glyphicon glyphicon-calendar"></span>
+                                      </span>
+                                </div>
 
-                             @if($errors->has('id_trip'))
+                                @if($errors->has('jadwal'))
+                                        <div class="text-danger">
+                                            {{ $errors->first('jadwal')}}
+                                        </div>
+                                @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label>Plat Mobil</label>
+                            <!-- <input type="text" name="plat_mobil" class="form-control" placeholder="Plat Mobil" value="{{old('plat_mobil', $trip->plat_mobil)}}"> -->
+                            <select class="form-control" name="plat_mobil">
+                                <option value=""> -- Plat Mobil -- </option>
+                                    @foreach($mobil as $m)
+                                            <option  value="{{$m->plat_mobil}}"{{$trip->plat_mobil == $m->plat_mobil ? 'selected' : ''}}>{{$m->plat_mobil}}</option>  
+                                    @endforeach
+                            </select>
+
+                             @if($errors->has('plat_mobil'))
                                 <div class="text-danger">
-                                    {{ $errors->first('id_trip')}}
+                                    {{ $errors->first('plat_mobil')}}
                                 </div>
                             @endif
 
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-sm-6">
                                     <label>Kota Asal</label>
                                     <select class="form-control" name="id_kota_asal" id="id_kota_asal"> 
@@ -69,25 +92,9 @@
                                         {{ $errors->first('id_kota_tujuan')}}
                                     </div>
                                 @endif
-                        </div>
+                        </div> --> 
 
-                        <div class="form-group">
-                            <label>Jadwal</label>
-                                <div class='input-group date' id='datetime_edit'>
-                                    <input type='text' class="form-control" name="jadwal" value="{{ $trip->jadwal }}" />
-                                      <span class="input-group-addon">
-                                          <span class="glyphicon glyphicon-calendar"></span>
-                                      </span>
-                                </div>
-
-                                @if($errors->has('jadwal'))
-                                        <div class="text-danger">
-                                            {{ $errors->first('jadwal')}}
-                                        </div>
-                                @endif
-                        </div>
-
-                       <div class="form-group">
+                       <!-- <div class="form-group">
                             <label>Sopir</label>
                             <select class="form-control" name="id_users_sopir">
                                 <option value=""> -- Sopir -- </option>
@@ -99,22 +106,6 @@
                             @if($errors->has('id_users_sopir'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_users_sopir')}}
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- <div class="form-group">
-                            <label>Operator</label>
-                            <select class="form-control" name="id_users_operator">
-                                    @foreach($operator as $o)
-                                            <option  value="{{$o->id_users}}"{{$trip->id_users_operator == $o->id_users ? 'selected' : ''}}>{{$o->nama}}</option> 
-                                    @endforeach
-                                    
-                            </select>
-
-                            @if($errors->has('id_users_operator'))
-                                <div class="text-danger">
-                                    {{ $errors->first('id_users_operator')}}
                                 </div>
                             @endif
                         </div> -->

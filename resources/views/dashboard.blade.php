@@ -3,7 +3,7 @@
 @section('breadcrumb')
   <section class="content-header">
       <h1>
-          Dashboard<small>Welcome, {{ Auth::guard('operator')->user()->nama }} ({{ Auth::guard('operator')->user()->kota->nama_kota }})</small>
+          Dashboard<small>Welcome, {{ Auth::guard('pengurus')->user()->nama }} ({{ Auth::guard('pengurus')->user()->kota->nama_kota }})</small>
       </h1>
           <ol class="breadcrumb">
             <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -84,22 +84,29 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table id="sortdata" class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped">
                   <thead>
                   <tr>
-                    <th>ID Trip</th>
+                    <th>No.</th>
                     <th>Jam</th>
                     <th>Kota Asal</th>
                     <th>Kota Tujuan</th>
-                    <th>Sopir</th>
-                    <th>Ketersediaan</th>
+                    <th>Mobil</th>
+                    <th>Opsi</th>
                   </tr>
                   </thead>
                   <tbody>
+                    @php
+                      $i = 0
+                    @endphp
+
                     @foreach($trip as $t)
                       
                             <tr>
-                                <td><a href="/trip/show/{{ $t->id_trip }}"><u>{{ $t->id_trip }}</u></a></td>
+                                @php
+                                  $i = $i + 1
+                                @endphp
+                                <td>{{ $i }}</td>
                                 <td id="tes_id">{{ date('H:i', strtotime($t->jadwal)) }} </td>
                                 <td>
                                   
@@ -108,7 +115,7 @@
                                       @elseif($t->id_kota_asal == "K2")
                                           Padang
                                       @elseif($t->id_kota_asal == "K3")
-                                          Payakumbuh
+                                          Pekanbaru
                                       @endif
                                   
                                 </td>        
@@ -118,22 +125,18 @@
                                       @elseif($t->id_kota_tujuan == "K2")
                                           Padang
                                       @elseif($t->id_kota_tujuan == "K3")
-                                          Payakumbuh
+                                          Pekanbaru
                                       @endif
                                 </td>
-                                <td>
-                                      @if(empty($t->id_users_sopir))
-                                        <a href="/trip/edit/{{ $t->id_trip }}"><u>Tambah Sopir</u></a>
-                                      @else
-                                        {{ $t->sopir->nama }}
-                                      @endif
-                                </td>
-                                <td ><a href="/trip/show/{{ $t->id_trip }}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>  
+                                <td>{{ $t->plat_mobil }}</td>
+                                <td ><a href="/trip/show/{{ $t->jadwal }}/{{ $t->plat_mobil }}" class="btn btn-lg"><i class="fa fa-eye"></i></a></td>  
                     @endforeach             
                   
                   </tbody>
                 </table>
               </div>
+
+              {{ $trip->links() }}
               
             </div>
             <!-- /.box-body -->
