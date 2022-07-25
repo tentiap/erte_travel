@@ -16,6 +16,7 @@ class SeatController extends Controller
     public function create(){
         $seat = new Seat();
         $seat_select = Seat::select('id_seat');
+ //afterSemhas
         $seat_count = $seat_select->count();
             if ($seat_count < 7) {
                 return view('erte.seat.create');
@@ -23,6 +24,16 @@ class SeatController extends Controller
                 session()->flash('flash_warning', "Tidak bisa menambahkan seat lagi");
                 return redirect('/seat');
             }
+    	
+//=======
+//        $seat_count = $seat_select->count();
+//            if ($seat_count < 7) {
+//                return view('erte.seat.create');
+//            }else{
+//                session()->flash('flash_warning', "Tidak bisa menambahkan seat lagi");
+//                return redirect('/seat');
+//            }
+//clean(2)
     }
     
     public function store(Request $request){

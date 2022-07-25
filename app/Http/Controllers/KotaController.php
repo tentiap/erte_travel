@@ -56,5 +56,5 @@ class KotaController extends Controller
         session()->flash('flash_success', "Berhasil menghapus kota ".$kota->nama_kota);
         return redirect('/kota');
     }
-
+	
 }
